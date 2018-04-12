@@ -14,7 +14,7 @@ if __name__ == "__main__":
     fDY=ROOT.TFile("files_nominal/DY.root","r")
     fTT=ROOT.TFile("files_"+options.scale+"/TT.root","r")
     fVV=ROOT.TFile("files_"+options.scale+"/VV.root","r")
-    fW=ROOT.TFile("files_"+options.scale+"/W.root","r")
+    fW=ROOT.TFile("files_"+options.scale+"/WJets.root","r")
     fData=ROOT.TFile("files_nominal/data.root","r")
     fout=ROOT.TFile("files_"+options.scale+"/QCD.root","recreate")
 
@@ -23,6 +23,10 @@ if __name__ == "__main__":
 
     postfixData=""
     hAIOS=fData.Get("AIOS/data_obs"+postfixData)
+    hAIOS.Add(fDY.Get("AIOS/DY"+postfix),-1)
+    hAIOS.Add(fTT.Get("AIOS/TT"+postfix),-1)
+    hAIOS.Add(fVV.Get("AIOS/VV"+postfix),-1)
+    hAIOS.Add(fW.Get("AIOS/W"+postfix),-1)
     for i in range(0,hAIOS.GetSize()-2):
         if hAIOS.GetBinContent(i)<0:
             hAIOS.SetBinError(i,max(0,hAIOS.GetBinError(i)+hAIOS.GetBinError(i)))

@@ -40,7 +40,6 @@ int main(int argc, char** argv) {
   std::string sample = *(argv + 3);
   std::string name = *(argv + 4);
   
-  cout << "argc : " << argc << endl;
   float tes=0;
   if (argc > 1) {
     tes = atof(argv[5]);
@@ -149,8 +148,14 @@ int main(int argc, char** argv) {
   
   cout.setf(ios::fixed, ios::floatfield);
   cout.precision(10);
-  arbre->SetBranchAddress("jetpt_1", &jetpt_1);
-  arbre->SetBranchAddress("jetpt_2", &jetpt_2);
+  arbre->SetBranchAddress("jpt_1", &jpt_1);
+  arbre->SetBranchAddress("jeta_1", &jeta_1);
+  arbre->SetBranchAddress("jphi_1", &jphi_1);
+  arbre->SetBranchAddress("jcsv_1", &jcsv_1);
+  arbre->SetBranchAddress("jpt_2", &jpt_2);
+  arbre->SetBranchAddress("jeta_2", &jeta_2);
+  arbre->SetBranchAddress("jphi_2", &jphi_2);
+  arbre->SetBranchAddress("jcsv_2", &jcsv_2);
   arbre->SetBranchAddress("run", &run);
   arbre->SetBranchAddress("lumi", &lumi);
   arbre->SetBranchAddress("evt", &evt);
@@ -311,14 +316,20 @@ int main(int argc, char** argv) {
 	// DoubleTau trigger
 	if (sample=="data_obs" && ((input=="myntuples/data_H_v2.root") || (input=="myntuples/data_H_v3.root"))) {
 	  if(!passDoubleTauCmbIso35) continue; 
+	  if(!matchDoubleTauCmbIso35_1 || !matchDoubleTauCmbIso35_2) continue;
+	  if(filterDoubleTauCmbIso35_1<0.5 || filterDoubleTauCmbIso35_2<0.5) continue;
 	}
 	if (sample=="data_obs" && !(input=="myntuples/data_H_v2.root") && !(input=="myntuples/data_H_v3.root")) { 
 	  if (!passDoubleTau35) continue; 
+	  if (!matchDoubleTau35_1 || !matchDoubleTau35_2) continue;
+	  if (filterDoubleTau35_1<0.5 || filterDoubleTau35_2<0.5) continue;
 	}
 	if (sample!="data_obs") { 
 	  if(!passDoubleTauCmbIso35 || !passDoubleTau35) continue; 
 	  if(passDoubleTauCmbIso35 && (filterDoubleTauCmbIso35_1<0.5 || filterDoubleTauCmbIso35_2<0.5)) continue;
+	  if(passDoubleTauCmbIso35 && (!matchDoubleTauCmbIso35_1 || !matchDoubleTauCmbIso35_2)) continue;
 	  if(passDoubleTau35 && (filterDoubleTau35_1<0.5 || filterDoubleTau35_2<0.5)) continue;
+	  if(passDoubleTau35 && (!matchDoubleTau35_1 || !matchDoubleTau35_2)) continue;
 	} 
 
 	// mytau1 is the highest pT tau
@@ -361,29 +372,26 @@ int main(int argc, char** argv) {
 	float signalRegion = byTightIsolationMVArun2v1DBoldDMwLT_1 && byTightIsolationMVArun2v1DBoldDMwLT_2;
         float aiRegion = ((byMediumIsolationMVArun2v1DBoldDMwLT_1 && !byTightIsolationMVArun2v1DBoldDMwLT_2 && byLooseIsolationMVArun2v1DBoldDMwLT_2) || (byMediumIsolationMVArun2v1DBoldDMwLT_2 && !byTightIsolationMVArun2v1DBoldDMwLT_1 && byLooseIsolationMVArun2v1DBoldDMwLT_1));
 	
-	// GenMap
-	//if (sample=="DY"
-
-	
 	// Weights depending in the generated jet multiplicity
         if (sample=="W"){
-	  weight=38.73334813;
-	  if (numGenJets==1) weight=7.512695043;
-	  else if (numGenJets==2) weight=4.06934263;
-	  else if (numGenJets==3) weight=1.037445761;
-	  else if (numGenJets==4) weight=1.103079447;
+	  weight=25.446;
+	  if (numGenJets==1) weight=6.8176;
+	  else if (numGenJets==2) weight=2.1038;
+	  else if (numGenJets==3) weight=0.6889;
+	  else if (numGenJets==4) weight=0.6900;
+	  //cout << weight << endl;
         }
 
         if (sample=="DY" or sample=="ZTT" or sample=="ZLL" or sample=="ZL" or sample=="ZJ"){
-	  weight=0.697701634;
-	  if (numGenJets==1)
-	    weight=0.343195232;
-	  else if (numGenJets==2)
-	    weight=0.348500407;
-	  else if (numGenJets==3)
-	    weight=0.355788884;
-	  else if (numGenJets==4)
-	    weight=0.305990056;
+	  weight=1.41957039;
+	  if (numGenJets==1 || input=="myntuples/DY1.root")
+	    weight=0.457675455;
+	  else if (numGenJets==2 || input=="myntuples/DY2.root")
+	    weight=0.467159142;
+	  else if (numGenJets==3 || input=="myntuples/DY3.root")
+	    weight=0.480349711;
+	  else if (numGenJets==4 || input=="myntuples/DY4.root")
+	    weight=0.3938184351;
 	  /*weight=1.4184;
             if (numGenJets==1)
                 weight=0.45729;
@@ -447,10 +455,17 @@ int main(int argc, char** argv) {
         if (pttop1>400) pttop1=400;
         float pttop2=pt_top2;
         if (pttop2>400) pttop2=400;
-        if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && fabs(tes)!=11) aweight*=sqrt(exp(0.156-0.00137*pttop1)*exp(0.156-0.00137*pttop2));
+        if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && fabs(tes)!=11) aweight*=sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2));
+	  //aweight*=sqrt(exp(0.156-0.00137*pttop1)*exp(0.156-0.00137*pttop2));
         if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && tes==11) aweight*=(1+2*(sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2))-1));
 
 	if (sample=="data_obs") aweight=1.0;
+
+	// Separation between L, T and J
+	if ((sample=="ZTT") && (gen_match_1!=5 || gen_match_2!=5)) continue;
+	if ((sample=="ZL") && (gen_match_1>5 || gen_match_2>5 || (gen_match_1==5 && gen_match_2==5))) continue;
+	//else cout << gen_match_1 << ", " << gen_match_2 << endl;
+	if ((sample=="ZJ") && (gen_match_1!=6 || gen_match_2!=6)) continue;
 
 	// #################################
 	// # Loop over uncertainty sources #
@@ -462,7 +477,7 @@ int main(int argc, char** argv) {
 	    // for each iteration start from the nominal objets
 	    float weight2=1.0;
 	    TLorentzVector mymet=myrawmet;
-	    
+	    //cout << mymet.M() << endl;
 	    // Apply uncertainty shifts ( NOT ADDED YET )
 	    
 	    // pT, Eta cuts for the leptons
@@ -475,11 +490,19 @@ int main(int argc, char** argv) {
 	    
 	    // Additional selections
 	    bool selection =true;
-
-	    //************************* Fill histograms **********************
-	    
+	    TLorentzVector myjet1;
+	    myjet1.SetPtEtaPhiM(jpt_1,jeta_1,jphi_1,0);
+	    TLorentzVector myjet2;
+	    myjet2.SetPtEtaPhiM(jpt_2,jeta_2,jphi_2,0);
             TLorentzVector Higgs = mytau1+mytau2+mymet;
 	    float HpT = mytau1.Pt()+mytau2.Pt()+mymet.Pt();
+	    //if (njets==0) selection = true; // 0-jets
+	    //if (njets==1 || !(njets>=2 && HpT>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5)) selection = true; // boosted
+	    //if (njets>=2 && Higgs.Pt()>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5) selection = true; // VBF
+	    //else selection = false;
+	    //************************* Fill histograms **********************
+	    
+
 	    /*if (sample!="data_obs") {
 	      cout << endl << input.c_str() << endl;
 	      cout << "amcatNLO_weight : " << amcatNLO_weight << endl;	
