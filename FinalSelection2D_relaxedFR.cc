@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
   TH1F* nbevt = (TH1F*) f_Double->Get("nevents");
   float ngen = nbevt->GetBinContent(2);
   cout.precision(11);
-  cout << "############## " << input.c_str() << "nevents 2nd bin - " << ngen << endl; 
+  //cout << "############## " << input.c_str() << "nevents 2nd bin - " << ngen << endl; 
 
   //Declaration of files with scale factors 
   TFile *f_Trk=new TFile("Tracking_EfficienciesAndSF_BCDEFGH.root");
@@ -74,9 +74,9 @@ int main(int argc, char** argv) {
   
   //Normalization os MC samples
   float xs=1.0; float weight=1.0; float luminosity=35870.0;
-  if (sample=="DY" or sample=="ZL" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL"){ xs=5765.4; weight=luminosity*xs/ngen;}//std::cout << "DY weight = " << weight << std::endl;}
+  if (sample=="DY" or sample=="ZL" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL"){ xs=5765.4; weight=luminosity*xs/ngen;}
   else if (sample=="TTL" or sample=="TT" or sample=="TTT" or sample=="TTJ") {xs=831.76; weight=luminosity*xs/ngen;}
-  else if (sample=="W") {xs=61526.7; weight=luminosity*xs/ngen;}// std::cout << "W weight = " << weight << std::endl;}
+  else if (sample=="W") {xs=61526.7; weight=luminosity*xs/ngen;}
   else if (sample=="QCD") {xs=720648000*0.00042; weight=luminosity*xs/ngen;}
   else if (sample=="data_obs"){weight=1.0;}
   else if (sample=="WZ1L1Nu2Q") {xs=10.71; weight=luminosity*xs/ngen;}
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
   else if (sample=="ST_t_top") {xs=44.07; weight=luminosity*xs/ngen;}
   else if (sample=="ggh") {xs=48.58*0.0627; weight=luminosity*xs/ngen;}
   else if (sample=="VBF") {xs=3.782*0.0627; weight=luminosity*xs/ngen;}
-  else if (sample=="ggH125") {xs=48.58; weight=luminosity*xs/ngen;}
+  else if (sample=="ggH125") {xs=48.58*0.0627; weight=luminosity*xs/ngen;}
   else if (sample=="VBF125") {xs=3.782*0.0627; weight=luminosity*xs/ngen;}
   else if (sample=="ggH120") {xs=52.22*0.0698; weight=luminosity*xs/ngen;}
   else if (sample=="VBF120") {xs=3.935*0.0698; weight=luminosity*xs/ngen;}
@@ -249,18 +249,21 @@ int main(int argc, char** argv) {
   arbre->SetBranchAddress("bflavor_1",&bflavor_1);
   arbre->SetBranchAddress("bflavor_2",&bflavor_2);
   
+  arbre->SetBranchAddress("m_sv",&m_sv);
+
   //float bins0[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
   //float bins1[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
   //float bins0[] = {0,10,20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300}; //VBF
   //float bins1[] = {0,10,20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300}; //VBF
-  //float bins0[] = {0,50,100,150,200,250,300,350,400,450,500,550,600}; //fig50 H pT
-  //float bins1[] = {0,50,100,150,200,250,300,350,400,450,500,550,600}; //fig50 H pT
-  float bins0[] = {0,50,100,150,200,250,300,350,400,450,500};//,550,600,650,700,750,800,850,900,950,1000,1050}; //fig50 H pT
-  float bins1[] = {0,50,100,150,200,250,300,350,400,450,500};//,550,600,650,700,750,800,850,900,950,1000,1050}; //fig50 H pT
+  float bins0[] = {0,50,100,150,200,250,300,350,400,450,500}; //fig50 H pT
+  float bins1[] = {0,50,100,150,200,250,300,350,400,450,500}; //fig50 H pT
+  //float bins0[] = {0,50,100,150,200,250,300,350,400,450,500};//,550,600,650,700,750,800,850,900,950,1000,1050}; //fig50 H pT 0~500
+  //float bins1[] = {0,50,100,150,200,250,300,350,400,450,500};//,550,600,650,700,750,800,850,900,950,1000,1050}; //fig50 H pT
   //float bins0[] = {0,80,160,240,320,400,480,560,640,720,800,880,960,1040,1120,1200,1280,1360};
   //float bins1[] = {0,80,160,240,320,400,480,560,640,720,800,880,960,1040,1120,1200,1280,1360};
-  //float bins0[] = {0,25,50,75,100,125,150,175,200,225,250,275,300,324,350,375,400,425,450,475,500,550,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj
-  //float bins1[] = {0,25,50,75,100,125,150,175,200,225,250,275,300,324,350,375,400,425,450,475,500,550,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj
+  //float bins0[] = {0,25,50,75,100,120,140,160,180,200,225,250,275,300,324,350,375,400,425,450,475,500,550};//,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj 800
+  //float bins1[] = {0,25,50,75,100,120,140,160,180,200,225,250,275,300,324,350,375,400,425,450,475,500,550};//,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj 800
+
 
   //float bins0[] = {-5.0,-4.5,-4.0,-3.5,-3.0,-2.5,-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0};
   //float bins1[] = {-5.0,-4.5,-4.0,-3.5,-3.0,-2.5,-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0};
@@ -552,7 +555,7 @@ int main(int argc, char** argv) {
 	    TLorentzVector myjet2;
 	    myjet2.SetPtEtaPhiM(jpt_2,jeta_2,jphi_2,0);
             TLorentzVector Higgs = mytau1+mytau2+mymet;
-	    float HpT = mytau1.Pt()+mytau2.Pt()+mymet.Pt();
+	    TLorentzVector jets=myjet2+myjet1;
 
 	    // Categories
 	    bool is_0jet = false;
@@ -561,33 +564,31 @@ int main(int argc, char** argv) {
 	    bool is_VH = false;
 
 	    if(njets==0) is_0jet=true;
-	    else if(njets==1 || !(njets>=2 && HpT>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5)) is_boosted=true;
-	    else is_VBF=true;//if(njets>=2 && Higgs.Pt()>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	    //else cout << "AN's category is not complete." << endl;
-	    if(njets>=2 && !is_VBF) is_VH=true;
-	    /*if (is_VH && (is_boosted || is_0jet || is_VBF)) {
-	      cout << endl;
-	      cout << "hole1 *****************************************"<< endl;
-	      cout << "HpT : " << HpT << endl;
-	      cout << "fabs(myjet1.Eta()-myjet2.Eta()) : "<< fabs(myjet1.Eta()-myjet2.Eta()) << endl;
-	      }
-	    if (is_VBF) {
-	      cout << endl;
-	      cout << "VBF *****************************************"<< endl;
-	      cout << "HpT : " << HpT << endl;
-	      cout << "fabs(myjet1.Eta()-myjet2.Eta()) : "<< fabs(myjet1.Eta()-myjet2.Eta()) << endl;
-	      }*/
+	    if(njets>=2 && Higgs.Pt()>100 && jets.M() > 300) is_VBF=true;
+	    if(njets>=2 && jets.M() < 300) is_VH=true;
+	    if(njets==1 || (njets>=2 && jets.M() > 300 && Higgs.Pt()<100)) is_boosted=true;
 
-	    //if (njets==0) selection = true; // 0-jets
-	    //if (njets==1 || !(njets>=2 && HpT>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5)) selection = true; // boosted
-	    //if (njets>=2 && Higgs.Pt()>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5) selection = true; // VBF
-	    //else selection = false;
+	    //else if(njets>=2 && Higgs.Pt()>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
+	    //if(njets==1 || !(njets>=2 && Higgs.Pt()>100 && fabs(myjet1.Eta()-myjet2.Eta())>2.5)) is_boosted=true;
+	    //else cout << "AN's category is not complete." << endl;
+
+	    //cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << endl;
+	    
+	    if (!(is_boosted || is_0jet || is_VBF || is_VH)) {
+	      cout << endl;
+	      cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << endl;
+	      cout << "hole1 *****************************************"<< endl;
+	      cout << "njets : " << njets << endl;
+	      cout << "Higgs.Pt() : " << Higgs.Pt() << endl;
+	      cout << "fabs(myjet1.Eta()-myjet2.Eta()) : "<< fabs(myjet1.Eta()-myjet2.Eta()) << endl;
+	    }
+
 	    //************************* Fill histograms **********************
 	    
-	    TLorentzVector jets=myjet2+myjet1;
+
 	    /*if(njets<2) continue;
-	    cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << endl;
-	    cout << "njets : " << njets << endl;
+
+
 	    cout << "jpt_1  : " << myjet1.Pt() << endl;
 	    cout << "jeta_1  : " << myjet1.Eta() << endl;
 	    cout << "jpt_2  : " << myjet2.Pt() << endl;

@@ -34,7 +34,7 @@ if __name__ == "__main__":
     dirAIOS_inclusive=fout.mkdir("AIOS_inclusive")
     dirAISS_inclusive=fout.mkdir("AISS_inclusive")
 
-    cats=['0jet','boosted','vbf']
+    cats=['0jet','boosted','vbf'] #do not have jobs
     regions=['OS','SS','AIOS','AISS']
 
     #for cat in cats:
@@ -316,7 +316,7 @@ if __name__ == "__main__":
         if hAISS_vh.GetBinContent(i)<0:
             hAISS_vh.SetBinError(i,max(0,hAISS_vh.GetBinError(i)+hAISS_vh.GetBinError(i)))
             hAISS_vh.SetBinContent(i,0)
-
+            
 
     fout.cd()
     dirOS_vh.cd()
@@ -334,4 +334,5 @@ if __name__ == "__main__":
     dirAISS_vh.cd()
     hAISS_vh.SetName("SMH")
     hAISS_vh.Write()
+
 

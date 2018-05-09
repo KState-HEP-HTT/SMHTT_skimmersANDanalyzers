@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import ROOT
 import re
+import math
 from array import array
 
 def add_lumi():
@@ -68,7 +69,7 @@ trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",
 
 categories=["ttOS_0jet","ttOS_boosted","ttOS_vbf","ttOS_vh","ttOS_inclusive"]#,"ttSS"]#,"AIOS","AISS"] 
 ncat = 5
-scale_sig = 200
+scale_sig = 100
 for i in range (0,ncat):
    Data=file.Get(categories[i]).Get("data_obs")
    VV=file.Get(categories[i]).Get("VV")
@@ -82,7 +83,16 @@ for i in range (0,ncat):
    VBF=file.Get(categories[i]).Get("VBF125")
    WH=file.Get(categories[i]).Get("WH")
    ZH=file.Get(categories[i]).Get("ZH125")
-   #ggH.Scale(0)
+   
+   signal = VBF.Integral(0,VBF.GetNbinsX()+1)
+   print('signal = ' +str(signal))
+   bkg = VV.Integral(0,VV.GetNbinsX()+1)+DYTT.Integral(0,DYTT.GetNbinsX()+1)+DYL.Integral(0,DYL.GetNbinsX()+1)+DYJ.Integral(0,DYJ.GetNbinsX()+1)+TT.Integral(0,TT.GetNbinsX()+1)+W.Integral(0,W.GetNbinsX()+1)+QCD.Integral(0,QCD.GetNbinsX()+1)
+   print('bkg = ' + str(bkg))
+   print('S/B = ' + str((signal/bkg)))
+   print('S/(S+B)) = ' + str((signal/(signal+bkg))))
+   print('S/sqrt(S+B) = '+ str((signal/math.sqrt(signal+bkg))))
+
+   ggH.Scale(scale_sig)
    VBF.Scale(scale_sig)
    WH.Scale(scale_sig)
    ZH.Scale(scale_sig)
@@ -211,10 +221,10 @@ for i in range (0,ncat):
 
    legende=make_legend()
    legende.AddEntry(Data,"Data","elp")
-   legende.AddEntry(ggH,"ggH 125 x1.0","l")
-   legende.AddEntry(VBF,"VBF 125 x200.0","l")
-   legende.AddEntry(WH,"WH 125 x200.0","l")
-   legende.AddEntry(ZH,"ZH 125 x200.0","l")
+   legende.AddEntry(ggH,"ggH 125 x100.0","l")
+   legende.AddEntry(VBF,"VBF 125 x100.0","l")
+   legende.AddEntry(WH,"WH 125 x100.0","l")
+   legende.AddEntry(ZH,"ZH 125 x100.0","l")
    legende.AddEntry(DYTT,"Z#rightarrow#tau#tau","f")
    legende.AddEntry(DYJ,"Z#rightarrowee (jet)","f")
    legende.AddEntry(DYL,"Z#rightarrowee (lepton)","f")
@@ -269,7 +279,7 @@ for i in range (0,ncat):
    h1.SetStats(0)
    h1.Divide(hwoE)
    h3.Divide(hwoE)
-   h1.GetXaxis().SetTitle("M_{jj} [GeV]")#"M_{#tau#tau} [GeV]")
+   h1.GetXaxis().SetTitle("Higgs p_{T} [GeV]")#"M_{#tau#tau} [GeV]")
            #"Higgs p_{T} [GeV]")#1:well matched, 3:sub is not from H, 4:leading is not from W")#("p_{T,vis} (GeV)")#("p_{T}(#mu_{2}) (GeV)")
    #("m_{vis} (GeV)")#(#vec{p_{T}}(#tau_{1})+#vec{p_{T}}(#tau_{2}))/(p_{T}(#tau_{1})+p_{T}(#tau_{2}))")#("m_{vis} (GeV)")#(#vec{p_{T}(#mu)}+#vec{p_{T}(#tau)})/(p_{T}(#mu)+p_{T}(#tau))")
    #if (i+1==1 or i+1==2 or i+1==7 or i+1==8):

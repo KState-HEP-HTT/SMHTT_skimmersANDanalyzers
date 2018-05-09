@@ -11,13 +11,20 @@
 hadd -f files_nominal/data.root files_nominal/data_B.root files_nominal/data_C.root files_nominal/data_D.root files_nominal/data_E.root files_nominal/data_F.root files_nominal/data_G.root files_nominal/data_H_v2.root files_nominal/data_H_v3.root
 
 #./FinalSelection2D_relaxedFR.exe myntuples/April15/ggH125.root files_nominal/SMH.root ggH125 SMH 0
-./FinalSelection2D_relaxedFR.exe myntuples/April15/VBF125_v1.root files_nominal/VBF125_v1.root VBF125 VBF125 0
-./FinalSelection2D_relaxedFR.exe myntuples/April15/ggH125.root files_nominal/ggH125.root ggH125 ggH125 0
-./FinalSelection2D_relaxedFR.exe myntuples/April15/WplusH125.root files_nominal/WplusH125.root WplusH125 WplusH125 0
-./FinalSelection2D_relaxedFR.exe myntuples/April15/WminusH125.root files_nominal/WminusH125.root WminusH125 WminusH125 0
-./FinalSelection2D_relaxedFR.exe myntuples/April15/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
-python Creat_sig.py 
+./FinalSelection2D_relaxedFR.exe myntuples/April22_svfit/VBF125.root files_nominal/VBF125.root VBF125 VBF125 0
+./FinalSelection2D_relaxedFR.exe myntuples/April22_svfit/ggH125.root files_nominal/ggH125.root ggH125 ggH125 0
+./FinalSelection2D_relaxedFR.exe myntuples/April22_svfit/WplusH125.root files_nominal/WplusH125.root WplusH125 WplusH125 0
+./FinalSelection2D_relaxedFR.exe myntuples/April22_svfit/WminusH125.root files_nominal/WminusH125.root WminusH125 WminusH125 0
+./FinalSelection2D_relaxedFR.exe myntuples/April22_svfit/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
+
+#./FinalSelection2D_relaxedFR.exe myntuples/April15/VBF125.root files_nominal/VBF125.root VBF125 VBF125 0
+#./FinalSelection2D_relaxedFR.exe myntuples/April15/ggH125.root files_nominal/ggH125.root ggH125 ggH125 0
+#./FinalSelection2D_relaxedFR.exe myntuples/April15/WplusH125.root files_nominal/WplusH125.root WplusH125 WplusH125 0
+#./FinalSelection2D_relaxedFR.exe myntuples/April15/WminusH125.root files_nominal/WminusH125.root WminusH125 WminusH125 0
+#./FinalSelection2D_relaxedFR.exe myntuples/April15/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
 python Creat_WH.py
+python Creat_sig.py 
+
 
 ./FinalSelection2D_relaxedFR.exe myntuples/April15/DY_ext1.root files_nominal/ZTT_ext1.root ZTT ZTT 0
 ./FinalSelection2D_relaxedFR.exe myntuples/April15/DY_ext2.root files_nominal/ZTT_ext2.root ZTT ZTT 0
