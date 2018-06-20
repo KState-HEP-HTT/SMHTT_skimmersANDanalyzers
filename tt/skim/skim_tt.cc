@@ -41,9 +41,10 @@ int main(int argc, char** argv) {
 
     // Get tree and couple of other histograms
     TTree* treePtr = (TTree*) fIn->Get("tt/final/Ntuple");
-    TH1F *evCounter = (TH1F*) fIn->Get("tt/eventCount");
-    TH1F *evCounterW = (TH1F*) fIn->Get("tt/summedWeights");
+    TH1D *evCounter = (TH1D*) fIn->Get("tt/eventCount");
+    TH1D *evCounterW = (TH1D*) fIn->Get("tt/summedWeights");
     HTauTauTree_tt* tree = new HTauTauTree_tt (treePtr);  
+
     //Define new output tree and its variables
     TTree *Run_Tree = new TTree("tt_tree", "tt_tree");
     Run_Tree->SetDirectory(0);
