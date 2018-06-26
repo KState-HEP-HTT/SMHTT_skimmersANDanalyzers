@@ -66,12 +66,13 @@ sample_Data = {"data_Tau_Run2016B_v2/" : "dataTT-B_",
                "data_Tau_Run2016H_v3/" : "dataTT-H_"
                }
 outputDic = {}
-
+directory_n = "testfiles_tt"
+numMax = 3 # the number of iteration
 print("./Make.sh skim_tt.cc\n") # 1
-print("mkdir testfiles_tt")
-print("mkdir testfiles_tt/Recoil0_TES1_WJ0")
-print("mkdir testfiles_tt/Recoil2_TES1_WJ0")
-print("mkdir testfiles_tt/Recoil2_TES1_WJ1")
+print("mkdir "+directory_n)
+print("mkdir "+directory_n+"/Recoil0_TES1_WJ0")
+print("mkdir "+directory_n+"/Recoil2_TES1_WJ0")
+print("mkdir "+directory_n+"/Recoil2_TES1_WJ1")
 
 
 dicSamples = {directory_MC : sample_MC, directory_Signal : sample_Signal, directory_Data : sample_Data}
@@ -98,14 +99,15 @@ for directory, samples in dicSamples.items():#.keys():
 
         for child in os.listdir(test_directory):
             test_path = os.path.join(test_directory, child)
-            # change testfiles_tt/
-            print ('./skim_tt.exe '+type+' testfiles_tt/'+dir+output+str(i)+'.root'+' '+test_directory+child) 
+            print ('./skim_tt.exe '+type+' '+directory_n+'/'+dir+output+str(i)+'.root'+' '+test_directory+child) 
+            # when multiple ver exist
             if os.listdir(test_directory)[-1] == child :
                 outputDic[output]=i
             i=i+1
             
             # Maximum number of iteration
-            if i == 1 :
+            if (i%numMax == 0):
+                outputDic[output]=i-1
                 break
 
 
