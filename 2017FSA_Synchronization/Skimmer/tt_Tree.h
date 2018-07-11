@@ -199,9 +199,11 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
       dijet=jet1+jet2;  
       mjj = dijet.M();
       jdeta = tree->vbfDeta;
+      // Tmp fix, FSA should initialize vbfJetVeto30, vbfJetVeto20 
       if (tree->jetVeto30 > 1 && (tree->jetVeto30>=tree->vbfJetVeto30)) njetingap = tree->vbfJetVeto30;
       if (tree->jetVeto30 > 1 && (tree->jetVeto30<tree->vbfJetVeto30)) njetingap = 0;
-      njetingap20 = tree->vbfJetVeto20;
+      if (tree->jetVeto20>=tree->vbfJetVeto20) njetingap20 = tree->vbfJetVeto20;
+      if (tree->jetVeto20<tree->vbfJetVeto20) njetingap20 = 0;
       jdphi = jet1.DeltaPhi(jet2);
       dijetpt = dijet.Pt();
       dijetphi = dijet.Phi();

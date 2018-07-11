@@ -19,3 +19,4 @@ For instance,
 ```python compare.py FSA_mt.root VIE_mt.root IC_mt.root KIE_mt.root -t FSA,VIE,IC,KIT```
 
 Official 2017-sync repository is https://github.com/CMS-HTT/2017-sync.
+All code in Comparision directory are from the official repository.

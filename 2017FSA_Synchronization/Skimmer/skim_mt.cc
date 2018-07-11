@@ -326,6 +326,11 @@ int main(int argc, char** argv) {
       if (tree->vbfJetVeto20 > 10)  cout << endl << "tree->vbfJetVeto20 > 10 : " << tree->jetVeto20 << ", " << tree->vbfJetVeto20 << ", " << tree->jetVeto30 << ", " << tree->vbfJetVeto30 << endl;
 
 
+      // Print for test purpose
+      /*cout << endl;
+      cout << tree->IsoMu24Group << "\t" << tree->IsoMu24Pass  << "\t" << tree->IsoMu24Prescale << endl;
+      cout << tree->IsoMu27Group << "\t" << tree->IsoMu27Pass  << "\t" << tree->IsoMu27Prescale << endl;
+      */
       evt_now=tree->evt;
       // Old sorting Algorithm as from Cecile
       if ( false ) {
@@ -359,9 +364,6 @@ int main(int argc, char** argv) {
 	    // comparison between previous tau pair and the new one takes place here!
 	    currentMuCandidate = make_pair(tree->mPt,  tree->mRelPFIsoDBDefaultR04);
 	    currentTauCandidate = make_pair(tree->tPt,  tree->tRerunMVArun2v2DBoldDMwLTraw);
-	    //cout << "iEntry " << iEntry << endl;
-	    //cout << muCandidate.second <<", "<< currentMuCandidate.second << endl;
-	    //cout << muCandidate.first << ", " << currentMuCandidate.first << endl;
 	    // clause 1, select the pair that has most isolated muon 
 	    if (currentMuCandidate.second - muCandidate.second  < 0.0001 ) bestEntry=iEntry; 
 	    // check if the first muon is the same, and if so - move to clause 2
@@ -370,7 +372,7 @@ int main(int argc, char** argv) {
 	      if (currentMuCandidate.first - muCandidate.first > 0.0001 ) bestEntry=iEntry;
 	      if ( fabs(currentMuCandidate.first -muCandidate.first) < 0.0001 ) { 
 		// same pT, same iso, move to clause 3
-		if (currentTauCandidate.second - tauCandidate.second > 0.0001 ) bestEntry=iEntry;
+		if (currentTauCandidate.second - tauCandidate.second < 0.0001 ) bestEntry=iEntry;
 		if ( fabs(currentTauCandidate.second - tauCandidate.second) < 0.0001 ) {
 		  // same iso - pick the pair with the highest pT
 		  if ( currentTauCandidate.first - tauCandidate.first  > 0.0001 ) bestEntry=iEntry;
@@ -379,7 +381,7 @@ int main(int argc, char** argv) {
 	      } // mu has the same pT
 
 	    } // mu has the same isolation
-	    //cout << "bestEntry " << bestEntry << ", iEntry " << iEntry << endl;
+
 	  } // not a new event
 	  evt_before=evt_now;
 	} // new way to sort (by isolation)

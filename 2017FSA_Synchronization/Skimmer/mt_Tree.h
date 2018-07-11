@@ -84,11 +84,12 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
     evt =tree->evt;
     aMCatNLO_weight = tree->GenWeight;
     // Extra lepton vetos
-    dilepton_veto=((tree->dimuonVeto>0));
-    extraelec_veto=((tree->eVetoZTTp001dxyzR0>0));
-    extramuon_veto=((tree->muVetoZTTp001dxyzR0>1));
+    dilepton_veto=(tree->dimuonVeto>0);
+    extraelec_veto=(tree->eVetoZTTp001dxyzR0>0);
+    extramuon_veto=(tree->muVetoZTTp001dxyzR0>1);
     // Trigger flags
-    trg_singlemuon = (tree->IsoMu24Group || tree->IsoMu24Pass || tree->IsoMu24Prescale);//|| tree->IsoMu27Group || tree->IsoMu27Pass || tree->IsoMu27Prescale;
+    trg_singlemuon = (tree->IsoMu24Pass && tree->IsoMu24Prescale) || (tree->IsoMu27Pass && tree->IsoMu27Prescale);
+    //trg_singlemuon = (tree->IsoMu24Group || tree->IsoMu24Pass || tree->IsoMu24Prescale || tree->IsoMu27Group || tree->IsoMu27Pass || tree->IsoMu27Prescale);
     //trg_mutaucross = ; // FIXME - FSA doesn't have cross trg branches.
 
     TLorentzVector mu, tau, mymet;
@@ -187,8 +188,13 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
       dijet=jet1+jet2;
       mjj = dijet.M();
       jdeta=tree->vbfDeta;
-      if(tree->jetVeto30>1) njetingap=tree->vbfJetVeto30;
-      njetingap20=tree->vbfJetVeto20;
+      // Tmp fix, FSA should initialize vbfJetVeto30, vbfJetVeto20
+      if (tree->jetVeto30 > 1 && (tree->jetVeto30>=tree->vbfJetVeto30)) njetingap = tree->vbfJetVeto30;
+      if (tree->jetVeto30 > 1 && (tree->jetVeto30<tree->vbfJetVeto30)) njetingap = 0;
+      if (tree->jetVeto20>=tree->vbfJetVeto20) njetingap20 = tree->vbfJetVeto20;
+      if (tree->jetVeto20<tree->vbfJetVeto20) njetingap20 = 0;
+      //if(tree->jetVeto30>1) njetingap=tree->vbfJetVeto30;
+      //njetingap20=tree->vbfJetVeto20;
       jdphi = jet1.DeltaPhi(jet2); 
       dijetpt = dijet.Pt();
       dijetphi=dijet.Phi();
