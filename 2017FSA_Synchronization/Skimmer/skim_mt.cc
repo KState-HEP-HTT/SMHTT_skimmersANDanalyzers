@@ -372,7 +372,7 @@ int main(int argc, char** argv) {
 	      if (currentMuCandidate.first - muCandidate.first > 0.0001 ) bestEntry=iEntry;
 	      if ( fabs(currentMuCandidate.first -muCandidate.first) < 0.0001 ) { 
 		// same pT, same iso, move to clause 3
-		if (currentTauCandidate.second - tauCandidate.second < 0.0001 ) bestEntry=iEntry;
+		if (currentTauCandidate.second - tauCandidate.second > 0.0001 ) bestEntry=iEntry;
 		if ( fabs(currentTauCandidate.second - tauCandidate.second) < 0.0001 ) {
 		  // same iso - pick the pair with the highest pT
 		  if ( currentTauCandidate.first - tauCandidate.first  > 0.0001 ) bestEntry=iEntry;
