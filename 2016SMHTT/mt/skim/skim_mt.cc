@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("lumi", &lumi);
     Run_Tree->Branch("evt", &evt);
 
-    Run_Tree->Branch("genDR_2", &genDR_2);
+    Run_Tree->Branch("tZTTGenDR", &tZTTGenDR);
     Run_Tree->Branch("npv", &npv);
     Run_Tree->Branch("npu", &npu, "npu/F");
     Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
@@ -428,32 +428,44 @@ int main(int argc, char** argv) {
         TLorentzVector dau2;
         dau1.SetPtEtaPhiM(tree->mPt,tree->mEta,tree->mPhi,tree->mMass);
         dau2.SetPtEtaPhiM(tree->tPt,tree->tEta,tree->tPhi,tree->tMass);
-        /*
-	if (isMC && tree->tDecayMode==0) dau2=dau2*0.982;
-        else if (isMC && tree->tDecayMode==1) dau2=dau2*1.010;
-        else if (isMC && tree->tDecayMode==10) dau2=dau2*1.004;
-	*/
+
+	// Baseline selection https://www.dropbox.com/s/mb6e26affiodpn3/AN2016_355_v10.pdf?dl=0 page 22
+	// line 443. No requirement on OS/SS @ skimming level
         if (tree->m_t_DR<0.5) continue;
+
+	// loosen requirement on muon pT a bit for energy scale systematics  (by 5%) 
+	// loosen tau pT and muon eta keeping Cécile's cut
+	if (dau1.Pt() < 20./1.05 || fabs(dau1.Eta())>2.4) continue;
+	if (dau2.Pt() < 20 || fabs(dau2.Eta())>2.3) continue;
+
+	// line 460
+	if (!tree->tDecayModeFinding) continue;
+
+ 	if (fabs(tree->tCharge)>1) continue;
+
+	// line 456 && 464
 	if (fabs(tree->mPVDXY)>0.045) continue;
         if (fabs(tree->mPVDZ)>0.2) continue;
         if (fabs(tree->tPVDZ)>0.2) continue;
-        if (dau1.Pt()<20 or dau2.Pt()<20) continue;//FIXME
-        //if (dau1.Pt()<23 or dau2.Pt()<20) continue;
-        if (fabs(dau1.Eta())>2.4 or fabs(dau2.Eta())>2.3) continue;
-	if (!tree->tDecayModeFinding) continue;
- 	if (fabs(tree->tCharge)>1) continue;
+
+	// line 465
+	if (!tree->tAgainstMuonTight3) continue;//FIXME
+        if (!tree->tAgainstElectronVLooseMVA6) continue;//FIXME
+        
 	//if (tree->mRelPFIsoDBDefaultR04>0.5) continue;//FIXME
 	bool goodglob=tree->mIsGlobal && tree->mNormalizedChi2 < 3 && tree->mChi2LocalPosition < 12 && tree->mTrkKink < 20; 
 	bool isMedium = tree->mPFIDLoose && tree->mValidFraction> 0.49 && tree->mSegmentCompatibility > (goodglob ? 0.303 : 0.451); 
         if (isMC && !tree->mPFIDMedium) continue;//FIXME
         if (isData && !tree->mPFIDMedium && !isMedium) continue;//FIXME
-	evt_now=tree->evt;
+	if (!tree->tByVLooseIsolationMVArun2v1DBoldDMwLT) continue;//FIXME
+	// D.Kim : It should be done at analysis code for consistency with tt channel codes.
+	/*
 	if (tree->eVetoZTTp001dxyzR0>0) continue;//FIXME
 	if (tree->muVetoZTTp001dxyzR0>1) continue;//FIXME
 	if (tree->dimuonVeto>0) continue;//FIXME
-	if (!tree->tByVLooseIsolationMVArun2v1DBoldDMwLT) continue;//FIXME
-	if (!tree->tAgainstMuonTight3) continue;//FIXME
-        if (!tree->tAgainstElectronVLooseMVA6) continue;//FIXME
+	*/
+
+	evt_now=tree->evt;
 	if (evt_now!=evt_before){
 	   mupt_before=tree->mPt;
 	   muiso_before=tree->mRelPFIsoDBDefaultR04;

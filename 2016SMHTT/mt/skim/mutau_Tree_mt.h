@@ -81,7 +81,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
     evt =tree->evt;
     aMCatNLO_weight = tree->GenWeight;
 //cout<<aMCatNLO_weight<<endl;
-    genDR_2=tree->tZTTGenDR;
+    tZTTGenDR=tree->tZTTGenDR;
 
     flag_BadChargedCandidate = tree->Flag_BadChargedCandidateFilter;
     flag_BadPFMuon = tree->Flag_BadPFMuonFilter;
@@ -523,15 +523,15 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
     metphi_JERUp=tree->type1_pfMet_shiftedPhi_JetResUp;
 
     metSig=tree->metSig;
-    metcov00=tree->metcov00_DESYlike;
-    metcov01=tree->metcov01_DESYlike;
-    metcov10=tree->metcov10_DESYlike;
-    metcov11=tree->metcov11_DESYlike;
+    metcov00=tree->metcov00;
+    metcov01=tree->metcov01;
+    metcov10=tree->metcov10;
+    metcov11=tree->metcov11;
 
-    metcov00_v2=tree->metcov00;
-    metcov01_v2=tree->metcov01;
-    metcov10_v2=tree->metcov10;
-    metcov11_v2=tree->metcov11;
+    metcov00_v2=tree->metcov00_DESYlike; 
+    metcov01_v2=tree->metcov01_DESYlike; 
+    metcov10_v2=tree->metcov10_DESYlike; 
+    metcov11_v2=tree->metcov11_DESYlike; 
 
     /*mvaMet=tree->m_t_MvaMet;
     mvaMetcov00=tree->m_t_MvaMetCovMatrix00;
