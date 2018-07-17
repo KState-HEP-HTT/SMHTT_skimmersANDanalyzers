@@ -1,3 +1,8 @@
+#################################################################
+### Search 'Bookmakr' to modify this script for your channel. ###
+### >> makedo_all.py > outputfile.sh                          ###
+### >> source outputfile.sh                                   ###
+#################################################################
 import os
 
 directory_MC = "/hdfs/store/user/caillol/SMHTT_mc_feb13/"
@@ -9,7 +14,7 @@ sample_MC = {"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext1-v2/
              "DY2JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets2_",
              "DY3JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets3_",
              "DY4JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets4_",
-             "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets_",
+             "WJetsToLNu_ TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets_",
              "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext2-v1/" : "WJets_",
              "W1JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets1_" ,
              "W2JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets2_",
@@ -66,31 +71,35 @@ sample_Data = {"data_Tau_Run2016B_v2/" : "dataTT-B_",
                "data_Tau_Run2016H_v3/" : "dataTT-H_"
                }
 outputDic = {}
-directory_n = "testfiles_tt"
+directory_n = "/scratch/doyeong/testfiles_tt_July12" # Bookmark 1
 numMax = 3 # the number of iteration
-print("./Make.sh skim_tt.cc\n") # 1
+print("./Make.sh skim_tt.cc\n") # Bookmark 2
 print("mkdir "+directory_n)
 print("mkdir "+directory_n+"/Recoil0_TES1_WJ0")
 print("mkdir "+directory_n+"/Recoil2_TES1_WJ0")
 print("mkdir "+directory_n+"/Recoil2_TES1_WJ1")
-
+print("mkdir "+directory_n+"/Recoil0_TES0_WJ0")
 
 dicSamples = {directory_MC : sample_MC, directory_Signal : sample_Signal, directory_Data : sample_Data}
 
 for directory, samples in dicSamples.items():#.keys():
-
     type = 'mc'
     if directory is directory_Data:
         type = 'data'
-    dir = 'Recoil0_TES1_WJ0/'
-    if 'DY' in str(samples):
-        dir = 'Recoil2_TES1_WJ0/'
-    if directory is directory_Signal:
-        dir = 'Recoil2_TES1_WJ0/'
-    if 'WJets' in str(samples):
-        dir = 'Recoil2_TES1_WJ1/'
 
     for sample in samples:
+        print 'sample :', sample
+        # This categorization form here : https://github.com/maravin/SubmitSVFit/blob/CMSSW_9_4_4_classic_svFit_v0/tools/controlledMerge.py
+        if ('DY' or 'VBF' or 'GluGluHToTauTau' or 'GluGluHToWWTo2L2Nu') in str(sample):
+            dir = 'Recoil2_TES1_WJ0/'
+        elif 'WJets' in str(sample):
+            dir = 'Recoil2_TES1_WJ1/'
+        elif directory is directory_Data:
+            dir = 'Recoil0_TES0_WJ0/'
+        else :
+            dir = 'Recoil0_TES1_WJ0/'
+
+
         test_directory = directory+sample
         output = samples[sample]
         i = 0
@@ -99,7 +108,7 @@ for directory, samples in dicSamples.items():#.keys():
 
         for child in os.listdir(test_directory):
             test_path = os.path.join(test_directory, child)
-            print ('./skim_tt.exe '+type+' '+directory_n+'/'+dir+output+str(i)+'.root'+' '+test_directory+child) 
+            print ('./skim_tt.exe '+type+' '+directory_n+'/'+dir+output+str(i)+'.root'+' '+test_directory+child) # Bookmark 3
             # when multiple ver exist
             if os.listdir(test_directory)[-1] == child :
                 outputDic[output]=i
