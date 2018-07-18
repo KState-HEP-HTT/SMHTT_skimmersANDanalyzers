@@ -1,10 +1,20 @@
-#################################################################
-### Search 'Bookmakr' to modify this script for your channel. ###
-### >> makedo_all.py > outputfile.sh                          ###
-### >> source outputfile.sh                                   ###
-#################################################################
 import os
+import sys
 
+channel = raw_input("Please, type channel. (tt, et, mt) : ")
+if (channel=="tt") :
+    ch = "TT"
+elif (channel=="mt") :
+    ch = "MT"
+elif (channel=="et") :
+    ch = "ET"
+print 'channel : ',ch
+    
+
+directory_n = raw_input("Please, type the path of output files. ( /scratch/doyeong/testfiles_tt_July12) :") # Bookmark 1
+numMax = input("Please, type the number of iteration. -1 for full skim. : ") # the number of iteration
+
+sys.stdout = open('skimScript.sh','wt')
 directory_MC = "/hdfs/store/user/caillol/SMHTT_mc_feb13/"
 directory_Signal = "/hdfs/store/user/truggles/SMHTT_signals_may30/"
 directory_Data = "/hdfs/store/user/caillol/SMHTT_reminiaod_feb14/"
@@ -14,7 +24,7 @@ sample_MC = {"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext1-v2/
              "DY2JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets2_",
              "DY3JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets3_",
              "DY4JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "DYJets4_",
-             "WJetsToLNu_ TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets_",
+             "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets_",
              "WJetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext2-v1/" : "WJets_",
              "W1JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets1_" ,
              "W2JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6-v1/" : "WJets2_",
@@ -25,8 +35,16 @@ sample_MC = {"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext1-v2/
              "W4JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext1-v1/" : "WJets4_",
              "W4JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext2-v1/" : "WJets4_",
              "TT_TuneCUETP8M2T4_13TeV-powheg-pythia8_v6-v1/" : "TT_",
-             "VVTo2L2Nu_13TeV_amcatnloFXFX_madspin_pythia8_v6-v1/" : "VV_",
-             "VVTo2L2Nu_13TeV_amcatnloFXFX_madspin_pythia8_v6_ext1-v1/" : "VV_",
+             "VVTo2L2Nu_13TeV_amcatnloFXFX_madspin_pythia8_v6-v1/" : "VV2l2nu_",
+             "VVTo2L2Nu_13TeV_amcatnloFXFX_madspin_pythia8_v6_ext1-v1/" : "VV2l2nu_",
+             "ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_v6-v1/" : "Tbar-tchan_",
+             "ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_v6-v1/" : "T-tchan_",
+             "ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_v6_ext1-v1/" : "Tbar-tW_",
+             "ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_v6_ext1-v1/" : "T-tW_",
+             "WWTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8_v6-v1/" : "WW1l1nu2q_",
+             "ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8_v6-v1/" : "ZZ2l2q_",
+             "ZZTo4L_13TeV-amcatnloFXFX-pythia8_v6_ext1-v1/" : "ZZ4l_",
+             
              "EWKWMinus2Jets_WToLNu_M-50_13TeV-madgraph-pythia8_v6-v1/" : "EWKWMinus_",
              "EWKWMinus2Jets_WToLNu_M-50_13TeV-madgraph-pythia8_v6_ext1-v1/" : "EWKWMinus_",
              "EWKWMinus2Jets_WToLNu_M-50_13TeV-madgraph-pythia8_v6_ext2-v1/" : "EWKWMinus_",
@@ -40,10 +58,6 @@ sample_MC = {"DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_v6_ext1-v2/
              "EWKZ2Jets_ZToNuNu_13TeV-madgraph-pythia8_v6_ext1-v1/" : "EWKZ2nu_",
              "EWKZ2Jets_ZToNuNu_13TeV-madgraph-pythia8_v6_ext2-v1/" : "EWKZ2nu_",
              "GluGluHToWWTo2L2Nu_M125_13TeV_powheg_pythia8_v6-v1/" : "ggH_WW125_",
-             "ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_v6-v1/" : "Tbar-tchan_",
-             "ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1_v6-v1/" : "T-tchan_",
-             "ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_v6_ext1-v1/" : "Tbar-tW_",
-             "ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1_v6_ext1-v1/" : "T-tW_",
              "VBFHToWWTo2L2Nu_M125_13TeV_powheg_pythia8_v6-v1/" : "VBF_WW125_",
              "WGToLNuG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_v6_ext1-v1/" : "WGLNu_",
              "WGToLNuG_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_v6_ext2-v1/" : "WGLNu_",
@@ -61,19 +75,18 @@ sample_Signal = {"GluGluHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "ggHtoTauT
                  "WminusHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "WMinusHTauTau125_",
                  "ZHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "ZHTauTau125_"
                  }
-sample_Data = {"data_Tau_Run2016B_v2/" : "dataTT-B_",
-               "data_Tau_Run2016C/" : "dataTT-C_",
-               "data_Tau_Run2016D/" : "dataTT-D_",
-               "data_Tau_Run2016E/" : "dataTT-E_",
-               "data_Tau_Run2016F/" : "dataTT-F_",
-               "data_Tau_Run2016G/" : "dataTT-G_",
-               "data_Tau_Run2016H_v2/" : "dataTT-H_",
-               "data_Tau_Run2016H_v3/" : "dataTT-H_"
+sample_Data = {"data_Tau_Run2016B_v2/" : "data"+ch+"-B_",
+               "data_Tau_Run2016C/" : "data"+ch+"-C_",
+               "data_Tau_Run2016D/" : "data"+ch+"-D_",
+               "data_Tau_Run2016E/" : "data"+ch+"-E_",
+               "data_Tau_Run2016F/" : "data"+ch+"-F_",
+               "data_Tau_Run2016G/" : "data"+ch+"-G_",
+               "data_Tau_Run2016H_v2/" : "data"+ch+"-H_",
+               "data_Tau_Run2016H_v3/" : "data"+ch+"-H_"
                }
 outputDic = {}
-directory_n = "/scratch/doyeong/testfiles_tt_July12" # Bookmark 1
-numMax = 3 # the number of iteration
-print("./Make.sh skim_tt.cc\n") # Bookmark 2
+
+print("./Make.sh skim_"+channel+".cc\n") # Bookmark 2
 print("mkdir "+directory_n)
 print("mkdir "+directory_n+"/Recoil0_TES1_WJ0")
 print("mkdir "+directory_n+"/Recoil2_TES1_WJ0")
@@ -88,8 +101,8 @@ for directory, samples in dicSamples.items():#.keys():
         type = 'data'
 
     for sample in samples:
-        print 'sample :', sample
         # This categorization form here : https://github.com/maravin/SubmitSVFit/blob/CMSSW_9_4_4_classic_svFit_v0/tools/controlledMerge.py
+        # Cecile's run script for mt : https://github.com/cecilecaillol/SMHTT2016/blob/master/mt/Analyze/do_all.sh
         if ('DY' or 'VBF' or 'GluGluHToTauTau' or 'GluGluHToWWTo2L2Nu') in str(sample):
             dir = 'Recoil2_TES1_WJ0/'
         elif 'WJets' in str(sample):
@@ -108,14 +121,14 @@ for directory, samples in dicSamples.items():#.keys():
 
         for child in os.listdir(test_directory):
             test_path = os.path.join(test_directory, child)
-            print ('./skim_tt.exe '+type+' '+directory_n+'/'+dir+output+str(i)+'.root'+' '+test_directory+child) # Bookmark 3
+            print ('./skim_'+channel+'.exe '+type+' '+directory_n+'/'+dir+output+str(i)+'.root'+' '+test_directory+child) # Bookmark 3
             # when multiple ver exist
             if os.listdir(test_directory)[-1] == child :
                 outputDic[output]=i
             i=i+1
             
             # Maximum number of iteration
-            if (i%numMax == 0):
+            if (numMax!=-1 and i%numMax == 0):
                 outputDic[output]=i-1
                 break
 
