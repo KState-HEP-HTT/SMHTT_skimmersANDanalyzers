@@ -75,7 +75,9 @@ sample_Signal = {"GluGluHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "ggHtoTauT
                  "WminusHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "WMinusHTauTau125_",
                  "ZHToTauTau_M125_13TeV_powheg_pythia8_v6-v1/" : "ZHTauTau125_"
                  }
-sample_Data = {"data_Tau_Run2016B_v2/" : "data"+ch+"-B_",
+sample_Data = {
+               "data_Tau_Run2016B_v1/" : "data"+ch+"-B_",
+               "data_Tau_Run2016B_v2/" : "data"+ch+"-B_",
                "data_Tau_Run2016C/" : "data"+ch+"-C_",
                "data_Tau_Run2016D/" : "data"+ch+"-D_",
                "data_Tau_Run2016E/" : "data"+ch+"-E_",
