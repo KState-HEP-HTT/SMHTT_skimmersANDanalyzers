@@ -12,7 +12,7 @@
 #include "TFile.h"
 #include "TSystem.h"
 #include "HTauTauTree_mt.h"
-//#include "RecoilCorrector.h"
+#include "RecoilCorrector.h"
 //#include "myHelper.h"
 
 using namespace std;
@@ -71,10 +71,12 @@ int njets_JetAbsoluteFlavMapUp,njets_JetAbsoluteMPFBiasUp,njets_JetAbsoluteScale
 float mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteStatDown,mjj_JetEnDown,mjj_JetFlavorQCDDown,mjj_JetFragmentationDown,mjj_JetPileUpDataMCDown,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtRefDown,mjj_JetRelativeBalDown,mjj_JetRelativeFSRDown,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJERHFDown,mjj_JetRelativePtBBDown,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC2Down,mjj_JetRelativePtHFDown,mjj_JetRelativeStatECDown,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatHFDown,mjj_JetSinglePionECALDown,mjj_JetSinglePionHCALDown,mjj_JetTimePtEtaDown;
 float mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatUp,mjj_JetEnUp,mjj_JetFlavorQCDUp,mjj_JetFragmentationUp,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalUp,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaUp;
 float flag_BadChargedCandidate, flag_BadPFMuon, flag_EcalDeadCellTriggerPrimitive, flag_HBHENoise, flag_HBHENoiseIso, flag_badCloneMuon, flag_badGlobalMuon, flag_eeBadSc, flag_globalTightHalo2016, flag_goodVertices;
+float tZTTGenDR;
 
-//RecoilCorrector recoilPFMetCorrector("SMH_mutau/RecoilCorrections/data/TypeI-PFMet_Run2016BtoH.root");
 
-void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
+RecoilCorrector recoilPFMetCorrector("FinalStateAnalysis/NtupleTools/TypeI-PFMet_Run2016BtoH.root");
+
+void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil, bool ismc) {
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
@@ -293,7 +295,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
     mymet_JESUp.SetPtEtaPhiM(tree->type1_pfMet_shiftedPt_JetEnUp,0,tree->type1_pfMet_shiftedPhi_JetEnUp,0);
     float pfmetcorr_ex_JESUp=mymet_JESUp.Px();
     float pfmetcorr_ey_JESUp=mymet_JESUp.Py();
-    /*
+   
     if (recoil==1){
          recoilPFMetCorrector.CorrectByMeanResolution(
          mymet.Px(), // uncorrected type I pf met px (float)
@@ -428,7 +430,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, bool ismc){
         pfmetcorr_ey_UESDown  // corrected type I pf met py (float)
         );
     }
-	*/
+
     mymet.SetPxPyPzE(pfmetcorr_ex,pfmetcorr_ey,0,sqrt(pfmetcorr_ex*pfmetcorr_ex+pfmetcorr_ey*pfmetcorr_ey));
     mymet_UESUp.SetPxPyPzE(pfmetcorr_ex_UESUp,pfmetcorr_ey_UESUp,0,sqrt(pfmetcorr_ex_UESUp*pfmetcorr_ex_UESUp+pfmetcorr_ey_UESUp*pfmetcorr_ey_UESUp));
     mymet_UESDown.SetPxPyPzE(pfmetcorr_ex_UESDown,pfmetcorr_ey_UESDown,0,sqrt(pfmetcorr_ex_UESDown*pfmetcorr_ex_UESDown+pfmetcorr_ey_UESDown*pfmetcorr_ey_UESDown));

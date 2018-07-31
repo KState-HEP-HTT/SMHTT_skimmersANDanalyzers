@@ -20,7 +20,7 @@
 #include "makeHisto.h"
 #include "mutau_Tree_mt.h"
 //#include "LumiReweightingStandAlone.h"
-#include <Python.h>
+
 int main(int argc, char** argv) {
 
     using namespace std;
@@ -41,12 +41,11 @@ int main(int argc, char** argv) {
     string inname= in;
     TFile *fIn = TFile::Open(inname.c_str());
 
-    /*
     int recoil=0;
     string recoilType = *(argv + 4);
     if (recoilType.compare("W") == 0)  recoil=1;
     if (recoilType.compare("Z") == 0)  recoil=2;
-    */
+
     TTree* treePtr = (TTree*) fIn->Get("mt/final/Ntuple");
     TH1F *evCounter = (TH1F*) fIn->Get("mt/eventCount");
     TH1F *evCounterW = (TH1F*) fIn->Get("mt/summedWeights");
@@ -474,7 +473,7 @@ int main(int argc, char** argv) {
 	}
         if (evt_now!=evt_before){
            if (bestEntry>-1 && bestPT>29)
-              fillTree(Run_Tree,tree,bestEntry,isMC);
+	     fillTree(Run_Tree,tree,bestEntry,recoil, isMC);
            bestEntry=iEntry;
 	   bestPT=dau2.Pt();
 	}
@@ -491,7 +490,7 @@ int main(int argc, char** argv) {
 	evt_before=evt_now;
     }
     if (bestPT>29)
-       fillTree(Run_Tree,tree,bestEntry,isMC);
+      fillTree(Run_Tree,tree,bestEntry,recoil,isMC);
     fout->cd();
     Run_Tree->Write();
     map<string, TH1F*>::const_iterator iMap1 = myMap1->begin();
