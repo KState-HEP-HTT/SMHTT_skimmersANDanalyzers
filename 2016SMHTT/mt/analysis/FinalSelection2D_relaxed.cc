@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("byIsolationMVA3oldDMwLTraw_2",&byIsolationMVA3oldDMwLTraw_2);
 
 
-    /*
+
     arbre->SetBranchAddress("byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2", &byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2);
     arbre->SetBranchAddress("byLooseIsolationRerunMVArun2v1DBoldDMwLT_2", &byLooseIsolationRerunMVArun2v1DBoldDMwLT_2);
     arbre->SetBranchAddress("byMediumIsolationRerunMVArun2v1DBoldDMwLT_2", &byMediumIsolationRerunMVArun2v1DBoldDMwLT_2);
@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("byVTightIsolationRerunMVArun2v1DBoldDMwLT_2", &byVTightIsolationRerunMVArun2v1DBoldDMwLT_2);
     arbre->SetBranchAddress("byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2", &byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2);
     arbre->SetBranchAddress("byIsolationRerunMVA3oldDMwLTraw_2", &byIsolationRerunMVA3oldDMwLTraw_2);
-    */
+
 
     arbre->SetBranchAddress("matchIsoMu22eta2p1_1", &matchIsoMu22eta2p1_1);
     arbre->SetBranchAddress("matchIsoTkMu22eta2p1_1", &matchIsoTkMu22eta2p1_1);
@@ -644,9 +644,9 @@ int main(int argc, char** argv) {
 	if (!againstElectronVLooseMVA6_2 or !againstMuonTight3_2) continue;
 
 	// D.Kim - for consistency with tautau channel
-	if (extraelec_veto>0) continue;
-	if (extramuon_veto>1) continue;
-	if (dilepton_veto>0) continue;
+	if (extraelec_veto!=0) continue;
+	if (extramuon_veto!=0) continue;
+	if (dilepton_veto!=0) continue;
 
         float sf_trg=1.0;
         float sf_id=1.0;

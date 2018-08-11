@@ -399,6 +399,10 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("bcsv_2", &bcsv_2);
     Run_Tree->Branch("bflavor_2", &bflavor_2);
 
+    Run_Tree->Branch("extraelec_veto", &extraelec_veto);
+    Run_Tree->Branch("extramuon_veto", &extramuon_veto);
+    Run_Tree->Branch("dilepton_veto", &dilepton_veto);
+
     //Run_Tree->Branch("gen_Higgs_pt", &gen_Higgs_pt, "gen_Higgs_pt/F");
     //Run_Tree->Branch("gen_Higgs_mass", &gen_Higgs_mass, "gen_Higgs_mass/F");
 
@@ -427,6 +431,9 @@ int main(int argc, char** argv) {
         TLorentzVector dau2;
         dau1.SetPtEtaPhiM(tree->mPt,tree->mEta,tree->mPhi,tree->mMass);
         dau2.SetPtEtaPhiM(tree->tPt,tree->tEta,tree->tPhi,tree->tMass);
+        if (isMC && tree->tDecayMode==0) dau2=dau2*0.982; //
+        else if (isMC && tree->tDecayMode==1) dau2=dau2*1.010; //
+        else if (isMC && tree->tDecayMode==10) dau2=dau2*1.004; //
 
 	// Baseline selection https://www.dropbox.com/s/mb6e26affiodpn3/AN2016_355_v10.pdf?dl=0 page 22
 	// line 443. No requirement on OS/SS @ skimming level
