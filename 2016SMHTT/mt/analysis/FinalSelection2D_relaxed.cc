@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("pt_2", &pt_2);
     arbre->SetBranchAddress("eta_2", &eta_2);
     arbre->SetBranchAddress("m_2", &m_2);
-    arbre->SetBranchAddress("mt_2", &mt_2);
+    //arbre->SetBranchAddress("mt_2", &mt_2);
     arbre->SetBranchAddress("phi_2", &phi_2);
     arbre->SetBranchAddress("met", &met);
     arbre->SetBranchAddress("metphi", &metphi);
@@ -169,14 +169,14 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("pt_sv", &pt_sv);
     arbre->SetBranchAddress("pt_sv_DOWN", &pt_sv_DOWN);
     arbre->SetBranchAddress("pt_sv_UP", &pt_sv_UP);
-    arbre->SetBranchAddress("m_sv_UESDown", &m_sv_UESDown);
-    arbre->SetBranchAddress("m_sv_UESUp", &m_sv_UESUp);
-    arbre->SetBranchAddress("m_sv_JESDown", &m_sv_JESDown);
-    arbre->SetBranchAddress("m_sv_JESUp", &m_sv_JESUp);
-    arbre->SetBranchAddress("pt_sv_UESDown", &pt_sv_UESDown);
-    arbre->SetBranchAddress("pt_sv_UESUp", &pt_sv_UESUp);
-    arbre->SetBranchAddress("pt_sv_JESDown", &pt_sv_JESDown);
-    arbre->SetBranchAddress("pt_sv_JESUp", &pt_sv_JESUp);
+    arbre->SetBranchAddress("m_sv_UncMet_DOWN", &m_sv_UncMet_DOWN);
+    arbre->SetBranchAddress("m_sv_UncMet_UP", &m_sv_UncMet_UP);
+    arbre->SetBranchAddress("m_sv_ClusteredMet_DOWN", &m_sv_ClusteredMet_DOWN);
+    arbre->SetBranchAddress("m_sv_ClusteredMet_UP", &m_sv_ClusteredMet_UP);
+    arbre->SetBranchAddress("pt_sv_UncMet_DOWN", &pt_sv_UncMet_DOWN);
+    arbre->SetBranchAddress("pt_sv_UncMet_UP", &pt_sv_UncMet_UP);
+    arbre->SetBranchAddress("pt_sv_ClusteredMet_DOWN", &pt_sv_ClusteredMet_DOWN);
+    arbre->SetBranchAddress("pt_sv_ClusteredMet_UP", &pt_sv_ClusteredMet_UP);
     arbre->SetBranchAddress("njets", &njets);
     arbre->SetBranchAddress("jpt_1", &jpt_1);
     arbre->SetBranchAddress("mjj", &mjj);
@@ -245,7 +245,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("againstMuonTight3_2",&againstMuonTight3_2);
     arbre->SetBranchAddress("gen_match_1",&gen_match_1);
     arbre->SetBranchAddress("gen_match_2",&gen_match_2);
-    arbre->SetBranchAddress("m_vis",&m_vis);
+    //arbre->SetBranchAddress("m_vis",&m_vis);
     arbre->SetBranchAddress("npu",&npu);
     arbre->SetBranchAddress("genpT",&genpT);
     arbre->SetBranchAddress("genM",&genM);
@@ -859,10 +859,10 @@ int main(int argc, char** argv) {
 	    }
 
             if (tes==1){
-               if (k==8){ var2=m_sv_UESDown; var1_1=pt_sv_UESDown; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
-               else if (k==9){ var2=m_sv_UESUp; var1_1=pt_sv_UESUp; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
-               else if (k==10){ var2=m_sv_JESDown; var1_1=pt_sv_JESDown; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
-               else if (k==11){ var2=m_sv_JESUp; var1_1=pt_sv_JESUp; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
+               if (k==8){ var2=m_sv_UncMet_DOWN; var1_1=pt_sv_UncMet_DOWN; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
+               else if (k==9){ var2=m_sv_UncMet_UP; var1_1=pt_sv_UncMet_UP; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
+               else if (k==10){ var2=m_sv_ClusteredMet_DOWN; var1_1=pt_sv_ClusteredMet_DOWN; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
+               else if (k==11){ var2=m_sv_ClusteredMet_UP; var1_1=pt_sv_ClusteredMet_UP; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
             }
 
 	   if (tes==15 && sample=="ZL"){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau*=1.015; mymet=mymet-(0.015/1.015)*mytau;}
@@ -1064,10 +1064,10 @@ int main(int argc, char** argv) {
                 if (genpT>150 and tes==-22) weight2=weight2*(2-(1+0.01*(0.114*genpT -17.14)));
                 if (signalRegion && q_1*q_2<0){
 		    pteta_0jet->Fill(mytau.Pt(),mytau.Eta(),weight2*aweight);
-		    mUESUp_0jet->Fill((m_sv_UESUp-m_sv)/m_sv_UESUp,weight2*aweight);
-                    mUESDown_0jet->Fill((m_sv_UESDown-m_sv)/m_sv_UESDown,weight2*aweight);
-                    mCESUp_0jet->Fill((m_sv_JESUp-m_sv)/m_sv_JESUp,weight2*aweight);
-                    mCESDown_0jet->Fill((m_sv_JESDown-m_sv)/m_sv_JESDown,weight2*aweight);
+		    mUESUp_0jet->Fill((m_sv_UncMet_UP-m_sv)/m_sv_UncMet_UP,weight2*aweight);
+                    mUESDown_0jet->Fill((m_sv_UncMet_DOWN-m_sv)/m_sv_UncMet_DOWN,weight2*aweight);
+                    mCESUp_0jet->Fill((m_sv_ClusteredMet_UP-m_sv)/m_sv_ClusteredMet_UP,weight2*aweight);
+                    mCESDown_0jet->Fill((m_sv_ClusteredMet_DOWN-m_sv)/m_sv_ClusteredMet_DOWN,weight2*aweight);
                     mTESUp_0jet->Fill((m_sv_UP-m_sv)/m_sv_UP,weight2*aweight);
                     mTESDown_0jet->Fill((m_sv_DOWN-m_sv)/m_sv_DOWN,weight2*aweight);
                     h0_OS[k]->Fill(var1_0,var2,weight2*aweight);
@@ -1095,10 +1095,10 @@ HiggspT->Fill(pt_sv,(mymu+mytau+mymet).Pt());
                     h1_OS[k]->Fill(var1_1,var2,weight2*aweight);
                     h2D_boosted->Fill(var2,var1_2,weight2*aweight);
 		    if (var1_1>150) {
-                    mUESUp_boosted->Fill((m_sv_UESUp-m_sv)/m_sv_UESUp,weight2*aweight);
-                    mUESDown_boosted->Fill((m_sv_UESDown-m_sv)/m_sv_UESDown,weight2*aweight);
-                    mCESUp_boosted->Fill((m_sv_JESUp-m_sv)/m_sv_JESUp,weight2*aweight);
-                    mCESDown_boosted->Fill((m_sv_JESDown-m_sv)/m_sv_JESDown,weight2*aweight);
+                    mUESUp_boosted->Fill((m_sv_UncMet_UP-m_sv)/m_sv_UncMet_UP,weight2*aweight);
+                    mUESDown_boosted->Fill((m_sv_UncMet_DOWN-m_sv)/m_sv_UncMet_DOWN,weight2*aweight);
+                    mCESUp_boosted->Fill((m_sv_ClusteredMet_UP-m_sv)/m_sv_ClusteredMet_UP,weight2*aweight);
+                    mCESDown_boosted->Fill((m_sv_ClusteredMet_DOWN-m_sv)/m_sv_ClusteredMet_DOWN,weight2*aweight);
                     mTESUp_boosted->Fill((m_sv_UP-m_sv)/m_sv_UP,weight2*aweight);
                     mTESDown_boosted->Fill((m_sv_DOWN-m_sv)/m_sv_DOWN,weight2*aweight);
 		    }
@@ -1132,10 +1132,10 @@ HiggspT->Fill(pt_sv,(mymu+mytau+mymet).Pt());
                     else if (var1_2<1100) pteta_vbf_2->Fill(mytau.Pt(),mytau.Eta(),weight2*aweight);
                     else if (var1_2<1500) pteta_vbf_3->Fill(mytau.Pt(),mytau.Eta(),weight2*aweight);
                     else pteta_vbf_4->Fill(mytau.Pt(),mytau.Eta(),weight2*aweight);
-                    mUESUp_vbf->Fill((m_sv_UESUp-m_sv)/m_sv_UESUp,weight2*aweight);
-                    mUESDown_vbf->Fill((m_sv_UESDown-m_sv)/m_sv_UESDown,weight2*aweight);
-                    mCESUp_vbf->Fill((m_sv_JESUp-m_sv)/m_sv_JESUp,weight2*aweight);
-                    mCESDown_vbf->Fill((m_sv_JESDown-m_sv)/m_sv_JESDown,weight2*aweight);
+                    mUESUp_vbf->Fill((m_sv_UncMet_UP-m_sv)/m_sv_UncMet_UP,weight2*aweight);
+                    mUESDown_vbf->Fill((m_sv_UncMet_DOWN-m_sv)/m_sv_UncMet_DOWN,weight2*aweight);
+                    mCESUp_vbf->Fill((m_sv_ClusteredMet_UP-m_sv)/m_sv_ClusteredMet_UP,weight2*aweight);
+                    mCESDown_vbf->Fill((m_sv_ClusteredMet_DOWN-m_sv)/m_sv_ClusteredMet_DOWN,weight2*aweight);
                     mTESUp_vbf->Fill((m_sv_UP-m_sv)/m_sv_UP,weight2*aweight);
                     mTESDown_vbf->Fill((m_sv_DOWN-m_sv)/m_sv_DOWN,weight2*aweight);
 		}
