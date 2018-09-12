@@ -1,5 +1,5 @@
 double GetSF_L(int WP, float x, int flavour, int syst){
-      if (fabs(flavour)==4 or fabs(flavour)==5){
+      if (std::abs(flavour)==4 or std::abs(flavour)==5){
         if (syst==0){
            return 0.887973*((1.+(0.0523821*x))/(1.+(0.0460876*x)));
 	}
@@ -31,10 +31,11 @@ double GetSF_L(int WP, float x, int flavour, int syst){
         if (syst==-1) return (1.13904+-0.000594946*x+1.97303e-06*x*x+-1.38194e-09*x*x*x)*(1-(0.0996438+-8.33354e-05*x+4.74359e-08*x*x));
         if (syst==1) return (1.13904+-0.000594946*x+1.97303e-06*x*x+-1.38194e-09*x*x*x)*(1+(0.0996438+-8.33354e-05*x+4.74359e-08*x*x));
      }
+    return 0;
 }
 
 double GetSF_M(int WP, float x, int flavour, int syst){
-      if (fabs(flavour)==4 or fabs(flavour)==5){
+      if (std::abs(flavour)==4 or std::abs(flavour)==5){
         if (syst==0){
            return 0.561694*((1.+(0.31439*x))/(1.+(0.17756*x)));
         }
@@ -44,12 +45,13 @@ double GetSF_M(int WP, float x, int flavour, int syst){
         if (syst==-1) return (1.0589+0.000382569*x+-2.4252e-07*x*x+2.20966e-10*x*x*x)*(1-(0.100485+3.95509e-05*x+-4.90326e-08*x*x));
         if (syst==1) return (1.0589+0.000382569*x+-2.4252e-07*x*x+2.20966e-10*x*x*x)*(1+(0.100485+3.95509e-05*x+-4.90326e-08*x*x));
      }
+    return 0;
 }
 
 double GetSF(int WP, float x, int flavour, int syst){
 
    if (WP==1){
-      if (fabs(flavour)==4 or fabs(flavour)==5){
+      if (std::abs(flavour)==4 or std::abs(flavour)==5){
         if (syst==0){
            return 0.498094*((1.+(0.422991*x))/(1.+(0.210944*x)));
         }
@@ -82,7 +84,7 @@ double GetSF(int WP, float x, int flavour, int syst){
         if (syst==-1) return (1.0589+0.000382569*x+-2.4252e-07*x*x+2.20966e-10*x*x*x)*(1-(0.100485+3.95509e-05*x+-4.90326e-08*x*x));
      }
    }
-   else return 0;
+   return 0;
 }
 
 
@@ -111,7 +113,7 @@ double bTagEventWeight(int nBtaggedJets, float bjetpt_1, int bjetflavour_1, floa
   double weight = 0;
   if(nBtaggedJets==1){
     double SF = GetSF(WP,bjetpt_1,bjetflavour_1,syst);
-    for( unsigned int i=0; i<=1; ++i ){
+    for( int i=0; i<=1; ++i ){
       if( i != nBTags ) continue;
       weight += pow(SF,i)*pow(1-SF,1-i);
     }
@@ -120,8 +122,8 @@ double bTagEventWeight(int nBtaggedJets, float bjetpt_1, int bjetflavour_1, floa
     double SF1 = GetSF(WP,bjetpt_1,bjetflavour_1,syst);
     double SF2 = GetSF(WP,bjetpt_2,bjetflavour_2,syst);
     
-    for( unsigned int i=0; i<=1; ++i ){
-      for( unsigned int j=0; j<=1; ++j ){
+    for( int i=0; i<=1; ++i ){
+      for( int j=0; j<=1; ++j ){
         if( (i+j) != nBTags ) continue;
         weight += pow(SF1,i)*pow(1-SF1,1-i)*pow(SF2,j)*pow(1-SF2,1-j);
       }
