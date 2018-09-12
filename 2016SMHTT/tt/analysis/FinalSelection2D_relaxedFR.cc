@@ -26,14 +26,17 @@
 #include "TFile.h"
 #include "myHelper.h"
 #include "ScaleFactor.h"
-#include "LumiReweightingStandAlone.h"
 #include "btagSF.h"
 #include "RooWorkspace.h"
 #include "RooRealVar.h"
 #include "RooFunctor.h"
 // user includes
-#include "include/scenario_info.h"
 #include "include/tt_Tree.h"
+#include "include/scenario_info.h"
+#include "include/LumiReweightingStandAlone.h"
+#include "include/lumiMap.h"
+
+
 int main(int argc, char** argv) {
     
     std::string input = *(argv + 1);
@@ -83,65 +86,11 @@ int main(int argc, char** argv) {
     // The line below breaks the code
     PyObject* compute_sf = PyObject_GetAttrString(fitFunctions,"compute_SF");
 
-    //Normalization os MC samples
-    float xs=1.0; float weight=1.0; float luminosity=35870.0;
-
-    // D.Kim : updated from Cécile's mt analysis code.
-    if (sample=="ZL" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL"){ xs=5765.4; weight=luminosity*xs/ngen;}
-    else if (sample=="TT" or sample=="TTT" or sample=="TTJ") {xs=831.76; weight=luminosity*xs/ngen;}
-    else if (sample=="W") {xs=61526.7; weight=luminosity*xs/ngen;}
-    else if (sample=="QCD") {xs=720648000*0.00042; weight=luminosity*xs/ngen;}
-    else if (sample=="data_obs"){weight=1.0;}
-    else if (sample=="WZ1L1Nu2Q") {xs=10.71; weight=luminosity*xs/ngen;}
-    else if (sample=="WZ1L3Nu") {xs=3.05; weight=luminosity*xs/ngen;}
-    else if (sample=="WZJets") {xs=5.26; weight=luminosity*xs/ngen;}
-    else if (sample=="WZLLLNu") {xs=4.708; weight=luminosity*xs/ngen;}
-    else if (sample=="WZ2L2Q") {xs=5.595; weight=luminosity*xs/ngen;}
-    else if (sample=="WW1L1Nu2Q") {xs=49.997; weight=luminosity*xs/ngen;}
-    else if (sample=="ZZ4L") {xs=1.212; weight=luminosity*xs/ngen;}
-    else if (sample=="ZZ2L2Q") {xs=3.22; weight=luminosity*xs/ngen;}
-    else if (sample=="VV2L2Nu") {xs=11.95; weight=luminosity*xs/ngen;}
-    else if (sample=="ST_tW_antitop") {xs=35.6; weight=luminosity*xs/ngen;}
-    else if (sample=="ST_tW_top") {xs=35.6; weight=luminosity*xs/ngen;}
-    else if (sample=="ST_t_antitop") {xs=26.23; weight=luminosity*xs/ngen;}
-    else if (sample=="ST_t_top") {xs=44.07; weight=luminosity*xs/ngen;}
-    else if (sample=="ggh") {xs=48.58*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF") {xs=3.782*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH125") {xs=48.58*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF125") {xs=3.782*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH120") {xs=52.22*0.0698; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF120") {xs=3.935*0.0698; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH130") {xs=45.31*0.0541; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF130") {xs=3.637*0.0541; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH110") {xs=57.90*0.0791; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF110") {xs=4.434*0.0791; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH140") {xs=36.0*0.0360; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF140") {xs=3.492*0.0360; weight=luminosity*xs/ngen;}
-    else if (sample=="ggH_WW125") {xs=48.58*0.2137*0.3258; weight=luminosity*xs/ngen;}
-    else if (sample=="VBF_WW125") {xs=3.782*0.2137*0.3258; weight=luminosity*xs/ngen;}
-    else if (sample=="WplusH120") {xs=0.9558*0.0698; weight=luminosity*xs/ngen;}
-    else if (sample=="WplusH125") {xs=0.840*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="WplusH130") {xs=0.7414*0.0541; weight=luminosity*xs/ngen;}
-    else if (sample=="WplusH110") {xs=1.335*0.0791; weight=luminosity*xs/ngen;}
-    else if (sample=="WplusH140") {xs=0.6308*0.0360; weight=luminosity*xs/ngen;}
-    else if (sample=="WminusH120") {xs=0.6092*0.0698; weight=luminosity*xs/ngen;}
-    else if (sample=="WminusH125") {xs=0.5328*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="WminusH130") {xs=0.4676*0.0541; weight=luminosity*xs/ngen;}
-    else if (sample=="WminusH110") {xs=0.8587*0.0791; weight=luminosity*xs/ngen;}
-    else if (sample=="WminusH140") {xs=0.394*0.0360; weight=luminosity*xs/ngen;}
-    else if (sample=="ZH120") {xs=0.9939*0.0698; weight=luminosity*xs/ngen;}
-    else if (sample=="ZH125") {xs=0.8839*0.0627; weight=luminosity*xs/ngen;}
-    else if (sample=="ZH130") {xs=0.7899*0.0541; weight=luminosity*xs/ngen;}
-    else if (sample=="ZH110") {xs=1.309*0.0791; weight=luminosity*xs/ngen;}
-    else if (sample=="ZH140") {xs=0.6514*0.0360; weight=luminosity*xs/ngen;}
-    else if (sample=="WGLNu") {xs=489.0; weight=luminosity*xs/ngen;}
-    else if (sample=="WGstarMuMu") {xs=2.793; weight=luminosity*xs/ngen;}
-    else if (sample=="WGstarEE") {xs=3.526; weight=luminosity*xs/ngen;}
-    else if (sample=="EWKWminus") {xs=20.25; weight=luminosity*xs/ngen;}
-    else if (sample=="EWKWplus") {xs=25.62; weight=luminosity*xs/ngen;}
-    else if (sample=="EWKZLL" or sample=="EWKZLL_TT" or sample=="EWKZLL_J" or sample=="EWKZLL_L" or sample=="EWKZLL_LL") {xs=3.987; weight=luminosity*xs/ngen;}
-    else if (sample=="EWKZNuNu" or sample=="EWKZNuNu_TT" or sample=="EWKZNuNu_J" or sample=="EWKZNuNu_L" or sample=="EWKZNuNu_LL") {xs=10.01; weight=luminosity*xs/ngen;}
-    else std::cout<<"Attention!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
+    float weight = 1.0;
+    // Lumi weight
+    float w_lumi = lumiWeight(sample, ngen);
+    if (w_lumi==0) std::cout << std::endl << "!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION - can't find lumi weight. Check the sample. !!!!!!!!!!!!!!!!!!!!!!!!" << std::endl << std::endl;
+    weight = w_lumi;
 
     std::cout.setf(std::ios::fixed, std::ios::floatfield);
     std::cout.precision(10);
@@ -213,16 +162,6 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("nbtag", &nbtag);
     arbre->SetBranchAddress("nbtagL", &nbtagL);
     arbre->SetBranchAddress("amcatNLO_weight", &amcatNLO_weight);
-    arbre->SetBranchAddress("metphi_JESDown", &metphi_JESDown);
-    arbre->SetBranchAddress("metphi_JESUp", &metphi_JESUp);
-    arbre->SetBranchAddress("met_JESDown", &met_JESDown);
-    arbre->SetBranchAddress("met_JESUp", &met_JESUp);
-    arbre->SetBranchAddress("metphi_UESDown", &metphi_UESDown);
-    arbre->SetBranchAddress("metphi_UESUp", &metphi_UESUp);
-    arbre->SetBranchAddress("met_UESDown", &met_UESDown);
-    arbre->SetBranchAddress("met_UESUp", &met_UESUp);
-    arbre->SetBranchAddress("njets_JESDown", &njets_JESDown);
-    arbre->SetBranchAddress("njets_JESUp", &njets_JESUp);
     
     arbre->SetBranchAddress("t1_decayMode",&t1_decayMode);
     arbre->SetBranchAddress("t2_decayMode",&t2_decayMode);
@@ -241,8 +180,6 @@ int main(int argc, char** argv) {
     
     // Construct scenario
     scenario_info scenario(arbre, unc);
-
-
 
     //float bins0[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
     //float bins1[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
@@ -716,8 +653,6 @@ int main(int argc, char** argv) {
       //KK Added for future. For now we need only first two variables
       int nombrejets[56]={njets_JESDown,njets_JESUp,njets_JetAbsoluteFlavMapDown,njets_JetAbsoluteFlavMapUp,njets_JetAbsoluteMPFBiasDown,njets_JetAbsoluteMPFBiasUp,njets_JetAbsoluteScaleDown,njets_JetAbsoluteScaleUp,njets_JetAbsoluteStatDown,njets_JetAbsoluteStatUp,njets_JetFlavorQCDDown,njets_JetFlavorQCDUp,njets_JetFragmentationDown,njets_JetFragmentationUp,njets_JetPileUpDataMCDown,njets_JetPileUpDataMCUp,njets_JetPileUpPtBBDown,njets_JetPileUpPtBBUp,njets_JetPileUpPtEC1Down,njets_JetPileUpPtEC1Up,njets_JetPileUpPtEC2Down,njets_JetPileUpPtEC2Up,njets_JetPileUpPtHFDown,njets_JetPileUpPtHFUp,njets_JetPileUpPtRefDown,njets_JetPileUpPtRefUp,njets_JetRelativeBalDown,njets_JetRelativeBalUp,njets_JetRelativeFSRDown,njets_JetRelativeFSRUp,njets_JetRelativeJEREC1Down,njets_JetRelativeJEREC1Up,njets_JetRelativeJEREC2Down,njets_JetRelativeJEREC2Up,njets_JetRelativeJERHFDown,njets_JetRelativeJERHFUp,njets_JetRelativePtBBDown,njets_JetRelativePtBBUp,njets_JetRelativePtEC1Down,njets_JetRelativePtEC1Up,njets_JetRelativePtEC2Down,njets_JetRelativePtEC2Up,njets_JetRelativePtHFDown,njets_JetRelativePtHFUp,njets_JetRelativeStatECDown,njets_JetRelativeStatECUp,njets_JetRelativeStatFSRDown,njets_JetRelativeStatFSRUp,njets_JetRelativeStatHFDown,njets_JetRelativeStatHFUp,njets_JetSinglePionECALDown,njets_JetSinglePionECALUp,njets_JetSinglePionHCALDown,njets_JetSinglePionHCALUp,njets_JetTimePtEtaDown,njets_JetTimePtEtaUp};
       
-      //float massejets[56]={mjj_JESDown,mjj_JESUp,mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatDown,mjj_JetAbsoluteStatUp,mjj_JetFlavorQCDDown,mjj_JetFlavorQCDUp,mjj_JetFragmentationDown,mjj_JetFragmentationUp,mjj_JetPileUpDataMCDown,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefDown,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalDown,mjj_JetRelativeBalUp,mjj_JetRelativeFSRDown,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFDown,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBDown,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Down,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFDown,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECDown,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFDown,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALDown,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALDown,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaDown,mjj_JetTimePtEtaUp};
-      
       for (int k=0; k<nbhist; ++k){
 	
 	float var2=scenario.get_m_sv(); 
@@ -728,7 +663,7 @@ int main(int argc, char** argv) {
 	TLorentzVector myjet2;
 	myjet2.SetPtEtaPhiM(scenario.get_jpt_2(),jeta_2,jphi_2,0);
 	TLorentzVector jets=myjet2+myjet1;
-	mjj = jets.M();
+	//mjj = jets.M();
 	float normMELA = scenario.get_ME_sm_VBF()/(scenario.get_ME_sm_VBF()+45*scenario.get_ME_bkg());
 
 	float var1_2=scenario.get_mjj();  //Dbkg_VBF;//mjj; 
@@ -736,44 +671,7 @@ int main(int argc, char** argv) {
 	myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
 	
-	// MET need to be adjusted!!! FIXME
 
-	//KK: added "&& gen_match_1==5"
-	/*
-	if (tes==1 && gen_match_2==5 && gen_match_1==5){	    
-	  
-	  if (k==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mytau2*=0.988;  mymet=mymet+(0.012/0.988)*mytau1+(0.012/0.988)*mytau2;}
-	  if (k==1){ var1_1=pt_sv_UP;   var2=m_sv_UP;   mytau1*=1.012; mytau2*=1.012;  mymet=mymet-(0.012/1.012)*mytau1-(0.012/1.012)*mytau2;}
-                   
-	  if (k==2 && t2_decayMode==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==3 && t2_decayMode==0){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-	  if (k==4 && t2_decayMode==1){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==5 && t2_decayMode==1){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-	  if (k==6 && t2_decayMode==10){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==7 && t2_decayMode==10){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-          
-	  if (k==2 && t1_decayMode==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==3 && t1_decayMode==0){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-	  if (k==4 && t1_decayMode==1){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==5 && t1_decayMode==1){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-	  if (k==6 && t1_decayMode==10){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==7 && t1_decayMode==10){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-          
-	}
-	
-	if (tes==1){
-	  //KK: Modified lines below from
-	  //	    if (k==8){ var2=m_sv_UESDown; var1_1=pt_sv_UESDown; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
-	  //	    else if (k==9){ var2=m_sv_UESUp; var1_1=pt_sv_UESUp; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
-	  //	    else if (k==10){ var2=m_sv_JESDown; var1_1=pt_sv_JESDown; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
-	  //	    else if (k==11){ var2=m_sv_JESUp; var1_1=pt_sv_JESUp; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
-	  //KK: to
-	  if (k==8){ var2=m_sv_UncMet_DOWN; var1_1=pt_sv_UncMet_DOWN; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
-	  else if (k==9){ var2=m_sv_UncMet_UP; var1_1=pt_sv_UncMet_UP; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
-	  else if (k==10){ var2=m_sv_ClusteredMet_DOWN; var1_1=pt_sv_ClusteredMet_DOWN; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
-	  else if (k==11){ var2=m_sv_ClusteredMet_UP; var1_1=pt_sv_ClusteredMet_UP; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
-	}
-	*/
 	//KK: Added njet and mjj variables affected by JES
 	/*
 	if (tes==100 && var1_2==mjj) {
@@ -817,7 +715,6 @@ int main(int argc, char** argv) {
 	if (scenario.get_njets()==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (scenario.get_njets()>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
 	if (scenario.get_njets()==2) is_2jets=true;
-	//if (!is_0jet && !is_boosted) std::cout << "NN is survived! " << NN_disc << std::endl;
 
 	// Z mumu SF 
 	// https://github.com/truggles/Z_to_TauTau_13TeV/blob/SM-HTT-2016/analysis2IsoJetsAndDups.py#L1193-L1211
