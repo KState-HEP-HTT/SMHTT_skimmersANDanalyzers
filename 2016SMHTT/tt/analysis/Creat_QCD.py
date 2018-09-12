@@ -14,9 +14,12 @@ if __name__ == "__main__":
     fZTT=ROOT.TFile("files_nominal/ZTT.root","r")
     fZJ=ROOT.TFile("files_nominal/ZJ.root","r")
     fZL=ROOT.TFile("files_nominal/ZL.root","r")
-    fTT=ROOT.TFile("files_"+options.scale+"/TT.root","r")
-    fVV=ROOT.TFile("files_"+options.scale+"/VV.root","r")
+    fTTT=ROOT.TFile("files_"+options.scale+"/TTT.root","r")
+    fTTJ=ROOT.TFile("files_"+options.scale+"/TTJ.root","r")
+    fVVT=ROOT.TFile("files_"+options.scale+"/VVT.root","r")
+    fVVJ=ROOT.TFile("files_"+options.scale+"/VVJ.root","r")
     fW=ROOT.TFile("files_"+options.scale+"/WJets.root","r")
+    fEWKZ=ROOT.TFile("files_"+options.scale+"/EWKZ.root","r")
     fData=ROOT.TFile("files_nominal/data.root","r")
     fout=ROOT.TFile("files_"+options.scale+"/QCD.root","recreate")
 
@@ -25,9 +28,12 @@ if __name__ == "__main__":
     hAIOS_0jet.Add(fZTT.Get("AIOS_0jet/ZTT"+postfix),-1)
     hAIOS_0jet.Add(fZJ.Get("AIOS_0jet/ZJ"+postfix),-1)
     hAIOS_0jet.Add(fZL.Get("AIOS_0jet/ZL"+postfix),-1)
-    hAIOS_0jet.Add(fTT.Get("AIOS_0jet/TT"+postfix),-1)
-    hAIOS_0jet.Add(fVV.Get("AIOS_0jet/VV"+postfix),-1)
+    hAIOS_0jet.Add(fTTT.Get("AIOS_0jet/TTT"+postfix),-1)
+    hAIOS_0jet.Add(fTTJ.Get("AIOS_0jet/TTJ"+postfix),-1)
+    hAIOS_0jet.Add(fVVT.Get("AIOS_0jet/VVT"+postfix),-1)
+    hAIOS_0jet.Add(fVVJ.Get("AIOS_0jet/VVJ"+postfix),-1)
     hAIOS_0jet.Add(fW.Get("AIOS_0jet/W"+postfix),-1)
+    hAIOS_0jet.Add(fEWKZ.Get("AIOS_0jet/EWKZ"+postfix),-1)
     hAIOS_0jet.SetName("OSLooseIso"+postfix)
     for i in range(0,hAIOS_0jet.GetSize()-2):
         if hAIOS_0jet.GetBinContent(i)<0:
@@ -39,9 +45,12 @@ if __name__ == "__main__":
     hAISS_0jet.Add(fZTT.Get("AISS_0jet/ZTT"+postfix),-1)
     hAISS_0jet.Add(fZJ.Get("AISS_0jet/ZJ"+postfix),-1)
     hAISS_0jet.Add(fZL.Get("AISS_0jet/ZL"+postfix),-1)
-    hAISS_0jet.Add(fTT.Get("AISS_0jet/TT"+postfix),-1)
-    hAISS_0jet.Add(fVV.Get("AISS_0jet/VV"+postfix),-1)
+    hAISS_0jet.Add(fTTT.Get("AISS_0jet/TTT"+postfix),-1)
+    hAISS_0jet.Add(fTTJ.Get("AISS_0jet/TTJ"+postfix),-1)
+    hAISS_0jet.Add(fVVT.Get("AISS_0jet/VVT"+postfix),-1)
+    hAISS_0jet.Add(fVVJ.Get("AISS_0jet/VVJ"+postfix),-1)
     hAISS_0jet.Add(fW.Get("AISS_0jet/W"+postfix),-1)
+    hAISS_0jet.Add(fEWKZ.Get("AISS_0jet/EWKZ"+postfix),-1)
     hAISS_0jet.SetName("SSLooseIso"+postfix)
     for i in range(0,hAISS_0jet.GetSize()-2):
         if hAISS_0jet.GetBinContent(i)<0:
@@ -53,9 +62,12 @@ if __name__ == "__main__":
     hSS_0jet.Add(fZTT.Get("ttSS_0jet/ZTT"+postfix),-1)
     hSS_0jet.Add(fZJ.Get("ttSS_0jet/ZJ"+postfix),-1)
     hSS_0jet.Add(fZL.Get("ttSS_0jet/ZL"+postfix),-1)
-    hSS_0jet.Add(fTT.Get("ttSS_0jet/TT"+postfix),-1)
-    hSS_0jet.Add(fVV.Get("ttSS_0jet/VV"+postfix),-1)
+    hSS_0jet.Add(fTTT.Get("ttSS_0jet/TTT"+postfix),-1)
+    hSS_0jet.Add(fTTJ.Get("ttSS_0jet/TTJ"+postfix),-1)
+    hSS_0jet.Add(fVVT.Get("ttSS_0jet/VVT"+postfix),-1)
+    hSS_0jet.Add(fVVJ.Get("ttSS_0jet/VVJ"+postfix),-1)
     hSS_0jet.Add(fW.Get("ttSS_0jet/W"+postfix),-1)
+    hSS_0jet.Add(fEWKZ.Get("ttSS_0jet/EWKZ"+postfix),-1)
     hSS_0jet.SetName("SignalLike"+postfix)
     for i in range(0,hSS_0jet.GetSize()-2):
         if hSS_0jet.GetBinContent(i)<0:
@@ -74,9 +86,12 @@ if __name__ == "__main__":
     hAIOS_boosted.Add(fZTT.Get("AIOS_boosted/ZTT"+postfix),-1)
     hAIOS_boosted.Add(fZJ.Get("AIOS_boosted/ZJ"+postfix),-1)
     hAIOS_boosted.Add(fZL.Get("AIOS_boosted/ZL"+postfix),-1)
-    hAIOS_boosted.Add(fTT.Get("AIOS_boosted/TT"+postfix),-1)
-    hAIOS_boosted.Add(fVV.Get("AIOS_boosted/VV"+postfix),-1)
+    hAIOS_boosted.Add(fTTT.Get("AIOS_boosted/TTT"+postfix),-1)
+    hAIOS_boosted.Add(fTTJ.Get("AIOS_boosted/TTJ"+postfix),-1)
+    hAIOS_boosted.Add(fVVT.Get("AIOS_boosted/VVT"+postfix),-1)
+    hAIOS_boosted.Add(fVVJ.Get("AIOS_boosted/VVJ"+postfix),-1)
     hAIOS_boosted.Add(fW.Get("AIOS_boosted/W"+postfix),-1)
+    hAIOS_boosted.Add(fEWKZ.Get("AIOS_boosted/EWKZ"+postfix),-1)
     hAIOS_boosted.SetName("OSLooseIso"+postfix)
     for i in range(0,hAIOS_boosted.GetSize()-2):
         if hAIOS_boosted.GetBinContent(i)<0:
@@ -88,9 +103,12 @@ if __name__ == "__main__":
     hAISS_boosted.Add(fZTT.Get("AISS_boosted/ZTT"+postfix),-1)
     hAISS_boosted.Add(fZJ.Get("AISS_boosted/ZJ"+postfix),-1)
     hAISS_boosted.Add(fZL.Get("AISS_boosted/ZL"+postfix),-1)
-    hAISS_boosted.Add(fTT.Get("AISS_boosted/TT"+postfix),-1)
-    hAISS_boosted.Add(fVV.Get("AISS_boosted/VV"+postfix),-1)
+    hAISS_boosted.Add(fTTT.Get("AISS_boosted/TTT"+postfix),-1)
+    hAISS_boosted.Add(fTTJ.Get("AISS_boosted/TTJ"+postfix),-1)
+    hAISS_boosted.Add(fVVT.Get("AISS_boosted/VVT"+postfix),-1)
+    hAISS_boosted.Add(fVVJ.Get("AISS_boosted/VVJ"+postfix),-1)
     hAISS_boosted.Add(fW.Get("AISS_boosted/W"+postfix),-1)
+    hAISS_boosted.Add(fEWKZ.Get("AISS_boosted/EWKZ"+postfix),-1)
     hAISS_boosted.SetName("SSLooseIso"+postfix)
     for i in range(0,hAISS_boosted.GetSize()-2):
         if hAISS_boosted.GetBinContent(i)<0:
@@ -102,9 +120,12 @@ if __name__ == "__main__":
     hSS_boosted.Add(fZTT.Get("ttSS_boosted/ZTT"+postfix),-1)
     hSS_boosted.Add(fZJ.Get("ttSS_boosted/ZJ"+postfix),-1)
     hSS_boosted.Add(fZL.Get("ttSS_boosted/ZL"+postfix),-1)
-    hSS_boosted.Add(fTT.Get("ttSS_boosted/TT"+postfix),-1)
-    hSS_boosted.Add(fVV.Get("ttSS_boosted/VV"+postfix),-1)
+    hSS_boosted.Add(fTTT.Get("ttSS_boosted/TTT"+postfix),-1)
+    hSS_boosted.Add(fTTJ.Get("ttSS_boosted/TTJ"+postfix),-1)
+    hSS_boosted.Add(fVVT.Get("ttSS_boosted/VVT"+postfix),-1)
+    hSS_boosted.Add(fVVJ.Get("ttSS_boosted/VVJ"+postfix),-1)
     hSS_boosted.Add(fW.Get("ttSS_boosted/W"+postfix),-1)
+    hSS_boosted.Add(fEWKZ.Get("ttSS_boosted/EWKZ"+postfix),-1)
     hSS_boosted.SetName("SignalLike"+postfix)
     for i in range(0,hSS_boosted.GetSize()-2):
         if hSS_boosted.GetBinContent(i)<0:
@@ -123,9 +144,12 @@ if __name__ == "__main__":
     hAIOS_vbf.Add(fZTT.Get("AIOS_vbf/ZTT"+postfix),-1)
     hAIOS_vbf.Add(fZJ.Get("AIOS_vbf/ZJ"+postfix),-1)
     hAIOS_vbf.Add(fZL.Get("AIOS_vbf/ZL"+postfix),-1)
-    hAIOS_vbf.Add(fTT.Get("AIOS_vbf/TT"+postfix),-1)
-    hAIOS_vbf.Add(fVV.Get("AIOS_vbf/VV"+postfix),-1)
+    hAIOS_vbf.Add(fTTT.Get("AIOS_vbf/TTT"+postfix),-1)
+    hAIOS_vbf.Add(fTTJ.Get("AIOS_vbf/TTJ"+postfix),-1)
+    hAIOS_vbf.Add(fVVT.Get("AIOS_vbf/VVT"+postfix),-1)
+    hAIOS_vbf.Add(fVVJ.Get("AIOS_vbf/VVJ"+postfix),-1)
     hAIOS_vbf.Add(fW.Get("AIOS_vbf/W"+postfix),-1)
+    hAIOS_vbf.Add(fEWKZ.Get("AIOS_vbf/EWKZ"+postfix),-1)
     hAIOS_vbf.SetName("OSLooseIso"+postfix)
     for i in range(0,hAIOS_vbf.GetSize()-2):
         if hAIOS_vbf.GetBinContent(i)<0:
@@ -137,9 +161,12 @@ if __name__ == "__main__":
     hAISS_vbf.Add(fZTT.Get("AISS_vbf/ZTT"+postfix),-1)
     hAISS_vbf.Add(fZJ.Get("AISS_vbf/ZJ"+postfix),-1)
     hAISS_vbf.Add(fZL.Get("AISS_vbf/ZL"+postfix),-1)
-    hAISS_vbf.Add(fTT.Get("AISS_vbf/TT"+postfix),-1)
-    hAISS_vbf.Add(fVV.Get("AISS_vbf/VV"+postfix),-1)
+    hAISS_vbf.Add(fTTT.Get("AISS_vbf/TTT"+postfix),-1)
+    hAISS_vbf.Add(fTTJ.Get("AISS_vbf/TTJ"+postfix),-1)
+    hAISS_vbf.Add(fVVT.Get("AISS_vbf/VVT"+postfix),-1)
+    hAISS_vbf.Add(fVVJ.Get("AISS_vbf/VVJ"+postfix),-1)
     hAISS_vbf.Add(fW.Get("AISS_vbf/W"+postfix),-1)
+    hAISS_vbf.Add(fEWKZ.Get("AISS_vbf/EWKZ"+postfix),-1)
     hAISS_vbf.SetName("SSLooseIso"+postfix)
     for i in range(0,hAISS_vbf.GetSize()-2):
         if hAISS_vbf.GetBinContent(i)<0:
@@ -151,9 +178,12 @@ if __name__ == "__main__":
     hSS_vbf.Add(fZTT.Get("ttSS_vbf/ZTT"+postfix),-1)
     hSS_vbf.Add(fZJ.Get("ttSS_vbf/ZJ"+postfix),-1)
     hSS_vbf.Add(fZL.Get("ttSS_vbf/ZL"+postfix),-1)
-    hSS_vbf.Add(fTT.Get("ttSS_vbf/TT"+postfix),-1)
-    hSS_vbf.Add(fVV.Get("ttSS_vbf/VV"+postfix),-1)
+    hSS_vbf.Add(fTTT.Get("ttSS_vbf/TTT"+postfix),-1)
+    hSS_vbf.Add(fTTJ.Get("ttSS_vbf/TTJ"+postfix),-1)
+    hSS_vbf.Add(fVVT.Get("ttSS_vbf/VVT"+postfix),-1)
+    hSS_vbf.Add(fVVJ.Get("ttSS_vbf/VVJ"+postfix),-1)
     hSS_vbf.Add(fW.Get("ttSS_vbf/W"+postfix),-1)
+    hSS_vbf.Add(fEWKZ.Get("ttSS_vbf/EWKZ"+postfix),-1)
     hSS_vbf.SetName("SignalLike"+postfix)
     for i in range(0,hSS_vbf.GetSize()-2):
         if hSS_vbf.GetBinContent(i)<0:
@@ -172,9 +202,12 @@ if __name__ == "__main__":
     hAIOS_inclusive.Add(fZTT.Get("AIOS_inclusive/ZTT"+postfix),-1)
     hAIOS_inclusive.Add(fZJ.Get("AIOS_inclusive/ZJ"+postfix),-1)
     hAIOS_inclusive.Add(fZL.Get("AIOS_inclusive/ZL"+postfix),-1)
-    hAIOS_inclusive.Add(fTT.Get("AIOS_inclusive/TT"+postfix),-1)
-    hAIOS_inclusive.Add(fVV.Get("AIOS_inclusive/VV"+postfix),-1)
+    hAIOS_inclusive.Add(fTTT.Get("AIOS_inclusive/TTT"+postfix),-1)
+    hAIOS_inclusive.Add(fTTJ.Get("AIOS_inclusive/TTJ"+postfix),-1)
+    hAIOS_inclusive.Add(fVVT.Get("AIOS_inclusive/VVT"+postfix),-1)
+    hAIOS_inclusive.Add(fVVJ.Get("AIOS_inclusive/VVJ"+postfix),-1)
     hAIOS_inclusive.Add(fW.Get("AIOS_inclusive/W"+postfix),-1)
+    hAIOS_inclusive.Add(fEWKZ.Get("AIOS_inclusive/EWKZ"+postfix),-1)
     hAIOS_inclusive.SetName("OSLooseIso"+postfix)
     for i in range(0,hAIOS_inclusive.GetSize()-2):
         if hAIOS_inclusive.GetBinContent(i)<0:
@@ -186,9 +219,12 @@ if __name__ == "__main__":
     hAISS_inclusive.Add(fZTT.Get("AISS_inclusive/ZTT"+postfix),-1)
     hAISS_inclusive.Add(fZJ.Get("AISS_inclusive/ZJ"+postfix),-1)
     hAISS_inclusive.Add(fZL.Get("AISS_inclusive/ZL"+postfix),-1)
-    hAISS_inclusive.Add(fTT.Get("AISS_inclusive/TT"+postfix),-1)
-    hAISS_inclusive.Add(fVV.Get("AISS_inclusive/VV"+postfix),-1)
+    hAISS_inclusive.Add(fTTT.Get("AISS_inclusive/TTT"+postfix),-1)
+    hAISS_inclusive.Add(fTTJ.Get("AISS_inclusive/TTJ"+postfix),-1)
+    hAISS_inclusive.Add(fVVT.Get("AISS_inclusive/VVT"+postfix),-1)
+    hAISS_inclusive.Add(fVVJ.Get("AISS_inclusive/VVJ"+postfix),-1)
     hAISS_inclusive.Add(fW.Get("AISS_inclusive/W"+postfix),-1)
+    hAISS_inclusive.Add(fEWKZ.Get("AISS_inclusive/EWKZ"+postfix),-1)
     hAISS_inclusive.SetName("SSLooseIso"+postfix)
     for i in range(0,hAISS_inclusive.GetSize()-2):
         if hAISS_inclusive.GetBinContent(i)<0:
@@ -200,9 +236,12 @@ if __name__ == "__main__":
     hSS_inclusive.Add(fZTT.Get("ttSS_inclusive/ZTT"+postfix),-1)
     hSS_inclusive.Add(fZJ.Get("ttSS_inclusive/ZJ"+postfix),-1)
     hSS_inclusive.Add(fZL.Get("ttSS_inclusive/ZL"+postfix),-1)
-    hSS_inclusive.Add(fTT.Get("ttSS_inclusive/TT"+postfix),-1)
-    hSS_inclusive.Add(fVV.Get("ttSS_inclusive/VV"+postfix),-1)
+    hSS_inclusive.Add(fTTT.Get("ttSS_inclusive/TTT"+postfix),-1)
+    hSS_inclusive.Add(fTTJ.Get("ttSS_inclusive/TTJ"+postfix),-1)
+    hSS_inclusive.Add(fVVT.Get("ttSS_inclusive/VVT"+postfix),-1)
+    hSS_inclusive.Add(fVVJ.Get("ttSS_inclusive/VVJ"+postfix),-1)
     hSS_inclusive.Add(fW.Get("ttSS_inclusive/W"+postfix),-1)
+    hSS_inclusive.Add(fEWKZ.Get("ttSS_inclusive/EWKZ"+postfix),-1)
     hSS_inclusive.SetName("SignalLike"+postfix)
     for i in range(0,hSS_inclusive.GetSize()-2):
         if hSS_inclusive.GetBinContent(i)<0:
@@ -222,9 +261,12 @@ if __name__ == "__main__":
     hAIOS_vh.Add(fZTT.Get("AIOS_vh/ZTT"+postfix),-1)
     hAIOS_vh.Add(fZJ.Get("AIOS_vh/ZJ"+postfix),-1)
     hAIOS_vh.Add(fZL.Get("AIOS_vh/ZL"+postfix),-1)
-    hAIOS_vh.Add(fTT.Get("AIOS_vh/TT"+postfix),-1)
-    hAIOS_vh.Add(fVV.Get("AIOS_vh/VV"+postfix),-1)
+    hAIOS_vh.Add(fTTT.Get("AIOS_vh/TTT"+postfix),-1)
+    hAIOS_vh.Add(fTTJ.Get("AIOS_vh/TTJ"+postfix),-1)
+    hAIOS_vh.Add(fVVT.Get("AIOS_vh/VVT"+postfix),-1)
+    hAIOS_vh.Add(fVVJ.Get("AIOS_vh/VVJ"+postfix),-1)
     hAIOS_vh.Add(fW.Get("AIOS_vh/W"+postfix),-1)
+    hAIOS_vh.Add(fEWKZ.Get("AIOS_vh/EWKZ"+postfix),-1)
     hAIOS_vh.SetName("OSLooseIso"+postfix)
     for i in range(0,hAIOS_vh.GetSize()-2):
         if hAIOS_vh.GetBinContent(i)<0:
@@ -236,9 +278,12 @@ if __name__ == "__main__":
     hAISS_vh.Add(fZTT.Get("AISS_vh/ZTT"+postfix),-1)
     hAISS_vh.Add(fZJ.Get("AISS_vh/ZJ"+postfix),-1)
     hAISS_vh.Add(fZL.Get("AISS_vh/ZL"+postfix),-1)
-    hAISS_vh.Add(fTT.Get("AISS_vh/TT"+postfix),-1)
-    hAISS_vh.Add(fVV.Get("AISS_vh/VV"+postfix),-1)
+    hAISS_vh.Add(fTTT.Get("AISS_vh/TTT"+postfix),-1)
+    hAISS_vh.Add(fTTJ.Get("AISS_vh/TTJ"+postfix),-1)
+    hAISS_vh.Add(fVVT.Get("AISS_vh/VVT"+postfix),-1)
+    hAISS_vh.Add(fVVJ.Get("AISS_vh/VVJ"+postfix),-1)
     hAISS_vh.Add(fW.Get("AISS_vh/W"+postfix),-1)
+    hAISS_vh.Add(fEWKZ.Get("AISS_vh/EWKZ"+postfix),-1)
     hAISS_vh.SetName("SSLooseIso"+postfix)
     for i in range(0,hAISS_vh.GetSize()-2):
         if hAISS_vh.GetBinContent(i)<0:
@@ -249,9 +294,12 @@ if __name__ == "__main__":
     hSS_vh.Add(fZTT.Get("ttSS_vh/ZTT"+postfix),-1)
     hSS_vh.Add(fZJ.Get("ttSS_vh/ZJ"+postfix),-1)
     hSS_vh.Add(fZL.Get("ttSS_vh/ZL"+postfix),-1)
-    hSS_vh.Add(fTT.Get("ttSS_vh/TT"+postfix),-1)
-    hSS_vh.Add(fVV.Get("ttSS_vh/VV"+postfix),-1)
+    hSS_vh.Add(fTTT.Get("ttSS_vh/TTT"+postfix),-1)
+    hSS_vh.Add(fTTJ.Get("ttSS_vh/TTJ"+postfix),-1)
+    hSS_vh.Add(fVVT.Get("ttSS_vh/VVT"+postfix),-1)
+    hSS_vh.Add(fVVJ.Get("ttSS_vh/VVJ"+postfix),-1)
     hSS_vh.Add(fW.Get("ttSS_vh/W"+postfix),-1)
+    hSS_vh.Add(fEWKZ.Get("ttSS_vh/EWKZ"+postfix),-1)
     hSS_vh.SetName("SignalLike"+postfix)
     for i in range(0,hSS_vh.GetSize()-2):
         if hSS_vh.GetBinContent(i)<0:
@@ -273,15 +321,36 @@ if __name__ == "__main__":
     hQCD_0jet.SetName("QCD"+postfix)
     hQCD_0jet.Write()
 
+# added by AM
+    dirQCD_0jet=fout.mkdir("tt_0jet")
+    dirQCD_0jet.cd()
+    hQCD_0jet.SetName("QCD"+postfix)
+    hQCD_0jet.Write()
+
     dirQCD_boosted=fout.mkdir("ttOS_boosted")
     dirQCD_boosted.cd()
     hQCD_boosted.SetName("QCD"+postfix)
     hQCD_boosted.Write()
 
+# added by AM
+    dirQCD_boosted=fout.mkdir("tt_boosted")
+    dirQCD_boosted.cd()
+    hQCD_boosted.SetName("QCD"+postfix)
+    hQCD_boosted.Write()
+    
+
     dirQCD_vbf=fout.mkdir("ttOS_vbf")
     dirQCD_vbf.cd()
     hQCD_vbf.SetName("QCD"+postfix)
     hQCD_vbf.Write()
+
+# added by AM
+    dirQCD_vbf=fout.mkdir("tt_vbf")
+    dirQCD_vbf.cd()
+    hQCD_vbf.SetName("QCD"+postfix)
+    hQCD_vbf.Write()
+
+
 
     dirQCD_vh=fout.mkdir("ttOS_vh")
     dirQCD_vh.cd()

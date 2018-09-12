@@ -40,13 +40,15 @@ int main(int argc, char** argv) {
     std::string output = *(argv + 2);
     std::string sample = *(argv + 3);
     std::string name = *(argv + 4);
-    
+    std::string unc = *(argv + 5);
+
     float tes=0;
-    std::string unc="nominal";
+
     if (argc > 1) {
         tes = atof(argv[5]);
     }
-    
+
+
     TFile *f_Double = new TFile(input.c_str());
     std::cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<std::endl;
     TTree *arbre = (TTree*) f_Double->Get("tt_tree");
@@ -144,11 +146,9 @@ int main(int argc, char** argv) {
 
     std::cout.setf(std::ios::fixed, std::ios::floatfield);
     std::cout.precision(10);
-    //arbre->SetBranchAddress("jpt_1", &jpt_1);
     arbre->SetBranchAddress("jeta_1", &jeta_1);
     arbre->SetBranchAddress("jphi_1", &jphi_1);
     arbre->SetBranchAddress("jcsv_1", &jcsv_1);
-    //arbre->SetBranchAddress("jpt_2", &jpt_2);
     arbre->SetBranchAddress("jeta_2", &jeta_2);
     arbre->SetBranchAddress("jphi_2", &jphi_2);
     arbre->SetBranchAddress("jcsv_2", &jcsv_2);
@@ -211,12 +211,8 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("filterDoubleTauCmbIso35_2", &filterDoubleTauCmbIso35_2);
     
     
-    //arbre->SetBranchAddress("met", &met);
-    //arbre->SetBranchAddress("metphi", &metphi);
-    //arbre->SetBranchAddress("njets", &njets);
     arbre->SetBranchAddress("nbtag", &nbtag);
     arbre->SetBranchAddress("nbtagL", &nbtagL);
-    //arbre->SetBranchAddress("jpt_1", &jpt_1);
     arbre->SetBranchAddress("amcatNLO_weight", &amcatNLO_weight);
     arbre->SetBranchAddress("metphi_JESDown", &metphi_JESDown);
     arbre->SetBranchAddress("metphi_JESUp", &metphi_JESUp);
@@ -244,56 +240,11 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("bflavor_1",&bflavor_1);
     arbre->SetBranchAddress("bflavor_2",&bflavor_2);
     
-    //arbre->SetBranchAddress("m_sv",&m_sv);
     // Construct scenario
     scenario_info scenario(arbre, unc);
-    /*
-    arbre->SetBranchAddress(m_sv_unc,&m_sv);
-    arbre->SetBranchAddress(pt_sv_unc,&pt_sv);
-    arbre->SetBranchAddress(ME_sm_VBF_unc,&ME_sm_VBF);
-    arbre->SetBranchAddress(ME_bkg_unc,&ME_bkg);
-    */
-    //KK
-    /*
-    arbre->SetBranchAddress("m_sv_DOWN", &m_sv_DOWN);
-    arbre->SetBranchAddress("m_sv_UP", &m_sv_UP);
-    arbre->SetBranchAddress("pt_sv", &pt_sv);
-    arbre->SetBranchAddress("pt_sv_DOWN", &pt_sv_DOWN);
-    arbre->SetBranchAddress("pt_sv_UP", &pt_sv_UP);
-    arbre->SetBranchAddress("m_sv_UncMet_DOWN", &m_sv_UncMet_DOWN);
-    arbre->SetBranchAddress("m_sv_UncMet_UP", &m_sv_UncMet_UP);
-    arbre->SetBranchAddress("m_sv_ClusteredMet_DOWN", &m_sv_ClusteredMet_DOWN);
-    arbre->SetBranchAddress("m_sv_ClusteredMet_UP", &m_sv_ClusteredMet_UP);
-    arbre->SetBranchAddress("pt_sv_UncMet_DOWN", &pt_sv_UncMet_DOWN);
-    arbre->SetBranchAddress("pt_sv_UncMet_UP", &pt_sv_UncMet_UP);
-    arbre->SetBranchAddress("pt_sv_ClusteredMet_DOWN", &pt_sv_ClusteredMet_DOWN);
-    arbre->SetBranchAddress("pt_sv_ClusteredMet_UP", &pt_sv_ClusteredMet_UP);
-    //D.Kim
-    arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF); // What we actually use.
-    arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
-    arbre->SetBranchAddress("ME_bkg",&ME_bkg); // What we actually use.
-    arbre->SetBranchAddress("Dbkg_VBF",&Dbkg_VBF);
-    arbre->SetBranchAddress("Dbkg_ggH",&Dbkg_ggH);  
-
-    arbre->SetBranchAddress("ME_sm_VBF_DOWN",&ME_sm_VBF_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_UP",&ME_sm_VBF_UP); 
-    arbre->SetBranchAddress("ME_sm_VBF_UncMet_DOWN",&ME_sm_VBF_UncMet_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_UncMet_UP",&ME_sm_VBF_UncMet_UP); 
-    arbre->SetBranchAddress("ME_sm_VBF_ClusteredMet_DOWN",&ME_sm_VBF_ClusteredMet_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_ClusteredMet_UP",&ME_sm_VBF_ClusteredMet_UP); 
-
-    arbre->SetBranchAddress("ME_bkg_DOWN",&ME_bkg_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_UP",&ME_bkg_UP); 
-    arbre->SetBranchAddress("ME_bkg_UncMet_DOWN",&ME_bkg_UncMet_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_UncMet_UP",&ME_bkg_UncMet_UP); 
-    arbre->SetBranchAddress("ME_bkg_ClusteredMet_DOWN",&ME_bkg_ClusteredMet_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_ClusteredMet_UP",&ME_bkg_ClusteredMet_UP); 
-    */
-
-    arbre->SetBranchAddress("NN_disc",&NN_disc);
 
 
-    
+
     //float bins0[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
     //float bins1[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
     //float bins0[] = {0,10,20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300}; //VBF
@@ -316,9 +267,9 @@ int main(int argc, char** argv) {
     float bins12[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
 
     //Binning for 2jet cat, x-axis: Mjj
-    //float bins21[] = {0,300,500,800,10000};
+    float bins21[] = {0,300,500,800,10000};
     //binning for 2jet cat, x-axis: Dbkg_VBF
-    float bins21[] = {0.0,0.3,0.6,0.9,1.0};
+    //float bins21[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, x-axis: NN_disc
     //float bins21[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
     //float bins21[] = {0.0,0.5,0.7,0.8,1.0};
@@ -452,12 +403,14 @@ int main(int argc, char** argv) {
       nbhist=2;
       //nbhist=56;
     }
-    if (tes==1) nbhist=12;
+    //if (tes==1) nbhist=12;
     if (tes==16) nbhist=6;
     if (tes==17) nbhist=12;
     if (tes==18) nbhist=4;
     if (tes==19) nbhist=6;
     if (tes==1000) nbhist=18;
+
+
 
     for (int k=0; k<nbhist; ++k){
       std::ostringstream HNS0OS; HNS0OS << "h0_OS" << k;
@@ -764,22 +717,22 @@ int main(int argc, char** argv) {
       //KK Added for future. For now we need only first two variables
       int nombrejets[56]={njets_JESDown,njets_JESUp,njets_JetAbsoluteFlavMapDown,njets_JetAbsoluteFlavMapUp,njets_JetAbsoluteMPFBiasDown,njets_JetAbsoluteMPFBiasUp,njets_JetAbsoluteScaleDown,njets_JetAbsoluteScaleUp,njets_JetAbsoluteStatDown,njets_JetAbsoluteStatUp,njets_JetFlavorQCDDown,njets_JetFlavorQCDUp,njets_JetFragmentationDown,njets_JetFragmentationUp,njets_JetPileUpDataMCDown,njets_JetPileUpDataMCUp,njets_JetPileUpPtBBDown,njets_JetPileUpPtBBUp,njets_JetPileUpPtEC1Down,njets_JetPileUpPtEC1Up,njets_JetPileUpPtEC2Down,njets_JetPileUpPtEC2Up,njets_JetPileUpPtHFDown,njets_JetPileUpPtHFUp,njets_JetPileUpPtRefDown,njets_JetPileUpPtRefUp,njets_JetRelativeBalDown,njets_JetRelativeBalUp,njets_JetRelativeFSRDown,njets_JetRelativeFSRUp,njets_JetRelativeJEREC1Down,njets_JetRelativeJEREC1Up,njets_JetRelativeJEREC2Down,njets_JetRelativeJEREC2Up,njets_JetRelativeJERHFDown,njets_JetRelativeJERHFUp,njets_JetRelativePtBBDown,njets_JetRelativePtBBUp,njets_JetRelativePtEC1Down,njets_JetRelativePtEC1Up,njets_JetRelativePtEC2Down,njets_JetRelativePtEC2Up,njets_JetRelativePtHFDown,njets_JetRelativePtHFUp,njets_JetRelativeStatECDown,njets_JetRelativeStatECUp,njets_JetRelativeStatFSRDown,njets_JetRelativeStatFSRUp,njets_JetRelativeStatHFDown,njets_JetRelativeStatHFUp,njets_JetSinglePionECALDown,njets_JetSinglePionECALUp,njets_JetSinglePionHCALDown,njets_JetSinglePionHCALUp,njets_JetTimePtEtaDown,njets_JetTimePtEtaUp};
       
-      float massejets[56]={mjj_JESDown,mjj_JESUp,mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatDown,mjj_JetAbsoluteStatUp,mjj_JetFlavorQCDDown,mjj_JetFlavorQCDUp,mjj_JetFragmentationDown,mjj_JetFragmentationUp,mjj_JetPileUpDataMCDown,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefDown,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalDown,mjj_JetRelativeBalUp,mjj_JetRelativeFSRDown,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFDown,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBDown,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Down,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFDown,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECDown,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFDown,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALDown,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALDown,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaDown,mjj_JetTimePtEtaUp};
+      //float massejets[56]={mjj_JESDown,mjj_JESUp,mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatDown,mjj_JetAbsoluteStatUp,mjj_JetFlavorQCDDown,mjj_JetFlavorQCDUp,mjj_JetFragmentationDown,mjj_JetFragmentationUp,mjj_JetPileUpDataMCDown,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefDown,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalDown,mjj_JetRelativeBalUp,mjj_JetRelativeFSRDown,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFDown,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBDown,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Down,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFDown,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECDown,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFDown,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALDown,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALDown,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaDown,mjj_JetTimePtEtaUp};
       
       for (int k=0; k<nbhist; ++k){
 	
-	float var2=m_sv; 
-	float var1_1=pt_sv;
-
+	float var2=scenario.get_m_sv(); 
+	float var1_1=scenario.get_pt_sv();
+	
 	TLorentzVector myjet1;
 	myjet1.SetPtEtaPhiM(scenario.get_jpt_1(),jeta_1,jphi_1,0);
 	TLorentzVector myjet2;
 	myjet2.SetPtEtaPhiM(scenario.get_jpt_2(),jeta_2,jphi_2,0);
 	TLorentzVector jets=myjet2+myjet1;
 	mjj = jets.M();
-	float normMELA = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
+	float normMELA = scenario.get_ME_sm_VBF()/(scenario.get_ME_sm_VBF()+45*scenario.get_ME_bkg());
 
-	float var1_2=normMELA;  //Dbkg_VBF;//mjj; 
+	float var1_2=scenario.get_mjj();  //Dbkg_VBF;//mjj; 
 	TLorentzVector myrawmet;
 	myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
@@ -820,11 +773,14 @@ int main(int argc, char** argv) {
 	}
 	
 	//KK: Added njet and mjj variables affected by JES
-	if (tes==100 && var1_2==mjj){
+	/*
+	if (tes==100 && var1_2==mjj) {
 	  njets = nombrejets[k];
 	  var1_2 = massejets[k]; //KK for now not available in trees
 	}
-
+	*/
+	
+	/*
 	if (tes==1 && var1_2==normMELA){ 
 	  if (text) {std::cout << "------------------------------ var1_2 is replaced to MELA ------------------------------" << std::endl;text=false;}
 	  if (k==8) var1_2=ME_sm_VBF_UncMet_DOWN/(ME_sm_VBF_UncMet_DOWN+45*ME_bkg_UncMet_DOWN);
@@ -832,6 +788,7 @@ int main(int argc, char** argv) {
 	  if (k==10) var1_2=ME_sm_VBF_ClusteredMet_DOWN/(ME_sm_VBF_ClusteredMet_DOWN+45*ME_bkg_ClusteredMet_DOWN);
 	  if (k==11) var1_2=ME_sm_VBF_ClusteredMet_UP/(ME_sm_VBF_ClusteredMet_UP+45*ME_bkg_ClusteredMet_UP);
 	}
+	*/
 
 	if (mytau1.Pt() < 40 || mytau2.Pt() < 40 ) continue;
 	if (mytau1.Pt() < 50) continue;
@@ -854,10 +811,10 @@ int main(int argc, char** argv) {
 	bool is_VH = false;
 	bool is_2jets = false;
 
-	if (njets==0) is_0jet=true;
-	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
-	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	if (njets==2) is_2jets=true;
+	if (scenario.get_njets()==0) is_0jet=true;
+	if (scenario.get_njets()==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
+	if (scenario.get_njets()>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
+	if (scenario.get_njets()==2) is_2jets=true;
 	//if (!is_0jet && !is_boosted) std::cout << "NN is survived! " << NN_disc << std::endl;
 
 	// Z mumu SF 
@@ -914,12 +871,7 @@ int main(int argc, char** argv) {
 	   var1_M* : vbf -> MELA obs
 	*/
 	float var = var2; 
-	/*
-	float var1_2 = ME_sm_VBF;//mjj;
-	float var1_M1 = Dbkg_VBF;//ME_sm_VBF;
-	float var1_M2 = Dbkg_ggH;//ME_sm_ggH;
-	float var1_M3 = ME_bkg;
-	*/
+
 	if (selection){
 	  // ################### signalRegion && OS ####################
 	  if (is_0jet && signalRegion && charge1*charge2<0){
@@ -1063,6 +1015,7 @@ int main(int argc, char** argv) {
     TDirectory *TRG_SF = fout->mkdir("trgSF");
 
     for (int k=0; k<nbhist; ++k){
+      /*
       if (tes==10) postfix="_CMS_htt_dyShape_13TeVUp";
       if (tes==-10) postfix="_CMS_htt_dyShape_13TeVDown";
       if (tes==14) postfix="_CMS_htt_jetToTauFake_13TeVUp";
@@ -1079,7 +1032,15 @@ int main(int argc, char** argv) {
       if (tes==13)  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
       if (tes==-13) postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
       std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;
-      
+      */
+      if (unc == "JESUp") postfix="_CMS_scale_j_13TeVUp";
+      else if (unc == "JESDown") postfix="_CMS_scale_j_13TeVDown";
+      else if (unc == "ClusteredMet_Up") postfix="_CMS_scale_met_clustered_13TeVUp";
+      else if (unc == "ClusteredMet_Down") postfix="_CMS_scale_met_clustered_13TeVDown";
+      else if (unc == "UncMet_Up") postfix="_CMS_scale_met_unclustered_13TeVUp";
+      else if (unc == "UncMet_Down") postfix="_CMS_scale_met_unclustered_13TeVDown";
+
+
       // These will be the final root files
       // D.Kim
       TRG_SF->cd();
