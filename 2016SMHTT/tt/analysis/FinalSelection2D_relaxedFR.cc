@@ -40,10 +40,9 @@ int main(int argc, char** argv) {
     std::string output = *(argv + 2);
     std::string sample = *(argv + 3);
     std::string name = *(argv + 4);
-    std::string unc = *(argv + 5);
-
+    std::string unc = *(argv + 6);
+    std::cout << "unc " << unc << std::endl;
     float tes=0;
-
     if (argc > 1) {
         tes = atof(argv[5]);
     }
@@ -737,7 +736,10 @@ int main(int argc, char** argv) {
 	myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
 	
+	// MET need to be adjusted!!! FIXME
+
 	//KK: added "&& gen_match_1==5"
+	/*
 	if (tes==1 && gen_match_2==5 && gen_match_1==5){	    
 	  
 	  if (k==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mytau2*=0.988;  mymet=mymet+(0.012/0.988)*mytau1+(0.012/0.988)*mytau2;}
@@ -771,7 +773,7 @@ int main(int argc, char** argv) {
 	  else if (k==10){ var2=m_sv_ClusteredMet_DOWN; var1_1=pt_sv_ClusteredMet_DOWN; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
 	  else if (k==11){ var2=m_sv_ClusteredMet_UP; var1_1=pt_sv_ClusteredMet_UP; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
 	}
-	
+	*/
 	//KK: Added njet and mjj variables affected by JES
 	/*
 	if (tes==100 && var1_2==mjj) {
@@ -1039,6 +1041,12 @@ int main(int argc, char** argv) {
       else if (unc == "ClusteredMet_Down") postfix="_CMS_scale_met_clustered_13TeVDown";
       else if (unc == "UncMet_Up") postfix="_CMS_scale_met_unclustered_13TeVUp";
       else if (unc == "UncMet_Down") postfix="_CMS_scale_met_unclustered_13TeVDown";
+      else if (unc == "DM0_Up") postfix="_CMS_scale_t_1prong_13TeVUp";
+      else if (unc == "DM0_Down") postfix="_CMS_scale_t_1prong_13TeVDown";
+      else if (unc == "DM1_Up") postfix="_CMS_scale_t_1prong1pizero_13TeVUp";
+      else if (unc == "DM1_Down") postfix="_CMS_scale_t_1prong1pizero_13TeVDown";
+      else if (unc == "DM10_Up") postfix="_CMS_scale_t_3prong_13TeVUp";
+      else if (unc == "DM10_Down") postfix="_CMS_scale_t_3prong_13TeVDown";
 
 
       // These will be the final root files
