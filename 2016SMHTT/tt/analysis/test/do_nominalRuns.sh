@@ -52,7 +52,7 @@
  ./tt_analyzer.exe myntuples/Sep03_v2/W4.root outputs_nominal/W4.root W W 0 nominal
  ./tt_analyzer.exe myntuples/Sep03_v2/EWKWMinus.root outputs_nominal/EWKWMinus.root EWKWminus W 0 nominal
  ./tt_analyzer.exe myntuples/Sep03_v2/EWKWPlus.root outputs_nominal/EWKWPlus.root EWKWplus W 0 nominal
- hadd -f outputs_nominal/WJets.root outputs_nominal/W0.root outputs_nominal/W1.root outputs_nominal/W2.root outputs_nominal/W3.root outputs_nominal/W4.root outputs_nominal/EWKWMinus.root outputs_nominal/EWKWPlus.root 
+ hadd -f outputs_nominal/W.root outputs_nominal/W0.root outputs_nominal/W1.root outputs_nominal/W2.root outputs_nominal/W3.root outputs_nominal/W4.root outputs_nominal/EWKWMinus.root outputs_nominal/EWKWPlus.root 
  # 6. VV
  ./tt_analyzer.exe myntuples/Sep03_v2/WZ1l1nu2q.root outputs_nominal/WZ1l1nu2q_T.root WZ1L1Nu2Q VVT 0 nominal
  ./tt_analyzer.exe myntuples/Sep03_v2/WZ1l3nu.root outputs_nominal/WZ1l3nu_T.root WZ1L3Nu VVT 0 nominal
@@ -85,5 +85,5 @@
  python python/Creat_QCD.py
 
  # hadd all outputs
- hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZTT.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTT.root outputs_nominal/TTJ.root outputs_nominal/VVT.root outputs_nominal/VVJ.root outputs_nominal/WJets.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root 
+ hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZTT.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTT.root outputs_nominal/TTJ.root outputs_nominal/VVT.root outputs_nominal/VVJ.root outputs_nominal/W.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root 
 
