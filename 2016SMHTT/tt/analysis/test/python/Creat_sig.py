@@ -33,6 +33,14 @@ if __name__ == "__main__":
     dirSS_inclusive=fout.mkdir("ttSS_inclusive")
     dirAIOS_inclusive=fout.mkdir("AIOS_inclusive")
     dirAISS_inclusive=fout.mkdir("AISS_inclusive")
+    
+    
+    
+    dirOStt_0jet=fout.mkdir("tt_0jet")
+    dirOStt_boosted=fout.mkdir("tt_boosted")
+    dirOStt_vbf=fout.mkdir("tt_vbf")
+    
+    
 
     cats=['0jet','boosted','vbf'] #do not have jobs
     regions=['OS','SS','AIOS','AISS']
@@ -82,6 +90,10 @@ if __name__ == "__main__":
 
     fout.cd()
     dirOS_0jet.cd()
+    hOS_0jet.SetName("SMH")
+    hOS_0jet.Write()
+
+    dirOStt_0jet.cd()
     hOS_0jet.SetName("SMH")
     hOS_0jet.Write()
 
@@ -146,6 +158,11 @@ if __name__ == "__main__":
     hOS_boosted.SetName("SMH")
     hOS_boosted.Write()
 
+    dirOStt_boosted.cd()
+    hOS_boosted.SetName("SMH")
+    hOS_boosted.Write()
+
+
     dirSS_boosted.cd()
     hSS_boosted.SetName("SMH")
     hSS_boosted.Write()
@@ -206,6 +223,13 @@ if __name__ == "__main__":
     dirOS_vbf.cd()
     hOS_vbf.SetName("SMH")
     hOS_vbf.Write()
+
+
+    dirOStt_vbf.cd()
+    hOS_vbf.SetName("SMH")
+    hOS_vbf.Write()
+
+
 
     dirSS_vbf.cd()
     hSS_vbf.SetName("SMH")

@@ -11,17 +11,17 @@ if __name__ == "__main__":
     options = parser.parse_args()
     postfix=""
 
-    fZTT=ROOT.TFile("files_nominal/ZTT.root","r")
-    fZJ=ROOT.TFile("files_nominal/ZJ.root","r")
-    fZL=ROOT.TFile("files_nominal/ZL.root","r")
-    fTTT=ROOT.TFile("files_"+options.scale+"/TTT.root","r")
-    fTTJ=ROOT.TFile("files_"+options.scale+"/TTJ.root","r")
-    fVVT=ROOT.TFile("files_"+options.scale+"/VVT.root","r")
-    fVVJ=ROOT.TFile("files_"+options.scale+"/VVJ.root","r")
-    fW=ROOT.TFile("files_"+options.scale+"/WJets.root","r")
-    fEWKZ=ROOT.TFile("files_"+options.scale+"/EWKZ.root","r")
-    fData=ROOT.TFile("files_nominal/data.root","r")
-    fout=ROOT.TFile("files_"+options.scale+"/QCD.root","recreate")
+    fZTT=ROOT.TFile("outputs_nominal/ZTT.root","r")
+    fZJ=ROOT.TFile("outputs_nominal/ZJ.root","r")
+    fZL=ROOT.TFile("outputs_nominal/ZL.root","r")
+    fTTT=ROOT.TFile("outputs_nominal/TTT.root","r")
+    fTTJ=ROOT.TFile("outputs_nominal/TTJ.root","r")
+    fVVT=ROOT.TFile("outputs_nominal/VVT.root","r")
+    fVVJ=ROOT.TFile("outputs_nominal/VVJ.root","r")
+    fW=ROOT.TFile("outputs_nominal/WJets.root","r")
+    fEWKZ=ROOT.TFile("outputs_nominal/EWKZ.root","r")
+    fData=ROOT.TFile("outputs_nominal/data.root","r")
+    fout=ROOT.TFile("outputs_nominal/QCD.root","recreate")
 
     postfixData=""
     hAIOS_0jet=fData.Get("AIOS_0jet/data_obs"+postfixData)

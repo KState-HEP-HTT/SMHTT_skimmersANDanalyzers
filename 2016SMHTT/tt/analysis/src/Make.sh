@@ -9,7 +9,7 @@ echo "================================================================"
 #rootcint -f eventdict.cc -c interface/myevent.h interface/LinkDef.h 
 #echo "====> Compiling $1 linked with eventdict.cc"
 filename=`echo $1 | awk -F"." '{print $1}'`
-exefilename=${filename}.exe
+exefilename=../test/${filename}.exe
 rm -f $exefilename
 
 #g++ $1 -o $exefilename `root-config --cflags --glibs` -lRooFit -lRooFitCore -framework Python
