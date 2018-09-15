@@ -1,0 +1,4 @@
+1. Set up new directory structure
+2. Check new QCD creator works identically as before
+3. Check scenario
+   a) nominal

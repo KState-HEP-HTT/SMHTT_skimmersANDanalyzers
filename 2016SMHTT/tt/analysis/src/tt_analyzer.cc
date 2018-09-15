@@ -35,7 +35,7 @@
 #include "../include/LumiReweightingStandAlone.h"
 #include "../include/lumiMap.h"
 #include "../include/btagSF.h"
-
+#include "../include/scenario_info.h"
 
 int main(int argc, char** argv) {
     
@@ -43,7 +43,8 @@ int main(int argc, char** argv) {
     std::string output = *(argv + 2);
     std::string sample = *(argv + 3);
     std::string name = *(argv + 4);
-    
+    std::string shape = *(argv + 6);
+
     float tes=0;
     if (argc > 1) {
         tes = atof(argv[5]);
@@ -170,7 +171,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("jeta_2", &jeta_2);
     arbre->SetBranchAddress("jphi_2", &jphi_2);
     arbre->SetBranchAddress("jcsv_2", &jcsv_2);
-    arbre->SetBranchAddress("njets", &njets);
+    //arbre->SetBranchAddress("njets", &njets);
     arbre->SetBranchAddress("njets_JESDown", &njets_JESDown);
     arbre->SetBranchAddress("njets_JESUp", &njets_JESUp);
     // bjets
@@ -181,8 +182,8 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("bflavor_1",&bflavor_1);
     arbre->SetBranchAddress("bflavor_2",&bflavor_2);
     // met
-    arbre->SetBranchAddress("met", &met);
-    arbre->SetBranchAddress("metphi", &metphi);
+    //arbre->SetBranchAddress("met", &met);
+    //arbre->SetBranchAddress("metphi", &metphi);
     arbre->SetBranchAddress("metphi_JESDown", &metphi_JESDown);
     arbre->SetBranchAddress("metphi_JESUp", &metphi_JESUp);
     arbre->SetBranchAddress("met_JESDown", &met_JESDown);
@@ -195,40 +196,14 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("pt_top1",&pt_top1);
     arbre->SetBranchAddress("pt_top2",&pt_top2);
     // svFit
-    arbre->SetBranchAddress("m_sv",&m_sv);
-    arbre->SetBranchAddress("m_sv_DOWN", &m_sv_DOWN);
-    arbre->SetBranchAddress("m_sv_UP", &m_sv_UP);
-    arbre->SetBranchAddress("pt_sv", &pt_sv);
-    arbre->SetBranchAddress("pt_sv_DOWN", &pt_sv_DOWN);
-    arbre->SetBranchAddress("pt_sv_UP", &pt_sv_UP);
-    arbre->SetBranchAddress("m_sv_UncMet_DOWN", &m_sv_UncMet_DOWN);
-    arbre->SetBranchAddress("m_sv_UncMet_UP", &m_sv_UncMet_UP);
-    arbre->SetBranchAddress("m_sv_ClusteredMet_DOWN", &m_sv_ClusteredMet_DOWN);
-    arbre->SetBranchAddress("m_sv_ClusteredMet_UP", &m_sv_ClusteredMet_UP);
-    arbre->SetBranchAddress("pt_sv_UncMet_DOWN", &pt_sv_UncMet_DOWN);
-    arbre->SetBranchAddress("pt_sv_UncMet_UP", &pt_sv_UncMet_UP);
-    arbre->SetBranchAddress("pt_sv_ClusteredMet_DOWN", &pt_sv_ClusteredMet_DOWN);
-    arbre->SetBranchAddress("pt_sv_ClusteredMet_UP", &pt_sv_ClusteredMet_UP);
+    //arbre->SetBranchAddress("m_sv",&m_sv);
+    //arbre->SetBranchAddress("pt_sv", &pt_sv);
     // MELA
-    arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF); // What we actually use.
-    arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
-    arbre->SetBranchAddress("ME_bkg",&ME_bkg); // What we actually use.
-    arbre->SetBranchAddress("Dbkg_VBF",&Dbkg_VBF);
-    arbre->SetBranchAddress("Dbkg_ggH",&Dbkg_ggH);  
-    arbre->SetBranchAddress("ME_sm_VBF_DOWN",&ME_sm_VBF_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_UP",&ME_sm_VBF_UP); 
-    arbre->SetBranchAddress("ME_sm_VBF_UncMet_DOWN",&ME_sm_VBF_UncMet_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_UncMet_UP",&ME_sm_VBF_UncMet_UP); 
-    arbre->SetBranchAddress("ME_sm_VBF_ClusteredMet_DOWN",&ME_sm_VBF_ClusteredMet_DOWN); 
-    arbre->SetBranchAddress("ME_sm_VBF_ClusteredMet_UP",&ME_sm_VBF_ClusteredMet_UP); 
-    arbre->SetBranchAddress("ME_bkg_DOWN",&ME_bkg_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_UP",&ME_bkg_UP); 
-    arbre->SetBranchAddress("ME_bkg_UncMet_DOWN",&ME_bkg_UncMet_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_UncMet_UP",&ME_bkg_UncMet_UP); 
-    arbre->SetBranchAddress("ME_bkg_ClusteredMet_DOWN",&ME_bkg_ClusteredMet_DOWN); 
-    arbre->SetBranchAddress("ME_bkg_ClusteredMet_UP",&ME_bkg_ClusteredMet_UP); 
+    //arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF); // What we actually use.
+    //arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
+    //arbre->SetBranchAddress("ME_bkg",&ME_bkg); // What we actually use.
 
-
+    scenario_info scenario(arbre, shape);
     
     //float bins0[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
     //float bins1[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
@@ -495,6 +470,16 @@ int main(int argc, char** argv) {
 	if (  !t35 && !tcomb35 ) continue;
       }
 
+
+      float jpt_1 = scenario.get_jpt_1();
+      float jpt_2 = scenario.get_jpt_2();
+      float njets = scenario.get_njets();
+      float met = scenario.get_met();
+      float metphi = scenario.get_metphi();
+      float m_sv = scenario.get_m_sv();
+      float pt_sv = scenario.get_pt_sv();
+      float mjj = scenario.get_mjj();
+
       // mytau1 is the highest pT tau
       float charge1=q_1;
       float charge2=q_2;
@@ -701,15 +686,19 @@ int main(int argc, char** argv) {
 
 	TLorentzVector myjet1;
 	myjet1.SetPtEtaPhiM(jpt_1,jeta_1,jphi_1,0);
+	//myjet1.SetPtEtaPhiM(scenario.get_jpt_1(),jeta_1,jphi_1,0);
 	TLorentzVector myjet2;
 	myjet2.SetPtEtaPhiM(jpt_2,jeta_2,jphi_2,0);
+	//myjet2.SetPtEtaPhiM(scenario.get_jpt_2(),jeta_2,jphi_2,0);
 	TLorentzVector jets=myjet2+myjet1;
-	mjj = jets.M();
+	//mjj = jets.M();
 	float normMELA = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-
+	
+	//std::cout << mjj << "\t" << jets.M() << "\t" << mjj/jets.M() << std::endl;
 	float var1_2=mjj;//normMELA;  //Dbkg_VBF;//mjj; 
 	TLorentzVector myrawmet;
 	myrawmet.SetPtEtaPhiM(met,0,metphi,0);
+	//myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
 	
 	//KK: added "&& gen_match_1==5"
