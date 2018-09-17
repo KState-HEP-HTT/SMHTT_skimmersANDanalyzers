@@ -756,16 +756,11 @@ int main(int argc, char** argv) {
 	
 	if ((fabs(mytau1.Eta()))>2.1 || (fabs(mytau2.Eta())>2.1)) continue; // L770
 
-	// Z mumu SF 
-	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
-	  aweight*=zmumuSF_boosted(pt_sv,shape);
-	if (is_VBF && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
-	  aweight*=zmumuSF_vbf(mjj,shape);
 	float weight2=1.0;	  
 
 	// D.Kim
 	weight2=weight2*sf_trg1*sf_trg2;
-	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}
+
         
 	// Additional selections
 	bool selection =true;
@@ -783,9 +778,13 @@ int main(int argc, char** argv) {
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
 	if (njets==2) is_2jets=true;
 	//if (!is_0jet && !is_boosted) std::cout << "NN is survived! " << NN_disc << std::endl;
+	// Z mumu SF 
+	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
+	  aweight*=zmumuSF_boosted(pt_sv,shape);
+	if (is_VBF && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
+	  aweight*=zmumuSF_vbf(mjj,shape);
 
-
-
+	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}
 	//KK: For some studies, definitions of categories
 	//	if(njets>=2 && Higgs.Pt()>100 && mjj > 300) is_VBF=true;
 	//	if(njets>=2 && mjj < 300) is_VH=true;
