@@ -51,7 +51,7 @@ if __name__ == "__main__":
         hQCD = hSF.Clone()
         hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
         fout.cd()
-        dir = fout.mkdir("ttOS_"+cates[k])
+        dir = fout.mkdir("tt_"+cates[k])
         dir.cd()
         hQCD.SetName("QCD")
         hQCD.Write()

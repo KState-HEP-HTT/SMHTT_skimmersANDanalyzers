@@ -16,17 +16,18 @@ ROOT.gStyle.SetOptStat(0)
 ######## Load Files ######### 
 #fsignal = ROOT.TFile("files_nominal/ggH125.root") 
 #fztt = ROOT.TFile("files_nominal/ZTT.root") 
-file = ROOT.TFile("final_nominal_ROC.root")
-file2 = ROOT.TFile("final_nominal_ROC_Dbkg.root")
+file1 = ROOT.TFile("final_nominal_mjj.root")
+file2 = ROOT.TFile("final_nominal_MELA.root")
 
 
 ####### Produce ROC curve #######
+'''
 plotRocCurve_def.produce_roc_curve( 
-    file,file, # input root files
-    'VBF125_Dbkg_VBF','VBF125_eff', # 'histogramName', ' legend Title' 
-    'ZTT_Dbkg_VBF','ZTT_eff', # 'histogramName', ' legend Title'
-    'vbf','2jets',  # category
-    'ROC(Norm_Dbkg_VBF)',
+    file1,file2,file3, # input root files
+    'VBF125','VBF125_eff', # 'histogramName', ' legend Title' 
+    'ZTT','ZTT_eff', # 'histogramName', ' legend Title'
+    'mjj','MELA','NN',  # type
+    'ROC',
     )
 
 plotRocCurve_def.produce_roc_curve( 
@@ -38,25 +39,27 @@ plotRocCurve_def.produce_roc_curve(
     )
 '''
 plotRocCurve_def.produce_roc_curve( 
-    file,file, # input root files
-    'ggH125_Dbkg_ggH','ggH125_eff', # 'histogramName', ' legend Title' 
-    'ZTT_Dbkg_ggH','ZTT_eff', # 'histogramName', ' legend Title'
-    'vbf','2jets',  # category
-    'ROC(Norm_Dbkg_ggH)',
+    file1,file2, # input root files
+    'ggH125','ggH125_eff', # 'histogramName', ' legend Title' 
+    'ZTT','ZTT_eff', # 'histogramName', ' legend Title'
+    'mjj','MELA',  # category
+    'ROC',
+    )
+
+####### Produce MELA obs with ratio #######
+
+plotRocCurve_def.produce_ratio(
+    file3,
+    'NN_disc','vbf', # 'variable', 'category'
+    'VBF125','ZTT', # 'signal histo name', 'ztt histo name'
     )
 '''
-####### Produce MELA obs with ratio #######
-plotRocCurve_def.produce_ratio(
-    file,
-    'Dbkg_VBF','vbf', # 'variable', 'category'
-    'VBF125_Dbkg_VBF','ZTT_Dbkg_VBF', # 'signal histo name', 'ztt histo name'
-    )
 plotRocCurve_def.produce_ratio(
     file,
     'Dbkg_VBF','2jets', # 'variable', 'category'
     'VBF125_Dbkg_VBF','ZTT_Dbkg_VBF', # 'signal histo name', 'ztt histo name'
     )
-'''
+
 plotRocCurve_def.produce_ratio(
     file,
     'Dbkg_ggH','vbf', # 'variable', 'category'

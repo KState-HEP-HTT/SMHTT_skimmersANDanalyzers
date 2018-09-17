@@ -38,6 +38,9 @@ def produce_tgraph(fsignal,sig_histname,fztt,ztt_histname,cate,color,MarkerStyle
     x_eff = numpy.array(get_eff(fsignal,cate,sig_histname),dtype=float)
     y_eff = numpy.array(get_eff(fztt,cate, ztt_histname),dtype=float)
     n = len(x_eff)
+    print fsignal
+    print x_eff
+    print y_eff
     tgraph = ROOT.TGraph(n,x_eff,y_eff)
     tgraph.SetMarkerStyle(MarkerStyle)
     tgraph.SetMarkerColor(color)
@@ -51,17 +54,18 @@ def produce_pair(histoId, ntupleEff,ntupleFR,N,tgline):
     fr = numpy.array([id_FakeRate],dtype=float)
     tgline.SetPoint(N,eff,fr)
 
-def produce_roc_curve(fsignal, fztt, sig_histname,sig_title, ztt_histname,ztt_title,cate1,cate2,title=''):#,label='roc'):
+def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, type1, type2, title=''):#,label='roc'):
     frame = ROOT.TMultiGraph()
     frame.SetTitle(title+';'+sig_title+';'+ztt_title)
-
+    cate = 'vbf'
     #Create a TGraph to draw a line behind the other points
     #tgline = 
     #produce_pair(histoId2, ntupleEff, ntupleFR, 1, tgline)
     #produce_pair(histoId3,ntupleEff, ntupleFR, 2, tgline)
     #Create TGraphs to add to the TMultiGraph
-    tg1 = produce_tgraph(fsignal,sig_histname,fsignal,ztt_histname,cate1,ROOT.kBlue,20)
-    tg2 = produce_tgraph(fztt,sig_histname,fztt,ztt_histname,cate2,ROOT.kRed,20)
+    tg1 = produce_tgraph(f1,sig_histname,f1,ztt_histname,cate,ROOT.kBlue,20)
+    tg2 = produce_tgraph(f2,sig_histname,f2,ztt_histname,cate,ROOT.kRed,20)
+    #tg3 = produce_tgraph(f3,sig_histname,f3,ztt_histname,cate,ROOT.kOrange,20)
     '''test = produce_tgraph(fsignal,"VBF125_MELA_VBF",fztt,"ZTT_MELA_VBF",ROOT.kBlack,20)
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
@@ -74,6 +78,7 @@ def produce_roc_curve(fsignal, fztt, sig_histname,sig_title, ztt_histname,ztt_ti
     frame.Add(tg1)
     frame.Add(tg2)
     #frame.Add(tg3)
+    #frame.Add(tg3)
     #Draw Axis,Line,Points
     frame.Draw("ALP")
     #frame.GetXaxis().SetLimits(0.,1.)
@@ -83,8 +88,9 @@ def produce_roc_curve(fsignal, fztt, sig_histname,sig_title, ztt_histname,ztt_ti
     legend.SetFillColor(ROOT.kWhite)
     legend.SetHeader("category","C")
     legend.SetBorderSize(0)
-    legend.AddEntry(tg1,cate1,"pe")
-    legend.AddEntry(tg2,cate2,"pe")
+    legend.AddEntry(tg1,type1,"pe")
+    legend.AddEntry(tg2,type2,"pe")
+    #legend.AddEntry(tg3,type3,"pe")
     #legend.AddEntry(tg3,legend3,"pe")
     legend.Draw()
     #Save with a specific file name
@@ -149,7 +155,7 @@ def CMSstyle():
 
 def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):    
     CMSstyle()
-    canvas2 = ROOT.TCanvas("MELA obs","MELA obs",0,0,600,650)
+    canvas2 = ROOT.TCanvas("","",0,0,600,650)
     #ROOT.gStyle.SetFrameBorderMode(0)
     #ROOT.gStyle.SetCanvasBorderMode(0)
     ROOT.gStyle.SetFrameLineWidth(2)
@@ -188,7 +194,7 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     h_ztt.SetMarkerStyle(8)
     h_ztt.Draw("same")
     legend = ROOT.TLegend(0.2,0.7,0.45,0.87)
-    legend.SetHeader("Norm("+var+"):"+cate,"C")
+    legend.SetHeader(var+":"+cate,"C")
     #legend.SetHeader(var+":"+cate,"C")
     legend.AddEntry(h_sig,histname_sig,"l")
     #legend.AddEntry(h_sig,"Norm("+histname_sig+")","l")
@@ -201,7 +207,7 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     h_ratio.SetLineColor(ROOT.kBlack)
     h_ratio.GetXaxis().SetLabelSize(0.09)
     #h_ratio.GetXaxis().SetTitle(var)
-    h_ratio.GetXaxis().SetTitle("Norm("+var+")")
+    h_ratio.GetXaxis().SetTitle(var)
     h_ratio.GetXaxis().SetTitleFont(42)
     h_ratio.GetXaxis().SetTitleSize(0.1)
     h_ratio.GetXaxis().SetTitleOffset(1.0)
