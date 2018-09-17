@@ -36,6 +36,7 @@
 #include "../include/lumiMap.h"
 #include "../include/btagSF.h"
 #include "../include/scenario_info.h"
+#include "../include/zmumuSF.h"
 
 int main(int argc, char** argv) {
     
@@ -755,7 +756,13 @@ int main(int argc, char** argv) {
 	
 	if ((fabs(mytau1.Eta()))>2.1 || (fabs(mytau2.Eta())>2.1)) continue; // L770
 
+	// Z mumu SF 
+	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
+	  aweight*=zmumuSF_boosted(pt_sv,shape);
+	if (is_VBF && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
+	  aweight*=zmumuSF_vbf(mjj,shape);
 	float weight2=1.0;	  
+
 	// D.Kim
 	weight2=weight2*sf_trg1*sf_trg2;
 	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}
@@ -777,37 +784,6 @@ int main(int argc, char** argv) {
 	if (njets==2) is_2jets=true;
 	//if (!is_0jet && !is_boosted) std::cout << "NN is survived! " << NN_disc << std::endl;
 
-	// Z mumu SF 
-	// https://github.com/truggles/Z_to_TauTau_13TeV/blob/SM-HTT-2016/analysis2IsoJetsAndDups.py#L1193-L1211
-	// https://github.com/truggles/Z_to_TauTau_13TeV/blob/SM-HTT-2016/analysisPlots.py#L293-L312
-	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) {
-	  float zmumusf = 1.00;
-	  if (pt_sv<=100) zmumusf = 0.973;
-	  else if (pt_sv<=170) zmumusf = 0.959;
-	  else if (pt_sv<=300) zmumusf = 0.934;
-	  else zmumusf = 0.993;
-	  if (std::abs(tes)!=13) //nominal 
-	    aweight*=zmumusf;
-	  zmumusf-=1.0;
-	  if (tes==13) // up 
-	    aweight*=((1.0+2*zmumusf)/(1.0+zmumusf));
-	  else if (tes==-13) // down  
-	    aweight*=(1.0/(1.0+zmumusf));
-	}
-	if (is_VBF && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) {
-	  float zmumusf = 1.00;
-	  if (mjj<=300) zmumusf = (0.010/2.0)+1.0;
-	  else if (mjj<=500) zmumusf = (0.064/2.0)+1.0;
-	  else if (mjj<=800) zmumusf = (0.088/2.0)+1.0;
-	  else zmumusf = (0.003/2.0)+1.0;
-	  if (std::abs(tes)!=13) //nominal 
-	    aweight*=zmumusf;
-	  zmumusf-=1.0;//((-1.0+zmumusf)/2.0);
-	  if (tes==13) // up 
-	    aweight*=((1.0+2*zmumusf)/(1.0+zmumusf));
-	  else if (tes==-13) // down  
-	    aweight*=(1.0/(1.0+zmumusf));
-	}
 
 
 	//KK: For some studies, definitions of categories
