@@ -196,61 +196,28 @@ int main(int argc, char** argv) {
     // top
     arbre->SetBranchAddress("pt_top1",&pt_top1);
     arbre->SetBranchAddress("pt_top2",&pt_top2);
-    // svFit
-    //arbre->SetBranchAddress("m_sv",&m_sv);
-    //arbre->SetBranchAddress("pt_sv", &pt_sv);
-    // MELA
-    //arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF); // What we actually use.
-    //arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
-    //arbre->SetBranchAddress("ME_bkg",&ME_bkg); // What we actually use.
+
 
     scenario_info scenario(arbre, shape);
-    
-    //float bins0[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
-    //float bins1[] = {0, 40, 60, 70, 80, 90, 100, 110, 120, 130, 150, 200, 250}; //VBF
-    //float bins0[] = {0,10,20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300}; //VBF
-    //float bins1[] = {0,10,20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300}; //VBF
-    //    float bins0[] = {0,50,100,150,200,250,300,350,400,450,500}; //fig50 H pT
-    //    float bins1[] = {0,50,100,150,200,250,300,350,400,450,500}; //fig50 H pT
-
     
     // D.Kim : AN line 791~795
     //Binning for 0jet cat. 1D: Msv. In AN it was 10GeV binning / official data card combined 0~50 as one bin
     float bins0[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
     float bins1[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
-    //float bins0[] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
-    //float bins1[] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
-    //float bins0[] = {0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300};
-    //float bins1[] = {0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300};
     //Binning for 1jet cat, x-axis: HpT
     float bins11[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
     float bins12[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-
     //Binning for 2jet cat, x-axis: Mjj
     float bins21[] = {0,300,500,800,10000};
+    //float bins21[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
     //binning for 2jet cat, x-axis: Dbkg_VBF
     //float bins21[] = {0.0,0.3,0.6,0.9,1.0};
-    //Binning for 2jet cat, x-axis: NN_disc
-    //float bins21[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-    //float bins21[] = {0.0,0.5,0.7,0.8,1.0};
     //Binning for 2jet cat, y-axis: Msv
     float bins22[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
 
-    //float bins1[] = {0,50,100,150,200,250,300,350,400,450,500};//,550,600,650,700,750,800,850,900,950,1000,1050}; //fig50 H pT
-    //float bins0[] = {0,80,160,240,320,400,480,560,640,720,800,880,960,1040,1120,1200,1280,1360};
-    //float bins1[] = {0,80,160,240,320,400,480,560,640,720,800,880,960,1040,1120,1200,1280,1360};
-    //float bins0[] = {0,25,50,75,100,120,140,160,180,200,225,250,275,300,324,350,375,400,425,450,475,500,550};//,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj 800
-    //float bins1[] = {0,25,50,75,100,120,140,160,180,200,225,250,275,300,324,350,375,400,425,450,475,500,550};//,600,650,700,750,800};//,850,900,950,1000,1050,1100,1150,1200,1250,1300}; // mjj 800
-    
-    //float bins0[] = {-5.0,-4.5,-4.0,-3.5,-3.0,-2.5,-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0};
-    //float bins1[] = {-5.0,-4.5,-4.0,-3.5,-3.0,-2.5,-2.0,-1.5,-1.0,-0.5,0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0};
-    //float bins0[] = {0,30,60,90,120,150,180,210,240,270,300,330,360,390};
-    //float bins1[] = {0,30,60,90,120,150,180,210,240,270,300,330,360,390};
-
     int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
     int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
-
     int  binnum11 = sizeof(bins11)/sizeof(Float_t) - 1;
     int  binnum12 = sizeof(bins12)/sizeof(Float_t) - 1;
     int  binnum21 = sizeof(bins21)/sizeof(Float_t) - 1;
@@ -262,36 +229,6 @@ int main(int argc, char** argv) {
     TH1F* hy_boosted = new TH1F ("hy_boosted", "hy_boosted", binnum12, bins12); hy_boosted->Sumw2();
     TH1F* hx_vbf = new TH1F ("hx_vbf", "hx_vbf", binnum21, bins21); hx_vbf->Sumw2();
     TH1F* hy_vbf = new TH1F ("hy_vbf", "hy_vbf", binnum22, bins22); hy_vbf->Sumw2();
-
-    // Categories
-    //TH1F* ojet = new TH1F ("ojet", "ojet", 100, -0.10, 0.10); ojet->Sumw2();
-    //TH1F* boosted = new TH1F ("boosted", "boosted", 100, -0.10, 0.10); boosted->Sumw2();
-    //TH1F* vbf = new TH1F ("vbf", "vbf", 100, -0.10, 0.10); vbf->Sumw2();
-
-    //KK Change to 2D histograms
-
-    /*
-    std::vector<TH1F*> h0_OS;
-    std::vector<TH1F*> h0_SS;
-    std::vector<TH1F*> h0_AIOS;
-    std::vector<TH1F*> h0_AISS;
-    std::vector<TH1F*> h1_OS;
-    std::vector<TH1F*> h1_SS;
-    std::vector<TH1F*> h1_AIOS;
-    std::vector<TH1F*> h1_AISS;
-    std::vector<TH1F*> h2_OS;
-    std::vector<TH1F*> h2_SS;
-    std::vector<TH1F*> h2_AIOS;
-    std::vector<TH1F*> h2_AISS;
-    std::vector<TH1F*> h3_OS;
-    std::vector<TH1F*> h3_SS;
-    std::vector<TH1F*> h3_AIOS;
-    std::vector<TH1F*> h3_AISS;
-    std::vector<TH1F*> h_OS;
-    std::vector<TH1F*> h_SS;
-    std::vector<TH1F*> h_AIOS;
-    std::vector<TH1F*> h_AISS;
-    */
 
     // h0_ : 0jet, h1_ : boosted, h2_ : vbf, h3_ : vh, h2M*_ : vbf with MELA, h4M_ : 2jets with MEAL  h_ : inclusive
     std::vector<TH1F*> h0_OS;
@@ -306,30 +243,6 @@ int main(int argc, char** argv) {
     std::vector<TH2F*> h2_SS;
     std::vector<TH2F*> h2_AIOS;
     std::vector<TH2F*> h2_AISS;
-
-    /*
-    std::vector<TH2F*> h2M1_OS;
-    std::vector<TH2F*> h2M1_SS;
-    std::vector<TH2F*> h2M1_AIOS;
-    std::vector<TH2F*> h2M1_AISS;
-    std::vector<TH2F*> h2M2_OS;
-    std::vector<TH2F*> h2M2_SS;
-    std::vector<TH2F*> h2M2_AIOS;
-    std::vector<TH2F*> h2M2_AISS;
-    std::vector<TH2F*> h2M3_OS;
-    std::vector<TH2F*> h2M3_SS;
-    std::vector<TH2F*> h2M3_AIOS;
-    std::vector<TH2F*> h2M3_AISS;
-    std::vector<TH2F*> h4M1_OS; // in test cate - ex) 2jets
-    std::vector<TH2F*> h4M1_SS;
-    std::vector<TH2F*> h4M1_AIOS;
-    std::vector<TH2F*> h4M1_AISS;
-    std::vector<TH2F*> h4M2_OS;
-    std::vector<TH2F*> h4M2_SS;
-    std::vector<TH2F*> h4M2_AIOS;
-    std::vector<TH2F*> h4M2_AISS;
-    */
-
     std::vector<TH2F*> h3_OS;
     std::vector<TH2F*> h3_SS;
     std::vector<TH2F*> h3_AIOS;
@@ -345,12 +258,6 @@ int main(int argc, char** argv) {
     std::vector<TH1F*> h_trgSF_FR;
     std::vector<TH1F*> h_trgSF_RF;
     std::vector<TH1F*> h_trgSF_FF;
-
-    /*
-    // D.Kim : MELA 1D
-    std::vector<TH1F*> h_MELA_VBF;
-    std::vector<TH1F*> h_MELA_ggH;
-    */
 
     TString postfix="";
     //For shape systematics
@@ -438,16 +345,7 @@ int main(int argc, char** argv) {
       
     }
     
-    TString postfixTES[12]={"_CMS_scale_t_13TeVDown","_CMS_scale_t_13TeVUp","_CMS_scale_t_1prong_13TeVDown","_CMS_scale_t_1prong_13TeVUp","_CMS_scale_t_1prong1pizero_13TeVDown","_CMS_scale_t_1prong1pizero_13TeVUp","_CMS_scale_t_3prong_13TeVDown","_CMS_scale_t_3prong_13TeVUp","_CMS_scale_met_unclustered_13TeVDown","_CMS_scale_met_unclustered_13TeVUp","_CMS_scale_met_clustered_13TeVDown","_CMS_scale_met_clustered_13TeVUp"};
-    TString postfixDM[6]={"_CMS_tauDMReco_1prong_13TeVUp","_CMS_tauDMReco_1prong_13TeVDown","_CMS_tauDMReco_1prong1pizero_13TeVUp","_CMS_tauDMReco_1prong1pizero_13TeVDown","_CMS_tauDMReco_3prong_13TeVUp","_CMS_tauDMReco_3prong_13TeVDown"};
-    TString postfixFakeDM[6]={"_CMS_jetToTauDMReco_1prong_13TeVUp","_CMS_jetToTauDMReco_1prong_13TeVDown","_CMS_jetToTauDMReco_1prong1pizero_13TeVUp","_CMS_jetToTauDMReco_1prong1pizero_13TeVDown","_CMS_jetToTauDMReco_3prong_13TeVUp","_CMS_jetToTauDMReco_3prong_13TeVDown"};
-    TString postfixZLshape[12]={"_CMS_htt_ZLShape_mt_13TeVUp","_CMS_htt_ZLShape_mt_13TeVDown","_CMS_ZLShape_mt_0jet_1prong_13TeVUp","_CMS_ZLShape_mt_0jet_1prong_13TeVDown","_CMS_ZLShape_mt_0jet_1prong1pizero_13TeVUp","_CMS_ZLShape_mt_0jet_1prong1pizero_13TeVDown","_CMS_ZLShape_mt_1prong_13TeVUp","_CMS_ZLShape_mt_1prong_13TeVDown", "_CMS_ZLShape_mt_1prong1pizero_13TeVUp","_CMS_ZLShape_mt_1prong1pizero_13TeVDown","_CMS_ZLShape_mt_3prong_13TeVUp","_CMS_ZLShape_mt_3prong_13TeVDown"};
-    TString postfixZLnorm[4]={"_CMS_mFakeTau_1prong_13TeVUp","_CMS_mFakeTau_1prong_13TeVDown","_CMS_mFakeTau_1prong1pizero_13TeVUp","_CMS_mFakeTau_1prong1pizero_13TeVDown"};
-    TString postfixJES[56]={"_CMS_scale_j_13TeVDown","_CMS_scale_j_13TeVUp","_CMS_scale_j_AbsoluteFlavMap_13TeVDown","_CMS_scale_j_AbsoluteFlavMap_13TeVUp","_CMS_scale_j_AbsoluteMPFBias_13TeVDown","_CMS_scale_j_AbsoluteMPFBias_13TeVUp","_CMS_scale_j_AbsoluteScale_13TeVDown","_CMS_scale_j_AbsoluteScale_13TeVUp","_CMS_scale_j_AbsoluteStat_13TeVDown","_CMS_scale_j_AbsoluteStat_13TeVUp","_CMS_scale_j_FlavorQCD_13TeVDown","_CMS_scale_j_FlavorQCD_13TeVUp","_CMS_scale_j_Fragmentation_13TeVDown","_CMS_scale_j_Fragmentation_13TeVUp","_CMS_scale_j_PileUpDataMC_13TeVDown","_CMS_scale_j_PileUpDataMC_13TeVUp","_CMS_scale_j_PileUpPtBB_13TeVDown","_CMS_scale_j_PileUpPtBB_13TeVUp","_CMS_scale_j_PileUpPtEC1_13TeVDown","_CMS_scale_j_PileUpPtEC1_13TeVUp","_CMS_scale_j_PileUpPtEC2_13TeVDown","_CMS_scale_j_PileUpPtEC2_13TeVUp","_CMS_scale_j_PileUpPtHF_13TeVDown","_CMS_scale_j_PileUpPtHF_13TeVUp","_CMS_scale_j_PileUpPtRef_13TeVDown","_CMS_scale_j_PileUpPtRef_13TeVUp","_CMS_scale_j_RelativeBal_13TeVDown","_CMS_scale_j_RelativeBal_13TeVUp","_CMS_scale_j_RelativeFSR_13TeVDown","_CMS_scale_j_RelativeFSR_13TeVUp","_CMS_scale_j_RelativeJEREC1_13TeVDown","_CMS_scale_j_RelativeJEREC1_13TeVUp","_CMS_scale_j_RelativeJEREC2_13TeVDown","_CMS_scale_j_RelativeJEREC2_13TeVUp","_CMS_scale_j_RelativeJERHF_13TeVDown","_CMS_scale_j_RelativeJERHF_13TeVUp","_CMS_scale_j_RelativePtBB_13TeVDown","_CMS_scale_j_RelativePtBB_13TeVUp","_CMS_scale_j_RelativePtEC1_13TeVDown","_CMS_scale_j_RelativePtEC1_13TeVUp","_CMS_scale_j_RelativePtEC2_13TeVDown","_CMS_scale_j_RelativePtEC2_13TeVUp","_CMS_scale_j_RelativePtHF_13TeVDown","_CMS_scale_j_RelativePtHF_13TeVUp","_CMS_scale_j_RelativeStatEC_13TeVDown","_CMS_scale_j_RelativeStatEC_13TeVUp","_CMS_scale_j_RelativeStatFSR_13TeVDown","_CMS_scale_j_RelativeStatFSR_13TeVUp","_CMS_scale_j_RelativeStatHF_13TeVDown","_CMS_scale_j_RelativeStatHF_13TeVUp","_CMS_scale_j_SinglePionECAL_13TeVDown","_CMS_scale_j_SinglePionECAL_13TeVUp","_CMS_scale_j_SinglePionHCAL_13TeVDown","_CMS_scale_j_SinglePionHCAL_13TeVUp","_CMS_scale_j_TimePtEta_13TeVDown","_CMS_scale_j_TimePtEta_13TeVUp"};
-    TString postfixWG1[18]={"_THU_ggH_Mu_13TeVUp","_THU_ggH_Mu_13TeVDown","_THU_ggH_Res_13TeVUp","_THU_ggH_Res_13TeVDown","_THU_ggH_Mig01_13TeVUp","_THU_ggH_Mig01_13TeVDown","_THU_ggH_Mig12_13TeVUp","_THU_ggH_Mig12_13TeVDown","_THU_ggH_VBF2j_13TeVUp","_THU_ggH_VBF2j_13TeVDown","_THU_ggH_VBF3j_13TeVUp","_THU_ggH_VBF3j_13TeVDown","_THU_ggH_PT60_13TeVUp","_THU_ggH_PT60_13TeVDown","_THU_ggH_PT120_13TeVUp","_THU_ggH_PT120_13TeVDown","_THU_ggH_qmtop_13TeVUp","_THU_ggH_qmtop_13TeVDown"};
     
-    bool text=true;    
-    std::cout << "2" << std::endl;    
     Int_t nentries_wtn = (Int_t) arbre->GetEntries();
     for (Int_t i = 0; i < nentries_wtn; i++) {
       arbre->GetEntry(i);
@@ -630,7 +528,7 @@ int main(int argc, char** argv) {
       
       // D.Kim : https://github.com/cecilecaillol/SMHTT2016/blob/master/mt/Analyze/FinalSelection2D_relaxed.cc#L744-L754
       //************************ Jet to tau FR shape **************************
-      if (tes==14 && (sample=="TTJ" or sample=="ZJ" or sample=="W")) {
+      if (shape=="jetToTauFake_Up" && (sample=="TTJ" or sample=="ZJ" or sample=="W")) {
 	  float jtotau1=1.0;
 	  if (gen_match_1==6) {
 	    jtotau1=1-(0.2*mytau1.Pt()/100);
@@ -644,7 +542,7 @@ int main(int argc, char** argv) {
 	  aweight=aweight*jtotau1*jtotau2;
       }
 
-	if (tes==-14 && (sample=="TTJ" or sample=="ZJ" or sample=="W")) {
+	if (shape=="jetToTauFake_Down" && (sample=="TTJ" or sample=="ZJ" or sample=="W")) {
 	  float jtotau1=1.0;
 	  if (gen_match_1==6) {
 	    jtotau1=1+(0.2*mytau1.Pt()/100);
@@ -684,7 +582,10 @@ int main(int argc, char** argv) {
 	
 	float var2=m_sv; 
 	float var1_1=pt_sv;
-
+	
+	// njets count only jets with pT > 30
+        if (jpt_1<30) {jpt_1=-9999.0; jeta_1=-9999.0; jphi_1=-9999.0;}
+        if (jpt_2<30) {jpt_2=-9999.0; jeta_2=-9999.0; jphi_2=-9999.0;}
 	TLorentzVector myjet1;
 	myjet1.SetPtEtaPhiM(jpt_1,jeta_1,jphi_1,0);
 	//myjet1.SetPtEtaPhiM(scenario.get_jpt_1(),jeta_1,jphi_1,0);
@@ -702,53 +603,20 @@ int main(int argc, char** argv) {
 	//myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
 	
-	//KK: added "&& gen_match_1==5"
-	if (tes==1 && gen_match_2==5 && gen_match_1==5){	    
-	  
-	  if (k==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mytau2*=0.988;  mymet=mymet+(0.012/0.988)*mytau1+(0.012/0.988)*mytau2;}
-	  if (k==1){ var1_1=pt_sv_UP;   var2=m_sv_UP;   mytau1*=1.012; mytau2*=1.012;  mymet=mymet-(0.012/1.012)*mytau1-(0.012/1.012)*mytau2;}
-                   
-	  if (k==2 && t2_decayMode==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==3 && t2_decayMode==0){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-	  if (k==4 && t2_decayMode==1){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==5 && t2_decayMode==1){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-	  if (k==6 && t2_decayMode==10){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
-	  if (k==7 && t2_decayMode==10){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
-          
-	  if (k==2 && t1_decayMode==0){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==3 && t1_decayMode==0){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-	  if (k==4 && t1_decayMode==1){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==5 && t1_decayMode==1){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-	  if (k==6 && t1_decayMode==10){ var1_1=pt_sv_DOWN; var2=m_sv_DOWN; mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
-	  if (k==7 && t1_decayMode==10){ var1_1=pt_sv_UP; var2=m_sv_UP; mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
-          
-	}
-	
-	if (tes==1){
-	  //KK: Modified lines below from
-	  //	    if (k==8){ var2=m_sv_UESDown; var1_1=pt_sv_UESDown; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
-	  //	    else if (k==9){ var2=m_sv_UESUp; var1_1=pt_sv_UESUp; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
-	  //	    else if (k==10){ var2=m_sv_JESDown; var1_1=pt_sv_JESDown; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
-	  //	    else if (k==11){ var2=m_sv_JESUp; var1_1=pt_sv_JESUp; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
-	  //KK: to
-	  if (k==8){ var2=m_sv_UncMet_DOWN; var1_1=pt_sv_UncMet_DOWN; mymet.SetPtEtaPhiM(met_UESDown,0,metphi_UESDown,0);}
-	  else if (k==9){ var2=m_sv_UncMet_UP; var1_1=pt_sv_UncMet_UP; mymet.SetPtEtaPhiM(met_UESUp,0,metphi_UESUp,0);}
-	  else if (k==10){ var2=m_sv_ClusteredMet_DOWN; var1_1=pt_sv_ClusteredMet_DOWN; mymet.SetPtEtaPhiM(met_JESDown,0,metphi_JESDown,0);}
-	  else if (k==11){ var2=m_sv_ClusteredMet_UP; var1_1=pt_sv_ClusteredMet_UP; mymet.SetPtEtaPhiM(met_JESUp,0,metphi_JESUp,0);}
-	}
-	
-	//KK: Added njet and mjj variables affected by JES
-	if (tes==100 && var1_2==mjj){
-	  njets = nombrejets[k];
-	  var1_2 = massejets[k]; //KK for now not available in trees
-	}
+	if (gen_match_2==5 && gen_match_1==5) {
+	  if (shape=="DM0_DOWN" && t1_decayMode==0) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
+	  if (shape=="DM1_DOWN" && t1_decayMode==1) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
+	  if (shape=="DM10_DOWN" && t1_decayMode==10) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
+	  if (shape=="DM0_DOWN" && t2_decayMode==0) {mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
+	  if (shape=="DM1_DOWN" && t2_decayMode==1) {mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
+	  if (shape=="DM10_DOWN" && t2_decayMode==10) {mytau2*=0.988; mymet=mymet+(0.012/0.988)*mytau2;}
 
-	if (tes==1 && var1_2==normMELA){ 
-	  if (text) {std::cout << "------------------------------ var1_2 is replaced to MELA ------------------------------" << std::endl;text=false;}
-	  if (k==8) var1_2=ME_sm_VBF_UncMet_DOWN/(ME_sm_VBF_UncMet_DOWN+45*ME_bkg_UncMet_DOWN);
-	  if (k==9) var1_2=ME_sm_VBF_UncMet_UP/(ME_sm_VBF_UncMet_UP+45*ME_bkg_UncMet_UP);
-	  if (k==10) var1_2=ME_sm_VBF_ClusteredMet_DOWN/(ME_sm_VBF_ClusteredMet_DOWN+45*ME_bkg_ClusteredMet_DOWN);
-	  if (k==11) var1_2=ME_sm_VBF_ClusteredMet_UP/(ME_sm_VBF_ClusteredMet_UP+45*ME_bkg_ClusteredMet_UP);
+	  if (shape=="DM0_UP" && t1_decayMode==0) {mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
+	  if (shape=="DM1_UP" && t1_decayMode==1) {mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
+	  if (shape=="DM10_UP" && t1_decayMode==10) {mytau1*=1.012; mymet=mymet-(0.012/1.012)*mytau1;}
+	  if (shape=="DM0_UP" && t2_decayMode==0) {mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
+	  if (shape=="DM1_UP" && t2_decayMode==1) {mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
+	  if (shape=="DM10_UP" && t2_decayMode==10) {mytau2*=1.012; mymet=mymet-(0.012/1.012)*mytau2;}
 	}
 
 	if (mytau1.Pt() < 40 || mytau2.Pt() < 40 ) continue;
@@ -761,8 +629,7 @@ int main(int argc, char** argv) {
 	// D.Kim
 	weight2=weight2*sf_trg1*sf_trg2;
 
-        
-	// Additional selections
+       	// Additional selections
 	bool selection =true;
 	TLorentzVector Higgs = mytau1+mytau2+mymet;
 	
@@ -776,8 +643,7 @@ int main(int argc, char** argv) {
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	if (njets==2) is_2jets=true;
-	//if (!is_0jet && !is_boosted) std::cout << "NN is survived! " << NN_disc << std::endl;
+
 	// Z mumu SF 
 	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
 	  aweight*=zmumuSF_boosted(pt_sv,shape);
@@ -955,21 +821,31 @@ int main(int argc, char** argv) {
     TDirectory *TRG_SF = fout->mkdir("trgSF");
 
     for (int k=0; k<nbhist; ++k){
-      if (tes==10) postfix="_CMS_htt_dyShape_13TeVUp";
-      if (tes==-10) postfix="_CMS_htt_dyShape_13TeVDown";
-      if (tes==14) postfix="_CMS_htt_jetToTauFake_13TeVUp";
-      if (tes==-14) postfix="_CMS_htt_jetToTauFake_13TeVDown";
-      if (tes==11) postfix="_CMS_htt_ttbarShape_13TeVUp";
-      if (tes==-11) postfix="_CMS_htt_ttbarShape_13TeVDown";        
-      if (tes==100) postfix=postfixJES[k];
-      if (tes==1) postfix=postfixTES[k];
-      if (tes==16) postfix=postfixDM[k];
-      if (tes==17) postfix=postfixZLshape[k];
-      if (tes==18) postfix=postfixZLnorm[k];
-      if (tes==19) postfix=postfixFakeDM[k];
-      if (tes==1000) postfix=postfixWG1[k];
-      if (tes==13)  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
-      if (tes==-13) postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
+      if (shape=="dyShape_Up") postfix="_CMS_htt_dyShape_13TeVUp";
+      if (shape=="dyShape_Down") postfix="_CMS_htt_dyShape_13TeVDown";
+      if (shape=="jetToTauFake_Up") postfix="_CMS_htt_jetToTauFake_13TeVUp";
+      if (shape=="jetToTauFake_Down") postfix="_CMS_htt_jetToTauFake_13TeVDown";
+      if (shape=="ttbarShape_Up") postfix="_CMS_htt_ttbarShape_13TeVUp";
+      if (shape=="ttbarShape_Down") postfix="_CMS_htt_ttbarShape_13TeVDown";        
+      if (shape=="ClusteredMet_UP") postfix="_CMS_scale_met_clustered_13TeVUp";
+      if (shape=="ClusteredMet_DOWN") postfix="_CMS_scale_met_clustered_13TeVDown";
+      if (shape=="UncMet_UP") postfix="_CMS_scale_met_unclustered_13TeVUp";
+      if (shape=="UncMet_DOWN") postfix="_CMS_scale_met_unclustered_13TeVDown";
+      if (shape=="DM0_UP") postfix="_CMS_scale_t_1prong_13TeVUp";
+      if (shape=="DM0_DOWN") postfix="_CMS_scale_t_1prong_13TeVDown";
+      if (shape=="DM1_UP") postfix="_CMS_scale_t_1prong1pizero_13TeVUp";
+      if (shape=="DM1_DOWN") postfix="_CMS_scale_t_1prong1pizero_13TeVDown";
+      if (shape=="DM10_UP") postfix="_CMS_scale_t_3prong_13TeVUp";
+      if (shape=="DM10_DOWN") postfix="_CMS_scale_t_3prong_13TeVDown";
+      if (shape=="JESUp") postfix="_CMS_scale_j_13TeVUp";
+      if (shape=="JESDown") postfix="_CMS_scale_j_13TeVDown";
+      //if (tes==1) postfix=postfixTES[k];
+      //if (tes==16) postfix=postfixDM[k];
+      //if (tes==17) postfix=postfixZLshape[k];
+      //if (tes==18) postfix=postfixZLnorm[k];
+
+      if (shape=="zmumuShape_Up")  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
+      if (shape=="zmumuShape_Down") postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
       std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;
       
       // These will be the final root files

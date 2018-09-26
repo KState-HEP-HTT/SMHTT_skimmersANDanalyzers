@@ -1,8 +1,3 @@
-'''
-Definitions for plotRocCurve.py so that other can stay cleaner
-Author: L. Dodd, UW Madison
-'''
-
 from subprocess import Popen
 from sys import argv, exit, stdout, stderr
 
@@ -19,14 +14,17 @@ ROOT.gStyle.SetOptStat(0)
 canvas = ROOT.TCanvas("asdf", "adsf", 800, 800)
 
 def get_histo(file, cate, histname=''):
+    print '.... Finding ',histname,' histogram. If it is 2D, ProjectionX of it going to be used.'
     hist2d = file.Get("tt_"+cate+"/"+histname)
     hist = hist2d.ProjectionX()
     return hist
 
 def get_eff(file,cate,histname=''):
     ''' Get the eff '''
+    print '.... Getting efficiency of ', file.GetName(),' in ',cate,' category.'
     hist = get_histo(file,cate,histname)
     deno = hist.Integral()
+    #print 'deno : ', deno
     eff = []
     for i in range(0,hist.GetNbinsX()):
         slice_yield=hist.Integral(hist.GetNbinsX()-i,hist.GetNbinsX())
@@ -35,12 +33,12 @@ def get_eff(file,cate,histname=''):
 
 def produce_tgraph(fsignal,sig_histname,fztt,ztt_histname,cate,color,MarkerStyle=20):
     ''' Create a TGraph with one point(TGraph) '''
+    print '.... Producing TGraph.'
     x_eff = numpy.array(get_eff(fsignal,cate,sig_histname),dtype=float)
     y_eff = numpy.array(get_eff(fztt,cate, ztt_histname),dtype=float)
     n = len(x_eff)
-    print fsignal
-    print x_eff
-    print y_eff
+    print 'sig_eff : ', x_eff
+    print 'bkf_eff : ', y_eff,'\n'
     tgraph = ROOT.TGraph(n,x_eff,y_eff)
     tgraph.SetMarkerStyle(MarkerStyle)
     tgraph.SetMarkerColor(color)
@@ -53,6 +51,32 @@ def produce_pair(histoId, ntupleEff,ntupleFR,N,tgline):
     id_FakeRate = get_ratio(histoId, ntupleFR)
     fr = numpy.array([id_FakeRate],dtype=float)
     tgline.SetPoint(N,eff,fr)
+
+def produce_roc_curve(f1, sig_histname, sig_title, ztt_histname, ztt_title, type2, title=''):#,label='roc'):
+    frame = ROOT.TMultiGraph()
+    frame.SetTitle(title+';'+sig_title+';'+ztt_title)
+    cate = 'vbf'
+    #Create TGraphs to add to the TMultiGraph
+    tg1 = produce_tgraph(f1,sig_histname,f1,ztt_histname,cate,ROOT.kBlue,20)
+
+    #Add the TGraphs to the TMultigraph 
+    frame.Add(tg1)
+
+    #Draw Axis,Line,Points
+    frame.Draw("ALP")
+
+    #Add Legend for the IDs
+    legend = ROOT.TLegend(0.2, 0.7, 0.39, 0.8, "", "brNDC")
+    legend.SetFillColor(ROOT.kWhite)
+    legend.SetHeader("category","C")
+    legend.SetBorderSize(0)
+    legend.AddEntry(tg1,type1,"pe")
+    legend.Draw()
+
+    #Save with a specific file name
+    saveas = title+'.pdf'
+    print saveas
+    canvas.SaveAs(saveas)
 
 def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, type1, type2, title=''):#,label='roc'):
     frame = ROOT.TMultiGraph()
@@ -86,7 +110,7 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, 
     #Add Legend for the IDs
     legend = ROOT.TLegend(0.2, 0.7, 0.39, 0.8, "", "brNDC")
     legend.SetFillColor(ROOT.kWhite)
-    legend.SetHeader("category","C")
+    #legend.SetHeader("category","C")
     legend.SetBorderSize(0)
     legend.AddEntry(tg1,type1,"pe")
     legend.AddEntry(tg2,type2,"pe")
@@ -94,9 +118,9 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, 
     #legend.AddEntry(tg3,legend3,"pe")
     legend.Draw()
     #Save with a specific file name
-    saveas = title+'.pdf'
-    print saveas
+    saveas = 'plots/ROC/'+title+ztt_histname+'.pdf'
     canvas.SaveAs(saveas)
+    print saveas,'----------------------------------------------------- \n\n\n'
 
 def CMSstyle():
     ROOT.gROOT.SetStyle("Plain")
@@ -188,19 +212,20 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     h_sig.SetLineColor(ROOT.kRed)
     h_sig.SetLineWidth(2)
     h_sig.SetMarkerStyle(8)
+    h_sig.SetMaximum(max(h_sig.GetMaximum()*1.60, h_ztt.GetMaximum()*1.60))
     h_sig.Draw()
     h_ztt.SetLineColor(ROOT.kBlue)
     h_ztt.SetLineWidth(2)
     h_ztt.SetMarkerStyle(8)
     h_ztt.Draw("same")
     legend = ROOT.TLegend(0.2,0.7,0.45,0.87)
-    legend.SetHeader(var+":"+cate,"C")
+    legend.SetHeader(var,"C")
     #legend.SetHeader(var+":"+cate,"C")
     legend.AddEntry(h_sig,histname_sig,"l")
     #legend.AddEntry(h_sig,"Norm("+histname_sig+")","l")
     legend.AddEntry(h_ztt,histname_ztt,"l")
     legend.Draw()
-    
+
     h_ratio = h_sig.Clone()
     h_ratio.Divide(h_sig,h_ztt,1,1,"B")
     h_ratio.SetLineWidth(1)
@@ -212,7 +237,7 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     h_ratio.GetXaxis().SetTitleSize(0.1)
     h_ratio.GetXaxis().SetTitleOffset(1.0)
     h_ratio.GetYaxis().SetLabelSize(0.07)
-    h_ratio.GetYaxis().SetTitle('sig / ZTT')#histname_sig+'/'+histname_ztt)
+    h_ratio.GetYaxis().SetTitle('sig / '+histname_ztt)#histname_sig+'/'+histname_ztt)
     h_ratio.GetYaxis().CenterTitle()
     h_ratio.GetYaxis().SetTitleFont(42)
     h_ratio.GetYaxis().SetTitleSize(0.1)
@@ -220,7 +245,7 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     pad2.cd()
     h_ratio.Draw()
 
-    saveas = var+'_'+cate+'.pdf'
+    saveas = 'plots/ROC/'+var+'_'+cate+histname_ztt+'.pdf'
     print saveas  
     canvas2.SaveAs(saveas) 
 

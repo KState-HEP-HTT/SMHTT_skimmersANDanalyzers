@@ -1,7 +1,7 @@
  rm outputs_nominal/*
- #####################
- #### Nominal runs ###
- #####################
+ ####################
+ ### Nominal runs ###
+ ####################
 
  # 1. Data
  ./tt_analyzer.exe myntuples/Aug30/data_B.root outputs_nominal/data_B.root data_obs data_obs 0 nominal
@@ -45,6 +45,7 @@
  # 5. TT
  ./tt_analyzer.exe myntuples/Aug30/TT.root outputs_nominal/TTT.root TT TTT 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/TT.root outputs_nominal/TTJ.root TT TTJ 0 nominal
+ # 6. W
  ./tt_analyzer.exe myntuples/Aug30/W.root outputs_nominal/W0.root W W 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/W1.root outputs_nominal/W1.root W W 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/W2.root outputs_nominal/W2.root W W 0 nominal
@@ -53,7 +54,7 @@
  ./tt_analyzer.exe myntuples/Aug30/EWKWMinus.root outputs_nominal/EWKWMinus.root EWKWminus W 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/EWKWPlus.root outputs_nominal/EWKWPlus.root EWKWplus W 0 nominal
  hadd -f outputs_nominal/W.root outputs_nominal/W0.root outputs_nominal/W1.root outputs_nominal/W2.root outputs_nominal/W3.root outputs_nominal/W4.root outputs_nominal/EWKWMinus.root outputs_nominal/EWKWPlus.root 
- # 6. VV
+ # 7. VV
  ./tt_analyzer.exe myntuples/Aug30/WZ1l1nu2q.root outputs_nominal/WZ1l1nu2q_T.root WZ1L1Nu2Q VVT 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/WZ1l3nu.root outputs_nominal/WZ1l3nu_T.root WZ1L3Nu VVT 0 nominal
  ./tt_analyzer.exe myntuples/Aug30/WZ3l1nu.root outputs_nominal/WZ3l1nu_T.root WZLLLNu VVT 0 nominal
@@ -81,7 +82,7 @@
  ./tt_analyzer.exe myntuples/Aug30/T-tchan.root outputs_nominal/T-tchan_J.root ST_t_top VVJ 0 nominal
  hadd -f outputs_nominal/VVJ.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ1l3nu_J.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ3l1nu_J.root outputs_nominal/WZ2l2q_J.root outputs_nominal/WW1l1nu2q_J.root outputs_nominal/ZZ4l_J.root outputs_nominal/ZZ2l2q_J.root outputs_nominal/VV2l2nu_J.root outputs_nominal/Tbar-tW_J.root outputs_nominal/T-tW_J.root outputs_nominal/Tbar-tchan_J.root outputs_nominal/T-tchan_J.root 
 
- python python/SignalCreator.py
+ #python python/SignalCreator.py
  python python/QCDcreator.py
 
  # hadd all outputs
