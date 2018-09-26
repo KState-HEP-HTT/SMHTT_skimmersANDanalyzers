@@ -248,6 +248,10 @@ public :
    Float_t         metcov01;
    Float_t         metcov10;
    Float_t         metcov11;
+   Float_t         metcov00_DESYlike;
+   Float_t         metcov01_DESYlike;
+   Float_t         metcov10_DESYlike;
+   Float_t         metcov11_DESYlike;
    Float_t         muGlbIsoVetoPt10;
    Float_t         muVetoPt15IsoIdVtx;
    Float_t         muVetoPt5;
@@ -858,32 +862,17 @@ public :
    Float_t         tripleMuPrescale;
    Float_t         type1_pfMetEt;
    Float_t         type1_pfMetPhi;
-   Float_t         type1_pfMet_shiftedPhi_ElectronEnDown;
-   Float_t         type1_pfMet_shiftedPhi_ElectronEnUp;
+
    Float_t         type1_pfMet_shiftedPhi_JetEnDown;
    Float_t         type1_pfMet_shiftedPhi_JetEnUp;
    Float_t         type1_pfMet_shiftedPhi_JetResDown;
    Float_t         type1_pfMet_shiftedPhi_JetResUp;
-   Float_t         type1_pfMet_shiftedPhi_MuonEnDown;
-   Float_t         type1_pfMet_shiftedPhi_MuonEnUp;
-   Float_t         type1_pfMet_shiftedPhi_PhotonEnDown;
-   Float_t         type1_pfMet_shiftedPhi_PhotonEnUp;
-   Float_t         type1_pfMet_shiftedPhi_TauEnDown;
-   Float_t         type1_pfMet_shiftedPhi_TauEnUp;
    Float_t         type1_pfMet_shiftedPhi_UnclusteredEnDown;
    Float_t         type1_pfMet_shiftedPhi_UnclusteredEnUp;
-   Float_t         type1_pfMet_shiftedPt_ElectronEnDown;
-   Float_t         type1_pfMet_shiftedPt_ElectronEnUp;
    Float_t         type1_pfMet_shiftedPt_JetEnDown;
    Float_t         type1_pfMet_shiftedPt_JetEnUp;
    Float_t         type1_pfMet_shiftedPt_JetResDown;
    Float_t         type1_pfMet_shiftedPt_JetResUp;
-   Float_t         type1_pfMet_shiftedPt_MuonEnDown;
-   Float_t         type1_pfMet_shiftedPt_MuonEnUp;
-   Float_t         type1_pfMet_shiftedPt_PhotonEnDown;
-   Float_t         type1_pfMet_shiftedPt_PhotonEnUp;
-   Float_t         type1_pfMet_shiftedPt_TauEnDown;
-   Float_t         type1_pfMet_shiftedPt_TauEnUp;
    Float_t         type1_pfMet_shiftedPt_UnclusteredEnDown;
    Float_t         type1_pfMet_shiftedPt_UnclusteredEnUp;
    Float_t         vbfDeta;
@@ -1241,11 +1230,15 @@ public :
    TBranch        *b_jetVeto30_JetTotalUp;   //!
    TBranch        *b_lumi;   //!
    TBranch        *b_metSig;   //!
-   TBranch        *b_metcov00;   //!
-   TBranch        *b_metcov01;   //!
-   TBranch        *b_metcov10;   //!
-   TBranch        *b_metcov11;   //!
-   TBranch        *b_muGlbIsoVetoPt10;   //!
+   TBranch        *b_metcov00;        //!
+   TBranch        *b_metcov01;        //!
+   TBranch        *b_metcov10;        //!
+   TBranch        *b_metcov11;        //!
+   TBranch        *b_metcov00_DESYlike; //!
+   TBranch        *b_metcov01_DESYlike; //!
+   TBranch        *b_metcov10_DESYlike; //!
+   TBranch        *b_metcov11_DESYlike; //!
+   TBranch        *b_muGlbIsoVetoPt10;            //!
    TBranch        *b_muVetoPt15IsoIdVtx;   //!
    TBranch        *b_muVetoPt5;   //!
    TBranch        *b_muVetoPt5IsoIdVtx;   //!
@@ -1855,32 +1848,32 @@ public :
    TBranch        *b_tripleMuPrescale;   //!
    TBranch        *b_type1_pfMetEt;   //!
    TBranch        *b_type1_pfMetPhi;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_ElectronEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_ElectronEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_ElectronEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_ElectronEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_JetEnDown;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_JetEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_JetResDown;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_JetResUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_MuonEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_MuonEnUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_PhotonEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_PhotonEnUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_TauEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPhi_TauEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_MuonEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_MuonEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_PhotonEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_PhotonEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_TauEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPhi_TauEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_UnclusteredEnDown;   //!
    TBranch        *b_type1_pfMet_shiftedPhi_UnclusteredEnUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_ElectronEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_ElectronEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_ElectronEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_ElectronEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPt_JetEnDown;   //!
    TBranch        *b_type1_pfMet_shiftedPt_JetEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPt_JetResDown;   //!
    TBranch        *b_type1_pfMet_shiftedPt_JetResUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_MuonEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_MuonEnUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_PhotonEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_PhotonEnUp;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_TauEnDown;   //!
-   TBranch        *b_type1_pfMet_shiftedPt_TauEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_MuonEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_MuonEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_PhotonEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_PhotonEnUp;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_TauEnDown;   //!
+   //TBranch        *b_type1_pfMet_shiftedPt_TauEnUp;   //!
    TBranch        *b_type1_pfMet_shiftedPt_UnclusteredEnDown;   //!
    TBranch        *b_type1_pfMet_shiftedPt_UnclusteredEnUp;   //!
    TBranch        *b_vbfDeta;   //!
@@ -2291,6 +2284,10 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("metcov01", &metcov01, &b_metcov01);
    fChain->SetBranchAddress("metcov10", &metcov10, &b_metcov10);
    fChain->SetBranchAddress("metcov11", &metcov11, &b_metcov11);
+   fChain->SetBranchAddress("metcov00_DESYlike", &metcov00_DESYlike, &b_metcov00_DESYlike);
+   fChain->SetBranchAddress("metcov01_DESYlike", &metcov01_DESYlike, &b_metcov01_DESYlike);
+   fChain->SetBranchAddress("metcov10_DESYlike", &metcov10_DESYlike, &b_metcov10_DESYlike);
+   fChain->SetBranchAddress("metcov11_DESYlike", &metcov11_DESYlike, &b_metcov11_DESYlike);
    fChain->SetBranchAddress("muGlbIsoVetoPt10", &muGlbIsoVetoPt10, &b_muGlbIsoVetoPt10);
    fChain->SetBranchAddress("muVetoPt15IsoIdVtx", &muVetoPt15IsoIdVtx, &b_muVetoPt15IsoIdVtx);
    fChain->SetBranchAddress("muVetoPt5", &muVetoPt5, &b_muVetoPt5);
@@ -2901,32 +2898,32 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("tripleMuPrescale", &tripleMuPrescale, &b_tripleMuPrescale);
    fChain->SetBranchAddress("type1_pfMetEt", &type1_pfMetEt, &b_type1_pfMetEt);
    fChain->SetBranchAddress("type1_pfMetPhi", &type1_pfMetPhi, &b_type1_pfMetPhi);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_ElectronEnDown", &type1_pfMet_shiftedPhi_ElectronEnDown, &b_type1_pfMet_shiftedPhi_ElectronEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_ElectronEnUp", &type1_pfMet_shiftedPhi_ElectronEnUp, &b_type1_pfMet_shiftedPhi_ElectronEnUp);
+   //   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_ElectronEnDown", &type1_pfMet_shiftedPhi_ElectronEnDown, &b_type1_pfMet_shiftedPhi_ElectronEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_ElectronEnUp", &type1_pfMet_shiftedPhi_ElectronEnUp, &b_type1_pfMet_shiftedPhi_ElectronEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_JetEnDown", &type1_pfMet_shiftedPhi_JetEnDown, &b_type1_pfMet_shiftedPhi_JetEnDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_JetEnUp", &type1_pfMet_shiftedPhi_JetEnUp, &b_type1_pfMet_shiftedPhi_JetEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_JetResDown", &type1_pfMet_shiftedPhi_JetResDown, &b_type1_pfMet_shiftedPhi_JetResDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_JetResUp", &type1_pfMet_shiftedPhi_JetResUp, &b_type1_pfMet_shiftedPhi_JetResUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_MuonEnDown", &type1_pfMet_shiftedPhi_MuonEnDown, &b_type1_pfMet_shiftedPhi_MuonEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_MuonEnUp", &type1_pfMet_shiftedPhi_MuonEnUp, &b_type1_pfMet_shiftedPhi_MuonEnUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_PhotonEnDown", &type1_pfMet_shiftedPhi_PhotonEnDown, &b_type1_pfMet_shiftedPhi_PhotonEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_PhotonEnUp", &type1_pfMet_shiftedPhi_PhotonEnUp, &b_type1_pfMet_shiftedPhi_PhotonEnUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_TauEnDown", &type1_pfMet_shiftedPhi_TauEnDown, &b_type1_pfMet_shiftedPhi_TauEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPhi_TauEnUp", &type1_pfMet_shiftedPhi_TauEnUp, &b_type1_pfMet_shiftedPhi_TauEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_MuonEnDown", &type1_pfMet_shiftedPhi_MuonEnDown, &b_type1_pfMet_shiftedPhi_MuonEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_MuonEnUp", &type1_pfMet_shiftedPhi_MuonEnUp, &b_type1_pfMet_shiftedPhi_MuonEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_PhotonEnDown", &type1_pfMet_shiftedPhi_PhotonEnDown, &b_type1_pfMet_shiftedPhi_PhotonEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_PhotonEnUp", &type1_pfMet_shiftedPhi_PhotonEnUp, &b_type1_pfMet_shiftedPhi_PhotonEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_TauEnDown", &type1_pfMet_shiftedPhi_TauEnDown, &b_type1_pfMet_shiftedPhi_TauEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPhi_TauEnUp", &type1_pfMet_shiftedPhi_TauEnUp, &b_type1_pfMet_shiftedPhi_TauEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_UnclusteredEnDown", &type1_pfMet_shiftedPhi_UnclusteredEnDown, &b_type1_pfMet_shiftedPhi_UnclusteredEnDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPhi_UnclusteredEnUp", &type1_pfMet_shiftedPhi_UnclusteredEnUp, &b_type1_pfMet_shiftedPhi_UnclusteredEnUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_ElectronEnDown", &type1_pfMet_shiftedPt_ElectronEnDown, &b_type1_pfMet_shiftedPt_ElectronEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_ElectronEnUp", &type1_pfMet_shiftedPt_ElectronEnUp, &b_type1_pfMet_shiftedPt_ElectronEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_ElectronEnDown", &type1_pfMet_shiftedPt_ElectronEnDown, &b_type1_pfMet_shiftedPt_ElectronEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_ElectronEnUp", &type1_pfMet_shiftedPt_ElectronEnUp, &b_type1_pfMet_shiftedPt_ElectronEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_JetEnDown", &type1_pfMet_shiftedPt_JetEnDown, &b_type1_pfMet_shiftedPt_JetEnDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_JetEnUp", &type1_pfMet_shiftedPt_JetEnUp, &b_type1_pfMet_shiftedPt_JetEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_JetResDown", &type1_pfMet_shiftedPt_JetResDown, &b_type1_pfMet_shiftedPt_JetResDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_JetResUp", &type1_pfMet_shiftedPt_JetResUp, &b_type1_pfMet_shiftedPt_JetResUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_MuonEnDown", &type1_pfMet_shiftedPt_MuonEnDown, &b_type1_pfMet_shiftedPt_MuonEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_MuonEnUp", &type1_pfMet_shiftedPt_MuonEnUp, &b_type1_pfMet_shiftedPt_MuonEnUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_PhotonEnDown", &type1_pfMet_shiftedPt_PhotonEnDown, &b_type1_pfMet_shiftedPt_PhotonEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_PhotonEnUp", &type1_pfMet_shiftedPt_PhotonEnUp, &b_type1_pfMet_shiftedPt_PhotonEnUp);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_TauEnDown", &type1_pfMet_shiftedPt_TauEnDown, &b_type1_pfMet_shiftedPt_TauEnDown);
-   fChain->SetBranchAddress("type1_pfMet_shiftedPt_TauEnUp", &type1_pfMet_shiftedPt_TauEnUp, &b_type1_pfMet_shiftedPt_TauEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_MuonEnDown", &type1_pfMet_shiftedPt_MuonEnDown, &b_type1_pfMet_shiftedPt_MuonEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_MuonEnUp", &type1_pfMet_shiftedPt_MuonEnUp, &b_type1_pfMet_shiftedPt_MuonEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_PhotonEnDown", &type1_pfMet_shiftedPt_PhotonEnDown, &b_type1_pfMet_shiftedPt_PhotonEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_PhotonEnUp", &type1_pfMet_shiftedPt_PhotonEnUp, &b_type1_pfMet_shiftedPt_PhotonEnUp);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_TauEnDown", &type1_pfMet_shiftedPt_TauEnDown, &b_type1_pfMet_shiftedPt_TauEnDown);
+   //fChain->SetBranchAddress("type1_pfMet_shiftedPt_TauEnUp", &type1_pfMet_shiftedPt_TauEnUp, &b_type1_pfMet_shiftedPt_TauEnUp);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_UnclusteredEnDown", &type1_pfMet_shiftedPt_UnclusteredEnDown, &b_type1_pfMet_shiftedPt_UnclusteredEnDown);
    fChain->SetBranchAddress("type1_pfMet_shiftedPt_UnclusteredEnUp", &type1_pfMet_shiftedPt_UnclusteredEnUp, &b_type1_pfMet_shiftedPt_UnclusteredEnUp);
    fChain->SetBranchAddress("vbfDeta", &vbfDeta, &b_vbfDeta);
