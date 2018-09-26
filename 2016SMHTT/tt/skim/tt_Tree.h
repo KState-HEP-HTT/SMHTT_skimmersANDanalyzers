@@ -83,8 +83,9 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     run = tree->run;
     lumi = tree->lumi;
     evt =tree->evt;
-    aMCatNLO_weight = tree->GenWeight;
-    
+    //aMCatNLO_weight = tree->GenWeight;
+    genweight = tree->GenWeight;
+
     njets_JetAbsoluteFlavMapUp=tree->jetVeto30_JetAbsoluteFlavMapUp;
     njets_JetAbsoluteMPFBiasUp=tree->jetVeto30_JetAbsoluteMPFBiasUp;
     njets_JetAbsoluteScaleUp=tree->jetVeto30_JetAbsoluteScaleUp;

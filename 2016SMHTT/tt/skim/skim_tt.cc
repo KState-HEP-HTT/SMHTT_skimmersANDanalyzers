@@ -66,7 +66,8 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("npv", &npv);
     Run_Tree->Branch("npu", &npu);
     Run_Tree->Branch("NUP", &NUP);
-    Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    //Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    Run_Tree->Branch("genweight", &genweight);
     Run_Tree->Branch("jetPt_1", &jetPt_1);
     Run_Tree->Branch("jetPt_2", &jetPt_2);
     Run_Tree->Branch("pt_1", &pt_1);

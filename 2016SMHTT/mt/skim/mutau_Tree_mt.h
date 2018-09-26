@@ -81,8 +81,9 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     run = tree->run;
     lumi = tree->lumi;
     evt =tree->evt;
-    aMCatNLO_weight = tree->GenWeight;
-//cout<<aMCatNLO_weight<<endl;
+    //aMCatNLO_weight = tree->GenWeight;
+    genweight = tree->GenWeight; 
+    //cout<<aMCatNLO_weight<<endl;
     tZTTGenDR=tree->tZTTGenDR;
 
     flag_BadChargedCandidate = tree->Flag_BadChargedCandidateFilter;

@@ -59,8 +59,10 @@ int main(int argc, char** argv) {
 
     Run_Tree->Branch("tZTTGenDR", &tZTTGenDR);
     Run_Tree->Branch("npv", &npv);
-    Run_Tree->Branch("npu", &npu, "npu/F");
-    Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    Run_Tree->Branch("npu", &npu);
+    //Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    Run_Tree->Branch("genweight", &genweight);
+
 
     Run_Tree->Branch("pt_1", &pt_1);
     Run_Tree->Branch("px_1", &px_1);
