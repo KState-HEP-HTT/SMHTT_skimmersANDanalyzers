@@ -1,0 +1,231 @@
+#################################################   tt_0jet   #################################################
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_data_obs.pdf
+data_obs
+official datacard yield is  19632.0
+KSU datacard yield is  19845.0 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_ZTT.pdf
+ZTT
+official datacard yield is  2645.09663708
+KSU datacard yield is  2980.60454941 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_ZJ.pdf
+ZJ
+official datacard yield is  120.957682696
+KSU datacard yield is  122.244872808 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_ZL.pdf
+ZL
+official datacard yield is  167.204015484
+KSU datacard yield is  223.620246947 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_TTT.pdf
+TTT
+official datacard yield is  8.9935701776
+KSU datacard yield is  8.82806771994 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_TTJ.pdf
+TTJ
+official datacard yield is  4.16427037941
+KSU datacard yield is  5.15265383571 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_VVT.pdf
+VVT
+official datacard yield is  33.2404978192
+KSU datacard yield is  32.2489647418 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_VVJ.pdf
+VVJ
+official datacard yield is  13.9206355213
+KSU datacard yield is  16.1785698161 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_W.pdf
+W
+official datacard yield is  1143.91993021
+KSU datacard yield is  1182.68369102 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_EWKZ.pdf
+EWKZ
+official datacard yield is  1.72607300966
+KSU datacard yield is  2.17976868153 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_VBF125.pdf
+VBF125
+official datacard yield is  1.34762780474
+KSU datacard yield is  1.29901074059 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_ggH125.pdf
+ggH125
+official datacard yield is  108.025624185
+KSU datacard yield is  111.733458847 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_WH125.pdf
+WH125
+official datacard yield is  0.85336841774
+KSU datacard yield is  0.856883289292 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_ZH125.pdf
+ZH125
+official datacard yield is  0.928328615102
+KSU datacard yield is  0.921412637457 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_0jet_QCD.pdf
+QCD
+official datacard yield is  16008.3704825
+KSU datacard yield is  16232.9703169 
+
+#################################################   tt_boosted   #################################################
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_data_obs.pdf
+data_obs
+official datacard yield is  13732.0
+KSU datacard yield is  13870.0 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_ZTT.pdf
+ZTT
+official datacard yield is  5233.15597979
+KSU datacard yield is  5306.29676569 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_ZJ.pdf
+ZJ
+official datacard yield is  120.118177028
+KSU datacard yield is  122.264143378 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_ZL.pdf
+ZL
+official datacard yield is  154.653811344
+KSU datacard yield is  199.430802464 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_TTT.pdf
+TTT
+official datacard yield is  280.398048187
+KSU datacard yield is  291.253391311 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_TTJ.pdf
+TTJ
+official datacard yield is  248.802320131
+KSU datacard yield is  284.336046517 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_VVT.pdf
+VVT
+official datacard yield is  144.585026624
+KSU datacard yield is  146.5386106 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_VVJ.pdf
+VVJ
+official datacard yield is  56.5063139317
+KSU datacard yield is  59.4241641541 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_W.pdf
+W
+official datacard yield is  433.368095094
+KSU datacard yield is  446.289804399 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_EWKZ.pdf
+EWKZ
+official datacard yield is  70.5011013891
+KSU datacard yield is  78.0733931288 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_VBF125.pdf
+VBF125
+official datacard yield is  23.7008169605
+KSU datacard yield is  22.8311071033 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_ggH125.pdf
+ggH125
+official datacard yield is  136.132478196
+KSU datacard yield is  136.551028233 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_WH125.pdf
+WH125
+official datacard yield is  8.40292326164
+KSU datacard yield is  8.32061398821 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_ZH125.pdf
+ZH125
+official datacard yield is  5.87023781151
+KSU datacard yield is  5.81706234114 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_boosted_QCD.pdf
+QCD
+official datacard yield is  7311.65709023
+KSU datacard yield is  7392.43374151 
+
+#################################################   tt_vbf   #################################################
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_data_obs.pdf
+data_obs
+official datacard yield is  645.0
+KSU datacard yield is  640.0 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_ZTT.pdf
+ZTT
+official datacard yield is  409.579816044
+KSU datacard yield is  427.467961773 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_ZJ.pdf
+ZJ
+official datacard yield is  3.24021416762
+KSU datacard yield is  3.36578470469 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_ZL.pdf
+ZL
+official datacard yield is  6.4212508061
+KSU datacard yield is  9.52289128304 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_TTT.pdf
+TTT
+official datacard yield is  16.4311315353
+KSU datacard yield is  18.0397769426 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_TTJ.pdf
+TTJ
+official datacard yield is  16.2891479446
+KSU datacard yield is  18.0779809803 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_VVT.pdf
+VVT
+official datacard yield is  11.741345202
+KSU datacard yield is  11.6532816794 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_VVJ.pdf
+VVJ
+official datacard yield is  2.73011079759
+KSU datacard yield is  1.87058056612 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_W.pdf
+W
+official datacard yield is  9.6105602733
+KSU datacard yield is  10.2630861364 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_EWKZ.pdf
+EWKZ
+official datacard yield is  35.1393585474
+KSU datacard yield is  39.1034104079 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_VBF125.pdf
+VBF125
+official datacard yield is  18.8036175162
+KSU datacard yield is  18.0977813005 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_ggH125.pdf
+ggH125
+official datacard yield is  12.1612988849
+KSU datacard yield is  13.9131038487 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_WH125.pdf
+WH125
+official datacard yield is  0.335927523645
+KSU datacard yield is  0.331047553336 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_ZH125.pdf
+ZH125
+official datacard yield is  0.212066250049
+KSU datacard yield is  0.20823266753 
+
+ERROR in TPDF::Open: Cannot open file:unrollPlots/tt_vbf_QCD.pdf
+QCD
+official datacard yield is  141.683305687
+KSU datacard yield is  158.173610898 
+
