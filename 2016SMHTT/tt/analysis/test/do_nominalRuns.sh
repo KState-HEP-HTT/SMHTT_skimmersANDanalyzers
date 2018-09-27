@@ -82,9 +82,9 @@
  ./tt_analyzer.exe myntuples/Aug30/T-tchan.root outputs_nominal/T-tchan_J.root ST_t_top VVJ 0 nominal
  hadd -f outputs_nominal/VVJ.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ1l3nu_J.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ3l1nu_J.root outputs_nominal/WZ2l2q_J.root outputs_nominal/WW1l1nu2q_J.root outputs_nominal/ZZ4l_J.root outputs_nominal/ZZ2l2q_J.root outputs_nominal/VV2l2nu_J.root outputs_nominal/Tbar-tW_J.root outputs_nominal/T-tW_J.root outputs_nominal/Tbar-tchan_J.root outputs_nominal/T-tchan_J.root 
 
- #python python/SignalCreator.py
+ python python/SignalCreator.py
  python python/QCDcreator.py
 
  # hadd all outputs
- hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZTT.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTT.root outputs_nominal/TTJ.root outputs_nominal/VVT.root outputs_nominal/VVJ.root outputs_nominal/W.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root 
+ hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZTT.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTT.root outputs_nominal/TTJ.root outputs_nominal/VVT.root outputs_nominal/VVJ.root outputs_nominal/W.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root outputs_nominal/SMH.root
 

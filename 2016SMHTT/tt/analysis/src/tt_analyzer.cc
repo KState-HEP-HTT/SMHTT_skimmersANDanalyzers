@@ -579,10 +579,21 @@ int main(int argc, char** argv) {
       float massejets[56]={mjj_JESDown,mjj_JESUp,mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatDown,mjj_JetAbsoluteStatUp,mjj_JetFlavorQCDDown,mjj_JetFlavorQCDUp,mjj_JetFragmentationDown,mjj_JetFragmentationUp,mjj_JetPileUpDataMCDown,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefDown,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalDown,mjj_JetRelativeBalUp,mjj_JetRelativeFSRDown,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFDown,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBDown,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Down,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFDown,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECDown,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFDown,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALDown,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALDown,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaDown,mjj_JetTimePtEtaUp};
       
       for (int k=0; k<nbhist; ++k){
-	
-	float var2=m_sv; 
-	float var1_1=pt_sv;
-	
+	//////////////////////////////////////////////////////////////////
+	//                                                              //
+	//  - Variable info (2016 analysis) -                           //
+	//                                                              //
+	//   0jet    -> mtautau svFit (m_sv)                            //
+	//   boosted -> Higgs pT svFit (pt_sv) VS mtautau svFit (m_sv)  // 
+	//   vbf     -> mjj VS mtautau svFit (m_sv)                     //
+	//                                                              //
+	//////////////////////////////////////////////////////////////////
+	float var_0jet = m_sv;
+	float var_boostedX = pt_sv;
+	float var_boostedY = m_sv; 
+	float var_vbfX = mjj;
+	float var_vbfY = m_sv; 
+
 	// njets count only jets with pT > 30
         if (jpt_1<30) {jpt_1=-9999.0; jeta_1=-9999.0; jphi_1=-9999.0;}
         if (jpt_2<30) {jpt_2=-9999.0; jeta_2=-9999.0; jphi_2=-9999.0;}
@@ -596,13 +607,13 @@ int main(int argc, char** argv) {
 	//mjj = jets.M();
 	float normMELA = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
 	
-	//std::cout << mjj << "\t" << jets.M() << "\t" << mjj/jets.M() << std::endl;
-	float var1_2=mjj;//normMELA;  //Dbkg_VBF;//mjj; 
 	TLorentzVector myrawmet;
-	myrawmet.SetPtEtaPhiM(met,0,metphi,0);
-	//myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
+	//myrawmet.SetPtEtaPhiM(met,0,metphi,0);
+	myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
-	
+
+	TLorentzVector Higgs = mytau1+mytau2+mymet;	
+
 	if (gen_match_2==5 && gen_match_1==5) {
 	  if (shape=="DM0_DOWN" && t1_decayMode==0) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
 	  if (shape=="DM1_DOWN" && t1_decayMode==1) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
@@ -631,7 +642,6 @@ int main(int argc, char** argv) {
 
        	// Additional selections
 	bool selection =true;
-	TLorentzVector Higgs = mytau1+mytau2+mymet;
 	
 	// Categories
 	bool is_0jet = false;
@@ -639,7 +649,6 @@ int main(int argc, char** argv) {
 	bool is_VBF = false;
 	bool is_VH = false;
 	bool is_2jets = false;
-
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
@@ -659,93 +668,74 @@ int main(int argc, char** argv) {
 	//std::cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << std::endl;
         
 	//************************* Fill histograms **********************
-	
-        //            float var = Higgs.Pt(); //Variable to plot
-        //	float var = (mytau2+mytau1).M(); //Variable to plot
-
-	/*
-	   - Variable info - 
-	   var : 0jet -> mtautau svFit (m_sv) 
-	   var1_1 : boosted -> Higgs pT svFit 
-	   var1_2 : vbf -> mjj
-	   var2 = boosted,vbf -> mtautau svFit (m_sv)
-	   var1_M* : vbf -> MELA obs
-	*/
-	float var = var2; 
-	/*
-	float var1_2 = ME_sm_VBF;//mjj;
-	float var1_M1 = Dbkg_VBF;//ME_sm_VBF;
-	float var1_M2 = Dbkg_ggH;//ME_sm_ggH;
-	float var1_M3 = ME_bkg;
-	*/
 	if (selection){
 	  // ################### signalRegion && OS ####################
 	  if (is_0jet && signalRegion && charge1*charge2<0){
-	    h0_OS[k]->Fill(var,weight2*aweight);
+	    h0_OS[k]->Fill(var_0jet,weight2*aweight);
 	    if (tes==0)
-	      h_0jet->Fill(var,weight2*aweight);
+	      h_0jet->Fill(var_0jet,weight2*aweight);
 	  }
 	  if (is_boosted && signalRegion && charge1*charge2<0){
-	    h1_OS[k]->Fill(var1_1,var2,weight2*aweight);
+	    h1_OS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
 	    if (tes==0){
-	      hx_boosted->Fill(var1_1,weight2*aweight);
-	      hy_boosted->Fill(var2,weight2*aweight);
+	      hx_boosted->Fill(var_boostedX,weight2*aweight);
+	      hy_boosted->Fill(var_boostedY,weight2*aweight);
 	    }
 	  }
 	  if (is_VBF && signalRegion && charge1*charge2<0) {
-	    h2_OS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h2_OS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	    if (tes==0){
-	      hx_vbf->Fill(var1_2,weight2*aweight);
-	      hy_vbf->Fill(var2,weight2*aweight);
+	      hx_vbf->Fill(var_vbfX,weight2*aweight);
+	      hy_vbf->Fill(var_vbfY,weight2*aweight);
 	      //std::cout << "var1_2 is " << var1_2 << std::endl;
 	    }
 	  }
 	  if (is_VH && signalRegion && charge1*charge2<0)
-	    h3_OS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h3_OS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  if (signalRegion && charge1*charge2<0)
-	    h_OS[k]->Fill(var,weight2*aweight);
+	    h_OS[k]->Fill(var_0jet,weight2*aweight);
 	  
 	  
 	  // ################### signalRegion && SS ####################
 	  if (is_0jet && signalRegion && charge1*charge2>0)
-	    h0_SS[k]->Fill(var,weight2*aweight);
+	    h0_SS[k]->Fill(var_0jet,weight2*aweight);
 	  if (is_boosted && signalRegion && charge1*charge2>0)
-	    h1_SS[k]->Fill(var1_1,var2,weight2*aweight);
+	    h1_SS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
 	  if (is_VBF && signalRegion && charge1*charge2>0) {
-	    h2_SS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h2_SS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  }
 	  if (is_VH && signalRegion && charge1*charge2>0)
-	    h3_SS[k]->Fill(var1_2,var2,weight2*aweight); 
+	    h3_SS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight); 
 	  if (signalRegion && charge1*charge2>0)
-	    h_SS[k]->Fill(var,weight2*aweight);
+	    h_SS[k]->Fill(var_0jet,weight2*aweight);
 
 
 	  // ################### ai-Region && OS ####################
 	  if (is_0jet && charge1*charge2<0 && aiRegion)
-	    h0_AIOS[k]->Fill(var,weight2*aweight);
+	    h0_AIOS[k]->Fill(var_0jet,weight2*aweight);
 	  if (is_boosted && charge1*charge2<0 && aiRegion)
-	    h1_AIOS[k]->Fill(var1_1,var2,weight2*aweight);
+	    h1_AIOS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
 	  if (is_VBF && charge1*charge2<0 && aiRegion) {
-	    h2_AIOS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h2_AIOS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  }
 	  if (is_VH && charge1*charge2<0 && aiRegion)
-	    h3_AIOS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h3_AIOS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  if (charge1*charge2<0 && aiRegion)
-	    h_AIOS[k]->Fill(var,weight2*aweight);
+	    h_AIOS[k]->Fill(var_0jet,weight2*aweight);
 
 	  
 	  // ################### ai-Region && SS ####################
 	  if (is_0jet && charge1*charge2>0 && aiRegion)
-	    h0_AISS[k]->Fill(var,weight2*aweight);
+	    h0_AISS[k]->Fill(var_0jet,weight2*aweight);
 	  if (is_boosted && charge1*charge2>0 && aiRegion)
-	    h1_AISS[k]->Fill(var1_1,var2,weight2*aweight);
+	    h1_AISS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
 	  if (is_VBF && charge1*charge2>0 && aiRegion) {
-	    h2_AISS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h2_AISS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  }
 	  if (is_VH && charge1*charge2>0 && aiRegion)
-	    h3_AISS[k]->Fill(var1_2,var2,weight2*aweight);
+	    h3_AISS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	  if (charge1*charge2>0 && aiRegion)
-	    h_AISS[k]->Fill(var,weight2*aweight);	  
+	    h_AISS[k]->Fill(var_0jet,weight2*aweight);	  
 
 
 	  // ################### trg SF ####################
@@ -762,27 +752,6 @@ int main(int argc, char** argv) {
     
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
-    
-    //    TString postfix="";
-    /*
-    TString postfix="";
-    for (int k=0; k<nbhist; ++k){
-      
-      if (tes==100) postfix=postfixJES[k];
-      if (tes==1) postfix=postfixTES[k];
-      if (tes==16) postfix=postfixDM[k];
-      if (tes==17) postfix=postfixZLshape[k];
-      if (tes==18) postfix=postfixZLnorm[k];
-      if (tes==19) postfix=postfixFakeDM[k];
-      if (tes==1000) postfix=postfixWG1[k];
-      
-      fout->cd();
-      n70[k]->SetName("n70"+postfix);
-      n70[k]->Write();
-      n70SS[k]->SetName("n70SS"+postfix);
-      n70SS[k]->Write();
-    }
-    */
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
@@ -839,11 +808,6 @@ int main(int argc, char** argv) {
       if (shape=="DM10_DOWN") postfix="_CMS_scale_t_3prong_13TeVDown";
       if (shape=="JESUp") postfix="_CMS_scale_j_13TeVUp";
       if (shape=="JESDown") postfix="_CMS_scale_j_13TeVDown";
-      //if (tes==1) postfix=postfixTES[k];
-      //if (tes==16) postfix=postfixDM[k];
-      //if (tes==17) postfix=postfixZLshape[k];
-      //if (tes==18) postfix=postfixZLnorm[k];
-
       if (shape=="zmumuShape_Up")  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
       if (shape=="zmumuShape_Down") postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
       std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;

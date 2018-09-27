@@ -3,14 +3,17 @@ import ROOT
 import re
 from array import array
 import math
+import plotRocCurve_def
 
 obs = "#Delta#eta_{jj}"
 
 file=ROOT.TFile("final_nominal.root","r")
+cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
+#cate={"ttOS_0jet":"0jet","ttOS_boosted":"boosted","ttOS_vbf":"vbf"}
 #cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets"}
 
 #file=ROOT.TFile("final_nominal_mjjLow.root","r")
-cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
+#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
 
 majors=["ZTT","QCD"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
@@ -128,6 +131,12 @@ def make_stackPad(y_low,y_high):
     padStack.SetFrameBorderSize(10)
     return padStack
 
+def unroll(file,cat,hist):
+    if file.Get(cat).Get(hist).GetDimension() is 1 : 
+        return file.Get(cat).Get(hist)
+    else :
+        return file.Get(cat).Get(hist).ProjectionX()
+
 def call_histos():
     histos = {"histSig":{},"histBkg":{},"histData":{}}
     for cat in cate.keys():
@@ -136,18 +145,18 @@ def call_histos():
         ''' Save histograms in the list '''
         # signals
         for signal in signals:
-            histlist_sig.append(file.Get(cat).Get(signal))
+            histlist_sig.append(unroll(file,cat,signal))#file.Get(cat).Get(signal))
         # major bkg
         for major in majors:
-            histlist.append(file.Get(cat).Get(major))
+            histlist.append(unroll(file,cat,major))#file.Get(cat).Get(major))
         # combine minor bkg
-        h_minor = file.Get(cat).Get(minors[0])
+        h_minor = unroll(file,cat,minors[0])#file.Get(cat).Get(minors[0])
         for minor in minors:
             if(minor!=minors[0]): 
-                h_minor.Add(file.Get(cat).Get(minor),1)
+                h_minor.Add(unroll(file,cat,minor),1)#file.Get(cat).Get(minor),1)
         histlist.append(h_minor)
         # data
-        h_data=file.Get(cat).Get("data_obs")
+        h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
         
         # add histograms into dictionary histos
         histos["histSig"][cate[cat]]=histlist_sig
@@ -190,7 +199,7 @@ def make_stack(category):
     return stack
 
 def make_sig(category,sig,color,style,scale):
-    h_sig = file.Get(category).Get(sig).Clone()
+    h_sig = unroll(file,category,sig)#file.Get(category).Get(sig).Clone()
     #h_sig.SetLineColor(ROOT.kBlue)    
     h_sig.SetMarkerStyle(0)
     h_sig.SetLineWidth(4)
