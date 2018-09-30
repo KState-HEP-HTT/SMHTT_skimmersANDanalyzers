@@ -16,7 +16,10 @@ canvas = ROOT.TCanvas("asdf", "adsf", 800, 800)
 def get_histo(file, cate, histname=''):
     print '.... Finding ',histname,' histogram. If it is 2D, ProjectionX of it going to be used.'
     hist2d = file.Get("tt_"+cate+"/"+histname)
-    hist = hist2d.ProjectionX()
+    if(hist2d.GetDimension()==2):
+        hist = hist2d.ProjectionX()
+    elif(hist2d.GetDimension()==1):
+        hist = hist2d
     return hist
 
 def get_eff(file,cate,histname=''):
@@ -52,16 +55,16 @@ def produce_pair(histoId, ntupleEff,ntupleFR,N,tgline):
     fr = numpy.array([id_FakeRate],dtype=float)
     tgline.SetPoint(N,eff,fr)
 
-def produce_roc_curve(f1, sig_histname, sig_title, ztt_histname, ztt_title, type2, title=''):#,label='roc'):
+def produce_roc_curve1(f1, sig_histname, sig_title, bkg1_histname, bkg2_histname, bkg_title, title=''):#,label='roc'):
     frame = ROOT.TMultiGraph()
-    frame.SetTitle(title+';'+sig_title+';'+ztt_title)
+    frame.SetTitle(title+';'+sig_title+';'+bkg_title)
     cate = 'vbf'
     #Create TGraphs to add to the TMultiGraph
-    tg1 = produce_tgraph(f1,sig_histname,f1,ztt_histname,cate,ROOT.kBlue,20)
-
+    tg1 = produce_tgraph(f1,sig_histname,f1,bkg1_histname,cate,ROOT.kBlue,20)
+    tg2 = produce_tgraph(f1,sig_histname,f1,bkg2_histname,cate,ROOT.kRed,20)
     #Add the TGraphs to the TMultigraph 
     frame.Add(tg1)
-
+    frame.Add(tg2)
     #Draw Axis,Line,Points
     frame.Draw("ALP")
 
@@ -70,7 +73,8 @@ def produce_roc_curve(f1, sig_histname, sig_title, ztt_histname, ztt_title, type
     legend.SetFillColor(ROOT.kWhite)
     legend.SetHeader("category","C")
     legend.SetBorderSize(0)
-    legend.AddEntry(tg1,type1,"pe")
+    legend.AddEntry(tg1,bkg1_histname,"pe")
+    legend.AddEntry(tg2,bkg2_histname,"pe")
     legend.Draw()
 
     #Save with a specific file name
@@ -78,9 +82,11 @@ def produce_roc_curve(f1, sig_histname, sig_title, ztt_histname, ztt_title, type
     print saveas
     canvas.SaveAs(saveas)
 
+
+
 def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, type1, type2, title=''):#,label='roc'):
     frame = ROOT.TMultiGraph()
-    frame.SetTitle(title+';'+sig_title+';'+ztt_title)
+    frame.SetTitle(title+';'+sig_title+';'+bkg_title)
     cate = 'vbf'
     #Create a TGraph to draw a line behind the other points
     #tgline = 
@@ -245,7 +251,8 @@ def produce_ratio(file,var,cate,histname_sig='',histname_ztt=''):
     pad2.cd()
     h_ratio.Draw()
 
-    saveas = 'plots/ROC/'+var+'_'+cate+histname_ztt+'.pdf'
+    #saveas = 'plots/ROC/'+var+'_'+cate+histname_ztt+'.pdf'
+    saveas = 'plots/ROC/'+var+'_'+histname_ztt+'.pdf'
     print saveas  
     canvas2.SaveAs(saveas) 
 

@@ -24,9 +24,12 @@ if __name__ == "__main__":
             for sample in samples:
                 # subtract all bkgs from data
                 if sample is "data":
+                    print "-----   Data   -----"
+                    print files[samples.index(sample)].Get(region+"_"+cate+"/data_obs").Integral()
                     histos[cates.index(cate)].append(files[samples.index(sample)].Get(region+"_"+cate+"/data_obs"))
                     print "----- Subtract -----"
                 else:
+                    print files[samples.index(sample)].Get(region+"_"+cate+"/"+sample).Integral()
                     histos[cates.index(cate)][-1].Add(files[samples.index(sample)].Get(region+"_"+cate+"/"+sample),-1)
                     print region+"_"+cate+"/"+sample
 

@@ -6,8 +6,8 @@ import math
 import plotRocCurve_def
 
 channel = "#tau_{h}#tau_{h}"
-varX = "M_{jj}"
-varY = "|#Delta#eta_{jj}|"
+varX = "normMELAggh"
+varY = "M_{#tau#tau}"
 plottitle = varX+" VS "+varY
 
 file=ROOT.TFile("final_nominal.root","r")
@@ -42,7 +42,7 @@ for cats in file.GetListOfKeys():
             histo.GetYaxis().SetTitle(varY)
             histo.GetXaxis().SetTitleOffset(1.0)
             histo.GetYaxis().SetTitleOffset(0.9)
-            canvas = ROOT.TCanvas(cat+"_"+histoN,"",0,0,800,600)
+            canvas = ROOT.TCanvas(cat+"_"+histoN,"",0,0,400,600)
             canvas.SetBottomMargin(0.15)
             canvas.SetTopMargin(0.12)
             canvas.SetBorderMode(0)

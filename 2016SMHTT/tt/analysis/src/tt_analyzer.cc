@@ -38,6 +38,7 @@
 #include "../include/scenario_info.h"
 #include "../include/zmumuSF.h"
 
+
 int main(int argc, char** argv) {
     
     std::string input = *(argv + 1);
@@ -196,10 +197,10 @@ int main(int argc, char** argv) {
     // top
     arbre->SetBranchAddress("pt_top1",&pt_top1);
     arbre->SetBranchAddress("pt_top2",&pt_top2);
-
+    arbre->SetBranchAddress("Dbkg_ggH",&Dbkg_ggH);
 
     scenario_info scenario(arbre, shape);
-    
+
     // D.Kim : AN line 791~795
     //Binning for 0jet cat. 1D: Msv. In AN it was 10GeV binning / official data card combined 0~50 as one bin
     float bins0[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
@@ -210,11 +211,17 @@ int main(int argc, char** argv) {
     float bins12[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
     //Binning for 2jet cat, x-axis: Mjj
     float bins21[] = {0,300,500,800,10000};
+    //float bins21[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    //float bins21[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
+    //plot binning for 2jet cat 
     //float bins21[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
+
     //binning for 2jet cat, x-axis: Dbkg_VBF
     //float bins21[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
     float bins22[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    // plot binning for 2jet cat
+    //float bins22[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
     int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
     int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
@@ -378,10 +385,18 @@ int main(int argc, char** argv) {
       float m_sv = scenario.get_m_sv();
       float pt_sv = scenario.get_pt_sv();
       float mjj = scenario.get_mjj();
+      float ME_sm_ggH = scenario.get_ME_sm_ggH();
+      float ME_sm_VBF = scenario.get_ME_sm_VBF();
+      float ME_bkg = scenario.get_ME_bkg();
 
       // mytau1 is the highest pT tau
       float charge1=q_1;
       float charge2=q_2;
+      bool OS = false;
+      bool SS = false;
+      if (charge1*charge2>0.0) SS = true;
+      else if (charge1*charge2<0.0) OS = true;
+
       TLorentzVector mytau1;
       mytau1.SetPtEtaPhiM(pt_1,eta_1,phi_1,m_1);
       TLorentzVector mytau2;
@@ -573,27 +588,7 @@ int main(int argc, char** argv) {
       if (!(gen_match_1==5 && gen_match_2==5) && (name=="VVT"|| name=="TTT")) continue;
       if ((gen_match_1==5 && gen_match_2==5) && (name=="VVJ" || name=="TTJ")) continue;
 
-      //KK Added for future. For now we need only first two variables
-      int nombrejets[56]={njets_JESDown,njets_JESUp,njets_JetAbsoluteFlavMapDown,njets_JetAbsoluteFlavMapUp,njets_JetAbsoluteMPFBiasDown,njets_JetAbsoluteMPFBiasUp,njets_JetAbsoluteScaleDown,njets_JetAbsoluteScaleUp,njets_JetAbsoluteStatDown,njets_JetAbsoluteStatUp,njets_JetFlavorQCDDown,njets_JetFlavorQCDUp,njets_JetFragmentationDown,njets_JetFragmentationUp,njets_JetPileUpDataMCDown,njets_JetPileUpDataMCUp,njets_JetPileUpPtBBDown,njets_JetPileUpPtBBUp,njets_JetPileUpPtEC1Down,njets_JetPileUpPtEC1Up,njets_JetPileUpPtEC2Down,njets_JetPileUpPtEC2Up,njets_JetPileUpPtHFDown,njets_JetPileUpPtHFUp,njets_JetPileUpPtRefDown,njets_JetPileUpPtRefUp,njets_JetRelativeBalDown,njets_JetRelativeBalUp,njets_JetRelativeFSRDown,njets_JetRelativeFSRUp,njets_JetRelativeJEREC1Down,njets_JetRelativeJEREC1Up,njets_JetRelativeJEREC2Down,njets_JetRelativeJEREC2Up,njets_JetRelativeJERHFDown,njets_JetRelativeJERHFUp,njets_JetRelativePtBBDown,njets_JetRelativePtBBUp,njets_JetRelativePtEC1Down,njets_JetRelativePtEC1Up,njets_JetRelativePtEC2Down,njets_JetRelativePtEC2Up,njets_JetRelativePtHFDown,njets_JetRelativePtHFUp,njets_JetRelativeStatECDown,njets_JetRelativeStatECUp,njets_JetRelativeStatFSRDown,njets_JetRelativeStatFSRUp,njets_JetRelativeStatHFDown,njets_JetRelativeStatHFUp,njets_JetSinglePionECALDown,njets_JetSinglePionECALUp,njets_JetSinglePionHCALDown,njets_JetSinglePionHCALUp,njets_JetTimePtEtaDown,njets_JetTimePtEtaUp};
-      
-      float massejets[56]={mjj_JESDown,mjj_JESUp,mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatDown,mjj_JetAbsoluteStatUp,mjj_JetFlavorQCDDown,mjj_JetFlavorQCDUp,mjj_JetFragmentationDown,mjj_JetFragmentationUp,mjj_JetPileUpDataMCDown,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefDown,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalDown,mjj_JetRelativeBalUp,mjj_JetRelativeFSRDown,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFDown,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBDown,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Down,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFDown,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECDown,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFDown,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALDown,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALDown,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaDown,mjj_JetTimePtEtaUp};
-      
       for (int k=0; k<nbhist; ++k){
-	//////////////////////////////////////////////////////////////////
-	//                                                              //
-	//  - Variable info (2016 analysis) -                           //
-	//                                                              //
-	//   0jet    -> mtautau svFit (m_sv)                            //
-	//   boosted -> Higgs pT svFit (pt_sv) VS mtautau svFit (m_sv)  // 
-	//   vbf     -> mjj VS mtautau svFit (m_sv)                     //
-	//                                                              //
-	//////////////////////////////////////////////////////////////////
-	float var_0jet = m_sv;
-	float var_boostedX = pt_sv;
-	float var_boostedY = m_sv; 
-	float var_vbfX = mjj;
-	float var_vbfY = m_sv; 
-
 	// njets count only jets with pT > 30
         if (jpt_1<30) {jpt_1=-9999.0; jeta_1=-9999.0; jphi_1=-9999.0;}
         if (jpt_2<30) {jpt_2=-9999.0; jeta_2=-9999.0; jphi_2=-9999.0;}
@@ -605,15 +600,21 @@ int main(int argc, char** argv) {
 	//myjet2.SetPtEtaPhiM(scenario.get_jpt_2(),jeta_2,jphi_2,0);
 	TLorentzVector jets=myjet2+myjet1;
 	//mjj = jets.M();
-	float normMELA = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-	
+
 	TLorentzVector myrawmet;
 	//myrawmet.SetPtEtaPhiM(met,0,metphi,0);
 	myrawmet.SetPtEtaPhiM(scenario.get_met(),0,scenario.get_metphi(),0);
 	TLorentzVector mymet=myrawmet;
 
 	TLorentzVector Higgs = mytau1+mytau2+mymet;	
+	// MELA
+        float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
+        float normMELAggh = ME_sm_ggH/(ME_sm_ggH+99*ME_bkg);
+        float normMELAvbfByggh = ME_sm_VBF/(ME_sm_ggH+ME_sm_VBF);
+        float normMELAgghByvbf = ME_sm_ggH/(ME_sm_VBF+ME_sm_ggH);
+        float normtest = ME_sm_VBF/(ME_sm_VBF+35*ME_bkg);
 
+	// TES 
 	if (gen_match_2==5 && gen_match_1==5) {
 	  if (shape=="DM0_DOWN" && t1_decayMode==0) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
 	  if (shape=="DM1_DOWN" && t1_decayMode==1) {mytau1*=0.988; mymet=mymet+(0.012/0.988)*mytau1;}
@@ -631,8 +632,7 @@ int main(int argc, char** argv) {
 	}
 
 	if (mytau1.Pt() < 40 || mytau2.Pt() < 40 ) continue;
-	if (mytau1.Pt() < 50) continue;
-	
+	if (mytau1.Pt() < 50) continue;	
 	if ((fabs(mytau1.Eta()))>2.1 || (fabs(mytau2.Eta())>2.1)) continue; // L770
 
 	float weight2=1.0;	  
@@ -668,73 +668,84 @@ int main(int argc, char** argv) {
 	//std::cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << std::endl;
         
 	//************************* Fill histograms **********************
+	//////////////////////////////////////////////////////////////////
+	//                                                              //
+	//  - Variable info (2016 analysis) -                           //
+	//                                                              //
+	//   0jet    -> mtautau svFit (m_sv)                            //
+	//   boosted -> Higgs pT svFit (pt_sv) VS mtautau svFit (m_sv)  // 
+	//   vbf     -> mjj VS mtautau svFit (m_sv)                     //
+	//                                                              //
+	//////////////////////////////////////////////////////////////////
+	float var_0jet = m_sv;
+	float var_boostedX = Higgs.Pt();//pt_sv;
+	float var_boostedY = m_sv; 
+	float var_vbfX = mjj;//ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);//mjj;//Dbkg_ggH;//normMELAggh;//mjj;
+	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
+
 	if (selection){
 	  // ################### signalRegion && OS ####################
-	  if (is_0jet && signalRegion && charge1*charge2<0){
+	  if (is_0jet && signalRegion && OS){
 	    h0_OS[k]->Fill(var_0jet,weight2*aweight);
 	    if (tes==0)
 	      h_0jet->Fill(var_0jet,weight2*aweight);
 	  }
-	  if (is_boosted && signalRegion && charge1*charge2<0){
+	  if (is_boosted && signalRegion && OS){
 	    h1_OS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
 	    if (tes==0){
 	      hx_boosted->Fill(var_boostedX,weight2*aweight);
 	      hy_boosted->Fill(var_boostedY,weight2*aweight);
 	    }
 	  }
-	  if (is_VBF && signalRegion && charge1*charge2<0) {
+	  if (is_VBF && signalRegion && OS) {
 	    h2_OS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
 	    if (tes==0){
 	      hx_vbf->Fill(var_vbfX,weight2*aweight);
 	      hy_vbf->Fill(var_vbfY,weight2*aweight);
-	      //std::cout << "var1_2 is " << var1_2 << std::endl;
 	    }
 	  }
-	  if (is_VH && signalRegion && charge1*charge2<0)
+	  if (is_VH && signalRegion && OS)
 	    h3_OS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  if (signalRegion && charge1*charge2<0)
+	  if (signalRegion && OS)
 	    h_OS[k]->Fill(var_0jet,weight2*aweight);
 	  
 	  
 	  // ################### signalRegion && SS ####################
-	  if (is_0jet && signalRegion && charge1*charge2>0)
+	  if (is_0jet && signalRegion && SS)
 	    h0_SS[k]->Fill(var_0jet,weight2*aweight);
-	  if (is_boosted && signalRegion && charge1*charge2>0)
+	  if (is_boosted && signalRegion && SS)
 	    h1_SS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
-	  if (is_VBF && signalRegion && charge1*charge2>0) {
+	  if (is_VBF && signalRegion && SS) 
 	    h2_SS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  }
-	  if (is_VH && signalRegion && charge1*charge2>0)
+	  if (is_VH && signalRegion && SS)
 	    h3_SS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight); 
-	  if (signalRegion && charge1*charge2>0)
+	  if (signalRegion && SS)
 	    h_SS[k]->Fill(var_0jet,weight2*aweight);
 
 
 	  // ################### ai-Region && OS ####################
-	  if (is_0jet && charge1*charge2<0 && aiRegion)
+	  if (is_0jet && OS && aiRegion)
 	    h0_AIOS[k]->Fill(var_0jet,weight2*aweight);
-	  if (is_boosted && charge1*charge2<0 && aiRegion)
+	  if (is_boosted && OS && aiRegion)
 	    h1_AIOS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
-	  if (is_VBF && charge1*charge2<0 && aiRegion) {
+	  if (is_VBF && OS && aiRegion) 
 	    h2_AIOS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  }
-	  if (is_VH && charge1*charge2<0 && aiRegion)
+	  if (is_VH && OS && aiRegion)
 	    h3_AIOS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  if (charge1*charge2<0 && aiRegion)
+	  if (OS && aiRegion)
 	    h_AIOS[k]->Fill(var_0jet,weight2*aweight);
 
 	  
 	  // ################### ai-Region && SS ####################
-	  if (is_0jet && charge1*charge2>0 && aiRegion)
+	  if (is_0jet && SS && aiRegion)
 	    h0_AISS[k]->Fill(var_0jet,weight2*aweight);
-	  if (is_boosted && charge1*charge2>0 && aiRegion)
+	  if (is_boosted && SS && aiRegion)
 	    h1_AISS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
-	  if (is_VBF && charge1*charge2>0 && aiRegion) {
+	  if (is_VBF && SS && aiRegion) 
 	    h2_AISS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  }
-	  if (is_VH && charge1*charge2>0 && aiRegion)
+	  if (is_VH && SS && aiRegion)
 	    h3_AISS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	  if (charge1*charge2>0 && aiRegion)
+	  if (SS && aiRegion)
 	    h_AISS[k]->Fill(var_0jet,weight2*aweight);	  
 
 
