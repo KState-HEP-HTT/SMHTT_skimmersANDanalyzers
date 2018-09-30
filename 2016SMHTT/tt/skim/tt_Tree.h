@@ -11,8 +11,8 @@
 #include "TTree.h"
 #include "TFile.h"
 #include "TSystem.h"
-//#include "HTauTauTree_tt_DY1.h"
 #include "HTauTauTree_tt.h"
+#include "RecoilCorrector.h"
 //#include "myHelper.h"
 
 using namespace std;
@@ -21,19 +21,13 @@ using namespace std;
 float trackpt_1,trackpt_2, jetPt_1, jetPt_2;
 unsigned int run, lumi, evt, NUP = -10;
 int gen_match_1, gen_match_2=0;
-
-float jetpt_1, jetpt_2, jetpt_3;
 float met_norecoil;
-float npu, rho, npv=-1, puweight, weight;
-//float againstMuonLoose3_1, againstElectronVLooseMVA6_1, againstMuonLoose3_2, againstElectronVLooseMVA6_2;
+float npu, rho, npv=-1;//, puweight, weight;
 float againstElectronLooseMVA6_1, againstElectronMediumMVA6_1, againstElectronTightMVA6_1, againstElectronVLooseMVA6_1, againstElectronVTightMVA6_1, againstMuonLoose3_1, againstMuonTight3_1, decayModeFinding_1;
 float againstElectronLooseMVA6_2, againstElectronMediumMVA6_2, againstElectronTightMVA6_2, againstElectronVLooseMVA6_2, againstElectronVTightMVA6_2, againstMuonLoose3_2, againstMuonTight3_2, decayModeFinding_2;
 float e_1, px_1, py_1, pz_1, pt_1, phi_1, eta_1, m_1, q_1, d0_1, dZ_1, mt_1, iso_1, t1_decayMode;
-float eid90_1, eid80_1;
 float e_2, px_2, py_2, pz_2, pt_2, phi_2, eta_2, m_2, q_2, d0_2, dZ_2, mt_2, iso_2, t2_decayMode;
-//float e_3, px_3, py_3, pz_3, pt_3, phi_3, eta_3, m_3, q_3, d0_3, dZ_3, mt_3, iso_3, t2_decayMode;
-float id_m_medium_2,id_m_medium2016_2, id_m_tight_2;
-float id_m_medium_1,id_m_medium2016_1, id_m_tight_1;
+//
 float byCombinedIsolationDeltaBetaCorrRaw3Hits_1, byIsolationMVA3oldDMwoLTraw_1;//byIsolationMVA3oldDMwoLTraw_1;
 float byCombinedIsolationDeltaBetaCorrRaw3Hits_2, byIsolationMVA3oldDMwoLTraw_2;
 float byVLooseIsolationMVArun2v1DBnewDMwLT_1,  byVLooseIsolationMVArun2v1DBoldDMwLT_1,  byVLooseIsolationMVArun2v1DBdR03oldDMwLT_1;
@@ -53,8 +47,8 @@ float mjj_JESDown, jdeta_JESDown,mjj_JESUp,jdeta_JESUp;
 int njetingap, njetingap20, nbtag, njets, njetspt20, nbtagL;
 int njetingap_JESDown, njetingap20_JESDown, njets_JESDown, njetspt20_JESDown;
 int njetingap_JESUp, njetingap20_JESUp, njets_JESUp, njetspt20_JESUp;
-float jmass_1, jpt_1, jpx_1, jpy_1, jpz_1, jeta_1, jphi_1, jrawf_1, jmva_1, jpfid_1, jpuid_1, jcsv_1;
-float jmass_2, jpx_2, jpy_2, jpz_2, jpt_2, jeta_2, jphi_2, jrawf_2, jmva_2, jpfid_2, jpuid_2, jcsv_2;
+float jmass_1, jpt_1, jpx_1, jpy_1, jpz_1, jeta_1, jphi_1, jrawf_1, jmva_1, jpfid_1, jpuid_1, jcsv_1, jpt_1_JESUp, jpt_1_JESDown;
+float jmass_2, jpx_2, jpy_2, jpz_2, jpt_2, jeta_2, jphi_2, jrawf_2, jmva_2, jpfid_2, jpuid_2, jcsv_2, jpt_2_JESUp, jpt_2_JESDown;
 float bpt_1, beta_1, bphi_1, bpfid_1, bpuid_1, bcsv_1, bflavor_1;
 float bpt_2, beta_2, bphi_2, bpfid_2, bpuid_2, bcsv_2, bflavor_2;
 float met, metphi, mvaMet, mvaMetphi, pzetavis, pzetamiss, mvacov00, mvacov01, mvacov11, mvacov10;
@@ -65,11 +59,7 @@ float byLooseCombinedIsolationDeltaBetaCorr3HitsdR03_3, byMediumCombinedIsolatio
 float extratau_veto, pt_top1, pt_top2, genweight, dphi_12, dphi_mumet, dphi_taumet;
 float aMCatNLO_weight, numGenJets;
 float met_px, met_py;
-float metSig, metcov00, metcov01, metcov10,metcov11, mvaMetcov00, mvaMetcov01,mvaMetcov10,mvaMetcov11, metcov00_v2, metcov01_v2, metcov10_v2,metcov11_v2;
-float met_JESDown,met_UESDown;
-float met_JESUp,met_UESUp,met_MESUp;
-float metphi_JERDown,metphi_JESDown,metphi_UESDown,metphi_MESDown,metphi_EESDown,metphi_TESDown,metphi_PESDown;
-float metphi_JERUp,metphi_JESUp,metphi_UESUp,metphi_MESUp,metphi_EESUp,metphi_TESUp,metphi_PESUp;
+float metSig, metcov00, metcov01, metcov10,metcov11, metcov00_v2, metcov01_v2, metcov10_v2,metcov11_v2;
 float genDR_2;
 float byVLooseIsolationRerunMVArun2v1DBoldDMwLT_1, byVTightIsolationRerunMVArun2v1DBoldDMwLT_1, byLooseIsolationRerunMVArun2v1DBoldDMwLT_1, byMediumIsolationRerunMVArun2v1DBoldDMwLT_1, byTightIsolationRerunMVArun2v1DBoldDMwLT_1, byVVTightIsolationRerunMVArun2v1DBoldDMwLT_1,byIsolationRerunMVA3oldDMwLTraw_1;
 float byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2, byVTightIsolationRerunMVArun2v1DBoldDMwLT_2, byLooseIsolationRerunMVArun2v1DBoldDMwLT_2, byMediumIsolationRerunMVArun2v1DBoldDMwLT_2, byTightIsolationRerunMVArun2v1DBoldDMwLT_2, byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2,byIsolationRerunMVA3oldDMwLTraw_2;
@@ -82,18 +72,19 @@ float passDoubleMu;
 float passDoubleTau35, matchDoubleTau35_1, matchDoubleTau35_2,filterDoubleTau35_1,filterDoubleTau35_2,passDoubleTauCmbIso35,matchDoubleTauCmbIso35_1,matchDoubleTauCmbIso35_2,filterDoubleTauCmbIso35_1,filterDoubleTauCmbIso35_2;
 float genM,genpT,genpX,genpY,vispX,vispY, b_vispX;
 float genEta, genPhi, genHTT, genMass;
-float type1_pfMet_shiftedPt_UnclusteredEnUp,type1_pfMet_shiftedPt_UnclusteredEnDown,type1_pfMet_shiftedPhi_UnclusteredEnUp,type1_pfMet_shiftedPhi_UnclusteredEnDown,type1_pfMet_shiftedPt_JetEnUp,type1_pfMet_shiftedPt_JetEnDown,type1_pfMet_shiftedPhi_JetEnUp,type1_pfMet_shiftedPhi_JetEnDown;
+float met_UESUp, met_UESDown, metphi_UESUp, metphi_UESDown, met_JESUp,met_JESDown, metphi_JESUp, metphi_JESDown, met_TESUp,met_TESDown, metphi_TESUp, metphi_TESDown;
 float t1GenCharge,t1GenDecayMode,t1GenEnergy,t1GenEta,t1GenIsPrompt,t1GenJetEta,t1GenJetPt,t1GenMotherEnergy,t1GenMotherEta,t1GenMotherPdgId,t1GenMotherPhi,t1GenMotherPt,t1GenPdgId,t1GenPhi,t1GenPt,t1GenStatus,t1ZTTGenDR,t1ZTTGenEta,t1ZTTGenMatching,t1ZTTGenPhi,t1ZTTGenPt;
 float t2GenCharge,t2GenDecayMode,t2GenEnergy,t2GenEta,t2GenIsPrompt,t2GenJetEta,t2GenJetPt,t2GenMotherEnergy,t2GenMotherEta,t2GenMotherPdgId,t2GenMotherPhi,t2GenMotherPt,t2GenPdgId,t2GenPhi,t2GenPt,t2GenStatus,t2ZTTGenDR,t2ZTTGenEta,t2ZTTGenMatching,t2ZTTGenPhi,t2ZTTGenPt;
 
+RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
-void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
+void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil, bool ismc){
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
     evt =tree->evt;
-    aMCatNLO_weight = tree->GenWeight;
-    
+    //aMCatNLO_weight = tree->GenWeight;
+    genweight = tree->GenWeight;
 
     njets_JetAbsoluteFlavMapUp=tree->jetVeto30_JetAbsoluteFlavMapUp;
     njets_JetAbsoluteMPFBiasUp=tree->jetVeto30_JetAbsoluteMPFBiasUp;
@@ -123,7 +114,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     njets_JetSinglePionECALUp=tree->jetVeto30_JetSinglePionECALUp;
     njets_JetSinglePionHCALUp=tree->jetVeto30_JetSinglePionHCALUp;
     njets_JetTimePtEtaUp=tree->jetVeto30_JetTimePtEtaUp;
-
+    
     njets_JetAbsoluteFlavMapDown=tree->jetVeto30_JetAbsoluteFlavMapDown;
     njets_JetAbsoluteMPFBiasDown=tree->jetVeto30_JetAbsoluteMPFBiasDown;
     njets_JetAbsoluteScaleDown=tree->jetVeto30_JetAbsoluteScaleDown;
@@ -152,7 +143,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     njets_JetSinglePionECALDown=tree->jetVeto30_JetSinglePionECALDown;
     njets_JetSinglePionHCALDown=tree->jetVeto30_JetSinglePionHCALDown;
     njets_JetTimePtEtaDown=tree->jetVeto30_JetTimePtEtaDown;
-
+    
     mjj_JetAbsoluteFlavMapUp=tree->vbfMass_JetAbsoluteFlavMapUp;
     mjj_JetAbsoluteMPFBiasUp=tree->vbfMass_JetAbsoluteMPFBiasUp;
     mjj_JetAbsoluteScaleUp=tree->vbfMass_JetAbsoluteScaleUp;
@@ -181,7 +172,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     mjj_JetSinglePionECALUp=tree->vbfMass_JetSinglePionECALUp;
     mjj_JetSinglePionHCALUp=tree->vbfMass_JetSinglePionHCALUp;
     mjj_JetTimePtEtaUp=tree->vbfMass_JetTimePtEtaUp;
-
+    
     mjj_JetAbsoluteFlavMapDown=tree->vbfMass_JetAbsoluteFlavMapDown;
     mjj_JetAbsoluteMPFBiasDown=tree->vbfMass_JetAbsoluteMPFBiasDown;
     mjj_JetAbsoluteScaleDown=tree->vbfMass_JetAbsoluteScaleDown;
@@ -210,6 +201,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     mjj_JetSinglePionECALDown=tree->vbfMass_JetSinglePionECALDown;
     mjj_JetSinglePionHCALDown=tree->vbfMass_JetSinglePionHCALDown;
     mjj_JetTimePtEtaDown=tree->vbfMass_JetTimePtEtaDown;
+
 
     passDoubleTau35 = tree->doubleTau35Pass;
     matchDoubleTau35_1 = tree->t1MatchesDoubleTau35Path; // data    - path
@@ -294,6 +286,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     else if (ismc && tree->t2DecayMode==1) tau2=tau2*1.010;
     else if (ismc && tree->t2DecayMode==10) tau2=tau2*1.004;
 
+    // configure nominal met
     TLorentzVector mymet;
     mymet.SetPtEtaPhiM(tree->type1_pfMetEt,0,tree->type1_pfMetPhi,0);
     met_norecoil=tree->type1_pfMetEt;
@@ -302,7 +295,183 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
 
     mymet.SetPxPyPzE(pfmetcorr_ex,pfmetcorr_ey,0,sqrt(pfmetcorr_ex*pfmetcorr_ex+pfmetcorr_ey*pfmetcorr_ey));
 
-    if (ismc && tree->t1DecayMode==0 && tree->t2DecayMode==0) mymet=mymet+(tau1+tau2)-0.982*(tau1+tau2);
+    if (recoil == 1) {
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet.Px(),          // uncorrected type I pf met px (float)
+          mymet.Py(),          // uncorrected type I pf met py (float)
+          tree->genpX,         // generator Z/W/Higgs px (float)
+          tree->genpY,         // generator Z/W/Higgs py (float)
+          tree->vispX,         // generator visible Z/W/Higgs px (float)
+          tree->vispY,         // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30 + 1, // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex,        // corrected type I pf met px (float)
+          pfmetcorr_ey         // corrected type I pf met py (float)
+      );
+    } else if (recoil == 2) {
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet.Px(),      // uncorrected type I pf met px (float)
+          mymet.Py(),      // uncorrected type I pf met py (float)
+          tree->genpX,     // generator Z/W/Higgs px (float)
+          tree->genpY,     // generator Z/W/Higgs py (float)
+          tree->vispX,     // generator visible Z/W/Higgs px (float)
+          tree->vispY,     // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30, // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex,    // corrected type I pf met px (float)
+          pfmetcorr_ey     // corrected type I pf met py (float)
+      );
+    }
+
+    // configure met systematics
+    /*
+    type1_pfMet_shiftedPt_UnclusteredEnUp = tree->type1_pfMet_shiftedPt_UnclusteredEnUp;
+    type1_pfMet_shiftedPt_UnclusteredEnDown = tree->type1_pfMet_shiftedPt_UnclusteredEnDown;
+    type1_pfMet_shiftedPhi_UnclusteredEnUp = tree->type1_pfMet_shiftedPhi_UnclusteredEnUp;
+    type1_pfMet_shiftedPhi_UnclusteredEnDown = tree->type1_pfMet_shiftedPhi_UnclusteredEnDown;
+    type1_pfMet_shiftedPt_JetEnUp = tree->type1_pfMet_shiftedPt_JetEnUp;
+    type1_pfMet_shiftedPt_JetEnDown = tree->type1_pfMet_shiftedPt_JetEnDown;
+    type1_pfMet_shiftedPhi_JetEnUp = tree->type1_pfMet_shiftedPhi_JetEnUp;
+    type1_pfMet_shiftedPhi_JetEnDown = tree->type1_pfMet_shiftedPhi_JetEnDown;
+    */
+    met_UESUp =  tree->type1_pfMet_shiftedPt_UnclusteredEnUp; 
+    met_UESDown = tree->type1_pfMet_shiftedPt_UnclusteredEnDown;  
+    metphi_UESUp = tree->type1_pfMet_shiftedPhi_UnclusteredEnUp;
+    metphi_UESDown = tree->type1_pfMet_shiftedPhi_UnclusteredEnDown; 
+    met_JESUp = tree->type1_pfMet_shiftedPt_JetEnUp; 
+    met_JESDown = tree->type1_pfMet_shiftedPt_JetEnDown;  
+    metphi_JESUp = tree->type1_pfMet_shiftedPhi_JetEnUp;
+    metphi_JESDown = tree->type1_pfMet_shiftedPhi_JetEnDown;  
+
+    TLorentzVector mymet_UESUp, mymet_UESDown, mymet_JESUp, mymet_JESDown;
+    /*
+    mymet_UESUp   .SetPtEtaPhiM(type1_pfMet_shiftedPt_UnclusteredEnUp  , 0, type1_pfMet_shiftedPhi_UnclusteredEnUp  , 0);
+    mymet_UESDown .SetPtEtaPhiM(type1_pfMet_shiftedPt_UnclusteredEnDown, 0, type1_pfMet_shiftedPhi_UnclusteredEnDown, 0);
+    mymet_JESUp   .SetPtEtaPhiM(type1_pfMet_shiftedPt_JetEnDown        , 0, type1_pfMet_shiftedPhi_JetEnUp          , 0);
+    mymet_JESDown .SetPtEtaPhiM(type1_pfMet_shiftedPt_JetEnUp          , 0, type1_pfMet_shiftedPhi_JetEnDown        , 0);
+    */
+    mymet_UESUp   .SetPtEtaPhiM(met_UESUp  , 0, metphi_UESUp  , 0);
+    mymet_UESDown .SetPtEtaPhiM(met_UESDown, 0, metphi_UESDown, 0);
+    mymet_JESUp   .SetPtEtaPhiM(met_JESUp  , 0, metphi_JESUp  , 0);
+    mymet_JESDown .SetPtEtaPhiM(met_JESDown, 0, metphi_JESDown, 0);
+
+    float pfmetcorr_ex_UESUp(mymet_UESUp.Px())    , pfmetcorr_ey_UESUp(mymet_UESUp.Py()),
+          pfmetcorr_ex_UESDown(mymet_UESDown.Px()), pfmetcorr_ey_UESDown(mymet_UESDown.Py()),
+          pfmetcorr_ex_JESUp(mymet_JESUp.Px())    , pfmetcorr_ey_JESUp(mymet_JESUp.Py()),
+          pfmetcorr_ex_JESDown(mymet_JESDown.Px()), pfmetcorr_ey_JESDown(mymet_JESDown.Py())
+          ;
+
+    if (recoil == 1) {  // W
+      // unclustered enery up
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_UESUp.Px(),       // uncorrected type I pf met px (float)
+          mymet_UESUp.Py(),       // uncorrected type I pf met py (float)
+          tree->genpX,            // generator Z/W/Higgs px (float)
+          tree->genpY,            // generator Z/W/Higgs py (float)
+          tree->vispX,            // generator visible Z/W/Higgs px (float)
+          tree->vispY,            // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30 + 1,    // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_UESUp,     // corrected type I pf met px (float)
+          pfmetcorr_ey_UESUp      // corrected type I pf met py (float)
+      );
+
+      // unclustered enery down
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_UESDown.Px(),     // uncorrected type I pf met px (float)
+          mymet_UESDown.Py(),     // uncorrected type I pf met py (float)
+          tree->genpX,            // generator Z/W/Higgs px (float)
+          tree->genpY,            // generator Z/W/Higgs py (float)
+          tree->vispX,            // generator visible Z/W/Higgs px (float)
+          tree->vispY,            // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30 + 1,    // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_UESDown,   // corrected type I pf met px (float)
+          pfmetcorr_ey_UESDown    // corrected type I pf met py (float)
+      );
+
+      // jet enery up
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_JESUp.Px(),    // uncorrected type I pf met px (float)
+          mymet_JESUp.Py(),    // uncorrected type I pf met py (float)
+          tree->genpX,         // generator Z/W/Higgs px (float)
+          tree->genpY,         // generator Z/W/Higgs py (float)
+          tree->vispX,         // generator visible Z/W/Higgs px (float)
+          tree->vispY,         // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30 + 1, // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_JESUp,  // corrected type I pf met px (float)
+          pfmetcorr_ey_JESUp   // corrected type I pf met py (float)
+      );
+
+      // jet enery down
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_JESDown.Px(),   // uncorrected type I pf met px (float)
+          mymet_JESDown.Py(),   // uncorrected type I pf met py (float)
+          tree->genpX,          // generator Z/W/Higgs px (float)
+          tree->genpY,          // generator Z/W/Higgs py (float)
+          tree->vispX,          // generator visible Z/W/Higgs px (float)
+          tree->vispY,          // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30 + 1,  // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_JESDown, // corrected type I pf met px (float)
+          pfmetcorr_ey_JESDown  // corrected type I pf met py (float)
+      );
+    } else if (recoil == 2) {  // Z
+      // unclustered enery up
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_UESUp.Px(),    // uncorrected type I pf met px (float)
+          mymet_UESUp.Py(),    // uncorrected type I pf met py (float)
+          tree->genpX,         // generator Z/W/Higgs px (float)
+          tree->genpY,         // generator Z/W/Higgs py (float)
+          tree->vispX,         // generator visible Z/W/Higgs px (float)
+          tree->vispY,         // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30,     // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_UESUp,  // corrected type I pf met px (float)
+          pfmetcorr_ey_UESUp   // corrected type I pf met py (float)
+      );
+
+      // unclustered enery down
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_UESDown.Px(),   // uncorrected type I pf met px (float)
+          mymet_UESDown.Py(),   // uncorrected type I pf met py (float)
+          tree->genpX,          // generator Z/W/Higgs px (float)
+          tree->genpY,          // generator Z/W/Higgs py (float)
+          tree->vispX,          // generator visible Z/W/Higgs px (float)
+          tree->vispY,          // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30,      // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_UESDown, // corrected type I pf met px (float)
+          pfmetcorr_ey_UESDown  // corrected type I pf met py (float)
+      );
+
+      // jet enery up
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_JESUp.Px(),    // uncorrected type I pf met px (float)
+          mymet_JESUp.Py(),    // uncorrected type I pf met py (float)
+          tree->genpX,         // generator Z/W/Higgs px (float)
+          tree->genpY,         // generator Z/W/Higgs py (float)
+          tree->vispX,         // generator visible Z/W/Higgs px (float)
+          tree->vispY,         // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30,     // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_JESUp,  // corrected type I pf met px (float)
+          pfmetcorr_ey_JESUp   // corrected type I pf met py (float)
+      );
+
+      // jet enery down
+      recoilPFMetCorrector.CorrectByMeanResolution(
+          mymet_JESDown.Px(),   // uncorrected type I pf met px (float)
+          mymet_JESDown.Py(),   // uncorrected type I pf met py (float)
+          tree->genpX,          // generator Z/W/Higgs px (float)
+          tree->genpY,          // generator Z/W/Higgs py (float)
+          tree->vispX,          // generator visible Z/W/Higgs px (float)
+          tree->vispY,          // generator visible Z/W/Higgs py (float)
+          tree->jetVeto30,      // number of jets (hadronic jet multiplicity) (int)
+          pfmetcorr_ex_JESDown, // corrected type I pf met px (float)
+          pfmetcorr_ey_JESDown  // corrected type I pf met py (float)
+      );
+    }
+
+    // correct met systematics
+    mymet_UESUp  .SetPxPyPzE(pfmetcorr_ex_UESUp  , pfmetcorr_ey_UESUp  , 0, sqrt(pfmetcorr_ex_UESUp * pfmetcorr_ex_UESUp + pfmetcorr_ey_UESUp * pfmetcorr_ey_UESUp));
+    mymet_UESDown.SetPxPyPzE(pfmetcorr_ex_UESDown, pfmetcorr_ey_UESDown, 0, sqrt(pfmetcorr_ex_UESDown * pfmetcorr_ex_UESDown + pfmetcorr_ey_UESDown * pfmetcorr_ey_UESDown));
+    mymet_JESUp  .SetPxPyPzE(pfmetcorr_ex_JESUp  , pfmetcorr_ey_JESUp  , 0, sqrt(pfmetcorr_ex_JESUp * pfmetcorr_ex_JESUp + pfmetcorr_ey_JESUp * pfmetcorr_ey_JESUp));
+    mymet_JESDown.SetPxPyPzE(pfmetcorr_ex_JESDown, pfmetcorr_ey_JESDown, 0, sqrt(pfmetcorr_ex_JESDown * pfmetcorr_ex_JESDown + pfmetcorr_ey_JESDown * pfmetcorr_ey_JESDown));
+
+    if (ismc && tree->t1DecayMode == 0 && tree->t2DecayMode == 0) mymet = mymet + (tau1 + tau2) - 0.982 * (tau1 + tau2);
     else if (ismc && tree->t1DecayMode==0 && tree->t2DecayMode==1) mymet=mymet+(tau1+tau2)-0.982*tau1-1.010*tau2;
     else if (ismc && tree->t1DecayMode==0 && tree->t2DecayMode==10) mymet=mymet+(tau1+tau2)-0.982*tau1-1.004*tau2;
     else if (ismc && tree->t1DecayMode==1 && tree->t2DecayMode==0) mymet=mymet+(tau1+tau2)-1.010*tau1-1.010*tau2;
@@ -323,6 +492,11 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     metcov10=tree->metcov10;
     metcov11=tree->metcov11;
 
+    metcov00_v2=tree->metcov00_DESYlike;  
+    metcov01_v2=tree->metcov01_DESYlike; 
+    metcov10_v2=tree->metcov10_DESYlike; 
+    metcov11_v2=tree->metcov11_DESYlike; 
+
     njets = tree->jetVeto30;
     nbtag = tree->bjetCISVVeto20Medium;
     nbtagL = tree->bjetCISVVeto20Loose;
@@ -337,7 +511,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     gen_match_2=tree->t2ZTTGenMatching;
 
     extraelec_veto=(tree->eVetoZTTp001dxyzR0>0);
-    extramuon_veto=(tree->muVetoZTTp001dxyzR0>2);
+    extramuon_veto=(tree->muVetoZTTp001dxyzR0>0);
     dilepton_veto=(tree->dimuonVeto>0);
  
     t1_decayMode=tree->t1DecayMode;
@@ -420,6 +594,10 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     jphi_2=tree->j2phi;
     jcsv_1=tree->j1csv;
     jcsv_2=tree->j2csv;
+    jpt_1_JESUp=tree->j1ptUp;
+    jpt_1_JESDown=tree->j1ptDown;
+    jpt_2_JESUp=tree->j2ptUp;
+    jpt_2_JESDown=tree->j2ptDown;
 
     bpt_1=tree->jb1pt;
     bpt_2=tree->jb2pt;
@@ -431,15 +609,6 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, bool ismc){
     bcsv_2=tree->jb2csv;
     bflavor_1=tree->jb1hadronflavor;
     bflavor_2=tree->jb2hadronflavor;
-   
-    type1_pfMet_shiftedPt_UnclusteredEnUp=tree->type1_pfMet_shiftedPt_UnclusteredEnUp;
-    type1_pfMet_shiftedPt_UnclusteredEnDown=tree->type1_pfMet_shiftedPt_UnclusteredEnDown;
-    type1_pfMet_shiftedPhi_UnclusteredEnUp=tree->type1_pfMet_shiftedPhi_UnclusteredEnUp;
-    type1_pfMet_shiftedPhi_UnclusteredEnDown=tree->type1_pfMet_shiftedPhi_UnclusteredEnDown;
-    type1_pfMet_shiftedPt_JetEnUp=tree->type1_pfMet_shiftedPt_JetEnUp;
-    type1_pfMet_shiftedPt_JetEnDown=tree->type1_pfMet_shiftedPt_JetEnDown;
-    type1_pfMet_shiftedPhi_JetEnUp=tree->type1_pfMet_shiftedPhi_JetEnUp;
-    type1_pfMet_shiftedPhi_JetEnDown=tree->type1_pfMet_shiftedPhi_JetEnDown;
 
    TLorentzVector jet1;
    if (njetspt20 > 0 && jpt_1>0)

@@ -59,8 +59,10 @@ int main(int argc, char** argv) {
 
     Run_Tree->Branch("tZTTGenDR", &tZTTGenDR);
     Run_Tree->Branch("npv", &npv);
-    Run_Tree->Branch("npu", &npu, "npu/F");
-    Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    Run_Tree->Branch("npu", &npu);
+    //Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
+    Run_Tree->Branch("genweight", &genweight);
+
 
     Run_Tree->Branch("pt_1", &pt_1);
     Run_Tree->Branch("px_1", &px_1);
@@ -171,8 +173,8 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("numGenJets", &numGenJets);
     Run_Tree->Branch("jetPt_2", &jetPt_2);
 
-    //Run_Tree->Branch("pt_tt", &pt_tt, "pt_tt/F");
-    //Run_Tree->Branch("m_vis", &m_vis, "m_vis/F");
+    Run_Tree->Branch("pt_tt", &pt_tt);//, "pt_tt/F");
+    Run_Tree->Branch("m_vis", &m_vis);//, "m_vis/F");
     /*Run_Tree->Branch("m_coll", &m_coll, "m_coll/F");
     Run_Tree->Branch("m_coll_uesD", &m_coll_uesD, "m_coll_uesD/F");
     Run_Tree->Branch("m_coll_uesU", &m_coll_uesU, "m_coll_uesU/F");
@@ -234,7 +236,7 @@ int main(int argc, char** argv) {
     //Run_Tree->Branch("dphi_mumet", &dphi_mumet, "dphi_mumet/F");
 
     Run_Tree->Branch("mjj", &mjj);
-    //Run_Tree->Branch("jdeta", &jdeta, "jdeta/F");
+    Run_Tree->Branch("jdeta", &jdeta);//, "jdeta/F");
     //Run_Tree->Branch("njetingap", &njetingap, "njetingap/I");
     //Run_Tree->Branch("njetingap20", &njetingap20, "njetingap20/I");
     Run_Tree->Branch("mjj_JESUp", &mjj_JESUp);
@@ -245,8 +247,8 @@ int main(int argc, char** argv) {
     //Run_Tree->Branch("jdeta_JESDown", &jdeta_JESDown, "jdeta_JESDown/F");
     //Run_Tree->Branch("njetingap_JESDown", &njetingap_JESDown, "njetingap_JESDown/I");
     //Run_Tree->Branch("njetingap20_JESDown", &njetingap20_JESDown, "njetingap20_JESDown/I");
-    Run_Tree->Branch("gen_match_1", &gen_match_1, "gen_match_1/I");
-    Run_Tree->Branch("gen_match_2", &gen_match_2, "gen_match_2/I");
+    Run_Tree->Branch("gen_match_1", &gen_match_1);//, "gen_match_1/I");
+    Run_Tree->Branch("gen_match_2", &gen_match_2);//, "gen_match_2/I");
     //Run_Tree->Branch("jdphi", &jdphi, "jdphi/F");
     //Run_Tree->Branch("dijetpt", &dijetpt, "dijetpt/F");
     //Run_Tree->Branch("dijetphi", &dijetphi, "dijetphi/F");
@@ -381,11 +383,15 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("jeta_1", &jeta_1);
     Run_Tree->Branch("jphi_1", &jphi_1);
     Run_Tree->Branch("jcsv_1", &jcsv_1);
+    Run_Tree->Branch("jpt_1_JESUp",  &jpt_1_JESUp);
+    Run_Tree->Branch("jpt_1_JESDown",  &jpt_1_JESDown);
 
     Run_Tree->Branch("jpt_2", &jpt_2);
     Run_Tree->Branch("jeta_2", &jeta_2);
     Run_Tree->Branch("jphi_2", &jphi_2);
     Run_Tree->Branch("jcsv_2", &jcsv_2);
+    Run_Tree->Branch("jpt_2_JESUp",  &jpt_2_JESUp);
+    Run_Tree->Branch("jpt_2_JESDown",  &jpt_2_JESDown);
 
     Run_Tree->Branch("bpt_1", &bpt_1);
     Run_Tree->Branch("beta_1", &beta_1);

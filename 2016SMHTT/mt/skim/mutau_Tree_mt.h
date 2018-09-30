@@ -36,8 +36,8 @@ float mjj_JESDown, jdeta_JESDown,mjj_JESUp,jdeta_JESUp;
 int njetingap, njetingap20, nbtag, njets, njetspt20;
 int njetingap_JESDown, njetingap20_JESDown, njets_JESDown, njetspt20_JESDown;
 int njetingap_JESUp, njetingap20_JESUp, njets_JESUp, njetspt20_JESUp;
-float je_1, jmass_1, jpt_1, jpx_1, jpy_1, jpz_1, jeta_1, jphi_1, jrawf_1, jmva_1, jpfid_1, jpuid_1, jcsv_1;
-float je_2, jmass_2, jpx_2, jpy_2, jpz_2, jpt_2, jeta_2, jphi_2, jrawf_2, jmva_2, jpfid_2, jpuid_2, jcsv_2;
+float je_1, jmass_1, jpt_1, jpx_1, jpy_1, jpz_1, jeta_1, jphi_1, jrawf_1, jmva_1, jpfid_1, jpuid_1, jcsv_1, jpt_1_JESUp, jpt_1_JESDown;
+float je_2, jmass_2, jpx_2, jpy_2, jpz_2, jpt_2, jeta_2, jphi_2, jrawf_2, jmva_2, jpfid_2, jpuid_2, jcsv_2, jpt_2_JESUp, jpt_2_JESDown;
 float bpt_1, beta_1, bphi_1, brawf_1, bmva_1, bpfid_1, bpuid_1, bcsv_1, bflavor_1;
 float bpt_2, beta_2, bphi_2, brawf_2, bmva_2, bpfid_2, bpuid_2, bcsv_2, bflavor_2;
 float met, metphi, mvaMet, mvaMetphi, pzetavis, pzetamiss, mvacov00, mvacov01, mvacov11, mvacov10;
@@ -74,15 +74,16 @@ float flag_BadChargedCandidate, flag_BadPFMuon, flag_EcalDeadCellTriggerPrimitiv
 float tZTTGenDR;
 
 
-RecoilCorrector recoilPFMetCorrector("FinalStateAnalysis/NtupleTools/TypeI-PFMet_Run2016BtoH.root");
+RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
 void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil, bool ismc) {
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
     evt =tree->evt;
-    aMCatNLO_weight = tree->GenWeight;
-//cout<<aMCatNLO_weight<<endl;
+    //aMCatNLO_weight = tree->GenWeight;
+    genweight = tree->GenWeight; 
+    //cout<<aMCatNLO_weight<<endl;
     tZTTGenDR=tree->tZTTGenDR;
 
     flag_BadChargedCandidate = tree->Flag_BadChargedCandidateFilter;
@@ -656,6 +657,10 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     jphi_2=tree->j2phi;
     jcsv_1=tree->j1csv;
     jcsv_2=tree->j2csv;
+    jpt_1_JESUp=tree->j1ptUp;
+    jpt_1_JESDown=tree->j1ptDown;
+    jpt_2_JESUp=tree->j2ptUp;
+    jpt_2_JESDown=tree->j2ptDown;
 
     bpt_1=tree->jb1pt;
     bpt_2=tree->jb2pt;
