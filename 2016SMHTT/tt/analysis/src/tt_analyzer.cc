@@ -45,13 +45,8 @@ int main(int argc, char** argv) {
     std::string output = *(argv + 2);
     std::string sample = *(argv + 3);
     std::string name = *(argv + 4);
-    std::string shape = *(argv + 6);
+    std::string shape = *(argv + 5);
 
-    float tes=0;
-    if (argc > 1) {
-        tes = atof(argv[5]);
-    }
-    
     TFile *f_Double = new TFile(input.c_str());
     std::cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<std::endl;
     TTree *arbre = (TTree*) f_Double->Get("tt_tree");
@@ -59,7 +54,21 @@ int main(int argc, char** argv) {
     float ngen = nbevt->GetBinContent(2);
     std::cout.precision(11);
     
-    //Declaration of files with scale factors
+    ////////////////////////////////////
+    //                                //
+    //  Weights and Scale Factors     //
+    //  1. PU reweighting : # of PV   //
+    //  2. Tau ID eff SF : below
+    //  3. Anti-lepton discriminator tau ID SF : below with 2.
+    //  4. Trigger efficiencies ??
+    //  5. Reweighting of LO Madgraph DY samples
+    //  6. Top pT reweighting
+    //  7. Recoil correction
+    //  8. Generator event weights
+    //
+    /////////////////////////////////
+    
+    // didn't use??
     TFile *f_Trk=new TFile("weightROOTs/Tracking_EfficienciesAndSF_BCDEFGH.root");
     TGraph *h_Trk=(TGraph*) f_Trk->Get("weightROOTs/ratio_eff_eta3_dr030e030_corr");
     
@@ -266,7 +275,8 @@ int main(int argc, char** argv) {
     std::vector<TH1F*> h_trgSF_RF;
     std::vector<TH1F*> h_trgSF_FF;
 
-    TString postfix="";
+    TString postfix = postfixMaps(shape);
+    std::cout << postfix << std::endl;
     //For shape systematics
     int nbhist=1;
     for (int k=0; k<nbhist; ++k){
@@ -340,7 +350,7 @@ int main(int argc, char** argv) {
       
     }
     
-    
+    // Loop over all events
     Int_t nentries_wtn = (Int_t) arbre->GetEntries();
     for (Int_t i = 0; i < nentries_wtn; i++) {
       arbre->GetEntry(i);
@@ -791,28 +801,6 @@ int main(int argc, char** argv) {
     TDirectory *TRG_SF = fout->mkdir("trgSF");
 
     for (int k=0; k<nbhist; ++k){
-      if (shape=="dyShape_Up") postfix="_CMS_htt_dyShape_13TeVUp";
-      if (shape=="dyShape_Down") postfix="_CMS_htt_dyShape_13TeVDown";
-      if (shape=="jetToTauFake_Up") postfix="_CMS_htt_jetToTauFake_13TeVUp";
-      if (shape=="jetToTauFake_Down") postfix="_CMS_htt_jetToTauFake_13TeVDown";
-      if (shape=="ttbarShape_Up") postfix="_CMS_htt_ttbarShape_13TeVUp";
-      if (shape=="ttbarShape_Down") postfix="_CMS_htt_ttbarShape_13TeVDown";        
-      if (shape=="ClusteredMet_UP") postfix="_CMS_scale_met_clustered_13TeVUp";
-      if (shape=="ClusteredMet_DOWN") postfix="_CMS_scale_met_clustered_13TeVDown";
-      if (shape=="UncMet_UP") postfix="_CMS_scale_met_unclustered_13TeVUp";
-      if (shape=="UncMet_DOWN") postfix="_CMS_scale_met_unclustered_13TeVDown";
-      if (shape=="DM0_UP") postfix="_CMS_scale_t_1prong_13TeVUp";
-      if (shape=="DM0_DOWN") postfix="_CMS_scale_t_1prong_13TeVDown";
-      if (shape=="DM1_UP") postfix="_CMS_scale_t_1prong1pizero_13TeVUp";
-      if (shape=="DM1_DOWN") postfix="_CMS_scale_t_1prong1pizero_13TeVDown";
-      if (shape=="DM10_UP") postfix="_CMS_scale_t_3prong_13TeVUp";
-      if (shape=="DM10_DOWN") postfix="_CMS_scale_t_3prong_13TeVDown";
-      if (shape=="JESUp") postfix="_CMS_scale_j_13TeVUp";
-      if (shape=="JESDown") postfix="_CMS_scale_j_13TeVDown";
-      if (shape=="zmumuShape_Up")  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
-      if (shape=="zmumuShape_Down") postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
-      std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;
-      
       // These will be the final root files
       // D.Kim
       TRG_SF->cd();

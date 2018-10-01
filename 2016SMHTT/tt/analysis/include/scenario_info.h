@@ -1,3 +1,5 @@
+#include <map>
+
 class scenario_info {
  private:
   Float_t jpt_1, jpt_2, mjj;
@@ -93,3 +95,28 @@ scenario_info::scenario_info(TTree* arbre, std::string unc) {
   arbre -> SetBranchAddress( ME_sm_ggH_unc.c_str()    , &ME_sm_ggH  );
   arbre -> SetBranchAddress( ME_bkg_unc.c_str()       , &ME_bkg     );
 }
+
+static std::map<std::string, TString> syst {
+  {"dyShape_Up", "_CMS_htt_dyShape_13TeVUp"},
+  {"dyShape_Down", "_CMS_htt_dyShape_13TeVDown"},
+  {"jetToTauFake_Up", "_CMS_htt_jetToTauFake_13TeVUp"},
+  {"jetToTauFake_Down", "_CMS_htt_jetToTauFake_13TeVDown"},
+  {"ttbarShape_Up", "_CMS_htt_ttbarShape_13TeVUp"},
+  {"ttbarShape_Down", "_CMS_htt_ttbarShape_13TeVDown"},
+  {"ClusteredMet_Up", "_CMS_scale_met_clustered_13TeVUp"},
+  {"ClusteredMet_Down", "_CMS_scale_met_clustered_13TeVDown"},
+  {"UncMet_Up", "_CMS_scale_met_unclustered_13TeVUp"},
+  {"UncMet_Down", "_CMS_scale_met_unclustered_13TeVDown"},
+  {"DM0_Up", "_CMS_scale_t_1prong_13TeVUp"},
+  {"DM0_Down", "_CMS_scale_t_1prong_13TeVDown"},
+  {"DM1_Up", "_CMS_scale_t_1prong1pizero_13TeVUp"},
+  {"DM1_Down", "_CMS_scale_t_1prong1pizero_13TeVDown"},
+  {"DM10_Up", "_CMS_scale_t_3prong_13TeVUp"},
+  {"DM10_Down", "_CMS_scale_t_3prong_13TeVDown"},
+  {"JESUp", "_CMS_scale_j_13TeVUp"},
+  {"JESDown", "_CMS_scale_j_13TeVDown"},
+  {"zmumuShape_Up", "_CMS_htt_zmumuShape_VBF_13TeVUp"},
+  {"zmumuShape_Down", "_CMS_htt_zmumuShape_VBF_13TeVDown"}
+};
+
+TString postfixMaps(std::string shape) { return syst[shape]; }
