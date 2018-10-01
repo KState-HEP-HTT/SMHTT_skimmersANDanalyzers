@@ -269,13 +269,6 @@ int main(int argc, char** argv) {
     TString postfix="";
     //For shape systematics
     int nbhist=1;
-    if (tes==1) nbhist=12;
-    if (tes==16) nbhist=6;
-    if (tes==17) nbhist=12;
-    if (tes==18) nbhist=4;
-    if (tes==19) nbhist=6;
-    if (tes==1000) nbhist=18;
-
     for (int k=0; k<nbhist; ++k){
       std::ostringstream HNS0OS; HNS0OS << "h0_OS" << k;
       std::ostringstream HNS1OS; HNS1OS << "h1_OS" << k;
@@ -517,12 +510,12 @@ int main(int argc, char** argv) {
       // Z pt reweighting for DY events
       if (sample=="DY" || sample=="EWKZLL" || sample=="EWKZNuNu" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ"){
 	float zpt_corr=histZ->GetBinContent(histZ->GetXaxis()->FindBin(genM),histZ->GetYaxis()->FindBin(genpT));
-	if (std::abs(tes)!=10) //nominal
-	  aweight=aweight*zpt_corr;
-	else if (tes==10) // up
+	if (shape=="dyShape_Up") // up
 	  aweight=aweight*(1+1.10*(zpt_corr-1));
-	else if (tes==-10) // down
+	else if (shape=="dyShape_Down") // down
 	  aweight=aweight*(1+0.90*(zpt_corr-1));
+	else 
+	  aweight=aweight*zpt_corr; // nominal
       }
       
       //  Top pT reweighting for ttbar events
@@ -530,9 +523,9 @@ int main(int argc, char** argv) {
       if (pttop1>400) pttop1=400;
       float pttop2=pt_top2;
       if (pttop2>400) pttop2=400;
-      if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && std::abs(tes)!=11) aweight*=sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2));
+      if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && (shape!="ttbarShape_Up" && shape!="ttbarShape_Down")) aweight*=sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2));
       //aweight*=sqrt(exp(0.156-0.00137*pttop1)*exp(0.156-0.00137*pttop2));
-      if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && tes==11) aweight*=(1+2*(sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2))-1));
+      if ((sample=="TTL" or sample=="TTJ" or sample=="TTT" or sample=="TT") && shape=="ttbarShape_Up") aweight*=(1+2*(sqrt(exp(0.0615-0.0005*pttop1)*exp(0.0615-0.0005*pttop2))-1));
       
       if (sample=="data_obs") aweight=1.0;
       
@@ -604,7 +597,7 @@ int main(int argc, char** argv) {
 	TLorentzVector Higgs = mytau1+mytau2+mymet;	
 	// MELA
         float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-        float normMELAggh = ME_sm_ggH/(ME_sm_ggH+99*ME_bkg);
+        float normMELAggh = ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);
         float normMELAvbfByggh = ME_sm_VBF/(ME_sm_ggH+ME_sm_VBF);
         float normMELAgghByvbf = ME_sm_ggH/(ME_sm_VBF+ME_sm_ggH);
         float normtest = ME_sm_VBF/(ME_sm_VBF+35*ME_bkg);
@@ -647,6 +640,8 @@ int main(int argc, char** argv) {
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
+	//if (njets>=2 && mjj<300)  is_VBF=true; 
+
 
 	// Z mumu SF 
 	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
@@ -675,26 +670,26 @@ int main(int argc, char** argv) {
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
-	float var_vbfX = mjj;//ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);//mjj;//Dbkg_ggH;//normMELAggh;//mjj;
+	float var_vbfX = mjj;//1-normMELAggh;///ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);//mjj;//Dbkg_ggH;//normMELAggh;//mjj;
 	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
 
 	if (selection){
 	  // ################### signalRegion && OS ####################
 	  if (is_0jet && signalRegion && OS){
 	    h0_OS[k]->Fill(var_0jet,weight2*aweight);
-	    if (tes==0)
+	    if (shape=="nominal")
 	      h_0jet->Fill(var_0jet,weight2*aweight);
 	  }
 	  if (is_boosted && signalRegion && OS){
 	    h1_OS[k]->Fill(var_boostedX,var_boostedY,weight2*aweight);
-	    if (tes==0){
+	    if (shape=="nominal"){
 	      hx_boosted->Fill(var_boostedX,weight2*aweight);
 	      hy_boosted->Fill(var_boostedY,weight2*aweight);
 	    }
 	  }
 	  if (is_VBF && signalRegion && OS) {
 	    h2_OS[k]->Fill(var_vbfX,var_vbfY,weight2*aweight);
-	    if (tes==0){
+	    if (shape=="nominal"){
 	      hx_vbf->Fill(var_vbfX,weight2*aweight);
 	      hy_vbf->Fill(var_vbfY,weight2*aweight);
 	    }
