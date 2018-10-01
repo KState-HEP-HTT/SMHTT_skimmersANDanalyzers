@@ -206,36 +206,36 @@ int main(int argc, char** argv) {
     float bins0[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
     float bins1[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
     //Binning for 1jet cat, x-axis: HpT
-    float bins11[] = {0,100,170,300,10000};
+    float bins1X[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
-    float bins12[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
     //Binning for 2jet cat, x-axis: Mjj
-    float bins21[] = {0,300,500,800,10000};
-    //float bins21[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-    //float bins21[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
+    float bins2X[] = {0,300,500,800,10000};
+    //float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    //float bins2X[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
     //plot binning for 2jet cat 
-    //float bins21[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
+    //float bins2X[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
 
     //binning for 2jet cat, x-axis: Dbkg_VBF
-    //float bins21[] = {0.0,0.3,0.6,0.9,1.0};
+    //float bins2X[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
-    float bins22[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
     // plot binning for 2jet cat
-    //float bins22[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
+    //float bins2Y[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
     int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
     int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
-    int  binnum11 = sizeof(bins11)/sizeof(Float_t) - 1;
-    int  binnum12 = sizeof(bins12)/sizeof(Float_t) - 1;
-    int  binnum21 = sizeof(bins21)/sizeof(Float_t) - 1;
-    int  binnum22 = sizeof(bins22)/sizeof(Float_t) - 1;
+    int  binnum1X = sizeof(bins1X)/sizeof(Float_t) - 1;
+    int  binnum1Y = sizeof(bins1Y)/sizeof(Float_t) - 1;
+    int  binnum2X = sizeof(bins2X)/sizeof(Float_t) - 1;
+    int  binnum2Y = sizeof(bins2Y)/sizeof(Float_t) - 1;
 
     // Categories
     TH1F* h_0jet = new TH1F ("h_0jet", "h_0jet", binnum0, bins0); h_0jet->Sumw2();
-    TH1F* hx_boosted = new TH1F ("hx_boosted", "hx_boosted", binnum11, bins11); hx_boosted->Sumw2();
-    TH1F* hy_boosted = new TH1F ("hy_boosted", "hy_boosted", binnum12, bins12); hy_boosted->Sumw2();
-    TH1F* hx_vbf = new TH1F ("hx_vbf", "hx_vbf", binnum21, bins21); hx_vbf->Sumw2();
-    TH1F* hy_vbf = new TH1F ("hy_vbf", "hy_vbf", binnum22, bins22); hy_vbf->Sumw2();
+    TH1F* hx_boosted = new TH1F ("hx_boosted", "hx_boosted", binnum1X, bins1X); hx_boosted->Sumw2();
+    TH1F* hy_boosted = new TH1F ("hy_boosted", "hy_boosted", binnum1Y, bins1Y); hy_boosted->Sumw2();
+    TH1F* hx_vbf = new TH1F ("hx_vbf", "hx_vbf", binnum2X, bins2X); hx_vbf->Sumw2();
+    TH1F* hy_vbf = new TH1F ("hy_vbf", "hy_vbf", binnum2Y, bins2Y); hy_vbf->Sumw2();
 
     // h0_ : 0jet, h1_ : boosted, h2_ : vbf, h3_ : vh, h2M*_ : vbf with MELA, h4M_ : 2jets with MEAL  h_ : inclusive
     std::vector<TH1F*> h0_OS;
@@ -269,11 +269,6 @@ int main(int argc, char** argv) {
     TString postfix="";
     //For shape systematics
     int nbhist=1;
-    if (tes==100) {
-      //KK For now use combined JES
-      nbhist=2;
-      //nbhist=56;
-    }
     if (tes==1) nbhist=12;
     if (tes==16) nbhist=6;
     if (tes==17) nbhist=12;
@@ -294,10 +289,10 @@ int main(int argc, char** argv) {
       std::ostringstream HNSOS; HNS2OS << "h_OS" << k;
       
       h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"diTauMa",binnum0,bins0)); h0_OS[k]->Sumw2();
-      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"diTauMa",binnum11,bins11,binnum12,bins12)); h1_OS[k]->Sumw2();
-      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h2_OS[k]->Sumw2();
+      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
+      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_OS[k]->Sumw2();
       
-      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h3_OS[k]->Sumw2();
+      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_OS[k]->Sumw2();
       h_OS.push_back(new TH1F (HNSOS.str().c_str(),"diTauMa",binnum0,bins0)); h_OS[k]->Sumw2();
       
       std::ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
@@ -307,9 +302,9 @@ int main(int argc, char** argv) {
       std::ostringstream HNSSS; HNSOS << "h_SS" << k;
 
       h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"diTauMa",binnum1,bins1)); h0_SS[k]->Sumw2();
-      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"diTauMa",binnum11,bins11,binnum12,bins12)); h1_SS[k]->Sumw2();
-      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h2_SS[k]->Sumw2();
-      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h3_SS[k]->Sumw2();
+      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
+      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_SS[k]->Sumw2();
+      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_SS[k]->Sumw2();
       h_SS.push_back(new TH1F (HNSSS.str().c_str(),"diTauMa",binnum1,bins1)); h_SS[k]->Sumw2();
       
       std::ostringstream HNS0AIOS; HNS0AIOS << "h0_AIOS" << k;
@@ -319,9 +314,9 @@ int main(int argc, char** argv) {
       std::ostringstream HNSAIOS; HNSAIOS << "h_AIOS" << k;
 
       h0_AIOS.push_back(new TH1F (HNS0AIOS.str().c_str(),"diTauMa",binnum0,bins0)); h0_AIOS[k]->Sumw2();
-      h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"diTauMa",binnum11,bins11,binnum12,bins12)); h1_AIOS[k]->Sumw2();
-      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h2_AIOS[k]->Sumw2();
-      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h3_AIOS[k]->Sumw2();
+      h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AIOS[k]->Sumw2();
+      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AIOS[k]->Sumw2();
+      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AIOS[k]->Sumw2();
       h_AIOS.push_back(new TH1F (HNSAIOS.str().c_str(),"diTauMa",binnum0,bins0)); h_AIOS[k]->Sumw2();
         
       std::ostringstream HNS0AISS; HNS0AISS << "h0_AISS" << k;
@@ -331,9 +326,9 @@ int main(int argc, char** argv) {
       std::ostringstream HNSAISS; HNSAISS << "h_AISS" << k;
 
       h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"diTauMa",binnum1,bins1)); h0_AISS[k]->Sumw2();
-      h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"diTauMa",binnum11,bins11,binnum12,bins12)); h1_AISS[k]->Sumw2();
-      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h2_AISS[k]->Sumw2();
-      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"diTauMa",binnum21,bins21,binnum22,bins22)); h3_AISS[k]->Sumw2();
+      h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
+      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AISS[k]->Sumw2();
+      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AISS[k]->Sumw2();
       h_AISS.push_back(new TH1F (HNSAISS.str().c_str(),"diTauMa",binnum1,bins1)); h_AISS[k]->Sumw2();
       
       // D.Kim trgSF
