@@ -37,7 +37,7 @@
 #include "../include/btagSF.h"
 #include "../include/scenario_info.h"
 #include "../include/zmumuSF.h"
-
+//#include "../include/NNskimmer.h"
 
 int main(int argc, char** argv) {
     
@@ -49,11 +49,66 @@ int main(int argc, char** argv) {
 
     TFile *f_Double = new TFile(input.c_str());
     std::cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<std::endl;
-    TTree *arbre = (TTree*) f_Double->Get("tt_tree");
+    TTree* arbre = (TTree*) f_Double->Get("tt_tree");
     TH1F* nbevt = (TH1F*) f_Double->Get("nevents");
     float ngen = nbevt->GetBinContent(2);
     std::cout.precision(11);
+    TTree* namu = new TTree("tt_tree", "tt_tree");
+    namu->SetDirectory(0);
+    namu->Branch("t1_pt",&t1_pt);
+    namu->Branch("t1_eta", &t1_eta);
+    namu->Branch("t1_phi", &t1_phi);
+    namu->Branch("t1_mass", &t1_mass);
+    namu->Branch("t2_pt", &t2_pt);
+    namu->Branch("t2_eta", &t2_eta);
+    namu->Branch("t2_phi", &t2_phi);
+    namu->Branch("t2_mass", &t2_mass);
+
+    namu->Branch("j1_pt",&j1_pt);
+    namu->Branch("j1_eta", &j1_eta);
+    namu->Branch("j1_phi", &j1_phi);
+    namu->Branch("j2_pt", &j2_pt);
+    namu->Branch("j2_eta", &j2_eta);
+    namu->Branch("j2_phi", &j2_phi);
+
+    namu->Branch("b1_pt",&b1_pt);
+    namu->Branch("b1_eta", &b1_eta);
+    namu->Branch("b1_phi", &b1_phi);
+    namu->Branch("b2_pt", &b2_pt);
+    namu->Branch("b2_eta", &b2_eta);
+    namu->Branch("b2_phi", &b2_phi);
+
+    namu->Branch("met",&met);
+    namu->Branch("metphi",&metphi);
+    namu->Branch("mjj",&mjj);
     
+    namu->Branch("njets", &njets);
+    namu->Branch("numGenJets",&numGenJets);
+
+    namu->Branch("pt_sv", &pt_sv);
+    namu->Branch("m_sv",&m_sv);
+    namu->Branch("Dbkg_VBF",&Dbkg_VBF);
+    namu->Branch("Dbkg_ggH",&Dbkg_ggH);
+    
+    namu->Branch("Phi"         , &Phi);
+    namu->Branch("Phi1"        , &Phi1);
+    namu->Branch("costheta1"   , &costheta1);
+    namu->Branch("costheta2"   , &costheta2);
+    namu->Branch("costhetastar", &costhetastar);
+    namu->Branch("Q2V1"        , &Q2V1);
+    namu->Branch("Q2V2"        , &Q2V2);
+
+    namu->Branch("higgs_pT",      &higgs_pT);
+    namu->Branch("higgs_m",       &higgs_m);
+    namu->Branch("hjj_pT",        &hjj_pT);
+    namu->Branch("hjj_m",         &hjj_m);
+    namu->Branch("dEtajj",        &dEtajj);
+    namu->Branch("dPhijj",        &dPhijj);
+    namu->Branch("cat_0jet",      &cat_0jet);
+    namu->Branch("cat_boosted",   &cat_boosted);
+    namu->Branch("cat_vbf",       &cat_vbf);
+    namu->Branch("cat_inclusive", &cat_inclusive);
+
     ////////////////////////////////////
     //                                //
     //  Weights and Scale Factors     //
@@ -174,11 +229,11 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("againstMuonLoose3_2",&againstMuonLoose3_2);
     arbre->SetBranchAddress("againstMuonTight3_2",&againstMuonTight3_2);
     // jets
-    arbre->SetBranchAddress("jpt_1", &jpt_1);
+    //arbre->SetBranchAddress("jpt_1", &jpt_1);
     arbre->SetBranchAddress("jeta_1", &jeta_1);
     arbre->SetBranchAddress("jphi_1", &jphi_1);
     arbre->SetBranchAddress("jcsv_1", &jcsv_1);
-    arbre->SetBranchAddress("jpt_2", &jpt_2);
+    //arbre->SetBranchAddress("jpt_2", &jpt_2);
     arbre->SetBranchAddress("jeta_2", &jeta_2);
     arbre->SetBranchAddress("jphi_2", &jphi_2);
     arbre->SetBranchAddress("jcsv_2", &jcsv_2);
@@ -186,12 +241,12 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("njets_JESDown", &njets_JESDown);
     arbre->SetBranchAddress("njets_JESUp", &njets_JESUp);
     // bjets
-    arbre->SetBranchAddress("nbtag", &nbtag);
-    arbre->SetBranchAddress("nbtagL", &nbtagL);
     arbre->SetBranchAddress("bpt_1",&bpt_1);
+    arbre->SetBranchAddress("beta_1",&beta_1);
+    arbre->SetBranchAddress("bphi_1",&bphi_1);
     arbre->SetBranchAddress("bpt_2",&bpt_2);
-    arbre->SetBranchAddress("bflavor_1",&bflavor_1);
-    arbre->SetBranchAddress("bflavor_2",&bflavor_2);
+    arbre->SetBranchAddress("beta_2",&beta_2);
+    arbre->SetBranchAddress("bphi_2",&bphi_2);
     // met
     //arbre->SetBranchAddress("met", &met);
     //arbre->SetBranchAddress("metphi", &metphi);
@@ -206,7 +261,17 @@ int main(int argc, char** argv) {
     // top
     arbre->SetBranchAddress("pt_top1",&pt_top1);
     arbre->SetBranchAddress("pt_top2",&pt_top2);
+    arbre->SetBranchAddress("Dbkg_VBF",&Dbkg_VBF);
     arbre->SetBranchAddress("Dbkg_ggH",&Dbkg_ggH);
+
+    arbre->SetBranchAddress("Phi"         , &Phi);
+    arbre->SetBranchAddress("Phi1"        , &Phi1);
+    arbre->SetBranchAddress("costheta1"   , &costheta1);
+    arbre->SetBranchAddress("costheta2"   , &costheta2);
+    arbre->SetBranchAddress("costhetastar", &costhetastar);
+    arbre->SetBranchAddress("Q2V1"        , &Q2V1);
+    arbre->SetBranchAddress("Q2V2"        , &Q2V2);
+
 
     scenario_info scenario(arbre, shape);
 
@@ -290,7 +355,7 @@ int main(int argc, char** argv) {
       std::ostringstream HNS4M2OS; HNS4M2OS << "h4M2_OS" << k;
       std::ostringstream HNS3OS; HNS3OS << "h3_OS" << k;
       std::ostringstream HNSOS; HNS2OS << "h_OS" << k;
-      
+      //binnum2X,bins2X,binnum2Y,bins2Y
       h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"diTauMa",binnum0,bins0)); h0_OS[k]->Sumw2();
       h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
       h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_OS[k]->Sumw2();
@@ -607,7 +672,7 @@ int main(int argc, char** argv) {
 	TLorentzVector Higgs = mytau1+mytau2+mymet;	
 	// MELA
         float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-        float normMELAggh = ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);
+        float normMELAggh = ME_sm_ggH/(ME_sm_ggH+45*ME_bkg);
         float normMELAvbfByggh = ME_sm_VBF/(ME_sm_ggH+ME_sm_VBF);
         float normMELAgghByvbf = ME_sm_ggH/(ME_sm_VBF+ME_sm_ggH);
         float normtest = ME_sm_VBF/(ME_sm_VBF+35*ME_bkg);
@@ -650,7 +715,7 @@ int main(int argc, char** argv) {
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	//if (njets>=2 && mjj<300)  is_VBF=true; 
+	//if (mjj>300)  is_VBF=true; 
 
 
 	// Z mumu SF 
@@ -680,7 +745,7 @@ int main(int argc, char** argv) {
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
-	float var_vbfX = mjj;//1-normMELAggh;///ME_sm_ggH/(ME_sm_ggH+200*ME_bkg);//mjj;//Dbkg_ggH;//normMELAggh;//mjj;
+	float var_vbfX = mjj;//Dbkg_ggH;//normMELAggh;//mjj;
 	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
 
 	if (selection){
@@ -756,13 +821,15 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==6 && gen_match_2==5) h_trgSF_FR[k]->Fill(sf_trg_FR);
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
-
+	  
+	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF);
 	}
       }
     } // end of loop over events
     
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
+    namu->Write();
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
