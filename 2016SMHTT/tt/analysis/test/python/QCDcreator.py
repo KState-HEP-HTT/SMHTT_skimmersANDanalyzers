@@ -40,7 +40,7 @@ if __name__ == "__main__":
                 if histo.GetBinContent(j)<0:
                     histo.SetBinContent(j,0)
 
-
+                    
 
     #######################################
     #                                     #
@@ -58,4 +58,7 @@ if __name__ == "__main__":
         dir.cd()
         hQCD.SetName("QCD")
         hQCD.Write()
-        
+        hSF.SetName("QCD_sf")
+        hSF.Write()
+        histos[k][regions.index("AIOS")].SetName("QCD_AIOS")
+        histos[k][regions.index("AIOS")].Write()
