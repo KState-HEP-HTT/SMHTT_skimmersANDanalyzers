@@ -62,30 +62,18 @@ float passDoubleMu;
 float passDoubleTau35, matchDoubleTau35_1, matchDoubleTau35_2,filterDoubleTau35_1,filterDoubleTau35_2,passDoubleTauCmbIso35,matchDoubleTauCmbIso35_1,matchDoubleTauCmbIso35_2,filterDoubleTauCmbIso35_1,filterDoubleTauCmbIso35_2;
 float genM,genpT,genpX,genpY,vispX,vispY, b_vispX;
 float pt_1_, pt_2_, eta_1_, eta_2_, phi_1_, phi_2_, m_1_, m_2_, mvis_, metcov00_, metcov01_, metcov11_, weight_, met_, metphi_, fvalue_;
-float m_sv;
+float t1_pt, t1_eta, t1_phi, t1_mass;
+float t2_pt, t2_eta, t2_phi, t2_mass;
+float j1_pt, j1_eta, j1_phi;
+float j2_pt, j2_eta, j2_phi;
+float b1_pt, b1_eta, b1_phi;
+float b2_pt, b2_eta, b2_phi;
+float m_sv, pt_sv;
 float Dbkg;
-
-float m_sv_DOWN;
-float m_sv_UP;
-float pt_sv;
-float pt_sv_DOWN;
-float pt_sv_UP;
-float m_sv_UESDown;
-float m_sv_UESUp;
-float m_sv_JESDown;
-float m_sv_JESUp;
-float pt_sv_UESDown;
-float pt_sv_UESUp;
-float pt_sv_JESDown;
-float pt_sv_JESUp;
-
-float m_sv_UncMet_DOWN, m_sv_UncMet_UP, m_sv_ClusteredMet_DOWN, m_sv_ClusteredMet_UP;
-float pt_sv_UncMet_DOWN, pt_sv_UncMet_UP, pt_sv_ClusteredMet_DOWN, pt_sv_ClusteredMet_UP;
-
+float Phi, Phi1, costheta1,costheta2,costhetastar,Q2V1,Q2V2;
+float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive;
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
-//float Dbkg_VBF_DOWN, Dbkg_VBF_UP, Dbkg_VBF_UncMet_DOWN, Dbkg_VBF_UncMet_UP,Dbkg_VBF_ClusteredMet_DOWN, Dbkg_VBF_ClusteredMet_UP;
-float ME_sm_VBF_DOWN,ME_sm_VBF_UP,ME_sm_VBF_UncMet_DOWN, ME_sm_VBF_UncMet_UP,ME_sm_VBF_ClusteredMet_DOWN,ME_sm_VBF_ClusteredMet_UP;
-float ME_bkg_DOWN,ME_bkg_UP,ME_bkg_UncMet_DOWN,ME_bkg_UncMet_UP,ME_bkg_ClusteredMet_DOWN,ME_bkg_ClusteredMet_UP;
+
 
 void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
   pt_1_=PT1;
@@ -107,4 +95,54 @@ void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, f
   weight_=WEIGHT;
   fvalue_=TARGET;
   BG_Tree->Fill();
+}
+
+
+
+void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF){
+  t1_pt = tau1.Pt();
+  t1_eta = tau1.Eta();
+  t1_phi = tau1.Phi();
+  t1_mass = tau1.M();
+  t2_pt = tau2.Pt();
+  t2_eta = tau2.Eta();
+  t2_phi = tau2.Phi();
+  t2_mass = tau2.M();
+
+  j1_pt = jet1.Pt();
+  j1_eta = jet1.Eta();
+  j1_phi = jet1.Phi();
+  j2_pt = jet2.Pt();
+  j2_eta = jet2.Eta();
+  j2_phi = jet2.Phi();
+
+  met = mymet.Pt();
+  metphi = mymet.Phi();
+  mjj = mymjj;
+  njets = mynjets;
+  pt_sv = mypt_sv;
+  m_sv = mym_sv;
+
+  b1_pt = bpt_1;
+  b1_eta = beta_1;
+  b1_phi = bphi_1;
+  b2_pt = bpt_2;
+  b2_eta = beta_2;
+  b2_phi = bphi_2;
+
+  
+
+  higgs_pT = Higgs.Pt();
+  higgs_m = Higgs.M();
+  hjj_pT = (Higgs + jet1 + jet2).Pt();
+  hjj_m = (Higgs + jet1 + jet2).M();
+  dEtajj = fabs(jet1.Eta()-jet2.Eta());
+  dPhijj = fabs(jet1.Phi()-jet2.Phi());//jet1.DeltaPhi(jet2);
+  cat_0jet = is_0jet;
+  cat_boosted = is_boosted;
+  cat_vbf = is_VBF;
+  cat_inclusive = false;
+  if (cat_0jet || cat_boosted || cat_vbf) cat_inclusive = true;
+
+  namu->Fill();
 }
