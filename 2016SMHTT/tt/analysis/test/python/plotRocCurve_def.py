@@ -45,6 +45,7 @@ def produce_tgraph(fsignal,sig_histname,fztt,ztt_histname,cate,color,MarkerStyle
     tgraph = ROOT.TGraph(n,x_eff,y_eff)
     tgraph.SetMarkerStyle(MarkerStyle)
     tgraph.SetMarkerColor(color)
+    tgraph.SetMarkerSize(0.5)
     return tgraph
 
 def produce_pair(histoId, ntupleEff,ntupleFR,N,tgline):
@@ -78,7 +79,7 @@ def produce_roc_curve1(f1, sig_histname, sig_title, bkg1_histname, bkg2_histname
     legend.Draw()
 
     #Save with a specific file name
-    saveas = title+'.pdf'
+    saveas = title+'_'+bkg1_histname+'.pdf'
     print saveas
     canvas.SaveAs(saveas)
 
