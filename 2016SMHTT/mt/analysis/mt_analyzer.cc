@@ -163,10 +163,10 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("phi_2", &phi_2);
     arbre->SetBranchAddress("met", &met);
     arbre->SetBranchAddress("metphi", &metphi);
-    //arbre->SetBranchAddress("m_sv", &m_sv);
+    arbre->SetBranchAddress("m_sv", &m_sv);
     arbre->SetBranchAddress("m_sv_DOWN", &m_sv_DOWN);
     arbre->SetBranchAddress("m_sv_UP", &m_sv_UP);
-    //arbre->SetBranchAddress("pt_sv", &pt_sv);
+    arbre->SetBranchAddress("pt_sv", &pt_sv);
     arbre->SetBranchAddress("pt_sv_DOWN", &pt_sv_DOWN);
     arbre->SetBranchAddress("pt_sv_UP", &pt_sv_UP);
     /*
@@ -377,6 +377,10 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("extramuon_veto", &extramuon_veto);
     arbre->SetBranchAddress("dilepton_veto", &dilepton_veto);
 
+    arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF);
+    arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
+    arbre->SetBranchAddress("ME_bkg",&ME_bkg);
+
     // Construct scenario
     //scenario_info scenario(arbre, unc);
 
@@ -386,7 +390,8 @@ int main(int argc, char** argv) {
    float bins2[] = {0,95,115,135,155,400};
 
    float bins_pth[] = {0,100,150,200,250,300,5000};
-   float bins_mjj[] = {300,700,1100,1500,10000};
+   //float bins_mjj[] = {300,700,1100,1500,10000};
+   float bins_mjj[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
    //float bins_taupt[] = {30,35,40,45,50,55,300};
    //float bins_taupt[] = {30,35,40,300};
    float bins_taupt[] = {0,1,10,11};
@@ -1009,7 +1014,10 @@ int main(int argc, char** argv) {
 
 	    bool is_0jet=(numberJets==0);
 	    bool is_boosted=(numberJets==1 or (numberJets>=2 && (massJets<=300 or var1_1<=50 or mytau.Pt()<=40)));
-	    bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
+	    //bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
+	    bool is_VBF=(numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
+	    float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
+	    var1_2 = normMELAvbf;
    	     //################ W+jets reweighting in high mT ###############
 
             if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){

@@ -46,7 +46,7 @@ hadd -f files_nominal/ZJ.root files_nominal/ZJ*.root
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/W4.root files_nominal/W4.root W W 0
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/EWKWMinus.root files_nominal/EWKWminus.root EWKWminus W 0
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/EWKWPlus.root files_nominal/EWKWplus.root EWKWplus W 0
-hadd -f files_nominal/Wunscaled.root files_nominal/W4.root files_nominal/W3.root files_nominal/W2.root files_nominal/W1.root files_nominal/Wincl.root files_nominal/EWKWminus.root files_nominal/EWKWplus.root
+hadd -f files_nominal/W.root files_nominal/W4.root files_nominal/W3.root files_nominal/W2.root files_nominal/W1.root files_nominal/Wincl.root files_nominal/EWKWminus.root files_nominal/EWKWplus.root
 
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/WW1l1nu2q.root files_nominal/WW1L1Nu2Q.root WW1L1Nu2Q VV 0 
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/VV2l2nu.root files_nominal/VV2L2Nu.root VV2L2Nu VV 0 
@@ -73,5 +73,5 @@ hadd -f files_nominal/WH125.root files_nominal/WplusH125.root files_nominal/Wmin
 #python Scale_W_HighMT.py --scale nominal --anti iso  
 python Create_QCD_2Drelaxed.py --scale nominal
 
-hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/Wunscaled.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/Wunscaled.root files_nominal/QCD.root
+hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
 
