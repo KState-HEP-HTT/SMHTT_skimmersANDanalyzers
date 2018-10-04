@@ -70,8 +70,8 @@ hadd -f files_nominal/VV.root files_nominal/ST_t_top.root files_nominal/ST_t_ant
 hadd -f files_nominal/WH125.root files_nominal/WplusH125.root files_nominal/WminusH125.root
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
 
-#python Scale_W_HighMT.py --scale nominal --anti iso  
-python Create_QCD_2Drelaxed.py --scale nominal
+#python python/Scale_W_HighMT.py --scale nominal --anti iso  
+python python/Create_QCD_2Drelaxed.py --scale nominal
 
 hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
 
