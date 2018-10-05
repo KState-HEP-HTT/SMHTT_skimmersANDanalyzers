@@ -739,14 +739,14 @@ int main(int argc, char** argv) {
 	  //aweight=aweight*w->function("m_trk_ratio")->getVal();
 	  aweight=aweight*h_Trk->Eval(eta_1);
         }
-
+	/*
 	if (name.find("ggH")<100 && name.find("NNLOPS")>100 && name.find("hww")>100){
-	  if (Rivet_nJets30==0) aweight = aweight * g_NNLOPS_0jet->Eval(min(Rivet_higgsPt,float(125.0)));
-	  if (Rivet_nJets30==1) aweight = aweight * g_NNLOPS_1jet->Eval(min(Rivet_higgsPt,float(625.0)));
-	  if (Rivet_nJets30==2) aweight = aweight * g_NNLOPS_2jet->Eval(min(Rivet_higgsPt,float(800.0)));
-	  if (Rivet_nJets30>=3) aweight = aweight * g_NNLOPS_3jet->Eval(min(Rivet_higgsPt,float(925.0)));
+	  if (Rivet_nJets30==0) {aweight = aweight * g_NNLOPS_0jet->Eval(min(Rivet_higgsPt,float(125.0)));	  std::cout << "I'm in the if {1} " << std::endl;}
+	  if (Rivet_nJets30==1) {aweight = aweight * g_NNLOPS_1jet->Eval(min(Rivet_higgsPt,float(625.0)));	  std::cout << "I'm in the if {2} " << std::endl;}
+	  if (Rivet_nJets30==2) {aweight = aweight * g_NNLOPS_2jet->Eval(min(Rivet_higgsPt,float(800.0)));	  std::cout << "I'm in the if {3} " << std::endl;}
+	  if (Rivet_nJets30>=3) {aweight = aweight * g_NNLOPS_3jet->Eval(min(Rivet_higgsPt,float(925.0)));	  std::cout << "I'm in the if {4} " << std::endl;}
 	}
-	
+	*/
 	//cout<<Rivet_nJets30<<" "<<Rivet_higgsPt<<" "<<Rivet_stage1_cat_pTjet30GeV<<endl;
         NumV WG1unc = qcd_ggF_uncert_2017(Rivet_nJets30, Rivet_higgsPt, Rivet_stage1_cat_pTjet30GeV);
 //if (evt==40 or evt==42 or evt==129 or evt==360) cout<<evt<<" "<<WG1unc[0]<<" "<<WG1unc[1]<<endl;
