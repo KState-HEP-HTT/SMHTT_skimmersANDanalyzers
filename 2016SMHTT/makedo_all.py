@@ -109,11 +109,11 @@ for directory, samples in dicSamples.items():#.keys():
         # Cecile's run script for mt : https://github.com/cecilecaillol/SMHTT2016/blob/master/mt/Analyze/do_all.sh
         if ((('GluGlu') in str(sample)) or (('DY') in str(sample)) or (('VBF') in str(sample)) ):
             dir = 'Recoil2_TES1_WJ0/'
-            recoil = 2
+            recoil = 'Z'
         elif 'WJets' in str(samples[sample]):
             #print str(samples[sample])
             dir = 'Recoil2_TES1_WJ1/'
-            recoil = 2
+            recoil = 'W'
         elif directory is directory_Data:
             dir = 'Recoil0_TES0_WJ0/'
             recoil = 0
