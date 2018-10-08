@@ -185,6 +185,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("mjj", &mjj);
 
     arbre->SetBranchAddress("amcatNLO_weight", &amcatNLO_weight);
+    arbre->SetBranchAddress("genweight", &genweight);
     /*
     arbre->SetBranchAddress("mjj_JESDown", &mjj_JESDown);
     arbre->SetBranchAddress("mjj_JESUp", &mjj_JESUp);

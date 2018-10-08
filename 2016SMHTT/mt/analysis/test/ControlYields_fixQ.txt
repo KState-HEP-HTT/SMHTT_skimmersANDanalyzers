@@ -31,13 +31,17 @@ W
 official datacard yield is  15605.6970978
 KSU datacard yield is  17180.7472839 
 
+VV
+official datacard yield is  701.845598698
+KSU datacard yield is  701.545909882 
+
 VBF125
 official datacard yield is  5.79645831697
 KSU datacard yield is  5.79645838402 
 
 ggH125
 official datacard yield is  550.701435089
-KSU datacard yield is  354.874758482 
+KSU datacard yield is  570.674059391 
 
 WH125
 official datacard yield is  2.05084442347
@@ -46,6 +50,10 @@ KSU datacard yield is  3.38141097128
 ZH125
 official datacard yield is  1.57147481075
 KSU datacard yield is  1.5714748033 
+
+QCD
+official datacard yield is  14948.6262169
+KSU datacard yield is  14634.5555687 
 
 ################################################# mt_boosted
 data_obs
@@ -80,13 +88,17 @@ W
 official datacard yield is  7857.19608705
 KSU datacard yield is  8194.65344006 
 
+VV
+official datacard yield is  1852.63390768
+KSU datacard yield is  1811.69611174 
+
 VBF125
 official datacard yield is  58.7439031573
 KSU datacard yield is  57.3269176604 
 
 ggH125
 official datacard yield is  376.674459998
-KSU datacard yield is  221.311833067 
+KSU datacard yield is  355.015363771 
 
 WH125
 official datacard yield is  11.5496681826
@@ -95,6 +107,10 @@ KSU datacard yield is  18.9111294113
 ZH125
 official datacard yield is  11.4004260446
 KSU datacard yield is  10.8628451852 
+
+QCD
+official datacard yield is  6753.52365381
+KSU datacard yield is  6662.85809093 
 
 ################################################# mt_vbf
 data_obs
@@ -129,13 +145,17 @@ W
 official datacard yield is  164.375539422
 KSU datacard yield is  174.334514111 
 
+VV
+official datacard yield is  159.76202774
+KSU datacard yield is  160.012767747 
+
 VBF125
 official datacard yield is  29.2411827147
 KSU datacard yield is  29.2411841452 
 
 ggH125
 official datacard yield is  27.2581047267
-KSU datacard yield is  19.2066351324 
+KSU datacard yield is  30.7095559314 
 
 WH125
 official datacard yield is  0.712956039235
@@ -144,4 +164,8 @@ KSU datacard yield is  1.2253238624
 ZH125
 official datacard yield is  0.772535808093
 KSU datacard yield is  0.772535811644 
+
+QCD
+official datacard yield is  105.210769475
+KSU datacard yield is  104.754703134 
 

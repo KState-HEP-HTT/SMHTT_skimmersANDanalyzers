@@ -986,6 +986,10 @@ public :
    Float_t         vispX;
    Float_t         vispY;
    Int_t           idx;
+   Float_t         Rivet_stage1_cat_pTjet30GeV;
+   Float_t         Rivet_stage0_cat;
+   Float_t         Rivet_higgsPt;
+   Float_t         Rivet_nJets30;
 
    // List of branches
    
@@ -1961,7 +1965,10 @@ public :
    TBranch        *b_vispX;   //!
    TBranch        *b_vispY;   //!
    TBranch        *b_idx;   //!
-
+   TBranch        *b_Rivet_stage1_cat_pTjet30GeV;   //!
+   TBranch        *b_Rivet_stage0_cat;   //!
+   TBranch        *b_Rivet_higgsPt;   //!
+   TBranch        *b_Rivet_nJets30;   //!
 
    // methods
    HTauTauTree_mt (TTree* tree); //ctor
@@ -2960,6 +2967,10 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("vispX", &vispX, &b_vispX);
    _tree->SetBranchAddress("vispY", &vispY, &b_vispY);
    _tree->SetBranchAddress("idx", &idx, &b_idx);
+   _tree->SetBranchAddress("Rivet_stage1_cat_pTjet30GeV", &Rivet_stage1_cat_pTjet30GeV, &b_Rivet_stage1_cat_pTjet30GeV);
+   _tree->SetBranchAddress("Rivet_stage0_cat", &Rivet_stage0_cat, &b_Rivet_stage0_cat);
+   _tree->SetBranchAddress("Rivet_higgsPt", &Rivet_higgsPt, &b_Rivet_higgsPt);
+   _tree->SetBranchAddress("Rivet_nJets30", &Rivet_nJets30, &b_Rivet_nJets30);
 }
 
 Int_t HTauTauTree_mt::GetEntry(int entry)

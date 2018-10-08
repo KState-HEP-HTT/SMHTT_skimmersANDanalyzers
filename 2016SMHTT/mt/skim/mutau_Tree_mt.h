@@ -21,6 +21,7 @@ unsigned int run, lumi, evt, NUP = -10;
 bool secondMuon=false;
 int gen_match_1, gen_match_2=0;
 float met_norecoil;
+float Rivet_stage1_cat_pTjet30GeV,Rivet_stage0_cat, Rivet_higgsPt, Rivet_nJets30;
 float npu, rho, npv=-1, puweight, weight;
 bool isZtt, isZmt, isZet, isZee, isZmm, isZem, isZEE, isZMM, isZLL, isFake;
 float e_1, px_1, py_1, pz_1, pt_1, phi_1, eta_1, m_1, q_1, d0_1, dZ_1, mt_1, iso_1, l1_decayMode, iso_1_v2;
@@ -613,6 +614,10 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     photonIso_2=tree->tPhotonPtSumOutsideSignalCone;
     numGenJets=tree->numGenJets;
     jetPt_2=tree->tJetPt;
+    Rivet_stage1_cat_pTjet30GeV=tree->Rivet_stage1_cat_pTjet30GeV;
+    Rivet_stage0_cat=tree->Rivet_stage0_cat;
+    Rivet_higgsPt=tree->Rivet_higgsPt;
+    Rivet_nJets30=tree->Rivet_nJets30;
 
 
     againstMuonTight3_2 = tree->tAgainstMuonTight3;
