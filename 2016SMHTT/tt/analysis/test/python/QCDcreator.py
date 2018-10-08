@@ -38,8 +38,11 @@ if __name__ == "__main__":
         for histo in histos[i]:
             for j in range(0,histo.GetSize()-2):
                 if histo.GetBinContent(j)<0:
+                    print histo
+                    print histo.GetBinContent(j)
+                    histo.SetBinError(j,max(0,histo.GetBinContent(j)+histo.GetBinContent(j)))
                     histo.SetBinContent(j,0)
-
+                    
                     
 
     #######################################
@@ -48,17 +51,38 @@ if __name__ == "__main__":
     #  QCD = AIOS * (SS_signallike/AISS)  #
     #                                     #
     #######################################
-    for k in range(0,len(histos)):
-        hSF = histos[k][0].Clone()
-        hSF.Divide(histos[k][regions.index("ttSS")],histos[k][regions.index("AISS")],1,1,"B")
-        hQCD = hSF.Clone()
-        hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
+    for k in range(0,len(histos)):  # loop over categories
         fout.cd()
         dir = fout.mkdir("tt_"+cates[k])
         dir.cd()
-        hQCD.SetName("QCD")
-        hQCD.Write()
-        hSF.SetName("QCD_sf")
-        hSF.Write()
+        # Save control region histograms for checking.
+        histos[k][regions.index("ttSS")].SetName("QCD_ttSS")
+        histos[k][regions.index("ttSS")].Write()
+        histos[k][regions.index("AISS")].SetName("QCD_AISS")
+        histos[k][regions.index("AISS")].Write()
         histos[k][regions.index("AIOS")].SetName("QCD_AIOS")
         histos[k][regions.index("AIOS")].Write()
+        # Compute SF and QCD
+        hSF = histos[k][0].Clone()
+        hSF.Divide(histos[k][regions.index("ttSS")],histos[k][regions.index("AISS")],1,1,"B")
+        hSF.SetName("QCD_sf")
+        hSF.Write()
+        hQCD = hSF.Clone()
+        hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
+        hQCD = histos[k][regions.index("AIOS")]
+        hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
+        '''
+        # Discard obvious wrong value
+        for l in range(0,histos[k][regions.index("AISS")].GetSize()-2):
+            #if histos[k][regions.index("AISS")].GetBinContent(l)<=0:
+            print "--"
+            print k,l
+            print histos[k][regions.index("AISS")].GetBinContent(l)
+            print histos[k][regions.index("ttSS")].GetBinContent(l)
+            print hQCD.GetBinContent(l)
+            hQCD.SetBinContent(l,0)        
+            '''
+        hQCD.SetName("QCD")
+        hQCD.Write()
+
+    
