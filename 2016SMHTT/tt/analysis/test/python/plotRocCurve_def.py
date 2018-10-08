@@ -68,6 +68,9 @@ def produce_roc_curve1(f1, sig_histname, sig_title, bkg1_histname, bkg2_histname
     frame.Add(tg2)
     #Draw Axis,Line,Points
     frame.Draw("ALP")
+    frame.GetXaxis().SetLimits(0.0,1.0);
+    frame.GetHistogram().SetMinimum(0.0);
+    frame.GetHistogram().SetMaximum(1.0);
 
     #Add Legend for the IDs
     legend = ROOT.TLegend(0.2, 0.7, 0.39, 0.8, "", "brNDC")
@@ -79,7 +82,7 @@ def produce_roc_curve1(f1, sig_histname, sig_title, bkg1_histname, bkg2_histname
     legend.Draw()
 
     #Save with a specific file name
-    saveas = title+'_'+bkg1_histname+'.pdf'
+    saveas = 'plots/ROC/'+title+'_'+bkg1_histname+'.pdf'
     print saveas
     canvas.SaveAs(saveas)
 
