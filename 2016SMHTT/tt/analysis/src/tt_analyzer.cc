@@ -640,7 +640,7 @@ int main(int argc, char** argv) {
       bool isZTT=false;
       bool isZL=false;
       bool isZJ=false;
-      if (gen_match_1==5 || gen_match_2==5) isZTT=true;
+      if (gen_match_1==5 && gen_match_2==5) isZTT=true;
       if (gen_match_1<6&&gen_match_2<6&&!(gen_match_1==5&&gen_match_2==5)) isZL=true;
       if (gen_match_2==6 || gen_match_1==6) isZJ=true;
       if ((name=="ZTT") && !isZTT) continue;
