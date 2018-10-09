@@ -1,5 +1,4 @@
 rm files_nominal/*
-./Make.sh mt_analyzer.cc
 
 # Data
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/data_B.root files_nominal/data_B.root data_obs data_obs 0
