@@ -185,6 +185,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("mjj", &mjj);
 
     arbre->SetBranchAddress("amcatNLO_weight", &amcatNLO_weight);
+    arbre->SetBranchAddress("genweight", &genweight);
     /*
     arbre->SetBranchAddress("mjj_JESDown", &mjj_JESDown);
     arbre->SetBranchAddress("mjj_JESUp", &mjj_JESUp);
@@ -713,12 +714,13 @@ int main(int argc, char** argv) {
 	else if (numGenJets==3)	weight=0.47995;
 	else if (numGenJets==4) weight=0.39349;
       }
-
+      
       float correction=sf_id;
 	if (sample!="embedded" && sample!="data_obs") correction=correction*LumiWeights_12->weight(npu);
         if (sample=="embedded" && amcatNLO_weight>1) amcatNLO_weight=0.10;
-	float aweight=amcatNLO_weight*weight*correction;
-
+	//float aweight=amcatNLO_weight*weight*correction;
+	float aweight=genweight*weight*correction;
+	
         if (sample!="data_obs"){
 	  if (gen_match_2==5) aweight=aweight*0.95;
 	  if (gen_match_2==2 or gen_match_2==4){//Yiwen reminiaod
@@ -739,14 +741,14 @@ int main(int argc, char** argv) {
 	  //aweight=aweight*w->function("m_trk_ratio")->getVal();
 	  aweight=aweight*h_Trk->Eval(eta_1);
         }
-	/*
+
 	if (name.find("ggH")<100 && name.find("NNLOPS")>100 && name.find("hww")>100){
-	  if (Rivet_nJets30==0) {aweight = aweight * g_NNLOPS_0jet->Eval(min(Rivet_higgsPt,float(125.0)));	  std::cout << "I'm in the if {1} " << std::endl;}
-	  if (Rivet_nJets30==1) {aweight = aweight * g_NNLOPS_1jet->Eval(min(Rivet_higgsPt,float(625.0)));	  std::cout << "I'm in the if {2} " << std::endl;}
-	  if (Rivet_nJets30==2) {aweight = aweight * g_NNLOPS_2jet->Eval(min(Rivet_higgsPt,float(800.0)));	  std::cout << "I'm in the if {3} " << std::endl;}
-	  if (Rivet_nJets30>=3) {aweight = aweight * g_NNLOPS_3jet->Eval(min(Rivet_higgsPt,float(925.0)));	  std::cout << "I'm in the if {4} " << std::endl;}
+	  if (Rivet_nJets30==0) aweight = aweight * g_NNLOPS_0jet->Eval(min(Rivet_higgsPt,float(125.0)));
+	  if (Rivet_nJets30==1) aweight = aweight * g_NNLOPS_1jet->Eval(min(Rivet_higgsPt,float(625.0)));
+	  if (Rivet_nJets30==2) aweight = aweight * g_NNLOPS_2jet->Eval(min(Rivet_higgsPt,float(800.0)));
+	  if (Rivet_nJets30>=3) aweight = aweight * g_NNLOPS_3jet->Eval(min(Rivet_higgsPt,float(925.0)));
 	}
-	*/
+
 	//cout<<Rivet_nJets30<<" "<<Rivet_higgsPt<<" "<<Rivet_stage1_cat_pTjet30GeV<<endl;
         NumV WG1unc = qcd_ggF_uncert_2017(Rivet_nJets30, Rivet_higgsPt, Rivet_stage1_cat_pTjet30GeV);
 //if (evt==40 or evt==42 or evt==129 or evt==360) cout<<evt<<" "<<WG1unc[0]<<" "<<WG1unc[1]<<endl;

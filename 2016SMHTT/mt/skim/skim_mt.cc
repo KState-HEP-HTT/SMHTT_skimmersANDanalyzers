@@ -63,6 +63,10 @@ int main(int argc, char** argv) {
     //Run_Tree->Branch("amcatNLO_weight", &aMCatNLO_weight);
     Run_Tree->Branch("genweight", &genweight);
 
+    Run_Tree->Branch("Rivet_stage1_cat_pTjet30GeV", &Rivet_stage1_cat_pTjet30GeV);
+    Run_Tree->Branch("Rivet_stage0_cat", &Rivet_stage0_cat);
+    Run_Tree->Branch("Rivet_higgsPt", &Rivet_higgsPt);
+    Run_Tree->Branch("Rivet_nJets30", &Rivet_nJets30);
 
     Run_Tree->Branch("pt_1", &pt_1);
     Run_Tree->Branch("px_1", &px_1);

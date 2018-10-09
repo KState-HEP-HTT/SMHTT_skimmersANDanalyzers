@@ -14,6 +14,7 @@ int gen_match_1, gen_match_2;
 //bool dilepton_veto, extraelec_veto, extramuon_veto;
 bool isZmt;
 int nbtag;
+float genweight;
 float gentau_vispt;
 int run, lumi, evt;
 int nup,njets;
