@@ -73,7 +73,7 @@ float Dbkg;
 float Phi, Phi1, costheta1,costheta2,costhetastar,Q2V1,Q2V2;
 float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive;
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
-
+float evtwt;
 
 void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
   pt_1_=PT1;
@@ -99,7 +99,8 @@ void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, f
 
 
 
-void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF){
+void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, float myevtwt){
+  evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
   t1_phi = tau1.Phi();

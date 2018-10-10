@@ -55,6 +55,9 @@ int main(int argc, char** argv) {
     std::cout.precision(11);
     TTree* namu = new TTree("tt_tree", "tt_tree");
     namu->SetDirectory(0);
+
+    namu->Branch("evtwt",&evtwt);
+
     namu->Branch("t1_pt",&t1_pt);
     namu->Branch("t1_eta", &t1_eta);
     namu->Branch("t1_phi", &t1_phi);
@@ -822,7 +825,7 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF);
+	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,weight2*aweight);
 	}
       }
     } // end of loop over events
