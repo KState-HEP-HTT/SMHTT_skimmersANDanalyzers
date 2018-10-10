@@ -27,7 +27,7 @@ trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",
 
 
 def add_lumi():
-    lowX=0.58
+    lowX=0.50
     lowY=0.835
     lumi  = ROOT.TPaveText(lowX, lowY+0.06, lowX+0.30, lowY+0.16, "NDC")
     lumi.SetBorderSize(   0 )
@@ -36,7 +36,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.05)
     lumi.SetTextFont (   42 )
-    lumi.AddText("2016, 35.9 fb^{-1} (13 TeV)")
+    lumi.AddText("#tau_{h}#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -96,11 +96,13 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     return legend
 
 def add_cate(category):
-    categ  = ROOT.TPaveText(0.21, 0.5+0.013, 0.43, 0.70+0.155, "NDC")
+    lowX=0.21 
+    lowY=0.63
+    categ  = ROOT.TPaveText(lowX, lowY, lowX+0.12, lowY+0.12, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
-    categ.SetTextSize ( 0.06 )
+    categ.SetTextSize ( 0.045 )
     categ.SetTextColor(    1 )
     categ.SetTextFont (   41 )
     categ.AddText(category)
@@ -236,12 +238,14 @@ def make_dividedHisto(num,deno,min,max,off,title,end):
     h_ratio.SetLineWidth(1)
     h_ratio.GetYaxis().SetTitle(title)
     h_ratio.GetYaxis().SetTitleOffset(off)
+    h_ratio.GetYaxis().SetTitleFont(42)
     h_ratio.GetYaxis().SetTitleSize(0.17)
     h_ratio.GetYaxis().SetLabelSize(0.17) #
+    h_ratio.GetYaxis().SetLabelFont(42)
     if end is 1:
         h_ratio.GetYaxis().SetTitleOffset(off*1.17)
-        h_ratio.GetYaxis().SetTitleSize(0.14)
-        h_ratio.GetYaxis().SetLabelSize(0.14) #
+        h_ratio.GetYaxis().SetTitleSize(0.15)
+        h_ratio.GetYaxis().SetLabelSize(0.15) #
     h_ratio.GetYaxis().SetTitleFont(42)
     h_ratio.GetYaxis().SetNdivisions(5, True)
     h_ratio.GetXaxis().SetNdivisions(505)
@@ -348,7 +352,8 @@ for cat in cate.keys():
     ggH.GetYaxis().SetLabelSize(0.10)
     ggH.GetYaxis().SetTitleSize(0.12)
     ggH.GetYaxis().SetTitle("Events/bin")
-    ggH.GetYaxis().SetTitleOffset(0.6)
+    ggH.GetYaxis().SetTitleFont(42)
+    ggH.GetYaxis().SetTitleOffset(0.5)
     ggH.SetLineColor(ROOT.kRed+1)  
     VBF.SetLineColor(ROOT.kBlue)  
     WH.SetLineColor(ROOT.kOrange)  
@@ -392,18 +397,19 @@ for cat in cate.keys():
     p_ratio_DataMC.cd()
     p_ratio_DataMC.SetGridy()
     data = histoAll["histData"][cate[cat]].Clone()
-    h_ratio_DataMC = make_dividedHisto(data,error,0.5,1.5,off,"Data / MC",0)
+    # make_dividedHisto(h_numerator,h_denominator,min,max,offset,title on Y axis, is bottom ratio?)
+    h_ratio_DataMC = make_dividedHisto(data,error,0,2,off,"Data / MC", 1)
     h_ratio_DataMC.Draw("e0p")
     h_ratioErr_DataMC = make_ratioErr(error)
     h_ratioErr_DataMC.Draw("e2same")
-    set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.0)
+    set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.2)
     print "ratio[1] : Data/MC pad is made."
 
     
     # Make canvas 
-    plot1 = make_canvas(700,"plot1")  
+    plot1 = make_canvas(650,"plot1")  
     # Stick main histogram pad   
-    pad_Main = make_stackPad(0.3,1.0)
+    pad_Main = make_stackPad(0.32,1.0)
     pad_Main.Draw()
     pad_Main.cd()
     p_histoStack.DrawClonePad()
@@ -415,13 +421,13 @@ for cat in cate.keys():
     legend.Draw()
     # Stick ratio Data/MC
     plot1.cd()
-    pad_DataMC = make_stackPad(0.1,0.3)
+    pad_DataMC = make_stackPad(0.10,0.32)
     pad_DataMC.Draw()
     pad_DataMC.cd()
     p_ratio_DataMC.DrawClonePad()
     # Stick title of the plot
     plot1.cd()
-    pad_obs = make_stackPad(0,0.09)
+    pad_obs = make_stackPad(0,0.1)
     pad_obs.Draw()
     pad_obs.cd()
     set_padMargin(pad_obs,0,0,0,0)
