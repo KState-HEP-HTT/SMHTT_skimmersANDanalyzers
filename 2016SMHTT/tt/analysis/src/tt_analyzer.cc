@@ -112,6 +112,9 @@ int main(int argc, char** argv) {
     namu->Branch("cat_vbf",       &cat_vbf);
     namu->Branch("cat_inclusive", &cat_inclusive);
 
+    namu->Branch("is_OS", &is_OS);
+    namu->Branch("is_signal", &is_signal);
+
     ////////////////////////////////////
     //                                //
     //  Weights and Scale Factors     //
@@ -274,6 +277,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("costhetastar", &costhetastar);
     arbre->SetBranchAddress("Q2V1"        , &Q2V1);
     arbre->SetBranchAddress("Q2V2"        , &Q2V2);
+
 
 
     scenario_info scenario(arbre, shape);
@@ -718,7 +722,7 @@ int main(int argc, char** argv) {
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	//if (mjj>300)  is_VBF=true; 
+	//if (njets>=2 && mjj>300)  is_VBF=true; 
 
 
 	// Z mumu SF 
@@ -825,7 +829,7 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,weight2*aweight);
+	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,OS,signalRegion,weight2*aweight);
 	}
       }
     } // end of loop over events
@@ -833,6 +837,7 @@ int main(int argc, char** argv) {
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
     namu->Write();
+    nbevt->Write();
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
