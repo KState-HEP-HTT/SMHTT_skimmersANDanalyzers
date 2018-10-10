@@ -55,6 +55,9 @@ int main(int argc, char** argv) {
     std::cout.precision(11);
     TTree* namu = new TTree("tt_tree", "tt_tree");
     namu->SetDirectory(0);
+
+    namu->Branch("evtwt",&evtwt);
+
     namu->Branch("t1_pt",&t1_pt);
     namu->Branch("t1_eta", &t1_eta);
     namu->Branch("t1_phi", &t1_phi);
@@ -108,6 +111,9 @@ int main(int argc, char** argv) {
     namu->Branch("cat_boosted",   &cat_boosted);
     namu->Branch("cat_vbf",       &cat_vbf);
     namu->Branch("cat_inclusive", &cat_inclusive);
+
+    namu->Branch("is_OS", &is_OS);
+    namu->Branch("is_signal", &is_signal);
 
     ////////////////////////////////////
     //                                //
@@ -282,10 +288,11 @@ int main(int argc, char** argv) {
     //Binning for 1jet cat, x-axis: HpT
     float bins1X[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
-    float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    float bins1Y[] = {0,1000000};
     //Binning for 2jet cat, x-axis: Mjj
-    float bins2X[] = {0,300,500,800,10000};
-    //float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    //float bins2X[] = {0,300,500,800,10000};
+    float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
     //float bins2X[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
     //plot binning for 2jet cat 
     //float bins2X[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
@@ -293,7 +300,8 @@ int main(int argc, char** argv) {
     //binning for 2jet cat, x-axis: Dbkg_VBF
     //float bins2X[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
-    float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    float bins2Y[] = {0,1000000};
     // plot binning for 2jet cat
     //float bins2Y[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
@@ -714,8 +722,8 @@ int main(int argc, char** argv) {
 	bool is_2jets = false;
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
-	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	//if (mjj>300)  is_VBF=true; 
+	//if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
+	if (njets>=2 && mjj>300)  is_VBF=true; 
 
 
 	// Z mumu SF 
@@ -745,7 +753,7 @@ int main(int argc, char** argv) {
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
-	float var_vbfX = mjj;//Dbkg_ggH;//normMELAggh;//mjj;
+	float var_vbfX = normMELAvbf;//Dbkg_ggH;//normMELAggh;//mjj;
 	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
 
 	if (selection){
@@ -822,7 +830,7 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF);
+	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,OS,signalRegion,weight2*aweight);
 	}
       }
     } // end of loop over events
@@ -830,6 +838,7 @@ int main(int argc, char** argv) {
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
     namu->Write();
+    nbevt->Write();
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
