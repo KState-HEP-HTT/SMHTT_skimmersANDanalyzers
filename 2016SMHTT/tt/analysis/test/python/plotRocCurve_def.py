@@ -88,7 +88,7 @@ def produce_roc_curve1(f1, sig_histname, sig_title, bkg1_histname, bkg2_histname
 
 
 
-def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, type1, type2, title=''):#,label='roc'):
+def produce_roc_curve(f1, f2, sig_histname, sig_title, bkg_histname, bkg_title, type1, type2, title=''):#,label='roc'):
     frame = ROOT.TMultiGraph()
     frame.SetTitle(title+';'+sig_title+';'+bkg_title)
     cate = 'vbf'
@@ -97,8 +97,8 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, 
     #produce_pair(histoId2, ntupleEff, ntupleFR, 1, tgline)
     #produce_pair(histoId3,ntupleEff, ntupleFR, 2, tgline)
     #Create TGraphs to add to the TMultiGraph
-    tg1 = produce_tgraph(f1,sig_histname,f1,ztt_histname,cate,ROOT.kBlue,20)
-    tg2 = produce_tgraph(f2,sig_histname,f2,ztt_histname,cate,ROOT.kRed,20)
+    tg1 = produce_tgraph(f1,sig_histname,f1,bkg_histname,cate,ROOT.kBlue,20)
+    tg2 = produce_tgraph(f2,sig_histname,f2,bkg_histname,cate,ROOT.kRed,20)
     #tg3 = produce_tgraph(f3,sig_histname,f3,ztt_histname,cate,ROOT.kOrange,20)
     '''test = produce_tgraph(fsignal,"VBF125_MELA_VBF",fztt,"ZTT_MELA_VBF",ROOT.kBlack,20)
     c=ROOT.TCanvas("canvas","",0,0,600,600)
@@ -115,6 +115,9 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, 
     #frame.Add(tg3)
     #Draw Axis,Line,Points
     frame.Draw("ALP")
+    frame.GetXaxis().SetLimits(0.0,1.0);
+    frame.GetHistogram().SetMinimum(0.0);
+    frame.GetHistogram().SetMaximum(1.0);
     #frame.GetXaxis().SetLimits(0.,1.)
     #frame.GetYaxis().SetRangeUser(0.,1.)
     #Add Legend for the IDs
@@ -128,7 +131,7 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, ztt_histname, ztt_title, 
     #legend.AddEntry(tg3,legend3,"pe")
     legend.Draw()
     #Save with a specific file name
-    saveas = 'plots/ROC/'+title+ztt_histname+'.pdf'
+    saveas = 'plots/ROC/'+title+bkg_histname+'.pdf'
     canvas.SaveAs(saveas)
     print saveas,'----------------------------------------------------- \n\n\n'
 

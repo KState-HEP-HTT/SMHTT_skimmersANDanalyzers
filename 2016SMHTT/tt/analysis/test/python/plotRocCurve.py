@@ -16,22 +16,23 @@ ROOT.gStyle.SetOptStat(0)
 ######## Load Files ######### 
 
 file_current = ROOT.TFile("final_nominal.root")
-'''
+file_NN = ROOT.TFile("final_nominal_NN.root")
+
 ####### Produce ROC curve #######
 plotRocCurve_def.produce_roc_curve( 
-    file_mjj,file_ggh,       # input root files
-    'ggH125','ggH125_eff',   # 'histogramName' in rootfile, 'legend Title' on the plot (x-axis)
-    'ZJ','ZJ_eff',         # 'histogramName' in rootfile, 'legend Title' on the plot (y-axis)
-    'mjj','MELA',            # category (legend name)
-    'ROC(normMELAggH)',      # output file name is 'ROC(normMELAggH).pdf'
+    file_current,file_NN,       # input root files
+    'VBF125','VBF125_eff',   # 'histogramName' in rootfile, 'legend Title' on the plot (x-axis)
+    'ZTT','ZTT_eff',         # 'histogramName' in rootfile, 'legend Title' on the plot (y-axis)
+    'normMELAvbf','NNdisc',            # category (legend name)
+    'ROC(tt_ZTT)',      # output file name is 'ROC(normMELAggH).pdf'
     )
-'''
-bkgtmp = 'EWKZ'
+
+bkgtmp = 'QCD'
 plotRocCurve_def.produce_roc_curve1( 
-    file_current,       # input root files
-    'ggH125','ggH125_eff',   # 'histogramName' in rootfile, 'legend Title' on the plot (x-axis)
-    bkgtmp,'ZTT','bkg125_eff',         # 'histogramName' in rootfile, 'legend Title' on the plot (y-axis)
-    'ROC(normMELAggh)',      # output file name is 'ROC(normMELAvbf).pdf'
+    file_NN,       # input root files
+    'VBF125','VBF125_eff',   # 'histogramName' in rootfile, 'legend Title' on the plot (x-axis)
+    'ZTT',bkgtmp,'bkg_eff',         # 'histogramName' in rootfile, 'legend Title' on the plot (y-axis)
+    'ROC(NNdisc)',      # output file name is 'ROC(normMELAvbf).pdf'
     )
 
 
@@ -44,8 +45,8 @@ plotRocCurve_def.produce_ratio(
     )
 '''
 plotRocCurve_def.produce_ratio(
-    file_current,
-    'normMELAggH','vbf',
-    'ggH125',bkgtmp,
+    file_NN,
+    'NNdisc','vbf',
+    'VBF125','ZTT',
     )
 
