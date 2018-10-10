@@ -356,12 +356,12 @@ int main(int argc, char** argv) {
       std::ostringstream HNS3OS; HNS3OS << "h3_OS" << k;
       std::ostringstream HNSOS; HNS2OS << "h_OS" << k;
       //binnum2X,bins2X,binnum2Y,bins2Y
-      h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"diTauMa",binnum0,bins0)); h0_OS[k]->Sumw2();
-      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
-      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_OS[k]->Sumw2();
+      h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"",binnum0,bins0)); h0_OS[k]->Sumw2();
+      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
+      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_OS[k]->Sumw2();
       
-      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_OS[k]->Sumw2();
-      h_OS.push_back(new TH1F (HNSOS.str().c_str(),"diTauMa",binnum0,bins0)); h_OS[k]->Sumw2();
+      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_OS[k]->Sumw2();
+      h_OS.push_back(new TH1F (HNSOS.str().c_str(),"",binnum0,bins0)); h_OS[k]->Sumw2();
       
       std::ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
       std::ostringstream HNS1SS; HNS1OS << "h1_SS" << k;
@@ -369,11 +369,11 @@ int main(int argc, char** argv) {
       std::ostringstream HNS3SS; HNS2OS << "h3_SS" << k;
       std::ostringstream HNSSS; HNSOS << "h_SS" << k;
 
-      h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"diTauMa",binnum1,bins1)); h0_SS[k]->Sumw2();
-      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
-      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_SS[k]->Sumw2();
-      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_SS[k]->Sumw2();
-      h_SS.push_back(new TH1F (HNSSS.str().c_str(),"diTauMa",binnum1,bins1)); h_SS[k]->Sumw2();
+      h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"",binnum1,bins1)); h0_SS[k]->Sumw2();
+      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
+      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_SS[k]->Sumw2();
+      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_SS[k]->Sumw2();
+      h_SS.push_back(new TH1F (HNSSS.str().c_str(),"",binnum1,bins1)); h_SS[k]->Sumw2();
       
       std::ostringstream HNS0AIOS; HNS0AIOS << "h0_AIOS" << k;
       std::ostringstream HNS1AIOS; HNS1AIOS << "h1_AIOS" << k;
@@ -381,11 +381,11 @@ int main(int argc, char** argv) {
       std::ostringstream HNS3AIOS; HNS3AIOS << "h3_AIOS" << k;
       std::ostringstream HNSAIOS; HNSAIOS << "h_AIOS" << k;
 
-      h0_AIOS.push_back(new TH1F (HNS0AIOS.str().c_str(),"diTauMa",binnum0,bins0)); h0_AIOS[k]->Sumw2();
-      h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AIOS[k]->Sumw2();
-      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AIOS[k]->Sumw2();
-      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AIOS[k]->Sumw2();
-      h_AIOS.push_back(new TH1F (HNSAIOS.str().c_str(),"diTauMa",binnum0,bins0)); h_AIOS[k]->Sumw2();
+      h0_AIOS.push_back(new TH1F (HNS0AIOS.str().c_str(),"",binnum0,bins0)); h0_AIOS[k]->Sumw2();
+      h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AIOS[k]->Sumw2();
+      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AIOS[k]->Sumw2();
+      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AIOS[k]->Sumw2();
+      h_AIOS.push_back(new TH1F (HNSAIOS.str().c_str(),"",binnum0,bins0)); h_AIOS[k]->Sumw2();
         
       std::ostringstream HNS0AISS; HNS0AISS << "h0_AISS" << k;
       std::ostringstream HNS1AISS; HNS1AISS << "h1_AISS" << k;
@@ -393,11 +393,11 @@ int main(int argc, char** argv) {
       std::ostringstream HNS3AISS; HNS3AISS << "h3_AISS" << k;
       std::ostringstream HNSAISS; HNSAISS << "h_AISS" << k;
 
-      h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"diTauMa",binnum1,bins1)); h0_AISS[k]->Sumw2();
-      h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"diTauMa",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
-      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AISS[k]->Sumw2();
-      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"diTauMa",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AISS[k]->Sumw2();
-      h_AISS.push_back(new TH1F (HNSAISS.str().c_str(),"diTauMa",binnum1,bins1)); h_AISS[k]->Sumw2();
+      h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"",binnum1,bins1)); h0_AISS[k]->Sumw2();
+      h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
+      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AISS[k]->Sumw2();
+      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AISS[k]->Sumw2();
+      h_AISS.push_back(new TH1F (HNSAISS.str().c_str(),"",binnum1,bins1)); h_AISS[k]->Sumw2();
       
       // D.Kim trgSF
       std::ostringstream HTRGSF1; HTRGSF1 << "h_trgSF1" << k;
