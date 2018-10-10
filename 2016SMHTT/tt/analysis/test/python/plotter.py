@@ -5,10 +5,11 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "#Delta#eta_{jj}"
+obs = "cos(#theta_{1})"
 
 file=ROOT.TFile("final_nominal.root","r")
-cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
+#cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
+cate={"tt_vbf":"VBF enriched"}
 #cate={"ttOS_0jet":"0jet","ttOS_boosted":"boosted","ttOS_vbf":"vbf"}
 #cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets"}
 
@@ -339,8 +340,8 @@ for cat in cate.keys():
     ''' Making signal histogram pad '''
     p_signal = make_canvas(300,"p_signal")
     p_signal.cd()
-    ggH = make_sig(cat,"ggH125",0,1,1)
-    VBF = make_sig(cat,"VBF125",0,1,1)
+    ggH = make_sig(cat,"ggH125",0,1,30)
+    VBF = make_sig(cat,"VBF125",0,1,30)
     WH = make_sig(cat,"WH125",0,1,3)
     ZH = make_sig(cat,"ZH125",0,1,3)
     ggH.SetMaximum(ggH.GetMaximum()*1.30)
@@ -348,8 +349,8 @@ for cat in cate.keys():
     ggH.GetYaxis().SetTitleSize(0.12)
     ggH.GetYaxis().SetTitle("Events/bin")
     ggH.GetYaxis().SetTitleOffset(0.6)
-    ggH.SetLineColor(ROOT.kBlack)  
-    VBF.SetLineColor(ROOT.kGreen+2)  
+    ggH.SetLineColor(ROOT.kRed+1)  
+    VBF.SetLineColor(ROOT.kBlue)  
     WH.SetLineColor(ROOT.kOrange)  
     ZH.SetLineColor(ROOT.kRed+1)  
     ggH.Draw("HIST")
@@ -397,6 +398,40 @@ for cat in cate.keys():
     h_ratioErr_DataMC.Draw("e2same")
     set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.0)
     print "ratio[1] : Data/MC pad is made."
+
+    
+    # Make canvas 
+    plot1 = make_canvas(700,"plot1")  
+    # Stick main histogram pad   
+    pad_Main = make_stackPad(0.3,1.0)
+    pad_Main.Draw()
+    pad_Main.cd()
+    p_histoStack.DrawClonePad()
+    p_histoStack.SetTitle("")    
+    #main_SMH.Draw("esame HIST")
+    main_ggH.Draw("esame HIST")
+    main_VBF.Draw("esame HIST")
+    legend = add_legendEntryMain(0,1,1,0,0,cat)
+    legend.Draw()
+    # Stick ratio Data/MC
+    plot1.cd()
+    pad_DataMC = make_stackPad(0.1,0.3)
+    pad_DataMC.Draw()
+    pad_DataMC.cd()
+    p_ratio_DataMC.DrawClonePad()
+    # Stick title of the plot
+    plot1.cd()
+    pad_obs = make_stackPad(0,0.09)
+    pad_obs.Draw()
+    pad_obs.cd()
+    set_padMargin(pad_obs,0,0,0,0)
+    obsPave = make_titleTag()
+    obsPave.Draw()
+
+    # Save plot
+    plot1.SaveAs("plots/general_"+cate[cat]+".pdf")
+
+    '''
     # ratio[2] : Sig/Bkg
     p_ratio_SigBkg = make_canvas(150,"p_ratio_SigBkg")
     p_ratio_SigBkg.cd()
@@ -662,3 +697,4 @@ for cat in cate.keys():
     
 
     
+    '''
