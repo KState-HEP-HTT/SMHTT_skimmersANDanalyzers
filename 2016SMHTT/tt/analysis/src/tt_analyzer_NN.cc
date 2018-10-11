@@ -37,6 +37,7 @@
 #include "../include/btagSF.h"
 #include "../include/scenario_info.h"
 #include "../include/zmumuSF.h"
+#include "../include/TMVAClassification_TMlpANN.cxx"
 //#include "../include/NNskimmer.h"
 
 int main(int argc, char** argv) {
@@ -187,8 +188,8 @@ int main(int argc, char** argv) {
       //binnum2X,bins2X,binnum2Y,bins2Y
       h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"",binnum0,bins0)); h0_OS[k]->Sumw2();
       h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
-      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_OS[k]->Sumw2();
-      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_OS[k]->Sumw2();
+      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",15,0,1,1,0,10000)); h2_OS[k]->Sumw2();
+      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"",15,0,1,1,0,10000)); h3_OS[k]->Sumw2();
       h_OS.push_back(new TH1F (HNSOS.str().c_str(),"",binnum0,bins0)); h_OS[k]->Sumw2();
       
       std::ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
@@ -199,8 +200,8 @@ int main(int argc, char** argv) {
 
       h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"",binnum1,bins1)); h0_SS[k]->Sumw2();
       h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
-      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_SS[k]->Sumw2();
-      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_SS[k]->Sumw2();
+      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",15,0,1,1,0,10000)); h2_SS[k]->Sumw2();
+      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"",15,0,1,1,0,10000)); h3_SS[k]->Sumw2();
       h_SS.push_back(new TH1F (HNSSS.str().c_str(),"",binnum1,bins1)); h_SS[k]->Sumw2();
       
       std::ostringstream HNS0AIOS; HNS0AIOS << "h0_AIOS" << k;
@@ -211,8 +212,8 @@ int main(int argc, char** argv) {
 
       h0_AIOS.push_back(new TH1F (HNS0AIOS.str().c_str(),"",binnum0,bins0)); h0_AIOS[k]->Sumw2();
       h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AIOS[k]->Sumw2();
-      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AIOS[k]->Sumw2();
-      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AIOS[k]->Sumw2();
+      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"",15,0,1,1,0,10000)); h2_AIOS[k]->Sumw2();
+      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"",15,0,1,1,0,10000)); h3_AIOS[k]->Sumw2();
       h_AIOS.push_back(new TH1F (HNSAIOS.str().c_str(),"",binnum0,bins0)); h_AIOS[k]->Sumw2();
         
       std::ostringstream HNS0AISS; HNS0AISS << "h0_AISS" << k;
@@ -223,10 +224,9 @@ int main(int argc, char** argv) {
 
       h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"",binnum1,bins1)); h0_AISS[k]->Sumw2();
       h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
-      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AISS[k]->Sumw2();
-      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h3_AISS[k]->Sumw2();
+      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",15,0,1,1,0,10000)); h2_AISS[k]->Sumw2();
+      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"",15,0,1,1,0,10000)); h3_AISS[k]->Sumw2();
       h_AISS.push_back(new TH1F (HNSAISS.str().c_str(),"",binnum1,bins1)); h_AISS[k]->Sumw2();
-      
     }
     
     // Loop over all events
@@ -235,10 +235,15 @@ int main(int argc, char** argv) {
       arbre->GetEntry(i);
       if (i % 1000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
       fflush(stdout);
+      // book the NN                                                                                                        
+      TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
+      double my_NN = t->Value(0, Phi, Phi1,
+			       costheta1, costheta2, costhetastar,
+			       Q2V1, Q2V2);      
       float var_0jet = NN_disc;
       float var_boostedX = NN_disc;
       float var_boostedY = m_sv;
-      float var_vbfX = NN_disc;
+      float var_vbfX = my_NN;
       float var_vbfY = m_sv;
       for (int k=0; k<nbhist; ++k){
 	//************************* Fill histograms **********************

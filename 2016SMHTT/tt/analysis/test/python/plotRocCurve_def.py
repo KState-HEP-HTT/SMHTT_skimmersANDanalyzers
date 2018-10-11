@@ -121,7 +121,7 @@ def produce_roc_curve(f1, f2, sig_histname, sig_title, bkg_histname, bkg_title, 
     #frame.GetXaxis().SetLimits(0.,1.)
     #frame.GetYaxis().SetRangeUser(0.,1.)
     #Add Legend for the IDs
-    legend = ROOT.TLegend(0.2, 0.7, 0.39, 0.8, "", "brNDC")
+    legend = ROOT.TLegend(0.2, 0.7, 0.48, 0.8, "", "brNDC")
     legend.SetFillColor(ROOT.kWhite)
     #legend.SetHeader("category","C")
     legend.SetBorderSize(0)
