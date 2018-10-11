@@ -29,5 +29,5 @@
  python python/QCDcreator.py
 
  # hadd all outputs
- hadd -f final_nominal.root outputs_NN/data.root outputs_NN/ZTT.root outputs_NN/ZJ.root outputs_NN/ZL.root outputs_NN/TTT.root outputs_NN/TTJ.root outputs_NN/VVT.root outputs_NN/VVJ.root outputs_NN/W.root outputs_NN/EWKZ.root outputs_NN/VBF125.root outputs_NN/QCD.root 
+ hadd -f final_nominal_NN.root outputs_NN/data.root outputs_NN/ZTT.root outputs_NN/ZJ.root outputs_NN/ZL.root outputs_NN/TTT.root outputs_NN/TTJ.root outputs_NN/VVT.root outputs_NN/VVJ.root outputs_NN/W.root outputs_NN/EWKZ.root outputs_NN/VBF125.root outputs_NN/QCD.root 
 
