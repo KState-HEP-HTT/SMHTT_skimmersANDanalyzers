@@ -4,7 +4,6 @@
 #include <sstream>
 #include <utility>
 #include <stdio.h>
-#include "Python.h"
 #include <typeinfo>
 // ROOT
 #include <TH2.h>
@@ -28,18 +27,19 @@
 #include "RooWorkspace.h"
 #include "RooRealVar.h"
 #include "RooFunctor.h"
+
 // my includes
-#include "../include/myHelper.h"
 #include "../include/tt_Tree.h"
+#include "../include/myHelper.h"
+/*
 #include "../include/ScaleFactor.h"
 #include "../include/LumiReweightingStandAlone.h"
 #include "../include/lumiMap.h"
 #include "../include/btagSF.h"
 #include "../include/scenario_info.h"
 #include "../include/zmumuSF.h"
-#include "../include/TMVAClassification_TMlpANN.cxx"
 //#include "../include/NNskimmer.h"
-
+*/
 int main(int argc, char** argv) {
     
     std::string input = *(argv + 1);
@@ -50,21 +50,24 @@ int main(int argc, char** argv) {
 
     TFile *f_Double = new TFile(input.c_str());
     std::cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<std::endl;
-    TTree* arbre = (TTree*) f_Double->Get("tt_tree");
+    TTree* arbre = (TTree*) f_Double->Get("etau_tree");
     TH1F* nbevt = (TH1F*) f_Double->Get("nevents");
     float ngen = nbevt->GetBinContent(2);
     std::cout.precision(11);
 
     arbre->SetBranchAddress("evtwt",&evtwt);
 
-    arbre->SetBranchAddress("t1_pt",&t1_pt);
+    arbre->SetBranchAddress("el_pt",&el_pt);
+    arbre->SetBranchAddress("el_eta", &el_eta);
+    arbre->SetBranchAddress("el_phi", &el_phi);
+    arbre->SetBranchAddress("el_mass", &el_mass);
+    arbre->SetBranchAddress("el_charge", &el_charge);
+
+    arbre->SetBranchAddress("t1_pt", &t1_pt);
     arbre->SetBranchAddress("t1_eta", &t1_eta);
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
-    arbre->SetBranchAddress("t2_pt", &t2_pt);
-    arbre->SetBranchAddress("t2_eta", &t2_eta);
-    arbre->SetBranchAddress("t2_phi", &t2_phi);
-    arbre->SetBranchAddress("t2_mass", &t2_mass);
+    arbre->SetBranchAddress("t1_charge", &t1_charge);
 
     arbre->SetBranchAddress("j1_pt",&j1_pt);
     arbre->SetBranchAddress("j1_eta", &j1_eta);
@@ -110,9 +113,17 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("cat_boosted",   &cat_boosted);
     arbre->SetBranchAddress("cat_vbf",       &cat_vbf);
     arbre->SetBranchAddress("cat_inclusive", &cat_inclusive);
+    /*
+    arbre->SetBranchAddress("cat_antiiso", &cat_antiiso);    
+    arbre->SetBranchAddress("cat_antiiso_0jet",      &cat_antiiso_0jet);
+    arbre->SetBranchAddress("cat_antiiso_boosted",   &cat_antiiso_boosted);
+    arbre->SetBranchAddress("cat_antiiso_vbf",       &cat_antiiso_vbf);
 
-    arbre->SetBranchAddress("is_OS", &is_OS);
-    arbre->SetBranchAddress("is_signal", &is_signal);
+    arbre->SetBranchAddress("cat_qcd", &cat_qcd);    
+    arbre->SetBranchAddress("cat_quc_0jet",      &cat_quc_0jet);
+    arbre->SetBranchAddress("cat_quc_boosted",   &cat_quc_boosted);
+    arbre->SetBranchAddress("cat_quc_vbf",       &cat_quc_vbf);
+    */
     arbre->SetBranchAddress("NN_disc", &NN_disc);
 
     //Binning for 0jet cat. 1D: Msv. In AN it was 10GeV binning / official data card combined 0~50 as one bin
@@ -175,7 +186,7 @@ int main(int argc, char** argv) {
     std::vector<TH1F*> h_AISS;
 
 
-    TString postfix = postfixMaps(shape);
+    TString postfix = "";//postfixMaps(shape);
     std::cout << postfix << std::endl;
 
     int nbhist=1;
@@ -188,8 +199,8 @@ int main(int argc, char** argv) {
       //binnum2X,bins2X,binnum2Y,bins2Y
       h0_OS.push_back(new TH1F (HNS0OS.str().c_str(),"",binnum0,bins0)); h0_OS[k]->Sumw2();
       h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_OS[k]->Sumw2();
-      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",15,0,1,1,0,10000)); h2_OS[k]->Sumw2();
-      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"",15,0,1,1,0,10000)); h3_OS[k]->Sumw2();
+      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",100,0,1,1,0,1000000)); h2_OS[k]->Sumw2();
+      h3_OS.push_back(new TH2F (HNS3OS.str().c_str(),"",100,0,1,1,0,1000000)); h3_OS[k]->Sumw2();
       h_OS.push_back(new TH1F (HNSOS.str().c_str(),"",binnum0,bins0)); h_OS[k]->Sumw2();
       
       std::ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
@@ -200,8 +211,8 @@ int main(int argc, char** argv) {
 
       h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"",binnum1,bins1)); h0_SS[k]->Sumw2();
       h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
-      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",15,0,1,1,0,10000)); h2_SS[k]->Sumw2();
-      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"",15,0,1,1,0,10000)); h3_SS[k]->Sumw2();
+      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",100,0,1,1,0,1000000)); h2_SS[k]->Sumw2();
+      h3_SS.push_back(new TH2F (HNS3SS.str().c_str(),"",100,0,1,1,0,1000000)); h3_SS[k]->Sumw2();
       h_SS.push_back(new TH1F (HNSSS.str().c_str(),"",binnum1,bins1)); h_SS[k]->Sumw2();
       
       std::ostringstream HNS0AIOS; HNS0AIOS << "h0_AIOS" << k;
@@ -212,8 +223,8 @@ int main(int argc, char** argv) {
 
       h0_AIOS.push_back(new TH1F (HNS0AIOS.str().c_str(),"",binnum0,bins0)); h0_AIOS[k]->Sumw2();
       h1_AIOS.push_back(new TH2F (HNS1AIOS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AIOS[k]->Sumw2();
-      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"",15,0,1,1,0,10000)); h2_AIOS[k]->Sumw2();
-      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"",15,0,1,1,0,10000)); h3_AIOS[k]->Sumw2();
+      h2_AIOS.push_back(new TH2F (HNS2AIOS.str().c_str(),"",100,0,1,1,0,1000000)); h2_AIOS[k]->Sumw2();
+      h3_AIOS.push_back(new TH2F (HNS3AIOS.str().c_str(),"",100,0,1,1,0,1000000)); h3_AIOS[k]->Sumw2();
       h_AIOS.push_back(new TH1F (HNSAIOS.str().c_str(),"",binnum0,bins0)); h_AIOS[k]->Sumw2();
         
       std::ostringstream HNS0AISS; HNS0AISS << "h0_AISS" << k;
@@ -224,9 +235,10 @@ int main(int argc, char** argv) {
 
       h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"",binnum1,bins1)); h0_AISS[k]->Sumw2();
       h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
-      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",15,0,1,1,0,10000)); h2_AISS[k]->Sumw2();
-      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"",15,0,1,1,0,10000)); h3_AISS[k]->Sumw2();
+      h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",100,0,1,1,0,1000000)); h2_AISS[k]->Sumw2();
+      h3_AISS.push_back(new TH2F (HNS3AISS.str().c_str(),"",100,0,1,1,0,1000000)); h3_AISS[k]->Sumw2();
       h_AISS.push_back(new TH1F (HNSAISS.str().c_str(),"",binnum1,bins1)); h_AISS[k]->Sumw2();
+      
     }
     
     // Loop over all events
@@ -235,22 +247,21 @@ int main(int argc, char** argv) {
       arbre->GetEntry(i);
       if (i % 1000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
       fflush(stdout);
-      // book the NN                                                                                                        
-      TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
-      double my_NN = t->Value(0, Phi, Phi1,
-			       costheta1, costheta2, costhetastar,
-			       Q2V1, Q2V2);      
       float var_0jet = NN_disc;
       float var_boostedX = NN_disc;
       float var_boostedY = m_sv;
-      float var_vbfX = my_NN;
+      float var_vbfX = NN_disc;
       float var_vbfY = m_sv;
+      bool is_OS = el_charge*t1_charge<0;
       for (int k=0; k<nbhist; ++k){
+
 	//************************* Fill histograms **********************
 	// ################### signalRegion && OS ####################
-	if (cat_0jet && is_signal && is_OS)	    h0_OS[k]->Fill(var_0jet,evtwt);
-	if (cat_boosted && is_signal && is_OS)	    h1_OS[k]->Fill(var_boostedX,var_boostedY,evtwt);
-	if (cat_vbf && is_signal && is_OS) 	    h2_OS[k]->Fill(var_vbfX,var_vbfY,evtwt);
+
+	if (cat_0jet  && is_OS)	    h0_OS[k]->Fill(var_0jet,evtwt);
+	if (cat_boosted && is_OS)   h1_OS[k]->Fill(var_boostedX,var_boostedY,evtwt);
+	if (cat_vbf && is_OS)  	    h2_OS[k]->Fill(var_vbfX,var_vbfY,evtwt);
+	/*
 	// ################### signalRegion && SS ####################
 	if (cat_0jet && is_signal && !is_OS)          h0_SS[k]->Fill(var_0jet,evtwt);
 	if (cat_boosted && is_signal && !is_OS)	    h1_SS[k]->Fill(var_boostedX,var_boostedY,evtwt);
@@ -263,6 +274,7 @@ int main(int argc, char** argv) {
 	if (cat_0jet && !is_OS && !is_signal)              h0_AISS[k]->Fill(var_0jet,evtwt);
 	if (cat_boosted && !is_OS && !is_signal)	    h1_AISS[k]->Fill(var_boostedX,var_boostedY,evtwt);
 	if (cat_vbf && !is_OS && !is_signal)         	    h2_AISS[k]->Fill(var_vbfX,var_vbfY,evtwt);
+	*/
       }
     } // end of loop over events
     
@@ -271,7 +283,7 @@ int main(int argc, char** argv) {
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
-
+    /*
     TDirectory *SS0jet =fout->mkdir("ttSS_0jet");
     TDirectory *SSboosted =fout->mkdir("ttSS_boosted");
     TDirectory *SSvbf =fout->mkdir("ttSS_vbf");
@@ -283,7 +295,7 @@ int main(int argc, char** argv) {
     TDirectory *AISS0jet =fout->mkdir("AISS_0jet");
     TDirectory *AISSboosted =fout->mkdir("AISS_boosted");
     TDirectory *AISSvbf =fout->mkdir("AISS_vbf");
-
+    */
     for (int k=0; k<nbhist; ++k){
       OS0jet_tt->cd();
       h0_OS[k]->SetName(name.c_str()+postfix);
@@ -294,7 +306,7 @@ int main(int argc, char** argv) {
       OSvbf_tt->cd();
       h2_OS[k]->SetName(name.c_str()+postfix);
       h2_OS[k]->Write();        
-      
+      /*
       SS0jet->cd();
       h0_SS[k]->SetName(name.c_str()+postfix);
       h0_SS[k]->Write();
@@ -324,11 +336,10 @@ int main(int argc, char** argv) {
       AISSvbf->cd();
       h2_AISS[k]->SetName(name.c_str()+postfix);
       h2_AISS[k]->Write();
-      
+      */
     }
     fout->Close();
-    // D.Kim
-    Py_Finalize();
+
 } 
 
 

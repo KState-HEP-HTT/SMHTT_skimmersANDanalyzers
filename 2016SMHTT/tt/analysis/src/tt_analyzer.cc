@@ -288,11 +288,11 @@ int main(int argc, char** argv) {
     //Binning for 1jet cat, x-axis: HpT
     float bins1X[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
-    //float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    float bins1Y[] = {0,1000000};
+    float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins1Y[] = {0,1000000};
     //Binning for 2jet cat, x-axis: Mjj
-    //float bins2X[] = {0,300,500,800,10000};
-    float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    float bins2X[] = {0,300,500,800,10000};
+    //float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
     //float bins2X[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
     //plot binning for 2jet cat 
     //float bins2X[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
@@ -300,8 +300,8 @@ int main(int argc, char** argv) {
     //binning for 2jet cat, x-axis: Dbkg_VBF
     //float bins2X[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
-    //float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    float bins2Y[] = {0,1000000};
+    float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins2Y[] = {0,1000000};
     // plot binning for 2jet cat
     //float bins2Y[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
@@ -722,8 +722,8 @@ int main(int argc, char** argv) {
 	bool is_2jets = false;
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
-	//if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	if (njets>=2 && mjj>300)  is_VBF=true; 
+	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
+	//if (njets>=2 && mjj>300)  is_VBF=true; 
 
 
 	// Z mumu SF 
@@ -753,7 +753,7 @@ int main(int argc, char** argv) {
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
-	float var_vbfX = normMELAvbf;//Dbkg_ggH;//normMELAggh;//mjj;
+	float var_vbfX = mjj;//normMELAvbf;//Dbkg_ggH;//normMELAggh;//mjj;
 	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
 
 	if (selection){
