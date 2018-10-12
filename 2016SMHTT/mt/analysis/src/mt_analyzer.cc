@@ -36,7 +36,7 @@
 #include "../include/ZmmSF.h"
 #include "../include/LumiReweightingStandAlone.h"
 #include "../include/btagSF.h"
-
+#include "../include/TMVAClassification_TMlpANN.cxx"
 //#include "include/scenario_info.h"
 
 typedef std::vector<double> NumV;
@@ -381,6 +381,15 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
     arbre->SetBranchAddress("ME_bkg",&ME_bkg);
 
+    arbre->SetBranchAddress("Phi"         , &Phi);
+    arbre->SetBranchAddress("Phi1"        , &Phi1);
+    arbre->SetBranchAddress("costheta1"   , &costheta1);
+    arbre->SetBranchAddress("costheta2"   , &costheta2);
+    arbre->SetBranchAddress("costhetastar", &costhetastar);
+    arbre->SetBranchAddress("Q2V1"        , &Q2V1);
+    arbre->SetBranchAddress("Q2V2"        , &Q2V2);
+
+
     // Construct scenario
     //scenario_info scenario(arbre, unc);
 
@@ -526,7 +535,7 @@ int main(int argc, char** argv) {
       h1_CRSS_W.push_back(new TH1F (HNS1CRSSW.str().c_str(),"I",1,80,200)); h1_CRSS_W[k]->Sumw2();
       h2_CRSS_W.push_back(new TH1F (HNS2CRSSW.str().c_str(),"I",1,80,200)); h2_CRSS_W[k]->Sumw2();
     }
-    
+    // binnum_mjj,bins_mjj,binnum2,bins2
     for (int k=0; k<nbhist; ++k){
       ostringstream HNS0OS; HNS0OS << "h0_OS" << k;
       ostringstream HNS1OS; HNS1OS << "h1_OS" << k;
@@ -718,8 +727,9 @@ int main(int argc, char** argv) {
       float correction=sf_id;
 	if (sample!="embedded" && sample!="data_obs") correction=correction*LumiWeights_12->weight(npu);
         if (sample=="embedded" && amcatNLO_weight>1) amcatNLO_weight=0.10;
-	//float aweight=amcatNLO_weight*weight*correction;
-	float aweight=genweight*weight*correction;
+	float aweight = 1.0;
+	if (name.find("ggH")) aweight = amcatNLO_weight*weight*correction;
+	else aweight=genweight*weight*correction;
 	
         if (sample!="data_obs"){
 	  if (gen_match_2==5) aweight=aweight*0.95;
@@ -1015,11 +1025,17 @@ int main(int argc, char** argv) {
 	  bool is_0jet=(numberJets==0);
 	  bool is_boosted=(numberJets==1 or (numberJets>=2 && (massJets<=300 or var1_1<=50 or mytau.Pt()<=40)));
 	  bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
-	  //bool is_VBF=(numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
+	  //bool is_VBF=(massJets > 300 && numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
 	  float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-	  //var1_2 = normMELAvbf;
-	  //################ W+jets reweighting in high mT ###############
+	  // book the NN                                                                                                       
+	  TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
+	  double my_NN = t->Value(0, Phi, Phi1,
+				  costheta1, costheta2, costhetastar,
+				  Q2V1, Q2V2);      
 	  
+	  //var1_2 = my_NN;
+	  //################ W+jets reweighting in high mT ###############
+	  //if(is_VBF) std::cout << var1_2 << std::endl;
 	  if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){
 	    n70[k]->Fill(0.1,aweight*weight2);
 	    if (is_bveto && is_0jet && var2<400) n70[k]->Fill(1.1,aweight*weight2*weight_btag);
