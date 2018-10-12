@@ -10,17 +10,13 @@ obs1= obs#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
 cate={"mt_vbf":"njets>1"}
-#cate={"ttOS_0jet":"0jet","ttOS_boosted":"boosted","ttOS_vbf":"vbf"}
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets"}
 
-#file=ROOT.TFile("final_nominal_mjjLow.root","r")
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
 
 majors=["ZTT","QCD","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
 # Colors
-mypalette=["#ffbcfe","#f9cd66","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
+mypalette=["#f9cd66","#ffbcfe","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
