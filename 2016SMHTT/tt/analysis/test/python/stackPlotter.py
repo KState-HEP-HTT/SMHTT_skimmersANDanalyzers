@@ -5,22 +5,18 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "cos(#theta_{1})"
+obs = "M_{jj}"
 
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"tt_vbf":"VBF enriched"}
-#cate={"ttOS_0jet":"0jet","ttOS_boosted":"boosted","ttOS_vbf":"vbf"}
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets"}
-
-#file=ROOT.TFile("final_nominal_mjjLow.root","r")
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
+cate={"tt_vbf":"ggH enriched"}
 
 majors=["ZTT","QCD"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 signals=["SMH","ggH125","VBF125","WH125","ZH125"]
+sig_stackScale = 10
 # Colors
-mypalette=["#ffbcfe","#f9cd66","#9feff2","#544e56"]
+mypalette=["#f9cd66","#ffbcfe","#9feff2","#544e56"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -80,18 +76,18 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     legend = make_legend(0.60, 0.52, 0.95, 0.80)
     legend.AddEntry(Data,"Data","elp")    
     if smh is 1:
-        legend.AddEntry(main_SMH,"SM Higgs(125)x30.0","l")
+        legend.AddEntry(main_SMH,"SM Higgs(125)x"+str(sig_stackScale),"l")
     if ggh is 1:
-        legend.AddEntry(main_ggH,"ggH Higgs(125)x30.0","l")
+        legend.AddEntry(main_ggH,"ggH Higgs(125)x"+str(sig_stackScale),"l")
     if vbf is 1:
-        legend.AddEntry(main_VBF,"VBF Higgs(125)x30.0","l")
+        legend.AddEntry(main_VBF,"VBF Higgs(125)x"+str(sig_stackScale),"l")
     if wh is 1:
-        legend.AddEntry(main_WH,"WH Higgs(125)x30.0","l")
+        legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
-        legend.AddEntry(main_ZH,"ZH Higgs(125)x30.0","l")
+        legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"others","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 
@@ -136,9 +132,10 @@ def make_stackPad(y_low,y_high):
 
 def unroll(file,cat,hist):
     if file.Get(cat).Get(hist).GetDimension() is 1 : 
-        return file.Get(cat).Get(hist)
+        r_hist = file.Get(cat).Get(hist).Clone()
     else :
-        return file.Get(cat).Get(hist).ProjectionX()
+        r_hist = file.Get(cat).Get(hist).ProjectionX().Clone()
+    return r_hist
 
 def call_histos():
     histos = {"histSig":{},"histBkg":{},"histData":{}}
@@ -311,11 +308,11 @@ for cat in cate.keys():
     error = make_errorBand(cate[cat])
     error.Draw("e2same")
     # Setup sig - flexible! : Draw at each plot
-    main_SMH = make_sig(cat,"SMH",0,7,30)
+    main_SMH = make_sig(cat,"SMH",0,7,sig_stackScale)
     main_SMH.SetLineColor(ROOT.kBlue)   
-    main_ggH = make_sig(cat,"ggH125",0,7,30)
+    main_ggH = make_sig(cat,"ggH125",0,7,sig_stackScale)
     main_ggH.SetLineColor(ROOT.kBlack)   
-    main_VBF = make_sig(cat,"VBF125",0,7,30)
+    main_VBF = make_sig(cat,"VBF125",0,7,sig_stackScale)
     main_VBF.SetLineColor(ROOT.kRed)   
     # Draw miscellaneous
     lumi = add_lumi()
@@ -344,8 +341,8 @@ for cat in cate.keys():
     ''' Making signal histogram pad '''
     p_signal = make_canvas(300,"p_signal")
     p_signal.cd()
-    ggH = make_sig(cat,"ggH125",0,1,30)
-    VBF = make_sig(cat,"VBF125",0,1,30)
+    ggH = make_sig(cat,"ggH125",0,1,sig_stackScale)
+    VBF = make_sig(cat,"VBF125",0,1,sig_stackScale)
     WH = make_sig(cat,"WH125",0,1,3)
     ZH = make_sig(cat,"ZH125",0,1,3)
     ggH.SetMaximum(ggH.GetMaximum()*1.30)
@@ -435,7 +432,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/general_"+cate[cat]+".pdf")
+    plot1.SaveAs("plots/"+obs+cate[cat]+".pdf")
 
     '''
     # ratio[2] : Sig/Bkg

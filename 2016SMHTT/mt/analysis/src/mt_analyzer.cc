@@ -181,8 +181,13 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("pt_sv_ClusteredMet_UP", &pt_sv_ClusteredMet_UP);
     */
     arbre->SetBranchAddress("njets", &njets);
-    arbre->SetBranchAddress("jpt_1", &jpt_1);
     arbre->SetBranchAddress("mjj", &mjj);
+    arbre->SetBranchAddress("jpt_1", &jpt_1);
+    arbre->SetBranchAddress("jeta_1", &jeta_1);
+    arbre->SetBranchAddress("jphi_1", &jphi_1);
+    arbre->SetBranchAddress("jpt_2", &jpt_2);
+    arbre->SetBranchAddress("jeta_2", &jeta_2);
+    arbre->SetBranchAddress("jphi_2", &jphi_2);
 
     arbre->SetBranchAddress("amcatNLO_weight", &amcatNLO_weight);
     arbre->SetBranchAddress("genweight", &genweight);
@@ -697,7 +702,11 @@ int main(int argc, char** argv) {
       mytau.SetPtEtaPhiM(pt_2,eta_2,phi_2,m_2);
       TLorentzVector mymu;
       mymu.SetPtEtaPhiM(pt_1,eta_1,phi_1,m_1);
-      
+      TLorentzVector myjet1;
+      myjet1.SetPtEtaPhiM(jpt_1,jeta_1,jphi_1,0);
+      TLorentzVector myjet2;
+      myjet2.SetPtEtaPhiM(jpt_2,jeta_2,jphi_2,0);
+
       //***************** Weights **************
       
       if (sample=="W"){
@@ -1027,6 +1036,7 @@ int main(int argc, char** argv) {
 	  bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
 	  //bool is_VBF=(massJets > 300 && numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
 	  float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
+	  TLorentzVector Higgs = mymet+mymu+mytau;
 	  // book the NN                                                                                                       
 	  TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
 	  double my_NN = t->Value(0, Phi, Phi1,

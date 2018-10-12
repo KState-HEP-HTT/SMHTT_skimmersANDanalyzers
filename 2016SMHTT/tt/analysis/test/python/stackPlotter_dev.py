@@ -5,22 +5,19 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "normMELAvbf"
-
-file=ROOT.TFile("final_nominal.root","r")
+obs = "M_{jj}"
+ptitle = "mjj"
+#file=ROOT.TFile("final_nominal.root","r")
+file=ROOT.TFile("mjjggHenriched_tt.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"tt_vbf":"VBF enriched"}
-#cate={"ttOS_0jet":"0jet","ttOS_boosted":"boosted","ttOS_vbf":"vbf"}
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets"}
-
-#file=ROOT.TFile("final_nominal_mjjLow.root","r")
-#cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
+cate={"tt_vbf":"ggH enriched"}
 
 majors=["ZTT","QCD"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 signals=["SMH","ggH125","VBF125","WH125","ZH125"]
+sig_stackScale = 20
 # Colors
-mypalette=["#ffbcfe","#f9cd66","#9feff2","#544e56"]
+mypalette=["#f9cd66","#ffbcfe","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -80,18 +77,18 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     legend = make_legend(0.60, 0.52, 0.95, 0.80)
     legend.AddEntry(Data,"Data","elp")    
     if smh is 1:
-        legend.AddEntry(main_SMH,"SM Higgs(125)x30.0","l")
+        legend.AddEntry(main_SMH,"SM Higgs(125)x"+str(sig_stackScale),"l")
     if ggh is 1:
-        legend.AddEntry(main_ggH,"ggH Higgs(125)x30.0","l")
+        legend.AddEntry(main_ggH,"ggH Higgs(125)x"+str(sig_stackScale),"l")
     if vbf is 1:
-        legend.AddEntry(main_VBF,"VBF Higgs(125)x30.0","l")
+        legend.AddEntry(main_VBF,"VBF Higgs(125)x"+str(sig_stackScale),"l")
     if wh is 1:
-        legend.AddEntry(main_WH,"WH Higgs(125)x30.0","l")
+        legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
-        legend.AddEntry(main_ZH,"ZH Higgs(125)x30.0","l")
+        legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"others","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 
@@ -173,7 +170,7 @@ def set_dataStyle(cat):
     Data.SetMarkerStyle(20)
     Data.SetLineColor(1)
     Data.SetMarkerSize(1)
-    Data.SetMaximum(Data.GetMaximum()*1.60)#,stack.GetMaximum()*1.20))
+    Data.SetMaximum(Data.GetMaximum()*1.90)#,stack.GetMaximum()*1.20))
     Data.SetMinimum(0)
     Data.SetTitle("")
     Data.GetXaxis().SetTitle("")
@@ -312,11 +309,11 @@ for cat in cate.keys():
     error = make_errorBand(cate[cat])
     error.Draw("e2same")
     # Setup sig - flexible! : Draw at each plot
-    main_SMH = make_sig(cat,"SMH",0,1,30)
+    main_SMH = make_sig(cat,"SMH",0,1,sig_stackScale)
     main_SMH.SetLineColor(ROOT.kBlue)   
-    main_ggH = make_sig(cat,"ggH125",0,1,30)
+    main_ggH = make_sig(cat,"ggH125",0,1,sig_stackScale)
     main_ggH.SetLineColor(ROOT.kBlue)   
-    main_VBF = make_sig(cat,"VBF125",0,1,30)
+    main_VBF = make_sig(cat,"VBF125",0,1,sig_stackScale)
     main_VBF.SetLineColor(ROOT.kRed)   
     # Draw miscellaneous
     lumi = add_lumi()
@@ -418,6 +415,27 @@ for cat in cate.keys():
     set_padMargin(p_ratio_QCDVBF,0.18,0.05,0.0,0.2) 
     print "ratio[2] : QCD/VBF pad is made."
 
+    # ratio[3] : VBF/Bkg
+    p_ratio_VBFBKG = make_canvas(150,"p_ratio_VBFBKG")
+    p_ratio_VBFBKG.cd()
+    p_ratio_VBFBKG.SetGridy()
+    #h_BKG = histoAll["histBkg"][cate[cat]][1]
+    #h_VBF = make_sig(cat,"VBF125",0,1,1)
+    h_ratio_VBFBKG = make_dividedHisto(h_VBF,error,0,0,off,"VBF / Bkg", 1)
+    h_ratio_VBFBKG.Draw("e0p") 
+    set_padMargin(p_ratio_VBFBKG,0.18,0.05,0.0,0.2) 
+    print "ratio[3] : VBF/Bkg pad is made."
+
+    # ratio[4] : VBF/ggH
+    p_ratio_VBFGGH = make_canvas(150,"p_ratio_VBFGGH")
+    p_ratio_VBFGGH.cd()
+    p_ratio_VBFGGH.SetGridy()
+    h_GGH = make_sig(cat,"ggH125",0,1,1)
+    h_ratio_VBFGGH = make_dividedHisto(h_VBF,h_GGH,0,0,off,"VBF / ggH", 1)
+    h_ratio_VBFGGH.Draw("e0p") 
+    set_padMargin(p_ratio_VBFGGH,0.18,0.05,0.0,0.2) 
+    print "ratio[4] : VBF/GGH pad is made."
+
     # Make canvas 
     plot1 = make_canvas(750,"plot1")  
     # Stick main histogram pad   
@@ -437,12 +455,22 @@ for cat in cate.keys():
     pad_DataMC.Draw()
     pad_DataMC.cd()
     p_ratio_DataMC.DrawClonePad()
-    # Stick ratio QCD/VBF
+
+    # Stick 2nd ratio
     plot1.cd()
-    pad_QCDVBF = make_stackPad(0.07,0.27)
-    pad_QCDVBF.Draw()
-    pad_QCDVBF.cd()
-    p_ratio_QCDVBF.DrawClonePad()
+    pad_2ndRatio = make_stackPad(0.07,0.27)
+    pad_2ndRatio.Draw()
+    pad_2ndRatio.cd()
+
+    ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
+
+    #p_ratio_QCDVBF.DrawClonePad()
+    #p_ratio_VBFBKG.DrawClonePad()
+    p_ratio_VBFGGH.DrawClonePad()
+
+    ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
+
+
     # Stick title of the plot
     plot1.cd()
     pad_obs = make_stackPad(0,0.07)
@@ -453,7 +481,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/general_"+cate[cat]+".pdf")
+    plot1.SaveAs("plots/"+ptitle+cate[cat]+".pdf")
 
     '''
     # ratio[2] : Sig/Bkg
