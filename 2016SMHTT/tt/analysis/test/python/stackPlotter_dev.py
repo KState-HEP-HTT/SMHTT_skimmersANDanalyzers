@@ -20,7 +20,7 @@ majors=["ZTT","QCD"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 signals=["SMH","ggH125","VBF125","WH125","ZH125"]
 # Colors
-mypalette=["#ffbcfe","#f9cd66","#9feff2","#544e56"]
+mypalette=["#ffbcfe","#f9cd66","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -91,7 +91,7 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_ZH,"ZH Higgs(125)x30.0","l")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"others","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 

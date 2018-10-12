@@ -34,7 +34,7 @@ for key in finKSU.GetListOfKeys():
                 h_off=finOFF.Get(dic_cat[tdirName]).Get(dic_sig[histName])
             else:
                 h_off=finOFF.Get(dic_cat[tdirName]).Get(histName)
-
+            h_off.Sumw2() 
             # for 1D
             if histDim==1:
                 h_ur=finKSU.Get(tdirName).Get(histName)
@@ -45,8 +45,10 @@ for key in finKSU.GetListOfKeys():
                 h_off.Write()
                 c.cd()      
                 h_off.SetMaximum(max(h_ur.GetMaximum(),h_off.GetMaximum()*1.5))
-                h_off.Draw("HIST")
-                h_ur.Draw("HIST same")
+                h_ur.Sumw2() 
+                h_off.Sumw2() 
+                h_off.Draw("HISTE")
+                h_ur.Draw("HISTE same")
                 legend = ROOT.TLegend(0.6,0.7,1.0,0.83, "", "brNDC")
                 legend.SetLineWidth(0)
                 legend.SetLineStyle(0)
@@ -82,8 +84,12 @@ for key in finKSU.GetListOfKeys():
                 h_off.Write()
                 c.cd()                
                 h_off.SetMaximum(max(h_ur.GetMaximum(),h_off.GetMaximum()*1.5))
-                h_off.Draw("HIST")
-                h_ur.Draw("HIST same")
+                h_ur.Sumw2() 
+                h_off.Sumw2() 
+                h_off.SetMarkerSize(0)
+                h_off.Draw("HISTE")
+                h_ur.Draw("HISTE same")
+                h_off.Draw("HISTE same")
                 legend = ROOT.TLegend(0.6,0.7,1.0,0.83, "", "brNDC")
                 legend.SetLineWidth(0)
                 legend.SetLineStyle(0)
