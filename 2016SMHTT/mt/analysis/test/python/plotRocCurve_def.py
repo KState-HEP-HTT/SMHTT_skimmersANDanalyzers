@@ -15,7 +15,7 @@ canvas = ROOT.TCanvas("asdf", "adsf", 800, 800)
 
 def get_histo(file, cate, histname=''):
     print '.... Finding ',histname,' histogram. If it is 2D, ProjectionX of it going to be used.'
-    hist2d = file.Get("tt_"+cate+"/"+histname)
+    hist2d = file.Get("mt_"+cate+"/"+histname)
     if(hist2d.GetDimension()==2):
         hist = hist2d.ProjectionX()
     elif(hist2d.GetDimension()==1):

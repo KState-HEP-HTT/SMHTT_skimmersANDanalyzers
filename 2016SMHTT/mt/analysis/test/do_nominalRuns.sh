@@ -63,7 +63,7 @@ hadd -f files_nominal/VV.root files_nominal/ST_t_top.root files_nominal/ST_t_ant
 
 # signal
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/VBF125.root files_nominal/VBF125.root VBF125 VBF125 0
-./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/ggH125_nonNNLOPS.root files_nominal/ggH125.root ggH125 ggH125 0
+./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/ggH125_ok.root files_nominal/ggH125.root ggH125 ggH125 0
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/WminusH125.root files_nominal/WminusH125.root WminusH125 WH125 0
 ./mt_analyzer.exe /hdfs/store/user/doyeong/SMHTT_CONDOR/mutau/myskims/Sep10_fixQ/WplusH125.root files_nominal/WplusH125.root WplusH125 WH125 0
 hadd -f files_nominal/WH125.root files_nominal/WplusH125.root files_nominal/WminusH125.root
