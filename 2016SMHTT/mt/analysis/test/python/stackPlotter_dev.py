@@ -5,7 +5,7 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "NN_TMVA"
+obs = "jet1 p_{T}"
 
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
@@ -16,11 +16,11 @@ cate={"mt_vbf":"VBF enriched"}
 #file=ROOT.TFile("final_nominal_mjjLow.root","r")
 #cate={"ttOS_0jetR":"0jet","ttOS_boostedR":"1jet","ttOS_vbfR":"2jets_mjjLow_finebins"}
 
-majors=["ZTT","QCD"]
-minors=["ZL","ZJ","TTT","TTJ","W","VV"]
+majors=["ZTT","QCD","TTT"]
+minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
 # Colors
-mypalette=["#ffbcfe","#f9cd66","#9feff2","#544e56"]
+mypalette=["#ffbcfe","#f9cd66","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -91,7 +91,10 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_ZH,"ZH Higgs(125)x30.0","l")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"others","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 
@@ -453,7 +456,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/general_"+cate[cat]+".pdf")
+    plot1.SaveAs("plots/"+obs+cate[cat]+".pdf")
 
     '''
     # ratio[2] : Sig/Bkg
