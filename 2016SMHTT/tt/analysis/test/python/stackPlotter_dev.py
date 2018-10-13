@@ -7,17 +7,16 @@ import plotRocCurve_def
 
 obs = "M_{jj}"
 ptitle = "mjj"
-#file=ROOT.TFile("final_nominal.root","r")
-file=ROOT.TFile("mjjggHenriched_tt.root","r")
+file=ROOT.TFile("final_nominal.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"tt_vbf":"ggH enriched"}
+cate={"tt_vbf":"VBF enriched"}
 
 majors=["ZTT","QCD"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 signals=["SMH","ggH125","VBF125","WH125","ZH125"]
 sig_stackScale = 20
 # Colors
-mypalette=["#f9cd66","#ffbcfe","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
+mypalette=["#f9cd66","#ffbcfe","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -194,6 +193,8 @@ def make_stack(category):
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
         h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
+        if h_bkg is histoAll["histBkg"][category][-1]:
+            h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
         c_index+=1
         stack.Add(h_bkg)
     #stack.SetMaximum(stack.GetMaximum()*1.60)
@@ -481,7 +482,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+ptitle+cate[cat]+".pdf")
+    plot1.SaveAs("plots/"+ptitle+cate[cat]+"_tt.pdf")
 
     '''
     # ratio[2] : Sig/Bkg
