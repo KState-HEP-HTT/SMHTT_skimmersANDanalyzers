@@ -23,7 +23,7 @@ class ScaleFactor {
 
 	void  SetAxisBins(TGraphAsymmErrors* graph){
 	   int NPOINTS = graph->GetN(); 
-	   double* AXISBINS = new double[10];
+	   double* AXISBINS = new double[100000];
 	   delete [] AXISBINS;
 	   AXISBINS [NPOINTS+1] = {};
 	   for (int i=0; i<NPOINTS; i++) { AXISBINS[i] = (graph->GetX()[i] - graph->GetErrorXlow(i)); }
