@@ -1,4 +1,4 @@
-[?1034h################################################# mt_0jet
+################################################# mt_0jet
 data_obs
 official datacard yield is  129672.000031
 KSU datacard yield is  129636.0 
@@ -41,7 +41,7 @@ KSU datacard yield is  5.79645838402
 
 ggH125
 official datacard yield is  550.701435089
-KSU datacard yield is  570.674059391 
+KSU datacard yield is  550.701426506 
 
 WH125
 official datacard yield is  2.05084442347
@@ -98,7 +98,7 @@ KSU datacard yield is  57.3269176604
 
 ggH125
 official datacard yield is  376.674459998
-KSU datacard yield is  355.015363771 
+KSU datacard yield is  373.206668429 
 
 WH125
 official datacard yield is  11.5496681826
@@ -155,7 +155,7 @@ KSU datacard yield is  29.2411841452
 
 ggH125
 official datacard yield is  27.2581047267
-KSU datacard yield is  30.7095559314 
+KSU datacard yield is  27.2581056207 
 
 WH125
 official datacard yield is  0.712956039235
