@@ -60,6 +60,72 @@ int main(int argc, char** argv) {
     TTree *arbre = (TTree*) f_Double->Get("mutau_tree");
     TH1F* nbevt = (TH1F*) f_Double->Get("nevents");
     float ngen = nbevt->GetBinContent(2);
+    TTree* namu = new TTree("mutau_tree", "mutau_tree");
+    namu->SetDirectory(0);
+
+    namu->Branch("evtwt",&evtwt);
+
+    namu->Branch("t1_pt",&t1_pt);
+    namu->Branch("t1_eta", &t1_eta);
+    namu->Branch("t1_phi", &t1_phi);
+    namu->Branch("t1_mass", &t1_mass);
+    namu->Branch("t1_charge", &t1_charge);
+    namu->Branch("mu_pt", &mu_pt);
+    namu->Branch("mu_eta", &mu_eta);
+    namu->Branch("mu_phi", &mu_phi);
+    namu->Branch("mu_mass", &mu_mass);
+    namu->Branch("mu_charge", &mu_charge);
+
+    namu->Branch("j1_pt",&j1_pt);
+    namu->Branch("j1_eta", &j1_eta);
+    namu->Branch("j1_phi", &j1_phi);
+    namu->Branch("j2_pt", &j2_pt);
+    namu->Branch("j2_eta", &j2_eta);
+    namu->Branch("j2_phi", &j2_phi);
+
+    namu->Branch("b1_pt",&b1_pt);
+    namu->Branch("b1_eta", &b1_eta);
+    namu->Branch("b1_phi", &b1_phi);
+    namu->Branch("b2_pt", &b2_pt);
+    namu->Branch("b2_eta", &b2_eta);
+    namu->Branch("b2_phi", &b2_phi);
+
+    namu->Branch("met",&met);
+    namu->Branch("metphi",&metphi);
+    namu->Branch("mjj",&mjj);
+    
+    namu->Branch("njets", &njets);
+    namu->Branch("numGenJets",&numGenJets);
+
+    namu->Branch("pt_sv", &pt_sv);
+    namu->Branch("m_sv",&m_sv);
+    namu->Branch("Dbkg_VBF",&Dbkg_VBF);
+    namu->Branch("Dbkg_ggH",&Dbkg_ggH);
+    
+    namu->Branch("Phi"         , &Phi);
+    namu->Branch("Phi1"        , &Phi1);
+    namu->Branch("costheta1"   , &costheta1);
+    namu->Branch("costheta2"   , &costheta2);
+    namu->Branch("costhetastar", &costhetastar);
+    namu->Branch("Q2V1"        , &Q2V1);
+    namu->Branch("Q2V2"        , &Q2V2);
+
+    namu->Branch("ME_sm_VBF"   , &ME_sm_VBF);
+    namu->Branch("ME_sm_ggH"   , &ME_sm_ggH);
+    namu->Branch("ME_bkg"   , &ME_bkg);
+
+    namu->Branch("higgs_pT",      &higgs_pT);
+    namu->Branch("higgs_m",       &higgs_m);
+    namu->Branch("hjj_pT",        &hjj_pT);
+    namu->Branch("hjj_m",         &hjj_m);
+    namu->Branch("dEtajj",        &dEtajj);
+    namu->Branch("dPhijj",        &dPhijj);
+    namu->Branch("cat_0jet",      &cat_0jet);
+    namu->Branch("cat_boosted",   &cat_boosted);
+    namu->Branch("cat_vbf",       &cat_vbf);
+    namu->Branch("cat_inclusive", &cat_inclusive);
+
+    namu->Branch("is_signal", &is_signal);
 
     TFile *f_Trk=new TFile("weightROOTs/Tracking_EfficienciesAndSF_BCDEFGH.root");
     TGraph *h_Trk=(TGraph*) f_Trk->Get("ratio_eff_eta3_dr030e030_corr");
@@ -264,7 +330,11 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("tZTTGenDR",&tZTTGenDR);
     arbre->SetBranchAddress("numGenJets",&numGenJets);
     arbre->SetBranchAddress("bpt_1",&bpt_1);
+    arbre->SetBranchAddress("beta_1",&beta_1);
+    arbre->SetBranchAddress("bphi_1",&bphi_1);
     arbre->SetBranchAddress("bpt_2",&bpt_2);
+    arbre->SetBranchAddress("beta_2",&beta_2);
+    arbre->SetBranchAddress("bphi_2",&bphi_2);
     arbre->SetBranchAddress("bflavor_1",&bflavor_1);
     arbre->SetBranchAddress("bflavor_2",&bflavor_2);
 
@@ -385,6 +455,9 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF);
     arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
     arbre->SetBranchAddress("ME_bkg",&ME_bkg);
+    
+    arbre->SetBranchAddress("Dbkg_ggH", &Dbkg_ggH);
+    arbre->SetBranchAddress("Dbkg_VBF", &Dbkg_VBF);
 
     arbre->SetBranchAddress("Phi"         , &Phi);
     arbre->SetBranchAddress("Phi1"        , &Phi1);
@@ -1044,6 +1117,7 @@ int main(int argc, char** argv) {
 				  Q2V1, Q2V2);      
 	  
 	  //var1_2 = my_NN;
+	  fillNNTree(namu,mytau,q_1,mymu,q_2,myjet1,myjet2,mymet,massJets,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight,ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	  //################ W+jets reweighting in high mT ###############
 	  //if(is_VBF) std::cout << var1_2 << std::endl;
 	  if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){
@@ -1206,6 +1280,7 @@ int main(int argc, char** argv) {
     
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
+    namu->Write();
     hincl->Write();
     nlowhigh->Write();
     mUESUp_0jet->Write();

@@ -104,6 +104,10 @@ int main(int argc, char** argv) {
     namu->Branch("Q2V1"        , &Q2V1);
     namu->Branch("Q2V2"        , &Q2V2);
 
+    namu->Branch("ME_sm_VBF"   , &ME_sm_VBF);
+    namu->Branch("ME_sm_ggH"   , &ME_sm_ggH);
+    namu->Branch("ME_bkg"   , &ME_bkg);
+
     namu->Branch("higgs_pT",      &higgs_pT);
     namu->Branch("higgs_m",       &higgs_m);
     namu->Branch("hjj_pT",        &hjj_pT);
@@ -857,7 +861,7 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,charge1,mytau2,charge2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight);
+	  fillNNTree(namu,mytau1,charge1,mytau2,charge2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight,ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	}
       }
     } // end of loop over events
