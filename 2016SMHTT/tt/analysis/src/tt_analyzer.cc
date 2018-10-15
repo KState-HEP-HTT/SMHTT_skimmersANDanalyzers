@@ -63,10 +63,12 @@ int main(int argc, char** argv) {
     namu->Branch("t1_eta", &t1_eta);
     namu->Branch("t1_phi", &t1_phi);
     namu->Branch("t1_mass", &t1_mass);
+    namu->Branch("t1_charge", &t1_charge);
     namu->Branch("t2_pt", &t2_pt);
     namu->Branch("t2_eta", &t2_eta);
     namu->Branch("t2_phi", &t2_phi);
     namu->Branch("t2_mass", &t2_mass);
+    namu->Branch("t2_charge", &t2_charge);
 
     namu->Branch("j1_pt",&j1_pt);
     namu->Branch("j1_eta", &j1_eta);
@@ -113,7 +115,6 @@ int main(int argc, char** argv) {
     namu->Branch("cat_vbf",       &cat_vbf);
     namu->Branch("cat_inclusive", &cat_inclusive);
 
-    namu->Branch("is_OS", &is_OS);
     namu->Branch("is_signal", &is_signal);
 
     ////////////////////////////////////
@@ -833,7 +834,7 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,mytau2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,OS,signalRegion,weight2*aweight);
+	  fillNNTree(namu,mytau1,charge1,mytau2,charge2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight);
 	}
       }
     } // end of loop over events

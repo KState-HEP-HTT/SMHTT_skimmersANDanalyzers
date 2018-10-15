@@ -45,7 +45,7 @@ float byLooseCombinedIsolationDeltaBetaCorr3HitsdR03_3, byMediumCombinedIsolatio
 float extratau_veto, pt_top1, pt_top2, genweight, dphi_12, dphi_mumet, dphi_taumet;
 float amcatNLO_weight, numGenJets;
 float met_px, met_py;
-float metSig, metcov00, metcov01, metcov10,metcov11, mvaMetcov00, mvaMetcov01,mvaMetcov10,mvaMetcov11, metcov00_v2, metcov01_v2, metcov10_v2,metcov11_v2;
+//float metSig, metcov00, metcov01, metcov10,metcov11, mvaMetcov00, mvaMetcov01,mvaMetcov10,mvaMetcov11, metcov00_v2, metcov01_v2, metcov10_v2,metcov11_v2;
 float met_JESDown,met_UESDown;
 float met_JESUp,met_UESUp,met_MESUp;
 float metphi_JERDown,metphi_JESDown,metphi_UESDown,metphi_MESDown,metphi_EESDown,metphi_TESDown,metphi_PESDown;
@@ -58,12 +58,12 @@ int njets_JetAbsoluteFlavMapDown,njets_JetAbsoluteMPFBiasDown,njets_JetAbsoluteS
 int njets_JetAbsoluteFlavMapUp,njets_JetAbsoluteMPFBiasUp,njets_JetAbsoluteScaleUp,njets_JetAbsoluteStatUp,njets_JetEnUp,njets_JetFlavorQCDUp,njets_JetFragmentationUp,njets_JetPileUpDataMCUp,njets_JetPileUpPtBBUp,njets_JetPileUpPtEC1Up,njets_JetPileUpPtEC2Up,njets_JetPileUpPtHFUp,njets_JetPileUpPtRefUp,njets_JetRelativeBalUp,njets_JetRelativeFSRUp,njets_JetRelativeJEREC1Up,njets_JetRelativeJEREC2Up,njets_JetRelativeJERHFUp,njets_JetRelativePtBBUp,njets_JetRelativePtEC1Up,njets_JetRelativePtEC2Up,njets_JetRelativePtHFUp,njets_JetRelativeStatECUp,njets_JetRelativeStatFSRUp,njets_JetRelativeStatHFUp,njets_JetSinglePionECALUp,njets_JetSinglePionHCALUp,njets_JetTimePtEtaUp;
 float mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteScaleDown,mjj_JetAbsoluteStatDown,mjj_JetEnDown,mjj_JetFlavorQCDDown,mjj_JetFragmentationDown,mjj_JetPileUpDataMCDown,mjj_JetPileUpPtBBDown,mjj_JetPileUpPtEC1Down,mjj_JetPileUpPtEC2Down,mjj_JetPileUpPtHFDown,mjj_JetPileUpPtRefDown,mjj_JetRelativeBalDown,mjj_JetRelativeFSRDown,mjj_JetRelativeJEREC1Down,mjj_JetRelativeJEREC2Down,mjj_JetRelativeJERHFDown,mjj_JetRelativePtBBDown,mjj_JetRelativePtEC1Down,mjj_JetRelativePtEC2Down,mjj_JetRelativePtHFDown,mjj_JetRelativeStatECDown,mjj_JetRelativeStatFSRDown,mjj_JetRelativeStatHFDown,mjjJetSinglePionECALDown,mjj_JetSinglePionHCALDown,mjj_JetTimePtEtaDown, mjj_JetSinglePionECALDown;
 float mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatUp,mjj_JetEnUp,mjj_JetFlavorQCDUp,mjj_JetFragmentationUp,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalUp,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaUp;
-float passDoubleMu;
+//float passDoubleMu;
 float passDoubleTau35, matchDoubleTau35_1, matchDoubleTau35_2,filterDoubleTau35_1,filterDoubleTau35_2,passDoubleTauCmbIso35,matchDoubleTauCmbIso35_1,matchDoubleTauCmbIso35_2,filterDoubleTauCmbIso35_1,filterDoubleTauCmbIso35_2;
 float genM,genpT,genpX,genpY,vispX,vispY, b_vispX;
 float pt_1_, pt_2_, eta_1_, eta_2_, phi_1_, phi_2_, m_1_, m_2_, mvis_, metcov00_, metcov01_, metcov11_, weight_, met_, metphi_, fvalue_;
-float t1_pt, t1_eta, t1_phi, t1_mass;
-float t2_pt, t2_eta, t2_phi, t2_mass;
+float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge;
+float t2_pt, t2_eta, t2_phi, t2_mass, t2_charge;
 float j1_pt, j1_eta, j1_phi;
 float j2_pt, j2_eta, j2_phi;
 float b1_pt, b1_eta, b1_phi;
@@ -75,40 +75,18 @@ float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, c
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
 float evtwt;
 
-void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
-  pt_1_=PT1;
-  pt_2_=PT2;
-  eta_1_=ETA1;
-  eta_2_=ETA2;
-  pt_1_=PT1;
-  pt_2_=PT2;
-  phi_1_=PHI1;
-  phi_2_=PHI2;
-  m_1_=M1;
-  m_2_=M2;
-  met_=MET;
-  metphi_=METPHI;
-  mvis_=MVIS;
-  metcov00_=METCOV00;
-  metcov11_=METCOV11;
-  metcov01_=METCOV01;
-  weight_=WEIGHT;
-  fvalue_=TARGET;
-  BG_Tree->Fill();
-}
-
-
-
-void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool OS, bool signalRegion, float myevtwt){
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, float myevtwt){
   evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
   t1_phi = tau1.Phi();
   t1_mass = tau1.M();
+  t1_charge = charge1;
   t2_pt = tau2.Pt();
   t2_eta = tau2.Eta();
   t2_phi = tau2.Phi();
   t2_mass = tau2.M();
+  t2_charge = charge2;
 
   j1_pt = jet1.Pt();
   j1_eta = jet1.Eta();
@@ -131,8 +109,6 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzV
   b2_eta = beta_2;
   b2_phi = bphi_2;
 
-  
-
   higgs_pT = Higgs.Pt();
   higgs_m = Higgs.M();
   hjj_pT = (Higgs + jet1 + jet2).Pt();
@@ -142,7 +118,6 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, TLorentzVector tau2, TLorentzV
   cat_0jet = is_0jet;
   cat_boosted = is_boosted;
   cat_vbf = is_VBF;
-  is_OS = OS;
   is_signal = signalRegion;
   cat_inclusive = false;
   if (cat_0jet || cat_boosted || cat_vbf) cat_inclusive = true;
