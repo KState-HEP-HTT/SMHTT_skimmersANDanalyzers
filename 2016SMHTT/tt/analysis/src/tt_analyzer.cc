@@ -37,6 +37,7 @@
 #include "../include/btagSF.h"
 #include "../include/scenario_info.h"
 #include "../include/zmumuSF.h"
+#include "../include/EmbedWeight.h"
 #include "../include/TMVAClassification_TMlpANN.cxx"
 //#include "../include/NNskimmer.h"
 
@@ -149,6 +150,10 @@ int main(int argc, char** argv) {
     RooWorkspace *w2 = (RooWorkspace*)fw2.Get("w");
     fw2.Close();
 
+    TFile fem("weightROOTs/htt_scalefactors_v16_9_embedded.root");
+    RooWorkspace *wEmbed = (RooWorkspace*)fem.Get("w");
+    fem.Close();
+
     // D.Kim
     const char *scriptDirectoryName = "./../python/";
     Py_Initialize();
@@ -158,7 +163,7 @@ int main(int argc, char** argv) {
     PyObject* fitFunctions =  PyImport_ImportModule((char *)"FitFunctions");
     // The line below breaks the code
     PyObject* compute_sf = PyObject_GetAttrString(fitFunctions,"compute_SF");
-
+    if (sample=="embedded") compute_sf = PyObject_GetAttrString(fitFunctions,"compute_Trg_Eff_Data");
     float weight = 1.0;
     // Lumi weight  
     float w_lumi = lumiWeight(sample, ngen);
@@ -441,8 +446,7 @@ int main(int argc, char** argv) {
 	if (!matchDoubleTau35_1  || !matchDoubleTau35_2) continue;
 	if (!filterDoubleTau35_1 || !filterDoubleTau35_2) continue;
       }
-
-      if (sample!="data_obs") {
+      if (sample!="data_obs" && sample!="embedded") {
 	bool t35     =  passDoubleTau35 && filterDoubleTau35_1 && filterDoubleTau35_2 && matchDoubleTau35_1 && matchDoubleTau35_2;
 	bool tcomb35 =  passDoubleTauCmbIso35 && filterDoubleTauCmbIso35_1 && filterDoubleTauCmbIso35_2 && matchDoubleTauCmbIso35_1 && matchDoubleTauCmbIso35_2;
 	if (  !t35 && !tcomb35 ) continue;
@@ -733,7 +737,34 @@ int main(int argc, char** argv) {
 	if (is_VBF && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
 	  aweight*=zmumuSF_vbf(mjj,shape);
 
-	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}
+	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}       
+	//if (sample=="embedded") std::cout << "*********************** embedded weight : " << std::endl;
+	if (sample=="embedded") {
+	  if( amcatNLO_weight > 1) continue;
+	  aweight=1.0; weight2=1.0;
+	  //#########################################################################################################
+          //##############################  Embedded Weights   #############################################
+          //#########################################################################################################
+          //            float Stitching_Weight= 1.0/0.899;
+          float Stitching_Weight= 1.0;
+          
+          float Total_Embed_Weight=0;
+	  if((run >= 272007) && (run < 275657)) Stitching_Weight=(1.0/0.897 * 1.02* 1.02);
+	  if((run >= 275657) && (run < 276315))  Stitching_Weight=(1.0/0.908* 1.02* 1.02);
+	  if((run >= 276315) && (run < 276831))  Stitching_Weight=(1.0/0.950* 1.02* 1.02);
+	  if((run >= 276831) && (run < 277772))  Stitching_Weight=(1.0/0.861* 1.02* 1.02);
+	  if((run >= 277772) && (run < 278820))  Stitching_Weight=(1.0/0.941* 1.02* 1.02);
+	  if((run >= 278820) && (run < 280919))  Stitching_Weight=(1.0/0.908* 1.02* 1.02);
+	  if((run >= 280919) && (run < 284045))  Stitching_Weight=(1.0/0.949* 1.02* 1.02);
+                    
+          
+          double EmbedWeight=  sf_trg1*sf_trg2 ;
+          
+          float WEIGHT_sel_trg_ratio= m_sel_trg_ratio(wEmbed,mytau1.Pt(),mytau1.Eta(),mytau2.Pt(),mytau2.Eta());
+          
+	  aweight=EmbedWeight * amcatNLO_weight * Stitching_Weight * WEIGHT_sel_trg_ratio;
+	  //std::cout << "embedded weight : " << aweight << std::endl;
+	}
 	//KK: For some studies, definitions of categories
 	//	if(njets>=2 && Higgs.Pt()>100 && mjj > 300) is_VBF=true;
 	//	if(njets>=2 && mjj < 300) is_VH=true;

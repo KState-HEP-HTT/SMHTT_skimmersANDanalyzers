@@ -2,6 +2,7 @@
 
 static std::map<std::string, double> xs {
   {"data_obs", 1.0},
+  {"embedded", 1.0},
   {"ggH125", 48.58*0.0627},  
   {"VBF125", 3.782*0.0627},
   {"WplusH125", 0.840*0.0627},
