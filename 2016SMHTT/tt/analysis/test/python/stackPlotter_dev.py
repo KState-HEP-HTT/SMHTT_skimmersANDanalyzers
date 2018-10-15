@@ -5,16 +5,16 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "M_{jj}"
-ptitle = "mjj"
+obs = "M_{#tau#tau}"
+obs1= "m_sv"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
-#cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"tt_vbf":"VBF enriched"}
+cate={"tt_0jet":"0jet","tt_boosted":"Boosted","tt_vbf":"VBF"}
+#cate={"tt_vbf":"VBF"}
 
+sig_stackScale = 30
 majors=["ZTT","QCD"]
-minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
-signals=["SMH","ggH125","VBF125","WH125","ZH125"]
-sig_stackScale = 20
+minors=["ZL","ZJ","TTJ","W","VVT","VVJ"]
+signals=["ggH125","VBF125","WH125","ZH125"]
 # Colors
 mypalette=["#f9cd66","#ffbcfe","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
 adapt=ROOT.gROOT.GetColor(12)
@@ -75,8 +75,8 @@ def make_legend(x1,y1,x2,y2):
 def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     legend = make_legend(0.60, 0.52, 0.95, 0.80)
     legend.AddEntry(Data,"Data","elp")    
-    if smh is 1:
-        legend.AddEntry(main_SMH,"SM Higgs(125)x"+str(sig_stackScale),"l")
+    #if smh is 1:
+    #    legend.AddEntry(main_SMH,"SM Higgs(125)x30.0","l")
     if ggh is 1:
         legend.AddEntry(main_ggH,"ggH Higgs(125)x"+str(sig_stackScale),"l")
     if vbf is 1:
@@ -87,6 +87,9 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
+    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
@@ -169,7 +172,7 @@ def set_dataStyle(cat):
     Data.SetMarkerStyle(20)
     Data.SetLineColor(1)
     Data.SetMarkerSize(1)
-    Data.SetMaximum(Data.GetMaximum()*1.90)#,stack.GetMaximum()*1.20))
+    Data.SetMaximum(Data.GetMaximum()*1.60)#,stack.GetMaximum()*1.20))
     Data.SetMinimum(0)
     Data.SetTitle("")
     Data.GetXaxis().SetTitle("")
@@ -310,8 +313,8 @@ for cat in cate.keys():
     error = make_errorBand(cate[cat])
     error.Draw("e2same")
     # Setup sig - flexible! : Draw at each plot
-    main_SMH = make_sig(cat,"SMH",0,1,sig_stackScale)
-    main_SMH.SetLineColor(ROOT.kBlue)   
+    #main_SMH = make_sig(cat,"SMH",0,1,30)
+    #main_SMH.SetLineColor(ROOT.kBlue)   
     main_ggH = make_sig(cat,"ggH125",0,1,sig_stackScale)
     main_ggH.SetLineColor(ROOT.kBlue)   
     main_VBF = make_sig(cat,"VBF125",0,1,sig_stackScale)
@@ -383,9 +386,9 @@ for cat in cate.keys():
     print "Signal histogram pad is made."
     
     # h_all histogram which is used often
-    SMH = make_sig(cat,"SMH",0,7,1)
-    h_all = SMH.Clone()
-    h_all.Add(error,1)
+    #SMH = make_sig(cat,"SMH",0,7,1)
+    #h_all = SMH.Clone()
+    #h_all.Add(error,1)
 
 
 
@@ -456,22 +459,16 @@ for cat in cate.keys():
     pad_DataMC.Draw()
     pad_DataMC.cd()
     p_ratio_DataMC.DrawClonePad()
-
     # Stick 2nd ratio
     plot1.cd()
     pad_2ndRatio = make_stackPad(0.07,0.27)
     pad_2ndRatio.Draw()
     pad_2ndRatio.cd()
-
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
-
     #p_ratio_QCDVBF.DrawClonePad()
     #p_ratio_VBFBKG.DrawClonePad()
     p_ratio_VBFGGH.DrawClonePad()
-
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
-
-
     # Stick title of the plot
     plot1.cd()
     pad_obs = make_stackPad(0,0.07)
@@ -482,7 +479,42 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+ptitle+cate[cat]+"_tt.pdf")
+    plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
+
+
+    # Make canvas 
+    plot2 = make_canvas(650,"plot1")  
+    # Stick main histogram pad   
+    pad_Main = make_stackPad(0.32,1.0)
+    pad_Main.Draw()
+    pad_Main.cd()
+    set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.2)
+    p_histoStack.DrawClonePad()
+    p_histoStack.SetTitle("")    
+    #main_SMH.Draw("esame HIST")
+    main_ggH.Draw("esame HIST")
+    main_VBF.Draw("esame HIST")
+    legend = add_legendEntryMain(0,1,1,0,0,cat)
+    legend.Draw()
+    # Stick ratio Data/MC
+    plot2.cd()
+    pad_DataMC = make_stackPad(0.10,0.32)
+    pad_DataMC.Draw()
+    pad_DataMC.cd()
+    p_ratio_DataMC.DrawClonePad()
+    # Stick title of the plot
+    plot2.cd()
+    pad_obs = make_stackPad(0,0.1)
+    pad_obs.Draw()
+    pad_obs.cd()
+    set_padMargin(pad_obs,0,0,0,0)
+    obsPave = make_titleTag()
+    obsPave.Draw()
+
+    # Save plot
+    plot2.SaveAs("plots/basic"+obs1+cate[cat]+"_tt.pdf")
+
+
 
     '''
     # ratio[2] : Sig/Bkg

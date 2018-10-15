@@ -5,13 +5,13 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "M_{jj}"
-obs1= "mjj"#"abs_Heata.5jjeta"
+obs = "M_{#tau#tau}"
+obs1= "m_sv"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
-#cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"mt_vbf":"VBF enriched"}
+cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
+#cate={"mt_vbf":"VBF"}
 
-sig_stackScale = 50
+sig_stackScale = 30
 majors=["ZTT","QCD","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
@@ -480,6 +480,41 @@ for cat in cate.keys():
 
     # Save plot
     plot1.SaveAs("plots/"+obs1+cate[cat]+"_mt.pdf")
+
+
+    # Make canvas 
+    plot2 = make_canvas(650,"plot1")  
+    # Stick main histogram pad   
+    pad_Main = make_stackPad(0.32,1.0)
+    pad_Main.Draw()
+    pad_Main.cd()
+    set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.2)
+    p_histoStack.DrawClonePad()
+    p_histoStack.SetTitle("")    
+    #main_SMH.Draw("esame HIST")
+    main_ggH.Draw("esame HIST")
+    main_VBF.Draw("esame HIST")
+    legend = add_legendEntryMain(0,1,1,0,0,cat)
+    legend.Draw()
+    # Stick ratio Data/MC
+    plot2.cd()
+    pad_DataMC = make_stackPad(0.10,0.32)
+    pad_DataMC.Draw()
+    pad_DataMC.cd()
+    p_ratio_DataMC.DrawClonePad()
+    # Stick title of the plot
+    plot2.cd()
+    pad_obs = make_stackPad(0,0.1)
+    pad_obs.Draw()
+    pad_obs.cd()
+    set_padMargin(pad_obs,0,0,0,0)
+    obsPave = make_titleTag()
+    obsPave.Draw()
+
+    # Save plot
+    plot2.SaveAs("plots/basic"+obs1+cate[cat]+"_mt.pdf")
+
+
 
     '''
     # ratio[2] : Sig/Bkg
