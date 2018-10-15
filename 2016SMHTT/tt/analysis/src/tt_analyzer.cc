@@ -39,7 +39,6 @@
 #include "../include/zmumuSF.h"
 #include "../include/EmbedWeight.h"
 #include "../include/TMVAClassification_TMlpANN.cxx"
-//#include "../include/NNskimmer.h"
 
 int main(int argc, char** argv) {
     
@@ -131,11 +130,6 @@ int main(int argc, char** argv) {
     //  8. Generator event weights
     //
     /////////////////////////////////
-    
-    // didn't use??
-    TFile *f_Trk=new TFile("weightROOTs/Tracking_EfficienciesAndSF_BCDEFGH.root");
-    TGraph *h_Trk=(TGraph*) f_Trk->Get("weightROOTs/ratio_eff_eta3_dr030e030_corr");
-    
     reweight::LumiReWeighting* LumiWeights_12;
     LumiWeights_12 = new reweight::LumiReWeighting("weightROOTs/MC_Moriond17_PU25ns_V1.root", "weightROOTs/Data_Pileup_2016_271036-284044_80bins.root", "pileup", "pileup");
     
@@ -725,11 +719,19 @@ int main(int argc, char** argv) {
 	bool is_VBF = false;
 	bool is_VH = false;
 	bool is_2jets = false;
+	////////////////////////////
+	// 2016 analysis category //
+	////////////////////////////
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-	//if (njets>=2 && mjj>300)  is_VBF=true; 
 
+	////////////////////////
+	// KSU study category //
+	////////////////////////
+	//if (njets==0) is_0jet=true;
+	//else if (njets>=2 && mjj>300)  is_VBF=true; 
+	//else is_boosted=true;
 
 	// Z mumu SF 
 	if (is_boosted && (sample=="DY" || sample=="ZTT" || sample=="ZLL" || sample=="ZL" || sample=="ZJ" || sample=="EWKZLL" || sample=="EWKZNuNu")) 
@@ -738,16 +740,15 @@ int main(int argc, char** argv) {
 	  aweight*=zmumuSF_vbf(mjj,shape);
 
 	if (sample=="data_obs") {aweight=1.0; weight2=1.0;}       
-	//if (sample=="embedded") std::cout << "*********************** embedded weight : " << std::endl;
+
+	//////////////////////
+	// Embedded weights //
+	//////////////////////
 	if (sample=="embedded") {
 	  if( amcatNLO_weight > 1) continue;
 	  aweight=1.0; weight2=1.0;
-	  //#########################################################################################################
-          //##############################  Embedded Weights   #############################################
-          //#########################################################################################################
-          //            float Stitching_Weight= 1.0/0.899;
+	  //float Stitching_Weight= 1.0/0.899;
           float Stitching_Weight= 1.0;
-          
           float Total_Embed_Weight=0;
 	  if((run >= 272007) && (run < 275657)) Stitching_Weight=(1.0/0.897 * 1.02* 1.02);
 	  if((run >= 275657) && (run < 276315))  Stitching_Weight=(1.0/0.908* 1.02* 1.02);
@@ -756,22 +757,16 @@ int main(int argc, char** argv) {
 	  if((run >= 277772) && (run < 278820))  Stitching_Weight=(1.0/0.941* 1.02* 1.02);
 	  if((run >= 278820) && (run < 280919))  Stitching_Weight=(1.0/0.908* 1.02* 1.02);
 	  if((run >= 280919) && (run < 284045))  Stitching_Weight=(1.0/0.949* 1.02* 1.02);
-                    
-          
           double EmbedWeight=  sf_trg1*sf_trg2 ;
-          
           float WEIGHT_sel_trg_ratio= m_sel_trg_ratio(wEmbed,mytau1.Pt(),mytau1.Eta(),mytau2.Pt(),mytau2.Eta());
-          
 	  aweight=EmbedWeight * amcatNLO_weight * Stitching_Weight * WEIGHT_sel_trg_ratio;
 	  //std::cout << "embedded weight : " << aweight << std::endl;
 	}
-	//KK: For some studies, definitions of categories
-	//	if(njets>=2 && Higgs.Pt()>100 && mjj > 300) is_VBF=true;
-	//	if(njets>=2 && mjj < 300) is_VH=true;
-	//	if(njets==1 || (njets>=2 && mjj > 300 && Higgs.Pt()<100)) is_boosted=true;
-        
-	//std::cout << "-------" << is_0jet << is_boosted << is_VBF << is_VH << std::endl;
-        
+
+	// book the NN                                                                                                        
+	TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
+	double my_NN = t->Value(0, Phi, Phi1, costheta1, costheta2, costhetastar, Q2V1, Q2V2);      
+
 	//************************* Fill histograms **********************
 	//////////////////////////////////////////////////////////////////
 	//                                                              //
@@ -782,9 +777,6 @@ int main(int argc, char** argv) {
 	//   vbf     -> mjj VS mtautau svFit (m_sv)                     //
 	//                                                              //
 	//////////////////////////////////////////////////////////////////
-	// book the NN                                                                                                        
-	TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
-	double my_NN = t->Value(0, Phi, Phi1, costheta1, costheta2, costhetastar, Q2V1, Q2V2);      
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
@@ -877,43 +869,36 @@ int main(int argc, char** argv) {
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
-    //TDirectory *OS2jets_tt =fout->mkdir("tt_2jets");
     
     TDirectory *OS0jet =fout->mkdir("ttOS_0jet");
     TDirectory *OSboosted =fout->mkdir("ttOS_boosted");
     TDirectory *OSvbf =fout->mkdir("ttOS_vbf");
     TDirectory *OSvh =fout->mkdir("ttOS_vh");
-    //TDirectory *OS2jets =fout->mkdir("ttOS_2jets");
     TDirectory *OS =fout->mkdir("ttOS_inclusive");
-    // KK
     TDirectory*  OScat = fout->mkdir("tt_categories");
 
     TDirectory *SS0jet =fout->mkdir("ttSS_0jet");
     TDirectory *SSboosted =fout->mkdir("ttSS_boosted");
     TDirectory *SSvbf =fout->mkdir("ttSS_vbf");
     TDirectory *SSvh =fout->mkdir("ttSS_vh");
-    //TDirectory *SS2jets =fout->mkdir("ttSS_2jets");
     TDirectory *SS =fout->mkdir("ttSS_inclusive");
     
     TDirectory *AIOS0jet =fout->mkdir("AIOS_0jet");
     TDirectory *AIOSboosted =fout->mkdir("AIOS_boosted");
     TDirectory *AIOSvbf =fout->mkdir("AIOS_vbf");
     TDirectory *AIOSvh =fout->mkdir("AIOS_vh");
-    //TDirectory *AIOS2jets =fout->mkdir("AIOS_2jets");
     TDirectory *AIOS =fout->mkdir("AIOS_inclusive");
     
     TDirectory *AISS0jet =fout->mkdir("AISS_0jet");
     TDirectory *AISSboosted =fout->mkdir("AISS_boosted");
     TDirectory *AISSvbf =fout->mkdir("AISS_vbf");
     TDirectory *AISSvh =fout->mkdir("AISS_vh");
-    //TDirectory *AISS2jets =fout->mkdir("AISS_2jets");
     TDirectory *AISS =fout->mkdir("AISS_inclusive");
-    // D.Kim
+
     TDirectory *TRG_SF = fout->mkdir("trgSF");
 
     for (int k=0; k<nbhist; ++k){
       // These will be the final root files
-      // D.Kim
       TRG_SF->cd();
       h_trgSF1[k]->SetName("trgSF1");
       h_trgSF1[k]->Write();
@@ -1015,7 +1000,6 @@ int main(int argc, char** argv) {
       h_AISS[k]->Write();
     }
     fout->Close();
-    // D.Kim
     Py_Finalize();
 } 
 
