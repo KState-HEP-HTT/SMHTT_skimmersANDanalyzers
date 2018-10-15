@@ -56,6 +56,17 @@ def compute_SF(x):#x, decayMode):
     #print 'eff_data = ',eff_data, ', eff_mc = ', eff_mc, ', eff_SF = ',eff_SF
     return eff_SF
 
+##Added by Abdollah
+def compute_Trg_Eff_Data(x):#x, decayMode):
+    if (x[0]==-1.0) :
+        return -1.0
+    eff_data = crystalballEfficiency(x[0],data['data_genuine_TightIso_dm'+str(x[1])].values())
+#    eff_mc = crystalballEfficiency(x[0],data['mc_genuine_TightIso_dm'+str(x[1])].values())
+#    eff_SF = eff_data/eff_mc # comment for embedded
+    eff_SF = eff_data   # comment for simulation
+    #print 'eff_data = ',eff_data, ', eff_mc = ', eff_mc, ', eff_SF = ',eff_SF
+    return eff_SF
+
 def crystalballEfficiency(x, par):
     x     = x
     alpha = par[0]
@@ -95,3 +106,4 @@ def _crystalballEfficiency(m, m0, sigma, alpha, n, norm):
         return norm * (leftArea + a * (1/ROOT.TMath.Power(t-b,n-1) - \
                                        1/ROOT.TMath.Power(absAlpha - b,n-1)) / (1 - n)) / area
   
+    

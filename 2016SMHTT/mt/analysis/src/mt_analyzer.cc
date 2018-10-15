@@ -509,8 +509,8 @@ int main(int argc, char** argv) {
     for (int k=0; k<nbhist; ++k){
       ostringstream HNn70; HNn70 << "n70" << k;
       ostringstream HNn70SS; HNn70SS << "n70SS" << k;
-      n70.push_back(new TH1F (HNn70.str().c_str(),"InvMa",18,0,18)); n70[k]->Sumw2();
-      n70SS.push_back(new TH1F (HNn70SS.str().c_str(),"InvMa",18,0,18)); n70SS[k]->Sumw2();
+      n70.push_back(new TH1F (HNn70.str().c_str(),"",18,0,18)); n70[k]->Sumw2();
+      n70SS.push_back(new TH1F (HNn70SS.str().c_str(),"",18,0,18)); n70SS[k]->Sumw2();
 
       ostringstream HNS0CRQCD; HNS0CRQCD << "h0_CR_QCD" << k;
       ostringstream HNS1CRQCD; HNS1CRQCD << "h1_CR_QCD" << k;
@@ -545,37 +545,37 @@ int main(int argc, char** argv) {
       ostringstream HNS0OS; HNS0OS << "h0_OS" << k;
       ostringstream HNS1OS; HNS1OS << "h1_OS" << k;
       ostringstream HNS2OS; HNS2OS << "h2_OS" << k;
-      h0_OS.push_back(new TH2F (HNS0OS.str().c_str(),"InvMa",binnum_taupt,bins_taupt,binnum0,bins0)); h0_OS[k]->Sumw2();
-      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"InvMa",binnum_pth,bins_pth,binnum1,bins1)); h1_OS[k]->Sumw2();
-      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"InvMa",binnum_mjj,bins_mjj,binnum2,bins2)); h2_OS[k]->Sumw2();
+      h0_OS.push_back(new TH2F (HNS0OS.str().c_str(),"",binnum_taupt,bins_taupt,binnum0,bins0)); h0_OS[k]->Sumw2();
+      h1_OS.push_back(new TH2F (HNS1OS.str().c_str(),"",binnum_pth,bins_pth,binnum1,bins1)); h1_OS[k]->Sumw2();
+      h2_OS.push_back(new TH2F (HNS2OS.str().c_str(),"",binnum_mjj,bins_mjj,binnum2,bins2)); h2_OS[k]->Sumw2();
       
       ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
       ostringstream HNS1SS; HNS1OS << "h1_SS" << k;
       ostringstream HNS2SS; HNS2OS << "h2_SS" << k;
-      h0_SS.push_back(new TH2F (HNS0SS.str().c_str(),"InvMa",binnum_taupt,bins_taupt,binnum0,bins0)); h0_SS[k]->Sumw2();
-      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"InvMa",binnum_pth,bins_pth,binnum1,bins1)); h1_SS[k]->Sumw2();
-      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"InvMa",binnum_mjj,bins_mjj,binnum2,bins2)); h2_SS[k]->Sumw2();
+      h0_SS.push_back(new TH2F (HNS0SS.str().c_str(),"",binnum_taupt,bins_taupt,binnum0,bins0)); h0_SS[k]->Sumw2();
+      h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"",binnum_pth,bins_pth,binnum1,bins1)); h1_SS[k]->Sumw2();
+      h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",binnum_mjj,bins_mjj,binnum2,bins2)); h2_SS[k]->Sumw2();
 
       ostringstream HNS0QCD; HNS0QCD << "h0_QCD" << k;
       ostringstream HNS1QCD; HNS1QCD << "h1_QCD" << k;
       ostringstream HNS2QCD; HNS2QCD << "h2_QCD" << k;
-      h0_QCD.push_back(new TH2F (HNS0QCD.str().c_str(),"InvMa",binnum_taupt,bins_taupt,binnum0,bins0)); h0_QCD[k]->Sumw2();
-      h1_QCD.push_back(new TH2F (HNS1QCD.str().c_str(),"InvMa",binnum_pth,bins_pth,binnum1,bins1)); h1_QCD[k]->Sumw2();
-      h2_QCD.push_back(new TH2F (HNS2QCD.str().c_str(),"InvMa",binnum_mjj,bins_mjj,binnum2,bins2)); h2_QCD[k]->Sumw2();
+      h0_QCD.push_back(new TH2F (HNS0QCD.str().c_str(),"",binnum_taupt,bins_taupt,binnum0,bins0)); h0_QCD[k]->Sumw2();
+      h1_QCD.push_back(new TH2F (HNS1QCD.str().c_str(),"",binnum_pth,bins_pth,binnum1,bins1)); h1_QCD[k]->Sumw2();
+      h2_QCD.push_back(new TH2F (HNS2QCD.str().c_str(),"",binnum_mjj,bins_mjj,binnum2,bins2)); h2_QCD[k]->Sumw2();
 
       ostringstream HNS0WSS; HNS0WSS << "h0_WSS" << k;
       ostringstream HNS1WSS; HNS1WSS << "h1_WSS" << k;
       ostringstream HNS2WSS; HNS2WSS << "h2_WSS" << k;
-      h0_WSS.push_back(new TH2F (HNS0WSS.str().c_str(),"InvMa",binnum_taupt,bins_taupt,binnum0,bins0)); h0_WSS[k]->Sumw2();
-      h1_WSS.push_back(new TH2F (HNS1WSS.str().c_str(),"InvMa",binnum_pth,bins_pth,binnum1,bins1));h1_WSS[k]->Sumw2();
-      h2_WSS.push_back(new TH2F (HNS2WSS.str().c_str(),"InvMa",binnum_mjj,bins_mjj,binnum2,bins2));h2_WSS[k]->Sumw2();
+      h0_WSS.push_back(new TH2F (HNS0WSS.str().c_str(),"",binnum_taupt,bins_taupt,binnum0,bins0)); h0_WSS[k]->Sumw2();
+      h1_WSS.push_back(new TH2F (HNS1WSS.str().c_str(),"",binnum_pth,bins_pth,binnum1,bins1));h1_WSS[k]->Sumw2();
+      h2_WSS.push_back(new TH2F (HNS2WSS.str().c_str(),"",binnum_mjj,bins_mjj,binnum2,bins2));h2_WSS[k]->Sumw2();
 
       ostringstream HNS0WOS; HNS0WOS << "h0_WOS" << k;
       ostringstream HNS1WOS; HNS1WOS << "h1_WOS" << k;
       ostringstream HNS2WOS; HNS2WOS << "h2_WOS" << k;
-      h0_WOS.push_back(new TH2F (HNS0WOS.str().c_str(),"InvMa",binnum_taupt,bins_taupt,binnum0,bins0)); h0_WOS[k]->Sumw2();
-      h1_WOS.push_back(new TH2F (HNS1WOS.str().c_str(),"InvMa",binnum_pth,bins_pth,binnum1,bins1)); h1_WOS[k]->Sumw2();
-      h2_WOS.push_back(new TH2F (HNS2WOS.str().c_str(),"InvMa",binnum_mjj,bins_mjj,binnum2,bins2)); h2_WOS[k]->Sumw2();
+      h0_WOS.push_back(new TH2F (HNS0WOS.str().c_str(),"",binnum_taupt,bins_taupt,binnum0,bins0)); h0_WOS[k]->Sumw2();
+      h1_WOS.push_back(new TH2F (HNS1WOS.str().c_str(),"",binnum_pth,bins_pth,binnum1,bins1)); h1_WOS[k]->Sumw2();
+      h2_WOS.push_back(new TH2F (HNS2WOS.str().c_str(),"",binnum_mjj,bins_mjj,binnum2,bins2)); h2_WOS[k]->Sumw2();
     }
     
     

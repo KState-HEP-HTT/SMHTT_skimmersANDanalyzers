@@ -5,18 +5,18 @@ from array import array
 import math
 import plotRocCurve_def
 
-obs = "M_{jj}"
-obs1= obs#"abs_Heata.5jjeta"
+obs = "M_{#tau#tau}"
+obs1= "m_sv"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
-#cate={"tt_0jet":"0jet","tt_boosted":"boosted","tt_vbf":"vbf"}
-cate={"mt_vbf":"njets>1"}
+cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
+#cate={"mt_vbf":"VBF"}
 
-
+sig_stackScale = 30
 majors=["ZTT","QCD","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
 # Colors
-mypalette=["#f9cd66","#ffbcfe","#9feff2","#cfe87f","#fcc894","#a0abff","#d1c7be"]
+mypalette=["#f9cd66","#ffbcfe","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -196,6 +196,8 @@ def make_stack(category):
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
         h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
+        if h_bkg is histoAll["histBkg"][category][-1]:
+            h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
         c_index+=1
         stack.Add(h_bkg)
     #stack.SetMaximum(stack.GetMaximum()*1.60)
@@ -313,7 +315,6 @@ for cat in cate.keys():
     # Setup sig - flexible! : Draw at each plot
     #main_SMH = make_sig(cat,"SMH",0,1,30)
     #main_SMH.SetLineColor(ROOT.kBlue)   
-    sig_stackScale = 50
     main_ggH = make_sig(cat,"ggH125",0,1,sig_stackScale)
     main_ggH.SetLineColor(ROOT.kBlue)   
     main_VBF = make_sig(cat,"VBF125",0,1,sig_stackScale)
@@ -429,6 +430,16 @@ for cat in cate.keys():
     set_padMargin(p_ratio_VBFBKG,0.18,0.05,0.0,0.2) 
     print "ratio[3] : VBF/Bkg pad is made."
 
+    # ratio[4] : VBF/ggH
+    p_ratio_VBFGGH = make_canvas(150,"p_ratio_VBFGGH")
+    p_ratio_VBFGGH.cd()
+    p_ratio_VBFGGH.SetGridy()
+    h_GGH = make_sig(cat,"ggH125",0,1,1)
+    h_ratio_VBFGGH = make_dividedHisto(h_VBF,h_GGH,0,0,off,"VBF / ggH", 1)
+    h_ratio_VBFGGH.Draw("e0p") 
+    set_padMargin(p_ratio_VBFGGH,0.18,0.05,0.0,0.2) 
+    print "ratio[4] : VBF/GGH pad is made."
+
     # Make canvas 
     plot1 = make_canvas(750,"plot1")  
     # Stick main histogram pad   
@@ -448,12 +459,16 @@ for cat in cate.keys():
     pad_DataMC.Draw()
     pad_DataMC.cd()
     p_ratio_DataMC.DrawClonePad()
-    # Stick ratio QCD/VBF
+    # Stick 2nd ratio
     plot1.cd()
-    pad_VBFBKG = make_stackPad(0.07,0.27)
-    pad_VBFBKG.Draw()
-    pad_VBFBKG.cd()
-    p_ratio_VBFBKG.DrawClonePad()
+    pad_2ndRatio = make_stackPad(0.07,0.27)
+    pad_2ndRatio.Draw()
+    pad_2ndRatio.cd()
+    ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
+    #p_ratio_QCDVBF.DrawClonePad()
+    #p_ratio_VBFBKG.DrawClonePad()
+    p_ratio_VBFGGH.DrawClonePad()
+    ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
     # Stick title of the plot
     plot1.cd()
     pad_obs = make_stackPad(0,0.07)
@@ -464,7 +479,42 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+obs1+cate[cat]+".pdf")
+    plot1.SaveAs("plots/"+obs1+cate[cat]+"_mt.pdf")
+
+
+    # Make canvas 
+    plot2 = make_canvas(650,"plot1")  
+    # Stick main histogram pad   
+    pad_Main = make_stackPad(0.32,1.0)
+    pad_Main.Draw()
+    pad_Main.cd()
+    set_padMargin(p_ratio_DataMC,0.18,0.05,0.0,0.2)
+    p_histoStack.DrawClonePad()
+    p_histoStack.SetTitle("")    
+    #main_SMH.Draw("esame HIST")
+    main_ggH.Draw("esame HIST")
+    main_VBF.Draw("esame HIST")
+    legend = add_legendEntryMain(0,1,1,0,0,cat)
+    legend.Draw()
+    # Stick ratio Data/MC
+    plot2.cd()
+    pad_DataMC = make_stackPad(0.10,0.32)
+    pad_DataMC.Draw()
+    pad_DataMC.cd()
+    p_ratio_DataMC.DrawClonePad()
+    # Stick title of the plot
+    plot2.cd()
+    pad_obs = make_stackPad(0,0.1)
+    pad_obs.Draw()
+    pad_obs.cd()
+    set_padMargin(pad_obs,0,0,0,0)
+    obsPave = make_titleTag()
+    obsPave.Draw()
+
+    # Save plot
+    plot2.SaveAs("plots/basic"+obs1+cate[cat]+"_mt.pdf")
+
+
 
     '''
     # ratio[2] : Sig/Bkg
