@@ -3,7 +3,8 @@ if __name__ == "__main__":
     import ROOT
     import argparse
     
-    samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VVT", "VVJ", "W", "EWKZ"]
+    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VVJ", "W", "EWKZ"]
+    #samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VVT", "VVJ", "W", "EWKZ"]
     regions = ["AIOS","AISS","ttSS"]
     cates = ["0jet","boosted","vbf"]
     files = []

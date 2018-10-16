@@ -1,13 +1,15 @@
-# Plotting distribution
+# 2016 Higgs to Tau-Tau Analysis Code
 
 ## Instruction :
+One can run this analyzer from local machine as well as Wisconsin machine. 
+
 Checkout the repository and change branch for plot.
 ```
 git clone git@github.com:KState-HEP-HTT/SMHTT_skimmersANDanalyzers.git
-cd SMHTT_skimmersANDanalyzers
+cd SMHTT_skimmersANDanalyzers/2016SMHTT/tt/analysis/
 ```
 
-One need to copy input ntuples into this place.
+One need to copy input ntuples into this place to run from local machine.
 
 ```2016SMHTT/tt/analysis/test/myntuples/Sep03_fixQ/```
 
@@ -35,7 +37,7 @@ source do_nominalRuns.sh
 
 I always keep uncommenting out everything such that one can reproduce 2016SMHTT official analysis. 
 One need to modify ```tt_analyzer.cc``` for our R&D. 
-I cpied lines from one of old commit which won't change as time goes, but one can find the same part(not the same line!!) from the current version of tt_analyzer.cc.
+I copied lines from one of old commit which won't change as time goes, but one can find the same part(not the same line!!) from the current version of tt_analyzer.cc.
 
 1. How to change binning? Search 'bins0[]' in the ```tt_analyzer.cc```. Something like this. 
 
