@@ -61,10 +61,12 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("t1_eta", &t1_eta);
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
+    arbre->SetBranchAddress("t1_charge", &t1_charge);
     arbre->SetBranchAddress("t2_pt", &t2_pt);
     arbre->SetBranchAddress("t2_eta", &t2_eta);
     arbre->SetBranchAddress("t2_phi", &t2_phi);
     arbre->SetBranchAddress("t2_mass", &t2_mass);
+    arbre->SetBranchAddress("t2_charge", &t2_charge);
 
     arbre->SetBranchAddress("j1_pt",&j1_pt);
     arbre->SetBranchAddress("j1_eta", &j1_eta);
@@ -100,6 +102,10 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("Q2V1"        , &Q2V1);
     arbre->SetBranchAddress("Q2V2"        , &Q2V2);
 
+    arbre->SetBranchAddress("ME_sm_VBF"   , &ME_sm_VBF);
+    arbre->SetBranchAddress("ME_sm_ggH"   , &ME_sm_ggH);
+    arbre->SetBranchAddress("ME_bkg"   , &ME_bkg);
+
     arbre->SetBranchAddress("higgs_pT",      &higgs_pT);
     arbre->SetBranchAddress("higgs_m",       &higgs_m);
     arbre->SetBranchAddress("hjj_pT",        &hjj_pT);
@@ -111,7 +117,6 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("cat_vbf",       &cat_vbf);
     arbre->SetBranchAddress("cat_inclusive", &cat_inclusive);
 
-    arbre->SetBranchAddress("is_OS", &is_OS);
     arbre->SetBranchAddress("is_signal", &is_signal);
     arbre->SetBranchAddress("NN_disc", &NN_disc);
 
@@ -121,11 +126,11 @@ int main(int argc, char** argv) {
     //Binning for 1jet cat, x-axis: HpT
     float bins1X[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
-    //float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    float bins1Y[] = {0,1000000};
+    float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins1Y[] = {0,1000000};
     //Binning for 2jet cat, x-axis: Mjj
-    //float bins2X[] = {0,300,500,800,10000};
-    float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+    float bins2X[] = {0,300,500,800,10000};
+    //float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
     //float bins2X[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
     //plot binning for 2jet cat 
     //float bins2X[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
@@ -133,8 +138,8 @@ int main(int argc, char** argv) {
     //binning for 2jet cat, x-axis: Dbkg_VBF
     //float bins2X[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
-    //float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    float bins2Y[] = {0,1000000};
+    float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
+    //float bins2Y[] = {0,1000000};
     // plot binning for 2jet cat
     //float bins2Y[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
@@ -328,7 +333,7 @@ int main(int argc, char** argv) {
     }
     fout->Close();
     // D.Kim
-    Py_Finalize();
+    //Py_Finalize();
 } 
 
 
