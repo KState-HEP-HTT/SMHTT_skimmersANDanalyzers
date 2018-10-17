@@ -13,15 +13,15 @@ if __name__ == "__main__":
     
 
     # Open root files
-
+    '''
     for sample in samples:
         files.append(ROOT.TFile("outputs_nominal/"+sample+".root","r"))
     fout=ROOT.TFile("outputs_nominal/QCD.root","recreate")
     '''
     for sample in samples:
-        files.append(ROOT.TFile("outputs_NN/"+sample+".root","r"))
-    fout=ROOT.TFile("outputs_NN/QCD.root","recreate")
-    '''
+        files.append(ROOT.TFile("outputs_forPlots/"+sample+".root","r"))
+    fout=ROOT.TFile("outputs_forPlots/QCD.root","recreate")
+        
 
     # Get all histograms
     for region in regions:

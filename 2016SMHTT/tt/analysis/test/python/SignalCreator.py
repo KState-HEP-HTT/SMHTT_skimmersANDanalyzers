@@ -4,12 +4,18 @@ if __name__ == "__main__":
     import argparse
 
     nbhist=1
-
+    '''
     fVBF125=ROOT.TFile("outputs_nominal/VBF125.root","r")
     fggH125=ROOT.TFile("outputs_nominal/ggH125.root","r")
     fWH125=ROOT.TFile("outputs_nominal/WH125.root","r")
     fZH125=ROOT.TFile("outputs_nominal/ZH125.root","r")
     fout=ROOT.TFile("outputs_nominal/SMH.root","recreate")
+    '''
+    fVBF125=ROOT.TFile("outputs_forPlots/VBF125.root","r")
+    fggH125=ROOT.TFile("outputs_forPlots/ggH125.root","r")
+    fWH125=ROOT.TFile("outputs_forPlots/WH125.root","r")
+    fZH125=ROOT.TFile("outputs_forPlots/ZH125.root","r")
+    fout=ROOT.TFile("outputs_forPlots/SMH.root","recreate")
 
 
     dirOS_0jet=fout.mkdir("tt_0jet")
@@ -30,10 +36,10 @@ if __name__ == "__main__":
 
     #for cat in cats:
     #    for region in regions:
-    hOS_0jet=fVBF125.Get("ttOS_0jet/VBF125")
-    hOS_0jet.Add(fggH125.Get("ttOS_0jet/ggH125"))
-    hOS_0jet.Add(fWH125.Get("ttOS_0jet/WH125"))
-    hOS_0jet.Add(fZH125.Get("ttOS_0jet/ZH125"))
+    hOS_0jet=fVBF125.Get("tt_0jet/VBF125")
+    hOS_0jet.Add(fggH125.Get("tt_0jet/ggH125"))
+    hOS_0jet.Add(fWH125.Get("tt_0jet/WH125"))
+    hOS_0jet.Add(fZH125.Get("tt_0jet/ZH125"))
     for i in range(0,hOS_0jet.GetSize()-2):
         if hOS_0jet.GetBinContent(i)<0:
             hOS_0jet.SetBinError(i,max(0,hOS_0jet.GetBinError(i)+hOS_0jet.GetBinError(i)))
@@ -86,10 +92,10 @@ if __name__ == "__main__":
 
 
 
-    hOS_boosted=fVBF125.Get("ttOS_boosted/VBF125")
-    hOS_boosted.Add(fggH125.Get("ttOS_boosted/ggH125"))
-    hOS_boosted.Add(fWH125.Get("ttOS_boosted/WH125"))
-    hOS_boosted.Add(fZH125.Get("ttOS_boosted/ZH125"))
+    hOS_boosted=fVBF125.Get("tt_boosted/VBF125")
+    hOS_boosted.Add(fggH125.Get("tt_boosted/ggH125"))
+    hOS_boosted.Add(fWH125.Get("tt_boosted/WH125"))
+    hOS_boosted.Add(fZH125.Get("tt_boosted/ZH125"))
     for i in range(0,hOS_boosted.GetSize()-2):
         if hOS_boosted.GetBinContent(i)<0:
             hOS_boosted.SetBinError(i,max(0,hOS_boosted.GetBinError(i)+hOS_boosted.GetBinError(i)))
@@ -145,10 +151,10 @@ if __name__ == "__main__":
 
 
 
-    hOS_vbf=fVBF125.Get("ttOS_vbf/VBF125")
-    hOS_vbf.Add(fggH125.Get("ttOS_vbf/ggH125"))
-    hOS_vbf.Add(fWH125.Get("ttOS_vbf/WH125"))
-    hOS_vbf.Add(fZH125.Get("ttOS_vbf/ZH125"))
+    hOS_vbf=fVBF125.Get("tt_vbf/VBF125")
+    hOS_vbf.Add(fggH125.Get("tt_vbf/ggH125"))
+    hOS_vbf.Add(fWH125.Get("tt_vbf/WH125"))
+    hOS_vbf.Add(fZH125.Get("tt_vbf/ZH125"))
     for i in range(0,hOS_vbf.GetSize()-2):
         if hOS_vbf.GetBinContent(i)<0:
             hOS_vbf.SetBinError(i,max(0,hOS_vbf.GetBinError(i)+hOS_vbf.GetBinError(i)))
