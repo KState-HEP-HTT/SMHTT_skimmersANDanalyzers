@@ -4,49 +4,24 @@
 #include <sstream>
 #include <utility>
 #include <stdio.h>
-#include "Python.h"
 #include <typeinfo>
 // ROOT
 #include <TH2.h>
-#include <TStyle.h>
-#include <TCanvas.h>
-#include <TGraph.h>
-#include <TGraphAsymmErrors.h>
-#include "TMultiGraph.h"
 #include <TF1.h>
 #include <TDirectoryFile.h>
-#include <TRandom3.h>
-#include "TLorentzVector.h"
-#include "TString.h"
-#include "TLegend.h"
 #include "TH1F.h"
-#include "TKey.h"
-#include "THashList.h"
-#include "THStack.h"
-#include "TPaveLabel.h"
 #include "TFile.h"
-#include "RooWorkspace.h"
-#include "RooRealVar.h"
-#include "RooFunctor.h"
 // my includes
 #include "../include/myHelper.h"
 #include "../include/tt_Tree.h"
-//#include "../include/ScaleFactor.h"
-//#include "../include/LumiReweightingStandAlone.h"
-//#include "../include/lumiMap.h"
-//#include "../include/btagSF.h"
 #include "../include/scenario_info.h"
-//#include "../include/zmumuSF.h"
 #include "../include/TMVAClassification_TMlpANN.cxx"
-//#include "../include/NNskimmer.h"
 
-int main(int argc, char** argv) {
-    
+int main(int argc, char** argv) {    
     std::string input = *(argv + 1);
     std::string output = *(argv + 2);
-    std::string sample = *(argv + 3);
-    std::string name = *(argv + 4);
-    std::string shape = *(argv + 5);
+    std::string name = *(argv + 3);
+    std::string shape = *(argv + 4);
 
     TFile *f_Double = new TFile(input.c_str());
     std::cout<<"XXXXXXXXXXXXX "<<input.c_str()<<" XXXXXXXXXXXX"<<std::endl;
@@ -118,33 +93,19 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("cat_inclusive", &cat_inclusive);
 
     arbre->SetBranchAddress("is_signal", &is_signal);
-    //arbre->SetBranchAddress("NN_disc", &NN_disc);
 
     //Binning for 0jet cat. 1D: Msv. In AN it was 10GeV binning / official data card combined 0~50 as one bin
     float bins0[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
-    float bins1[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
     //Binning for 1jet cat, x-axis: HpT
     float bins1X[] = {0,100,170,300,10000};
     //Binning for 1jet cat, y-axis: Msv
     float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    //float bins1Y[] = {0,1000000};
     //Binning for 2jet cat, x-axis: Mjj
     float bins2X[] = {0,300,500,800,10000};
-    //float bins2X[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-    //float bins2X[] = {0.0,0.02,0.04,0.06,0.08,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};//0.92,0.94,0.96,0.98,1.0};
-    //plot binning for 2jet cat 
-    //float bins2X[] = {0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000};
-
-    //binning for 2jet cat, x-axis: Dbkg_VBF
-    //float bins2X[] = {0.0,0.3,0.6,0.9,1.0};
     //Binning for 2jet cat, y-axis: Msv
     float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
-    //float bins2Y[] = {0,1000000};
-    // plot binning for 2jet cat
-    //float bins2Y[] = {0.0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0};
 
     int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
-    int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
     int  binnum1X = sizeof(bins1X)/sizeof(Float_t) - 1;
     int  binnum1Y = sizeof(bins1Y)/sizeof(Float_t) - 1;
     int  binnum2X = sizeof(bins2X)/sizeof(Float_t) - 1;
@@ -178,7 +139,7 @@ int main(int argc, char** argv) {
       std::ostringstream HNS0SS; HNS0OS << "h0_SS" << k;
       std::ostringstream HNS1SS; HNS1OS << "h1_SS" << k;
       std::ostringstream HNS2SS; HNS2OS << "h2_SS" << k;
-      h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"",binnum1,bins1)); h0_SS[k]->Sumw2();
+      h0_SS.push_back(new TH1F (HNS0SS.str().c_str(),"",binnum0,bins0)); h0_SS[k]->Sumw2();
       h1_SS.push_back(new TH2F (HNS1SS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_SS[k]->Sumw2();
       h2_SS.push_back(new TH2F (HNS2SS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_SS[k]->Sumw2();
       
@@ -192,7 +153,7 @@ int main(int argc, char** argv) {
       std::ostringstream HNS0AISS; HNS0AISS << "h0_AISS" << k;
       std::ostringstream HNS1AISS; HNS1AISS << "h1_AISS" << k;
       std::ostringstream HNS2AISS; HNS2AISS << "h2_AISS" << k;
-      h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"",binnum1,bins1)); h0_AISS[k]->Sumw2();
+      h0_AISS.push_back(new TH1F (HNS0AISS.str().c_str(),"",binnum0,bins0)); h0_AISS[k]->Sumw2();
       h1_AISS.push_back(new TH2F (HNS1AISS.str().c_str(),"",binnum1X,bins1X,binnum1Y,bins1Y)); h1_AISS[k]->Sumw2();
       h2_AISS.push_back(new TH2F (HNS2AISS.str().c_str(),"",binnum2X,bins2X,binnum2Y,bins2Y)); h2_AISS[k]->Sumw2();
     }
@@ -205,9 +166,8 @@ int main(int argc, char** argv) {
       fflush(stdout);
       // book the NN                                                                                                        
       TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
-      double my_NN = t->Value(0, Phi, Phi1,
-			       costheta1, costheta2, costhetastar,
-			       Q2V1, Q2V2);      
+      double my_NN = t->Value(0, Phi, Phi1, costheta1, costheta2, costhetastar, Q2V1, Q2V2);      
+      float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
 
       // Categories                                                                                                                                                                                       
       bool is_0jet = false;
@@ -224,18 +184,16 @@ int main(int argc, char** argv) {
       // KSU study category //                                                                                                                                                                            
       ////////////////////////                                                                                                                                                                            
       //if (njets==0) is_0jet=true;                                                                                                                                                                       
-      //else if (njets>=2 && mjj>300)  is_VBF=true;                                                                                                                                                       
+      //else if (njets>=2 && mjj>300) is_VBF=true; 
       //else is_boosted=true;   
-
 
       float var_0jet = m_sv;
       float var_boostedX = higgs_pT;//pt_sv;                                                                                                                                                            
       float var_boostedY = m_sv;
-      float var_vbfX = mjj;//my_NN;//normMELAvbf;                                                                                                                                                         
+      float var_vbfX = normMELAvbf;//my_NN;//
       float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv;                                                                                                                                     
 
       for (int k=0; k<nbhist; ++k){
-	//************************* Fill histograms **********************
 	// ################### signalRegion && OS ####################
 	if (is_0jet && is_signal && t1_charge*t2_charge<0)	    h0_OS[k]->Fill(var_0jet,evtwt);
 	if (is_boosted && is_signal && t1_charge*t2_charge<0)	    h1_OS[k]->Fill(var_boostedX,var_boostedY,evtwt);
@@ -316,8 +274,6 @@ int main(int argc, char** argv) {
       
     }
     fout->Close();
-    // D.Kim
-    //Py_Finalize();
 } 
 
 
