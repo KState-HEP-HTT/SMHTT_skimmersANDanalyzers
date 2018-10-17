@@ -1,50 +1,45 @@
-# Plotting distribution
+# 2016 Higgs to Tau-Tau Analysis Code
 
 ## Instruction :
-Checkout the repository and change branch for plot.
+One can run this analyzer from local machine as well as Wisconsin machine. 
+
+Checkout the repository.
 ```
 git clone git@github.com:KState-HEP-HTT/SMHTT_skimmersANDanalyzers.git
-cd SMHTT_skimmersANDanalyzers
 ```
 
-One need to copy input ntuples into this place.
-
-```2016SMHTT/tt/analysis/test/myntuples/Sep03_fixQ/```
-
-Ntuples are here : 
-
-from the Wisconsin machine(@login.wisc.hep.edu) 
-```/hdfs/store/user/doyeong/SMHTT_CONDOR/tautau/myskims/Sep03_fixQ/```
-
-To compile analyzer,
+To compile,
 ```
-cd 2016SMHTT/tt/analysis/src
-./Make.sh tt_analyzer.cc
+cd SMHTT_skimmersANDanalyzers/2016SMHTT/tt/analysis/src
+./Make.sh tt_templateMaker.cc
 ```
 
 To run the analyzer and make the distribution plots,
 ```
 cd ../test
-source do_nominalRuns.sh
+source do_plotter.sh
 ```
 
 ---
-### How to change observable
-One need to modify ```tt_analyzer.cc``` to make other observable distributions. 
+### How to make changes for R&D
+One mainly need to change three things. 1) binning, 2) variables, and 3) category. 
+Where ingredients for each category are the following.
 
-1. Set what you want to plots in this line.
+* 0jet 
+  - binning : bins0[]
+  - variable : var_0jet
+  - category : is_0jet 
 
-https://github.com/dykim1/HTT/blob/feature-plot/2016SMHTT/tt/analysis/src/tt_analyzer.cc#L761
+* boosted
+  - binning : bins1X[], bins1Y[]
+  - variable : var_boostedX, var_boostedY
+  - category : is_boosted
 
-2. Choose the proper binning from here.
+* 0jet 
+  - binning : bins2X[], bins2Y[]
+  - variable : var_vbfX, var_vbfY
+  - category : is_VBF
 
-https://github.com/dykim1/HTT/blob/feature-plot/2016SMHTT/tt/analysis/src/tt_analyzer.cc#L223-L225
 
-Where 0, 1, and 2 means 0jet, 1jet and 2 or more jets category. One can modify binning of each category independently. 
 
-3. If you would like to change the definiton of category, modifiy these lines.
-
-https://github.com/dykim1/HTT/blob/feature-plot/2016SMHTT/tt/analysis/src/tt_analyzer.cc#L738-L739
-
-https://github.com/dykim1/HTT/blob/feature-plot/2016SMHTT/tt/analysis/src/tt_analyzer.cc#L735
 

@@ -6,6 +6,7 @@ float byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2, byVTightIsolationRerunMVArun2
 float matchIsoMu22eta2p1_1,matchIsoTkMu22eta2p1_1,matchIsoMu22_1,matchIsoTkMu22_1,matchIsoMu24_1,matchIsoTkMu24_1,matchIsoMu19Tau20_1,matchIsoMu21Tau20_1,filterIsoMu22eta2p1_1,filterIsoTkMu22eta2p1_1,filterIsoMu22_1,filterIsoTkMu22_1,filterIsoMu24_1,filterIsoTkMu24_1,filterIsoMu19Tau20_1,filterIsoMu21Tau20_1,passIsoMu22eta2p1,passIsoTkMu22eta2p1,passIsoMu22,passIsoTkMu22,passIsoMu24,passIsoTkMu24,passIsoMu19Tau20,passIsoMu21Tau20,matchIsoMu19Tau20_2,matchIsoMu21Tau20_2,filterIsoMu19Tau20_2,filterIsoMu21Tau20_2;
 int njets_JESDown,njets_JESUp;
 float bpt_1, bpt_2, bflavor_1, bflavor_2;
+float beta_1, beta_2, bphi_1, bphi_2;
 float photonIso_2, puIso_2, chargedIso_2, neutralIso_2,metcor,metcorphi;
 float byCombinedIsolationDeltaBetaCorrRaw3Hits_2, byIsolationMVA3oldDMwLTraw_2;
 float pt_1,pt_2,px_1,px_2,py_1,py_2,pz_1,pz_2,eta_1,eta_2,phi_1,phi_2,iso_1,e_1,e_2,m_1,m_2,m_sv,m_pfsv,mvamet,mvametphi,m_sv_UP, m_sv_DOWN, m_pfsv_UP, m_pfsv_DOWN, pt_sv, pt_sv_UP, pt_sv_DOWN; 
@@ -53,6 +54,15 @@ float Phi, Phi1, costheta1,costheta2,costhetastar,Q2V1,Q2V2;
 float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive;
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
 
+float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge;
+float mu_pt, mu_eta, mu_phi, mu_mass, mu_charge;
+float j1_pt, j1_eta, j1_phi;
+float j2_pt, j2_eta, j2_phi;
+float b1_pt, b1_eta, b1_phi;
+float b2_pt, b2_eta, b2_phi;
+float evtwt, is_signal;
+//float m_sv, pt_sv;
+
 
 void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
    pt_1_=PT1;
@@ -77,4 +87,57 @@ void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, f
 }
 
 
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
+  evtwt = myevtwt;
+  t1_pt = tau1.Pt();
+  t1_eta = tau1.Eta();
+  t1_phi = tau1.Phi();
+  t1_mass = tau1.M();
+  t1_charge = charge1;
+  mu_pt = tau2.Pt();
+  mu_eta = tau2.Eta();
+  mu_phi = tau2.Phi();
+  mu_mass = tau2.M();
+  mu_charge = charge2;
+
+  j1_pt = jet1.Pt();
+  j1_eta = jet1.Eta();
+  j1_phi = jet1.Phi();
+  j2_pt = jet2.Pt();
+  j2_eta = jet2.Eta();
+  j2_phi = jet2.Phi();
+
+  met = mymet.Pt();
+  metphi = mymet.Phi();
+  mjj = mymjj;
+  njets = mynjets;
+  pt_sv = mypt_sv;
+  m_sv = mym_sv;
+
+  ME_sm_VBF = myME_sm_VBF;
+  ME_sm_ggH = myME_sm_ggH;
+  ME_bkg = myME_bkg;
+
+  b1_pt = bpt_1;
+  b1_eta = beta_1;
+  b1_phi = bphi_1;
+  b2_pt = bpt_2;
+  b2_eta = beta_2;
+  b2_phi = bphi_2;
+
+  higgs_pT = Higgs.Pt();
+  higgs_m = Higgs.M();
+  hjj_pT = (Higgs + jet1 + jet2).Pt();
+  hjj_m = (Higgs + jet1 + jet2).M();
+  dEtajj = fabs(jet1.Eta()-jet2.Eta());
+  dPhijj = fabs(jet1.Phi()-jet2.Phi());//jet1.DeltaPhi(jet2);
+  cat_0jet = is_0jet;
+  cat_boosted = is_boosted;
+  cat_vbf = is_VBF;
+  is_signal = signalRegion;
+  cat_inclusive = false;
+  if (cat_0jet || cat_boosted || cat_vbf) cat_inclusive = true;
+
+  namu->Fill();
+}
 

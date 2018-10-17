@@ -20,12 +20,6 @@
  hadd -f outputs_nominal/WH125.root outputs_nominal/WplusH125.root outputs_nominal/WminusH125.root
  ./tt_analyzer.exe myntuples/Sep03_fixQ/ZH125.root outputs_nominal/ZH125.root ZH125 ZH125 nominal
  # 3. DY
- ./tt_analyzer.exe myntuples/Sep03_fixQ/DY.root outputs_nominal/ZTT0.root DY ZTT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/DY1.root outputs_nominal/ZTT1.root DY ZTT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/DY2.root outputs_nominal/ZTT2.root DY ZTT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/DY3.root outputs_nominal/ZTT3.root DY ZTT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/DY4.root outputs_nominal/ZTT4.root DY ZTT nominal
- hadd -f outputs_nominal/ZTT.root outputs_nominal/ZTT0.root outputs_nominal/ZTT1.root outputs_nominal/ZTT2.root outputs_nominal/ZTT3.root outputs_nominal/ZTT4.root
  ./tt_analyzer.exe myntuples/Sep03_fixQ/DY.root outputs_nominal/ZL0.root DY ZL nominal
  ./tt_analyzer.exe myntuples/Sep03_fixQ/DY1.root outputs_nominal/ZL1.root DY ZL nominal
  ./tt_analyzer.exe myntuples/Sep03_fixQ/DY2.root outputs_nominal/ZL2.root DY ZL nominal
@@ -43,7 +37,6 @@
  ./tt_analyzer.exe myntuples/Sep03_fixQ/EWKZ2nu.root outputs_nominal/EWKZ2nu.root EWKZNuNu EWKZ nominal
  hadd -f outputs_nominal/EWKZ.root outputs_nominal/EWKZ2l.root outputs_nominal/EWKZ2nu.root
  # 5. TT
- ./tt_analyzer.exe myntuples/Sep03_fixQ/TT.root outputs_nominal/TTT.root TT TTT nominal
  ./tt_analyzer.exe myntuples/Sep03_fixQ/TT.root outputs_nominal/TTJ.root TT TTJ nominal
  # 6. W
  ./tt_analyzer.exe myntuples/Sep03_fixQ/W.root outputs_nominal/W0.root W W nominal
@@ -55,19 +48,6 @@
  ./tt_analyzer.exe myntuples/Sep03_fixQ/EWKWPlus.root outputs_nominal/EWKWPlus.root EWKWplus W nominal
  hadd -f outputs_nominal/W.root outputs_nominal/W0.root outputs_nominal/W1.root outputs_nominal/W2.root outputs_nominal/W3.root outputs_nominal/W4.root outputs_nominal/EWKWMinus.root outputs_nominal/EWKWPlus.root 
  # 7. VV
- ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ1l1nu2q.root outputs_nominal/WZ1l1nu2q_T.root WZ1L1Nu2Q VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ1l3nu.root outputs_nominal/WZ1l3nu_T.root WZ1L3Nu VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ3l1nu.root outputs_nominal/WZ3l1nu_T.root WZLLLNu VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ2l2q.root outputs_nominal/WZ2l2q_T.root WZ2L2Q VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/WW1l1nu2q.root outputs_nominal/WW1l1nu2q_T.root WW1L1Nu2Q VVT nominal 
- ./tt_analyzer.exe myntuples/Sep03_fixQ/ZZ4l.root outputs_nominal/ZZ4l_T.root ZZ4L VVT nominal 
- ./tt_analyzer.exe myntuples/Sep03_fixQ/ZZ2l2q.root outputs_nominal/ZZ2l2q_T.root ZZ2L2Q VVT nominal 
- ./tt_analyzer.exe myntuples/Sep03_fixQ/VV2l2nu.root outputs_nominal/VV2l2nu_T.root VV2L2Nu VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/Tbar-tW.root outputs_nominal/Tbar-tW_T.root ST_tW_antitop VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/T-tW.root outputs_nominal/T-tW_T.root ST_tW_top VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/Tbar-tchan.root outputs_nominal/Tbar-tchan_T.root ST_t_antitop VVT nominal
- ./tt_analyzer.exe myntuples/Sep03_fixQ/T-tchan.root outputs_nominal/T-tchan_T.root ST_t_top VVT nominal
- hadd -f outputs_nominal/VVT.root outputs_nominal/WZ1l1nu2q_T.root outputs_nominal/WZ1l3nu_T.root outputs_nominal/WZ1l1nu2q_T.root outputs_nominal/WZ3l1nu_T.root outputs_nominal/WZ2l2q_T.root outputs_nominal/WW1l1nu2q_T.root outputs_nominal/ZZ4l_T.root outputs_nominal/ZZ2l2q_T.root outputs_nominal/VV2l2nu_T.root outputs_nominal/Tbar-tW_T.root outputs_nominal/T-tW_T.root outputs_nominal/Tbar-tchan_T.root outputs_nominal/T-tchan_T.root 
  ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ1l1nu2q.root outputs_nominal/WZ1l1nu2q_J.root WZ1L1Nu2Q VVJ nominal
  ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ1l3nu.root outputs_nominal/WZ1l3nu_J.root WZ1L3Nu VVJ nominal
  ./tt_analyzer.exe myntuples/Sep03_fixQ/WZ3l1nu.root outputs_nominal/WZ3l1nu_J.root WZLLLNu VVJ nominal
@@ -82,12 +62,12 @@
  ./tt_analyzer.exe myntuples/Sep03_fixQ/T-tchan.root outputs_nominal/T-tchan_J.root ST_t_top VVJ nominal
  hadd -f outputs_nominal/VVJ.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ1l3nu_J.root outputs_nominal/WZ1l1nu2q_J.root outputs_nominal/WZ3l1nu_J.root outputs_nominal/WZ2l2q_J.root outputs_nominal/WW1l1nu2q_J.root outputs_nominal/ZZ4l_J.root outputs_nominal/ZZ2l2q_J.root outputs_nominal/VV2l2nu_J.root outputs_nominal/Tbar-tW_J.root outputs_nominal/T-tW_J.root outputs_nominal/Tbar-tchan_J.root outputs_nominal/T-tchan_J.root 
 
- python python/SignalCreator.py
- python python/QCDcreator.py
-
  # embedded
  ./tt_analyzer.exe myntuples/Oct14_Embedded/embedded.root outputs_nominal/embedded.root embedded embedded nominal
 
+ #python python/SignalCreator.py
+ #python python/QCDcreator.py
+
  # hadd all outputs
- hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZTT.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTT.root outputs_nominal/TTJ.root outputs_nominal/VVT.root outputs_nominal/VVJ.root outputs_nominal/W.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root outputs_nominal/SMH.root outputs_nominal/embedded.root
+ #hadd -f final_nominal.root outputs_nominal/data.root outputs_nominal/ZJ.root outputs_nominal/ZL.root outputs_nominal/TTJ.root outputs_nominal/VVJ.root outputs_nominal/W.root outputs_nominal/EWKZ.root outputs_nominal/VBF125.root outputs_nominal/ggH125.root outputs_nominal/WH125.root outputs_nominal/ZH125.root outputs_nominal/QCD.root outputs_nominal/SMH.root outputs_nominal/embedded.root
 
