@@ -188,10 +188,10 @@ int main(int argc, char** argv) {
       //else is_boosted=true;   
 
       float var_0jet = m_sv;
-      float var_boostedX = higgs_pT;//pt_sv;                                                                                                                                                            
+      float var_boostedX = higgs_pT;
       float var_boostedY = m_sv;
-      float var_vbfX = normMELAvbf;//my_NN;//
-      float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv;                                                                                                                                     
+      float var_vbfX = mjj;
+      float var_vbfY = m_sv;
 
       for (int k=0; k<nbhist; ++k){
 	// ################### signalRegion && OS ####################

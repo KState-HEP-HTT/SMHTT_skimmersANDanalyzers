@@ -2,20 +2,25 @@ if __name__ == "__main__":
 
     import ROOT
     import argparse
+    from optparse import OptionParser
+    import sys
 
-    nbhist=1
-    '''
-    fVBF125=ROOT.TFile("outputs_nominal/VBF125.root","r")
-    fggH125=ROOT.TFile("outputs_nominal/ggH125.root","r")
-    fWH125=ROOT.TFile("outputs_nominal/WH125.root","r")
-    fZH125=ROOT.TFile("outputs_nominal/ZH125.root","r")
-    fout=ROOT.TFile("outputs_nominal/SMH.root","recreate")
-    '''
-    fVBF125=ROOT.TFile("outputs_forPlots/VBF125.root","r")
-    fggH125=ROOT.TFile("outputs_forPlots/ggH125.root","r")
-    fWH125=ROOT.TFile("outputs_forPlots/WH125.root","r")
-    fZH125=ROOT.TFile("outputs_forPlots/ZH125.root","r")
-    fout=ROOT.TFile("outputs_forPlots/SMH.root","recreate")
+    parser = OptionParser()
+    parser.add_option('--ztt', '-z', action='store_true',
+                      default=False, dest='is_zttMC',
+                      help='run on embedded or MC ZTT'
+                      )
+    (options, args) = parser.parse_args()
+
+    samplefolder = "outputs_forPlots"
+    if options.is_zttMC: 
+        samplefolder = "outputs_nominal"
+        
+    fVBF125=ROOT.TFile(samplefolder+"/VBF125.root","r")
+    fggH125=ROOT.TFile(samplefolder+"/ggH125.root","r")
+    fWH125=ROOT.TFile(samplefolder+"/WH125.root","r")
+    fZH125=ROOT.TFile(samplefolder+"/ZH125.root","r")
+    fout=ROOT.TFile(samplefolder+"/SMH.root","recreate")
 
 
     dirOS_0jet=fout.mkdir("tt_0jet")

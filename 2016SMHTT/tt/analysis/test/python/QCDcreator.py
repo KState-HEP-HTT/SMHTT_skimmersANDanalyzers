@@ -2,26 +2,32 @@ if __name__ == "__main__":
 
     import ROOT
     import argparse
-    
-    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VVJ", "W", "EWKZ"]
-    #samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VVT", "VVJ", "W", "EWKZ"]
+    from optparse import OptionParser
+    import sys
+
+    parser = OptionParser()
+    parser.add_option('--ztt', '-z', action='store_true',
+                      default=False, dest='is_zttMC',
+                      help='run on embedded or MC ZTT'
+                      )
+    (options, args) = parser.parse_args()
+
     regions = ["AIOS","AISS","ttSS"]
     cates = ["0jet","boosted","vbf"]
     files = []
     histos = [[],[],[]] # [[hAIOS_0jet,hAISS_0jet,hSS_0jet],[same for boosted],[same for vbf]]
-
-    
-
+    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VVJ", "W", "EWKZ"]
     # Open root files
-    '''
-    for sample in samples:
-        files.append(ROOT.TFile("outputs_nominal/"+sample+".root","r"))
-    fout=ROOT.TFile("outputs_nominal/QCD.root","recreate")
-    '''
     for sample in samples:
         files.append(ROOT.TFile("outputs_forPlots/"+sample+".root","r"))
     fout=ROOT.TFile("outputs_forPlots/QCD.root","recreate")
-        
+
+    if options.is_zttMC:
+        del files[:]
+        samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VVT", "VVJ", "W", "EWKZ"]
+        for sample in samples:
+            files.append(ROOT.TFile("outputs_nominal/"+sample+".root","r"))
+            fout=ROOT.TFile("outputs_nominal/QCD.root","recreate")
 
     # Get all histograms
     for region in regions:
@@ -77,17 +83,7 @@ if __name__ == "__main__":
         hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
         hQCD = histos[k][regions.index("AIOS")]
         hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
-        '''
-        # Discard obvious wrong value
-        for l in range(0,histos[k][regions.index("AISS")].GetSize()-2):
-            #if histos[k][regions.index("AISS")].GetBinContent(l)<=0:
-            print "--"
-            print k,l
-            print histos[k][regions.index("AISS")].GetBinContent(l)
-            print histos[k][regions.index("ttSS")].GetBinContent(l)
-            print hQCD.GetBinContent(l)
-            hQCD.SetBinContent(l,0)        
-            '''
+
         hQCD.SetName("QCD")
         hQCD.Write()
 
