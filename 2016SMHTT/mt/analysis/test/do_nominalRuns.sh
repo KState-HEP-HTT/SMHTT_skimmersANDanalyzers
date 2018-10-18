@@ -16,10 +16,7 @@ hadd -f files_nominal/Data.root files_nominal/data*.root
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY2.root files_nominal/ZTT2.root ZTT ZTT 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY3.root files_nominal/ZTT3.root ZTT ZTT 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY4.root files_nominal/ZTT4.root ZTT ZTT 0
-#EWKZ
-./mt_analyzer.exe myntuple/Sep10_fixQ/EWKZ2l.root files_nominal/EWKZLL.root EWKZLL EWKZ 0
-./mt_analyzer.exe myntuple/Sep10_fixQ/EWKZ2nu.root files_nominal/EWKZNuNu.root EWKZNuNu EWKZ 0
-hadd -f files_nominal/ZTT.root files_nominal/ZTT*.root files_nominal/EWKZLL.root files_nominal/EWKZNuNu.root
+hadd -f files_nominal/ZTT.root files_nominal/ZTT*.root 
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY.root files_nominal/ZLall.root ZL ZL 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY1.root files_nominal/ZL1.root ZL ZL 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY2.root files_nominal/ZL2.root ZL ZL 0
@@ -32,6 +29,11 @@ hadd -f files_nominal/ZL.root files_nominal/ZL*.root
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY3.root files_nominal/ZJ3.root ZJ ZJ 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY4.root files_nominal/ZJ4.root ZJ ZJ 0
 hadd -f files_nominal/ZJ.root files_nominal/ZJ*.root
+
+#EWKZ
+./mt_analyzer.exe myntuple/Sep10_fixQ/EWKZ2l.root files_nominal/EWKZLL.root EWKZLL EWKZ 0
+./mt_analyzer.exe myntuple/Sep10_fixQ/EWKZ2nu.root files_nominal/EWKZNuNu.root EWKZNuNu EWKZ 0
+hadd -f files_nominal/EWKZ.root files_nominal/EWKZ*.root
 
 # TT
 ./mt_analyzer.exe myntuple/Sep10_fixQ/TT.root files_nominal/TTT.root TTT TTT 0

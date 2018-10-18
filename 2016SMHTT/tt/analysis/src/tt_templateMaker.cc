@@ -169,29 +169,29 @@ int main(int argc, char** argv) {
       double my_NN = t->Value(0, Phi, Phi1, costheta1, costheta2, costhetastar, Q2V1, Q2V2);      
       float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
 
-      // Categories                                                                                                                                                                                       
+      // Categories
       bool is_0jet = false;
       bool is_boosted = false;
       bool is_VBF = false;
-      ////////////////////////////                                                                                                                                                                        
-      // 2016 analysis category //                                                                                                                                                                        
-      ////////////////////////////                                                                                                                                                                        
+      ////////////////////////////
+      // 2016 analysis category //
+      ////////////////////////////
       if (njets==0) is_0jet=true;
       if (njets==1 || (njets>=2 && (!(higgs_pT>100 && dEtajj>2.5)))) is_boosted=true;
       if (njets>=2 && higgs_pT>100 && dEtajj>2.5) is_VBF=true;
 
-      ////////////////////////                                                                                                                                                                            
-      // KSU study category //                                                                                                                                                                            
-      ////////////////////////                                                                                                                                                                            
-      //if (njets==0) is_0jet=true;                                                                                                                                                                       
+      ////////////////////////     
+      // KSU study category //     
+      ////////////////////////     
+      //if (njets==0) is_0jet=true;
       //else if (njets>=2 && mjj>300) is_VBF=true; 
       //else is_boosted=true;   
 
       float var_0jet = m_sv;
-      float var_boostedX = higgs_pT;//pt_sv;                                                                                                                                                            
+      float var_boostedX = higgs_pT;
       float var_boostedY = m_sv;
-      float var_vbfX = normMELAvbf;//my_NN;//
-      float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv;                                                                                                                                     
+      float var_vbfX = mjj;
+      float var_vbfY = m_sv;
 
       for (int k=0; k<nbhist; ++k){
 	// ################### signalRegion && OS ####################

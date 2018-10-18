@@ -16,16 +16,22 @@ if __name__ == "__main__":
                       )
     (options, args) = parser.parse_args()
 
-    regions = ["AIOS","AISS","ttSS"]
-    cates = ["0jet","boosted","vbf"]
+    factor0jet_u=1.11
+    factor1jet_u=1.12
+    factor2jet_u=1.20
+
+    factor0jet_d=1.03
+    factor1jet_d=1.00
+    factor2jet_d=0.80
+
+
+    regions = ["SS","QCD"]
+    cates = ["0jet","1jet","vbf"]
+    catesout = ["0jet","boosted","vbf"]
     files = []
     histos = [[],[],[]] # [[hAIOS_0jet,hAISS_0jet,hSS_0jet],[same for boosted],[same for vbf]]
-    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VVJ", "W", "EWKZ"]
-    if options.is_zttMC:
-        del files[:]
-        samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VVT", "VVJ", "W", "EWKZ"]
-
-    print options.outputs_xxx
+    samples = ["Data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VV", "W"]
+    QCDfactor = [1.07,1.06,1.00]
     # Open root files
     for sample in samples:
         files.append(ROOT.TFile(options.outputs_xxx+"/"+sample+".root","r"))
@@ -37,15 +43,15 @@ if __name__ == "__main__":
         for cate in cates:
             for sample in samples:
                 # subtract all bkgs from data
-                if sample is "data":
+                if sample is "Data":
                     print "-----   Data   -----"
-                    print files[samples.index(sample)].Get(region+"_"+cate+"/data_obs").Integral()
-                    histos[cates.index(cate)].append(files[samples.index(sample)].Get(region+"_"+cate+"/data_obs"))
+                    print files[samples.index(sample)].Get(region+cate+"/data_obs").Integral()
+                    histos[cates.index(cate)].append(files[samples.index(sample)].Get(region+cate+"/data_obs"))
                     print "----- Subtract -----"
                 else:
-                    print files[samples.index(sample)].Get(region+"_"+cate+"/"+sample).Integral()
-                    histos[cates.index(cate)][-1].Add(files[samples.index(sample)].Get(region+"_"+cate+"/"+sample),-1)
-                    print region+"_"+cate+"/"+sample
+                    print files[samples.index(sample)].Get(region+cate+"/"+sample).Integral()
+                    histos[cates.index(cate)][-1].Add(files[samples.index(sample)].Get(region+cate+"/"+sample),-1)
+                    print region+cate+"/"+sample
 
     # Set negative yield bin to 0
     for i in range(0,len(histos)):
@@ -56,37 +62,24 @@ if __name__ == "__main__":
                     print histo.GetBinContent(j)
                     histo.SetBinError(j,max(0,histo.GetBinError(j)+histo.GetBinError(j)))
                     histo.SetBinContent(j,0)
-                    
-                    
 
     #######################################
+    #                                     #                     
+    #  Estimate QCD - AN eq (13)          #
+    #  QCD = (hQCD*flatfactor)*QCDCR      #
     #                                     #
-    #  Estimate QCD - AN eq (14)          #
-    #  QCD = AIOS * (SS_signallike/AISS)  #
-    #                                     #
-    #######################################
+    #######################################                     
+
     for k in range(0,len(histos)):  # loop over categories
         fout.cd()
-        dir = fout.mkdir("tt_"+cates[k])
+        dir = fout.mkdir("mt_"+catesout[k])
         dir.cd()
-        # Save control region histograms for checking.
-        histos[k][regions.index("ttSS")].SetName("QCD_ttSS")
-        histos[k][regions.index("ttSS")].Write()
-        histos[k][regions.index("AISS")].SetName("QCD_AISS")
-        histos[k][regions.index("AISS")].Write()
-        histos[k][regions.index("AIOS")].SetName("QCD_AIOS")
-        histos[k][regions.index("AIOS")].Write()
         # Compute SF and QCD
-        hSF = histos[k][0].Clone()
-        hSF.Divide(histos[k][regions.index("ttSS")],histos[k][regions.index("AISS")],1,1,"B")
-        hSF.SetName("QCD_sf")
-        hSF.Write()
-        hQCD = hSF.Clone()
-        hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
-        hQCD = histos[k][regions.index("AIOS")]
-        hQCD.Multiply(histos[k][regions.index("AIOS")],hSF,1,1,"B")
+        hQCDCR = histos[k][regions.index("SS")]
+        hQCDCR.Scale(QCDfactor[k])
+        hQCD = histos[k][regions.index("QCD")]
+        hQCD.Scale(QCDfactor[k])
+        hQCD.Scale(hQCDCR.Integral()/hQCD.Integral())
 
         hQCD.SetName("QCD")
         hQCD.Write()
-
-    
