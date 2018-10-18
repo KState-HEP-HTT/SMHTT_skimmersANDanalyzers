@@ -70,6 +70,8 @@ int main(int argc, char** argv) {
     namu->Branch("t1_phi", &t1_phi);
     namu->Branch("t1_mass", &t1_mass);
     namu->Branch("t1_charge", &t1_charge);
+    namu->Branch("t1_decaymode", &t1_decaymode);
+
     namu->Branch("mu_pt", &mu_pt);
     namu->Branch("mu_eta", &mu_eta);
     namu->Branch("mu_phi", &mu_phi);
@@ -126,6 +128,8 @@ int main(int argc, char** argv) {
     namu->Branch("cat_inclusive", &cat_inclusive);
 
     namu->Branch("is_signal", &is_signal);
+    namu->Branch("is_qcd", &is_qcd);
+    namu->Branch("mt", &mt);
 
     TFile *f_Trk=new TFile("weightROOTs/Tracking_EfficienciesAndSF_BCDEFGH.root");
     TGraph *h_Trk=(TGraph*) f_Trk->Get("ratio_eff_eta3_dr030e030_corr");
@@ -1109,7 +1113,8 @@ int main(int argc, char** argv) {
 	  bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
 	  //bool is_VBF=(massJets > 300 && numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
 	  float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-	  TLorentzVector Higgs = mymet+mymu+mytau;
+	  TLorentzVector Higgs;// = mymet+mymu+mytau;
+	  Higgs.SetPtEtaPhiM(var1_1,(mymet+mymu+mytau).Eta(),(mymet+mymu+mytau).Phi(),(mymet+mymu+mytau).M());
 	  // book the NN                                                                                                       
 	  TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
 	  double my_NN = t->Value(0, Phi, Phi1,
@@ -1117,7 +1122,19 @@ int main(int argc, char** argv) {
 				  Q2V1, Q2V2);      
 	  
 	  //var1_2 = my_NN;
-	  fillNNTree(namu,mytau,q_1,mymu,q_2,myjet1,myjet2,mymet,massJets,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight,ME_sm_VBF,ME_sm_ggH,ME_bkg);
+	  fillNNTree(namu,mytau,q_1,l2_decayMode,
+		     mymu,q_2,
+		     myjet1,myjet2,
+		     mymet,massJets,
+		     var1_1,var2,mt, //pt_sv, m_sv, mt
+		     numberJets,
+		     bpt_1,beta_1,bphi_1,
+		     bpt_2,beta_2,bphi_2,
+		     Higgs,
+		     is_0jet,is_boosted,is_VBF,
+		     signalRegion,qcdRegion,wRegion,wsfRegion,qcdCR,
+		     weight2*aweight,
+		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	  //################ W+jets reweighting in high mT ###############
 	  //if(is_VBF) std::cout << var1_2 << std::endl;
 	  if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){
@@ -1280,6 +1297,7 @@ int main(int argc, char** argv) {
     
     TFile *fout = TFile::Open(output.c_str(), "RECREATE");
     fout->cd();
+    nbevt->Write();
     namu->Write();
     hincl->Write();
     nlowhigh->Write();
