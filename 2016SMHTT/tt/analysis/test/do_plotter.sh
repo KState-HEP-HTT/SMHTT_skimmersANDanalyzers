@@ -20,12 +20,14 @@
  ./tt_templateMaker.exe outputs_nominal/EWKZ.root outputs_forPlots/EWKZ.root EWKZ nominal
 
  # 5. TT
+ ./tt_templateMaker.exe outputs_nominal/TTJ.root outputs_forPlots/TTT.root TTT nominal
  ./tt_templateMaker.exe outputs_nominal/TTJ.root outputs_forPlots/TTJ.root TTJ nominal
 
  # 6. W
  ./tt_templateMaker.exe outputs_nominal/W.root outputs_forPlots/W.root W nominal
 
  # 7. VV
+ ./tt_templateMaker.exe outputs_nominal/VVT.root outputs_forPlots/VVT.root VVT nomianl
  ./tt_templateMaker.exe outputs_nominal/VVJ.root outputs_forPlots/VVJ.root VVJ nomianl
 
  # embedded

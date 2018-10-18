@@ -28,7 +28,7 @@
  ./tt_templateMaker.exe outputs_nominal/W.root outputs_forPlots/W.root W nominal
 
  # 7. VV
- ./tt_templateMaker.exe outputs_nominal/VVJ.root outputs_forPlots/VVT.root VVT nomianl
+ ./tt_templateMaker.exe outputs_nominal/VVT.root outputs_forPlots/VVT.root VVT nomianl
  ./tt_templateMaker.exe outputs_nominal/VVJ.root outputs_forPlots/VVJ.root VVJ nomianl
 
 # python python/SignalCreator.py -z -

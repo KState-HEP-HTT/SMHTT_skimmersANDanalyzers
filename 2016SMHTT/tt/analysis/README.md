@@ -15,9 +15,20 @@ cd SMHTT_skimmersANDanalyzers/2016SMHTT/tt/analysis/src
 ```
 
 To run the analyzer and make the distribution plots,
+
+1. Embedded sample,
+
 ```
 cd ../test
 source do_plotter.sh
+python python/stackPlotter_dev.py
+```
+2. MC samples,
+
+```
+cd ../test
+source do_plotterMC.sh 
+python python/stackPlotter_dev.py -z
 ```
 
 ---
