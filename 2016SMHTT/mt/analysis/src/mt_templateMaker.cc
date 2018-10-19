@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
     arbre->SetBranchAddress("t1_charge", &t1_charge);
+    arbre->SetBranchAddress("t1_decaymode", &t1_decaymode);
     arbre->SetBranchAddress("mu_pt", &mu_pt);
     arbre->SetBranchAddress("mu_eta", &mu_eta);
     arbre->SetBranchAddress("mu_phi", &mu_phi);
