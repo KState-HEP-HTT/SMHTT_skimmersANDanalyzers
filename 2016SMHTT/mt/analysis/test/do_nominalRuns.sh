@@ -74,5 +74,5 @@ hadd -f files_nominal/WH125.root files_nominal/WplusH125.root files_nominal/Wmin
 #python python/Scale_W_HighMT.py --scale nominal --anti iso  
 python python/Create_QCD_2Drelaxed.py --scale nominal
 
-hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
+hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/EWKZ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
 

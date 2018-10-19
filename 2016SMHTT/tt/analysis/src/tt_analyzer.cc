@@ -135,20 +135,20 @@ int main(int argc, char** argv) {
     //
     /////////////////////////////////
     reweight::LumiReWeighting* LumiWeights_12;
-    LumiWeights_12 = new reweight::LumiReWeighting("weightROOTs/MC_Moriond17_PU25ns_V1.root", "weightROOTs/Data_Pileup_2016_271036-284044_80bins.root", "pileup", "pileup");
+    LumiWeights_12 = new reweight::LumiReWeighting("../../../CommonAN/weightROOTs/MC_Moriond17_PU25ns_V1.root", "../../../CommonAN/weightROOTs/Data_Pileup_2016_271036-284044_80bins.root", "pileup", "pileup");
     
-    TFile *fZ=new TFile("weightROOTs/zpt_weights_2016_BtoH.root");
+    TFile *fZ=new TFile("../../../CommonAN/weightROOTs/zpt_weights_2016_BtoH.root");
     TH2F *histZ=(TH2F*) fZ->Get("zptmass_histo");
     
-    TFile fw("weightROOTs/htt_scalefactors_v16_3.root");
+    TFile fw("../../../CommonAN/weightROOTs/htt_scalefactors_v16_3.root");
     RooWorkspace *w = (RooWorkspace*)fw.Get("w");
     fw.Close();
     
-    TFile fw2("weightROOTs/htt_scalefactors_sm_moriond_v1.root");
+    TFile fw2("../../../CommonAN/weightROOTs/htt_scalefactors_sm_moriond_v1.root");
     RooWorkspace *w2 = (RooWorkspace*)fw2.Get("w");
     fw2.Close();
 
-    TFile fem("weightROOTs/htt_scalefactors_v16_9_embedded.root");
+    TFile fem("../../../CommonAN/weightROOTs/htt_scalefactors_v16_9_embedded.root");
     RooWorkspace *wEmbed = (RooWorkspace*)fem.Get("w");
     fem.Close();
 
