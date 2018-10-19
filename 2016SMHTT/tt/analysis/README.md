@@ -20,14 +20,14 @@ To run the analyzer and make the distribution plots,
 
 ```
 cd ../test
-source do_plotter.sh
+source do_plotter.sh outputs_nominal
 python python/stackPlotter_dev.py
 ```
 2. MC samples,
 
 ```
 cd ../test
-source do_plotterMC.sh 
+source do_plotter.sh outputs_nominal mc
 python python/stackPlotter_dev.py -z
 ```
 
