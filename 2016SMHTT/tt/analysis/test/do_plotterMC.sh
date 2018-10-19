@@ -13,6 +13,7 @@
  ./tt_templateMaker.exe outputs_nominal/ZH125.root outputs_forPlots/ZH125.root ZH125 nominal
 
  # 3. DY
+ ./tt_templateMaker.exe outputs_nominal/ZTT.root outputs_forPlots/ZTT.root ZTT nominal
  ./tt_templateMaker.exe outputs_nominal/ZL.root outputs_forPlots/ZL.root ZL nominal
  ./tt_templateMaker.exe outputs_nominal/ZJ.root outputs_forPlots/ZJ.root ZJ nominal
 
@@ -30,12 +31,9 @@
  ./tt_templateMaker.exe outputs_nominal/VVT.root outputs_forPlots/VVT.root VVT nomianl
  ./tt_templateMaker.exe outputs_nominal/VVJ.root outputs_forPlots/VVJ.root VVJ nomianl
 
- # embedded
- ./tt_templateMaker.exe outputs_nominal/embedded.root outputs_forPlots/embedded.root embedded nominal
-
- python python/SignalCreator.py
- python python/QCDcreator.py
+# python python/SignalCreator.py -z -
+ python python/QCDcreator.py -z
 
  # hadd all outputs
- hadd -f final_nominal.root outputs_forPlots/data.root outputs_forPlots/ZJ.root outputs_forPlots/ZL.root outputs_forPlots/TTJ.root outputs_forPlots/VVJ.root outputs_forPlots/W.root outputs_forPlots/EWKZ.root outputs_forPlots/VBF125.root outputs_forPlots/ggH125.root outputs_forPlots/WH125.root outputs_forPlots/ZH125.root outputs_forPlots/QCD.root outputs_forPlots/SMH.root outputs_forPlots/embedded.root
+ hadd -f final_nominal.root outputs_forPlots/data.root outputs_forPlots/ZTT.root outputs_forPlots/ZJ.root outputs_forPlots/ZL.root outputs_forPlots/TTT.root outputs_forPlots/TTJ.root outputs_forPlots/VVT.root outputs_forPlots/VVJ.root outputs_forPlots/W.root outputs_forPlots/EWKZ.root outputs_forPlots/VBF125.root outputs_forPlots/ggH125.root outputs_forPlots/WH125.root outputs_forPlots/ZH125.root outputs_forPlots/QCD.root 
 

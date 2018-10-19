@@ -4,23 +4,38 @@ import re
 from array import array
 import math
 import plotRocCurve_def
+from optparse import OptionParser
+import sys
 
-obs = "M_{#tau#tau}"
-obs1= "m_sv"#"abs_Heata.5jjeta"
+parser = OptionParser()
+parser.add_option('--ztt', '-z', action='store_true',
+                  default=False, dest='is_zttMC',
+                  help='run on embedded or MC ZTT'
+                  )
+(options, args) = parser.parse_args()
+
+
+obs = "M_{jj}"
+obs1= "mjj"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
-cate={"tt_0jet":"0jet","tt_boosted":"Boosted","tt_vbf":"VBF"}
-#cate={"tt_vbf":"VBF"}
+#cate={"tt_0jet":"0jet","tt_boosted":"Boosted","tt_vbf":"VBF"}
+cate={"tt_vbf":"2016VBF"}
 
-sig_stackScale = 30
-majors=["ZTT","QCD"]
-minors=["ZL","ZJ","TTJ","W","VVT","VVJ"]
+sig_stackScale = 10
 signals=["ggH125","VBF125","WH125","ZH125"]
+majors=["embedded","QCD"]
+minors=["ZL","ZJ","TTJ","W","VVJ"]
+if options.is_zttMC:    
+    del majors[:]
+    del minors[:]
+    majors=["ZTT","QCD"]
+    minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
+
 # Colors
 mypalette=["#f9cd66","#ffbcfe","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
-
 
 def add_lumi():
     lowX=0.50
@@ -85,10 +100,14 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")
+
+    if options.is_zttMC:
+        legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")        
+    else:
+        legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"embedded","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
     legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
@@ -479,7 +498,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
+    #plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
 
 
     # Make canvas 
