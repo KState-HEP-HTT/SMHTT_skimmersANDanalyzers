@@ -64,11 +64,13 @@ int main(int argc, char** argv) {
     namu->Branch("t1_phi", &t1_phi);
     namu->Branch("t1_mass", &t1_mass);
     namu->Branch("t1_charge", &t1_charge);
+    namu->Branch("t1_decaymode", &t1_decaymode);
     namu->Branch("t2_pt", &t2_pt);
     namu->Branch("t2_eta", &t2_eta);
     namu->Branch("t2_phi", &t2_phi);
     namu->Branch("t2_mass", &t2_mass);
     namu->Branch("t2_charge", &t2_charge);
+    namu->Branch("t2_decaymode", &t2_decaymode);
 
     namu->Branch("j1_pt",&j1_pt);
     namu->Branch("j1_eta", &j1_eta);
@@ -83,6 +85,7 @@ int main(int argc, char** argv) {
     namu->Branch("b2_pt", &b2_pt);
     namu->Branch("b2_eta", &b2_eta);
     namu->Branch("b2_phi", &b2_phi);
+    namu->Branch("nbtag", &nbtag);
 
     namu->Branch("met",&met);
     namu->Branch("metphi",&metphi);
@@ -258,6 +261,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("bpt_2",&bpt_2);
     arbre->SetBranchAddress("beta_2",&beta_2);
     arbre->SetBranchAddress("bphi_2",&bphi_2);
+    arbre->SetBranchAddress("nbtag",&nbtag);
     // met
     //arbre->SetBranchAddress("met", &met);
     //arbre->SetBranchAddress("metphi", &metphi);
@@ -861,7 +865,18 @@ int main(int argc, char** argv) {
 	  if (gen_match_1==5 && gen_match_2==6) h_trgSF_RF[k]->Fill(sf_trg_RF);
 	  if (gen_match_1==6 && gen_match_2==6) h_trgSF_FF[k]->Fill(sf_trg_FF);
 	  
-	  fillNNTree(namu,mytau1,charge1,mytau2,charge2,myjet1,myjet2,mymet,mjj,pt_sv,m_sv,njets,bpt_1,beta_1,bphi_1,bpt_2,beta_2,bphi_2,Higgs,is_0jet,is_boosted,is_VBF,signalRegion,weight2*aweight,ME_sm_VBF,ME_sm_ggH,ME_bkg);
+	  fillNNTree(namu,
+		     mytau1,charge1,t1_decayMode,
+		     mytau2,charge2,t2_decayMode,
+		     myjet1,myjet2,mymet,mjj,
+		     pt_sv,m_sv,
+		     njets,
+		     bpt_1,beta_1,bphi_1,
+		     bpt_2,beta_2,bphi_2,nbtag,
+		     Higgs,
+		     is_0jet,is_boosted,is_VBF,
+		     signalRegion,weight2*aweight,
+		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	}
       }
     } // end of loop over events

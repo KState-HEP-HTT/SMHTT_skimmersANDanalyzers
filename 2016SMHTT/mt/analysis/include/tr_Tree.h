@@ -88,7 +88,7 @@ void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, f
 }
 
 
-void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mymt, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, bool qcdRegion, bool wRegion, bool wsfRegion, bool qcdCR, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mymt, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, bool qcdRegion, bool wRegion, bool wsfRegion, bool qcdCR, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
   evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
@@ -126,6 +126,7 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode
   b2_pt = bpt_2;
   b2_eta = beta_2;
   b2_phi = bphi_2;
+  nbtag = mynbtag;
 
   higgs_pT = Higgs.Pt();
   higgs_m = Higgs.M();

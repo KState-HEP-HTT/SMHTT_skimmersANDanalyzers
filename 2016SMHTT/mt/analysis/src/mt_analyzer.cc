@@ -91,6 +91,7 @@ int main(int argc, char** argv) {
     namu->Branch("b2_pt", &b2_pt);
     namu->Branch("b2_eta", &b2_eta);
     namu->Branch("b2_phi", &b2_phi);
+    namu->Branch("nbtag", &nbtag);
 
     namu->Branch("met",&met);
     namu->Branch("metphi",&metphi);
@@ -1129,7 +1130,7 @@ int main(int argc, char** argv) {
 		     var1_1,var2,mt, //pt_sv, m_sv, mt
 		     numberJets,
 		     bpt_1,beta_1,bphi_1,
-		     bpt_2,beta_2,bphi_2,
+		     bpt_2,beta_2,bphi_2,nbtag,
 		     Higgs,
 		     is_0jet,is_boosted,is_VBF,
 		     signalRegion,qcdRegion,wRegion,wsfRegion,qcdCR,
