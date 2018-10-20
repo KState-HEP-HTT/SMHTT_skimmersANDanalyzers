@@ -62,8 +62,8 @@ float mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleUp,m
 float passDoubleTau35, matchDoubleTau35_1, matchDoubleTau35_2,filterDoubleTau35_1,filterDoubleTau35_2,passDoubleTauCmbIso35,matchDoubleTauCmbIso35_1,matchDoubleTauCmbIso35_2,filterDoubleTauCmbIso35_1,filterDoubleTauCmbIso35_2;
 float genM,genpT,genpX,genpY,vispX,vispY, b_vispX;
 float pt_1_, pt_2_, eta_1_, eta_2_, phi_1_, phi_2_, m_1_, m_2_, mvis_, metcov00_, metcov01_, metcov11_, weight_, met_, metphi_, fvalue_;
-float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge;
-float t2_pt, t2_eta, t2_phi, t2_mass, t2_charge;
+float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge, t1_decaymode;
+float t2_pt, t2_eta, t2_phi, t2_mass, t2_charge, t2_decaymode;
 float j1_pt, j1_eta, j1_phi;
 float j2_pt, j2_eta, j2_phi;
 float b1_pt, b1_eta, b1_phi;
@@ -75,18 +75,20 @@ float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, c
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
 float evtwt;
 
-void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float mydecay1, TLorentzVector tau2, float charge2,float mydecay2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
   evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
   t1_phi = tau1.Phi();
   t1_mass = tau1.M();
   t1_charge = charge1;
+  t1_decaymode = mydecay1;
   t2_pt = tau2.Pt();
   t2_eta = tau2.Eta();
   t2_phi = tau2.Phi();
   t2_mass = tau2.M();
   t2_charge = charge2;
+  t2_decaymode = mydecay2;
 
   j1_pt = jet1.Pt();
   j1_eta = jet1.Eta();
@@ -112,6 +114,7 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, TLorentzVector 
   b2_pt = bpt_2;
   b2_eta = beta_2;
   b2_phi = bphi_2;
+  nbtag = mynbtag;
 
   higgs_pT = Higgs.Pt();
   higgs_m = Higgs.M();

@@ -37,11 +37,13 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
     arbre->SetBranchAddress("t1_charge", &t1_charge);
+    arbre->SetBranchAddress("t1_decaymode", &t1_decaymode);
     arbre->SetBranchAddress("t2_pt", &t2_pt);
     arbre->SetBranchAddress("t2_eta", &t2_eta);
     arbre->SetBranchAddress("t2_phi", &t2_phi);
     arbre->SetBranchAddress("t2_mass", &t2_mass);
     arbre->SetBranchAddress("t2_charge", &t2_charge);
+    arbre->SetBranchAddress("t2_decaymode", &t2_decaymode);
 
     arbre->SetBranchAddress("j1_pt",&j1_pt);
     arbre->SetBranchAddress("j1_eta", &j1_eta);
@@ -56,6 +58,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("b2_pt", &b2_pt);
     arbre->SetBranchAddress("b2_eta", &b2_eta);
     arbre->SetBranchAddress("b2_phi", &b2_phi);
+    arbre->SetBranchAddress("nbtag", &nbtag);
 
     arbre->SetBranchAddress("met",&met);
     arbre->SetBranchAddress("metphi",&metphi);
@@ -103,7 +106,7 @@ int main(int argc, char** argv) {
     //Binning for 2jet cat, x-axis: Mjj
     float bins2X[] = {0,300,500,800,10000};
     //Binning for 2jet cat, y-axis: Msv
-    float bins2Y[] = {};//{0,40,60,70,80,90,100,110,120,130,150,200,250};
+    float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
 
     int  binnum0 = sizeof(bins0)/sizeof(Float_t) - 1;
     int  binnum1X = sizeof(bins1X)/sizeof(Float_t) - 1;
@@ -190,7 +193,7 @@ int main(int argc, char** argv) {
       float var_0jet = m_sv;
       float var_boostedX = higgs_pT;
       float var_boostedY = m_sv;
-      float var_vbfX = normMELAvbf;
+      float var_vbfX = mjj;
       float var_vbfY = m_sv;
 
       for (int k=0; k<nbhist; ++k){

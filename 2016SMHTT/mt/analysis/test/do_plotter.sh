@@ -32,5 +32,5 @@ rm outputs_template/*
 python python/QCDcreator.py -i outputs_template
 
 
-hadd -f final_nominal.root outputs_template/data.root outputs_template/ZTT.root outputs_template/ZL.root outputs_template/ZJ.root outputs_template/TTT.root outputs_template/TTJ.root outputs_template/W.root outputs_template/VV.root outputs_template/VBF125.root outputs_template/ggH125.root outputs_template/WH125.root outputs_template/ZH125.root outputs_template/QCD.root
+hadd -f final_nominal.root outputs_template/data.root outputs_template/ZTT.root outputs_template/ZL.root outputs_template/ZJ.root outputs_template/EWKZ.root outputs_template/TTT.root outputs_template/TTJ.root outputs_template/W.root outputs_template/VV.root outputs_template/VBF125.root outputs_template/ggH125.root outputs_template/WH125.root outputs_template/ZH125.root outputs_template/QCD.root
 

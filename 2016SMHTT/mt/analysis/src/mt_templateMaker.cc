@@ -56,6 +56,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("b2_pt", &b2_pt);
     arbre->SetBranchAddress("b2_eta", &b2_eta);
     arbre->SetBranchAddress("b2_phi", &b2_phi);
+    arbre->SetBranchAddress("nbtag", &nbtag);
 
     arbre->SetBranchAddress("met",&met);
     arbre->SetBranchAddress("metphi",&metphi);
@@ -179,9 +180,9 @@ int main(int argc, char** argv) {
       // KSU study category //
       ////////////////////////
       //if (njets==0) is_0jet=true;
-      //else if (njets>=2 && mjj>300) is_VBF=true; 
+      //else if (njets>=2) is_VBF=true; 
       //else is_boosted=true;   
-
+      is_VBF=true;
       float var_0jetX = t1_decaymode;
       float var_0jetY = m_sv;
       float var_boostedX = pt_sv;
