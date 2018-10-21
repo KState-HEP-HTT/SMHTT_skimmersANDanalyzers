@@ -4,7 +4,6 @@ import sys
 from ROOT import TH1F
 
 #fin = ROOT.TFile("files_nominal/VBF125.root","")
-#finKSU = ROOT.TFile("final_nominal.root","")
 finKSU = ROOT.TFile("final_nominal.root","")
 finOFF = ROOT.TFile("../../../CommonAN/htt_input.root","")
 fout = ROOT.TFile("testUnroll.root","recreate")
@@ -14,11 +13,12 @@ dic_bkg = ['data_obs', 'ZTT', 'ZJ', 'ZL', 'TTT', 'TTJ', 'VV', 'W', 'EWKZ','QCD']
 #dic_sig = {'VBF125':'qqH125', 'WH125':'WH125','ggH125':'ggH125','ZH125':'ZH125'}
 c=ROOT.TCanvas("canvas","",0,0,600,600)
 
+
 for key in finKSU.GetListOfKeys():
     tdirName = key.GetName()
     if tdirName in dic_cat.keys():
         #print tdirName
-        print '#################################################', tdirName
+        print '#################################################  ', tdirName, '  #################################################\n'
         for histK in finKSU.Get(tdirName).GetListOfKeys():
             histName = histK.GetName()
             hist = finKSU.Get(tdirName).Get(histName)
@@ -27,14 +27,14 @@ for key in finKSU.GetListOfKeys():
 
             # open histogram in official datacard
             finOFF.cd()
-            if histName not in dic_bkg:
-                if histName not in dic_sig.keys():
-                    continue
+            if ((histName not in dic_bkg) and (histName not in dic_sig.keys())):
+                continue
             if histName in dic_sig.keys():
                 #print 'histName, dic_sig[histName]:',histName, dic_sig[histName]
                 h_off=finOFF.Get(dic_cat[tdirName]).Get(dic_sig[histName])
             else:
                 h_off=finOFF.Get(dic_cat[tdirName]).Get(histName)
+
             # for 1D
             if histDim==1:
                 h_ur=finKSU.Get(tdirName).Get(histName)
@@ -43,10 +43,22 @@ for key in finKSU.GetListOfKeys():
                 h_ur.SetLineColor(2)
                 h_ur.Write()
                 h_off.Write()
-                c.cd()                
-                #h_off.Draw();
-                #h_ur.Draw('same');
-                #c.SaveAs('unrollPlots/'+tdirName+'_'+histName+'.pdf')
+                c.cd()      
+                h_off.SetMaximum(max(h_ur.GetMaximum(),h_off.GetMaximum()*1.5))
+                h_off.Draw("HISTE")
+                h_ur.Draw("HISTE same")
+                legend = ROOT.TLegend(0.6,0.7,1.0,0.83, "", "brNDC")
+                legend.SetLineWidth(0)
+                legend.SetLineStyle(0)
+                legend.SetFillStyle(0)
+                legend.SetBorderSize(0)
+                legend.SetMargin(0.3)
+                legend.SetTextFont(62)
+                legend.AddEntry(h_ur,"KSU","elp")
+                legend.AddEntry(h_off,"SVN","l")
+                legend.Draw("same")
+
+                c.SaveAs('unrollPlots/'+tdirName+'_'+histName+'.pdf')
                 print histName
                 print "official datacard yield is ", h_off.Integral()
                 print "KSU datacard yield is ", h_ur.Integral(), '\n'
@@ -69,9 +81,20 @@ for key in finKSU.GetListOfKeys():
                 h_ur.Write()
                 h_off.Write()
                 c.cd()                
-                #h_off.Draw();
-                #h_ur.Draw('same');
-                #c.SaveAs('unrollPlots/'+tdirName+'_'+histName+'.pdf')
+                h_off.SetMaximum(max(h_ur.GetMaximum(),h_off.GetMaximum()*1.5))
+                h_off.Draw("HISTE")
+                h_ur.Draw("HISTE same")
+                legend = ROOT.TLegend(0.6,0.7,1.0,0.83, "", "brNDC")
+                legend.SetLineWidth(0)
+                legend.SetLineStyle(0)
+                legend.SetFillStyle(0)
+                legend.SetBorderSize(0)
+                legend.SetMargin(0.3)
+                legend.SetTextFont(62)
+                legend.AddEntry(h_ur,"KSU","elp")
+                legend.AddEntry(h_off,"SVN","l")
+                legend.Draw("same")
+                c.SaveAs('unrollPlots/'+tdirName+'_'+histName+'.pdf')
                 print histName
                 print "official datacard yield is ", h_off.Integral()
                 print "KSU datacard yield is ", h_ur.Integral(),'\n'

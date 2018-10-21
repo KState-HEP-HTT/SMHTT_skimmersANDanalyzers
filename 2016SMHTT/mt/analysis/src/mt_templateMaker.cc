@@ -182,7 +182,7 @@ int main(int argc, char** argv) {
       //if (njets==0) is_0jet=true;
       //else if (njets>=2) is_VBF=true; 
       //else is_boosted=true;   
-      is_VBF=true;
+
       float var_0jetX = t1_decaymode;
       float var_0jetY = m_sv;
       float var_boostedX = pt_sv;

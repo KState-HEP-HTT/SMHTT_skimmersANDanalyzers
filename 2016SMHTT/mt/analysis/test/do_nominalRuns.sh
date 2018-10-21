@@ -112,6 +112,10 @@ rm files_nominal/WminusH125.root
 rm files_nominal/WplusH125.root
 ./mt_analyzer.exe myntuple/Sep10_fixQ/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
 
+#embedded
+./mt_analyzer.exe myntuple/Sep10_fixQ/embedded.root files_nominal/embedded.root embedded embedded 0
+
+
 #python python/Scale_W_HighMT.py --scale nominal --anti iso  
 #python python/Create_QCD_2Drelaxed.py --scale nominal
 

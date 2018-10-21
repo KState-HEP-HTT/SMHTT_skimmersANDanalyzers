@@ -30,7 +30,11 @@ if __name__ == "__main__":
     catesout = ["0jet","boosted","vbf"]
     files = []
     histos = [[],[],[]] # [[hAIOS_0jet,hAISS_0jet,hSS_0jet],[same for boosted],[same for vbf]]
-    samples = ["Data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VV", "W"]
+    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VV", "W", "EWKZ"]
+    if options.is_zttMC:
+        del files[:]
+        samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VV", "W", "EWKZ"]
+
     QCDfactor = [1.07,1.06,1.00]
     # Open root files
     for sample in samples:
@@ -43,7 +47,7 @@ if __name__ == "__main__":
         for cate in cates:
             for sample in samples:
                 # subtract all bkgs from data
-                if sample is "Data":
+                if sample is "data":
                     print "-----   Data   -----"
                     print files[samples.index(sample)].Get(region+cate+"/data_obs").Integral()
                     histos[cates.index(cate)].append(files[samples.index(sample)].Get(region+cate+"/data_obs"))
