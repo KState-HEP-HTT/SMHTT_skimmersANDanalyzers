@@ -37,7 +37,7 @@
       ./tt_templateMaker.exe ${1}/embedded.root outputs_forPlots/embedded.root embedded nominal
       python python/SignalCreator.py
       python python/QCDcreator.py
-      hadd -f final_nominal.root outputs_forPlots/data.root outputs_forPlots/ZJ.root outputs_forPlots/ZL.root outputs_forPlots/TTJ.root outputs_forPlots/VVJ.root outputs_forPlots/W.root outputs_forPlots/EWKZ.root outputs_forPlots/VBF125.root outputs_forPlots/ggH125.root outputs_forPlots/WH125.root outputs_forPlots/ZH125.root outputs_forPlots/QCD.root outputs_forPlots/SMH.root outputs_forPlots/embedded.root
+      hadd -f final_nominal.root outputs_forPlots/data.root outputs_forPlots/ZJ.root outputs_forPlots/ZL.root outputs_forPlots/TTT.root outputs_forPlots/TTJ.root outputs_forPlots/VVT.root outputs_forPlots/VVJ.root outputs_forPlots/W.root outputs_forPlots/EWKZ.root outputs_forPlots/VBF125.root outputs_forPlots/ggH125.root outputs_forPlots/WH125.root outputs_forPlots/ZH125.root outputs_forPlots/QCD.root outputs_forPlots/SMH.root outputs_forPlots/embedded.root
 
  elif [ ${2} = "mc" ]; then
      ./tt_templateMaker.exe ${1}/ZTT.root outputs_forPlots/ZTT.root ZTT nominal
