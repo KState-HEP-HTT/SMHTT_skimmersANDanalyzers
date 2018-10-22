@@ -30,7 +30,7 @@ if __name__ == "__main__":
     catesout = ["0jet","boosted","vbf"]
     files = []
     histos = [[],[],[]] # [[hAIOS_0jet,hAISS_0jet,hSS_0jet],[same for boosted],[same for vbf]]
-    samples = ["data","embedded", "ZJ", "ZL", "TTJ", "VV", "W", "EWKZ"]
+    samples = ["data","embedded", "ZJ", "ZL", "TTJ","TTT", "VV", "W", "EWKZ"]
     if options.is_zttMC:
         del files[:]
         samples = ["data","ZTT", "ZJ", "ZL", "TTT", "TTJ", "VV", "W", "EWKZ"]

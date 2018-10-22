@@ -11,7 +11,7 @@
 #include "TTree.h"
 
 // user includes
-#include "../include/CLParser.h"
+#include "CLParser.h"
 
 using namespace std;
 // class to hold the histograms until I'm ready to write them

@@ -6,7 +6,7 @@ parser.add_argument('--var', '-v', action='store',
                     help='name of variable to plot'
                     )
 parser.add_argument('--cat', '-c', action='store',
-                    dest='cat', default='et_vbf',
+                    dest='cat', default='mt_vbf',
                     help='name of category to pull from'
                     )
 args = parser.parse_args()
@@ -109,6 +109,7 @@ titles = {
     'j2_pt': 'jet2 p_{T} (GeV)',
     'nbjets': 'N b-jets',
     'el_pt': 'Electron p_{T} [GeV]',
+    'mu_pt': 'Muon p_{T} [GeV]',
     't1_pt': 'Tau p_{T} [GeV]',
     'met': 'Missing E_{T} [GeV]',
     'pt_sv': 'SVFit p_{T} [GeV]',
