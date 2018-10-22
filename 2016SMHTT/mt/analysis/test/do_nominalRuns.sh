@@ -113,11 +113,11 @@ rm files_nominal/WplusH125.root
 ./mt_analyzer.exe myntuple/Sep10_fixQ/ZH125.root files_nominal/ZH125.root ZH125 ZH125 0
 
 #embedded
-./mt_analyzer.exe myntuple/Sep10_fixQ/embedded.root files_nominal/embedded.root embedded embedded 0
+./mt_analyzer.exe myntuple/Sep10_fixQ/embedded_mt.root files_nominal/embedded.root embedded embedded 0
 
 
 #python python/Scale_W_HighMT.py --scale nominal --anti iso  
-#python python/Create_QCD_2Drelaxed.py --scale nominal
+python python/Create_QCD_2Drelaxed.py --scale nominal
 
-#hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/EWKZ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
+hadd -f final_nominal.root files_nominal/Data.root files_nominal/ZTT.root files_nominal/ZL.root files_nominal/ZJ.root files_nominal/EWKZ.root files_nominal/TTT.root files_nominal/TTJ.root files_nominal/W.root files_nominal/VV.root files_nominal/VBF125.root files_nominal/ggH125.root files_nominal/WH125.root files_nominal/ZH125.root files_nominal/QCD.root
 

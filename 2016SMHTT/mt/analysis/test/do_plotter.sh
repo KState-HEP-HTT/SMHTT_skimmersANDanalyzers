@@ -22,7 +22,7 @@
  ./mt_templateMaker.exe ${1}/EWKZ.root outputs_forPlots/EWKZ.root EWKZ nominal
 
  # 5. TT
- ./mt_templateMaker.exe ${1}/TTJ.root outputs_forPlots/TTT.root TTT nominal
+ ./mt_templateMaker.exe ${1}/TTT.root outputs_forPlots/TTT.root TTT nominal
  ./mt_templateMaker.exe ${1}/TTJ.root outputs_forPlots/TTJ.root TTJ nominal
 
  # 6. W
