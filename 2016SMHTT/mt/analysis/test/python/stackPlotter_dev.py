@@ -15,11 +15,11 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "N(b-jets)"# [GeV]"
-obs1= "nbjet"#"abs_Heata.5jjeta"
+obs = "Dijets Mass [GeV]"
+obs1= "mjj"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"mt_vbf":"high Dijet Mass"}
+cate={"mt_vbf":"VBF enriched"}
 
 sig_stackScale = 30
 majors=["QCD","embedded","TTT"]
@@ -102,19 +102,17 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
-    i_legend=3
+
+    i_legend=len(histoAll["histBkg"][cate[cat]])-1
+    print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
     for h in histoAll["histBkg"][cate[cat]]:
         if h.GetName() == "QCD_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
             legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"QCD","f") 
-        if h.GetName() == "embedded_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
             legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"Z#rightarrow#tau#tau","f" )
         if h.GetName() == "TTT_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
             legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"TTT","f")
         if h.GetName() == "ZL_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
             legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"others","f") 
         i_legend-=1
 
@@ -193,12 +191,17 @@ def call_histos():
             if(minor!=minors[0]): 
                 h_minor.Add(unroll(file,cat,minor),1)#file.Get(cat).Get(minor),1)
         histlist.append(h_minor)
-        # stack sorting
+                # stack sorting
         for bkghistos in histlist:
             histlist_sort.append(bkghistos.Integral())
         histlist_sort2 = sorted(range(len(histlist_sort)), key=histlist_sort.__getitem__)
         for isort in range(len(histlist_sort2)):
             histlist2.append(histlist[histlist_sort2[isort]])
+        #print histlist_sort
+        #print histlist_sort2
+        #print "list1 >>>>>>>" ,histlist
+        print "list2 >>>>>>>" ,histlist2
+
         # data
         h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
         
@@ -236,6 +239,15 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
+        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+        if h_bkg.GetName() == "TTT_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
+        if h_bkg.GetName() == "ZL_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
+        if h_bkg.GetName() == "QCD_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
+            
         #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
         #if h_bkg is histoAll["histBkg"][category][-1]:
         #    h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
