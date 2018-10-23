@@ -105,15 +105,17 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
 
     i_legend=len(histoAll["histBkg"][cate[cat]])-1
     print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
-    for h in histoAll["histBkg"][cate[cat]]:
+    for i in range(0,len(histoAll["histBkg"][cate[cat]])):
+        h = histoAll["histBkg"][cate[cat]][i_legend]
         if h.GetName() == "QCD_px":
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"QCD","f") 
+            print">>>>>>>>>> h.GetName() ", h.GetName()
+            legend.AddEntry(h,"QCD","f") 
         if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"Z#rightarrow#tau#tau","f" )
+            legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
         if h.GetName() == "TTT_px":
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"TTT","f")
+            legend.AddEntry(h,"TTT","f")
         if h.GetName() == "ZL_px":
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"others","f") 
+            legend.AddEntry(h,"others","f") 
         i_legend-=1
 
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"QCD","f")
