@@ -6,8 +6,6 @@ import math
 import plotRocCurve_def
 from optparse import OptionParser
 import sys
-import numpy as np
-
 
 parser = OptionParser()
 parser.add_option('--ztt', '-z', action='store_true',
@@ -17,17 +15,18 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "Dijets mass [GeV]"
-obs1= "m_jj_"#"abs_Heata.5jjeta"
+obs = "Dijets Mass [GeV]"
+obs1= "mjj"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
-#cate={"tt_0jet":"0jet","tt_boosted":"Boosted","tt_vbf":"VBF"}
-cate={"tt_vbf":"inclusive embeded"}
+#cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
+cate={"tt_vbf":"njets>1"}
 
-sig_stackScale = 30
-signals=["ggH125","VBF125","WH125","ZH125"]
+sig_stackScale = 50
 majors=["QCD","embedded"]
-minors=["ZL","ZJ","TTJ","W","VVJ"]
-if options.is_zttMC:    
+minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
+signals=["ggH125","VBF125","WH125","ZH125"]
+
+if options.is_zttMC:
     del majors[:]
     del minors[:]
     majors=["QCD","ZTT"]
@@ -39,6 +38,7 @@ adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
 
+
 def add_lumi():
     lowX=0.50
     lowY=0.835
@@ -49,7 +49,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.05)
     lumi.SetTextFont (   42 )
-    lumi.AddText("#tau_{h}#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
+    lumi.AddText("#mu#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -102,26 +102,24 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
-    i_legend=2
-    for h in histoAll["histBkg"][cate[cat]]:
+
+    i_legend=len(histoAll["histBkg"][cate[cat]])-1
+    print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
+    for i in range(0,len(histoAll["histBkg"][cate[cat]])):
+        h = histoAll["histBkg"][cate[cat]][i_legend]
         if h.GetName() == "QCD_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"QCD","f") 
-        if h.GetName() == "embedded_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"Z#rightarrow#tau#tau","f" )
+            print">>>>>>>>>> h.GetName() ", h.GetName()
+            legend.AddEntry(h,"QCD","f") 
+        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
+            legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
+        if h.GetName() == "TTT_px":
+            legend.AddEntry(h,"TTT","f")
         if h.GetName() == "ZL_px":
-            h.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
-            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"others","f") 
+            legend.AddEntry(h,"others","f") 
         i_legend-=1
+
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"QCD","f")
-    #legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")        
-    '''
-    if options.is_zttMC:
-        legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")        
-    else:
-        legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"embedded","f")
-        '''
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
@@ -195,20 +193,20 @@ def call_histos():
             if(minor!=minors[0]): 
                 h_minor.Add(unroll(file,cat,minor),1)#file.Get(cat).Get(minor),1)
         histlist.append(h_minor)
-        # stack sorting
+                # stack sorting
         for bkghistos in histlist:
             histlist_sort.append(bkghistos.Integral())
         histlist_sort2 = sorted(range(len(histlist_sort)), key=histlist_sort.__getitem__)
         for isort in range(len(histlist_sort2)):
             histlist2.append(histlist[histlist_sort2[isort]])
-            #histlist2.append(histlist[histlist_sort2.index(len(histlist_sort2)-isort)])
-        print histlist_sort
-        print histlist_sort2
-        print histlist
-        print histlist2
+        #print histlist_sort
+        #print histlist_sort2
+        #print "list1 >>>>>>>" ,histlist
+        print "list2 >>>>>>>" ,histlist2
+
         # data
         h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
-
+        
         # add histograms into dictionary histos
         histos["histSig"][cate[cat]]=histlist_sig
         histos["histBkg"][cate[cat]]=histlist2
@@ -243,6 +241,15 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
+        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+        if h_bkg.GetName() == "TTT_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
+        if h_bkg.GetName() == "ZL_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
+        if h_bkg.GetName() == "QCD_px":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
+            
         #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
         #if h_bkg is histoAll["histBkg"][category][-1]:
         #    h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
@@ -514,8 +521,8 @@ for cat in cate.keys():
     pad_2ndRatio.cd()
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
     #p_ratio_QCDVBF.DrawClonePad()
-    #p_ratio_VBFBKG.DrawClonePad()
-    p_ratio_VBFGGH.DrawClonePad()
+    p_ratio_VBFBKG.DrawClonePad()
+    #p_ratio_VBFGGH.DrawClonePad()
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
     # Stick title of the plot
     plot1.cd()
