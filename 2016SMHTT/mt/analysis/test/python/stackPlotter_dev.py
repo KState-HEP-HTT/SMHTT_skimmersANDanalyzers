@@ -15,11 +15,11 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "Dijets Mass [GeV]"
-obs1= "mjj"#"abs_Heata.5jjeta"
+obs = "N(b-jets)"# [GeV]"
+obs1= "nbjet"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"mt_vbf":"VBF enriched"}
+cate={"mt_vbf":"high Dijet Mass"}
 
 sig_stackScale = 30
 majors=["QCD","embedded","TTT"]
@@ -102,12 +102,28 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"QCD","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")
+    i_legend=3
+    for h in histoAll["histBkg"][cate[cat]]:
+        if h.GetName() == "QCD_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"QCD","f") 
+        if h.GetName() == "embedded_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"Z#rightarrow#tau#tau","f" )
+        if h.GetName() == "TTT_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"TTT","f")
+        if h.GetName() == "ZL_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"others","f") 
+        i_legend-=1
+
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"QCD","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 
@@ -161,6 +177,8 @@ def call_histos():
     histos = {"histSig":{},"histBkg":{},"histData":{}}
     for cat in cate.keys():
         histlist=[] # all bkg histograms go into here
+        histlist2=[] # all bkg histograms sorted
+        histlist_sort=[] # integral
         histlist_sig=[] # ggH, VBF and SMH(ggH+VBF+VH) go into here
         ''' Save histograms in the list '''
         # signals
@@ -175,12 +193,18 @@ def call_histos():
             if(minor!=minors[0]): 
                 h_minor.Add(unroll(file,cat,minor),1)#file.Get(cat).Get(minor),1)
         histlist.append(h_minor)
+        # stack sorting
+        for bkghistos in histlist:
+            histlist_sort.append(bkghistos.Integral())
+        histlist_sort2 = sorted(range(len(histlist_sort)), key=histlist_sort.__getitem__)
+        for isort in range(len(histlist_sort2)):
+            histlist2.append(histlist[histlist_sort2[isort]])
         # data
         h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
         
         # add histograms into dictionary histos
         histos["histSig"][cate[cat]]=histlist_sig
-        histos["histBkg"][cate[cat]]=histlist
+        histos["histBkg"][cate[cat]]=histlist2
         histos["histData"][cate[cat]]=h_data
     return histos
 
@@ -212,9 +236,9 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
-        h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
-        if h_bkg is histoAll["histBkg"][category][-1]:
-            h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
+        #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
+        #if h_bkg is histoAll["histBkg"][category][-1]:
+        #    h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
         c_index+=1
         stack.Add(h_bkg)
     #stack.SetMaximum(stack.GetMaximum()*1.60)

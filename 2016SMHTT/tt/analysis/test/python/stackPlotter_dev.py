@@ -6,6 +6,8 @@ import math
 import plotRocCurve_def
 from optparse import OptionParser
 import sys
+import numpy as np
+
 
 parser = OptionParser()
 parser.add_option('--ztt', '-z', action='store_true',
@@ -15,24 +17,24 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "M_{jj}"
-obs1= "mjj"#"abs_Heata.5jjeta"
+obs = "Dijets mass [GeV]"
+obs1= "m_jj_"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"tt_0jet":"0jet","tt_boosted":"Boosted","tt_vbf":"VBF"}
-cate={"tt_vbf":"2016VBF"}
+cate={"tt_vbf":"inclusive embeded"}
 
-sig_stackScale = 10
+sig_stackScale = 30
 signals=["ggH125","VBF125","WH125","ZH125"]
-majors=["embedded","QCD"]
+majors=["QCD","embedded"]
 minors=["ZL","ZJ","TTJ","W","VVJ"]
 if options.is_zttMC:    
     del majors[:]
     del minors[:]
-    majors=["ZTT","QCD"]
+    majors=["QCD","ZTT"]
     minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 
 # Colors
-mypalette=["#f9cd66","#ffbcfe","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
+mypalette=["#ffbcfe","#f9cd66","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
 adapt=ROOT.gROOT.GetColor(12)
 new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
 trans=ROOT.TColor(new_idx, adapt.GetRed(), adapt.GetGreen(),adapt.GetBlue(), "",0.5)
@@ -100,16 +102,30 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_WH,"WH Higgs(125)x"+str(sig_stackScale),"l")
     if zh is 1:
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
-
+    i_legend=2
+    for h in histoAll["histBkg"][cate[cat]]:
+        if h.GetName() == "QCD_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"QCD","f") 
+        if h.GetName() == "embedded_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"Z#rightarrow#tau#tau","f" )
+        if h.GetName() == "ZL_px":
+            h.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
+            legend.AddEntry(histoAll["histBkg"][cate[cat]][i_legend],"others","f") 
+        i_legend-=1
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"QCD","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")        
+    '''
     if options.is_zttMC:
-        legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"Z#rightarrow#tau#tau","f")        
+        legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"Z#rightarrow#tau#tau","f")        
     else:
-        legend.AddEntry(histoAll["histBkg"][cate[cat]][0],"embedded","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"QCD","f")
+        legend.AddEntry(histoAll["histBkg"][cate[cat]][1],"embedded","f")
+        '''
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"W+Jets","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][2],"TTT","f")
     #legend.AddEntry(histoAll["histBkg"][cate[cat]][4],"TTJ","f")
-    legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
+    #legend.AddEntry(histoAll["histBkg"][cate[cat]][-1],"others","f")
     legend.AddEntry(error,"Uncertainty","f")
     return legend
 
@@ -163,6 +179,8 @@ def call_histos():
     histos = {"histSig":{},"histBkg":{},"histData":{}}
     for cat in cate.keys():
         histlist=[] # all bkg histograms go into here
+        histlist2=[] # all bkg histograms sorted
+        histlist_sort=[] # integral
         histlist_sig=[] # ggH, VBF and SMH(ggH+VBF+VH) go into here
         ''' Save histograms in the list '''
         # signals
@@ -177,12 +195,23 @@ def call_histos():
             if(minor!=minors[0]): 
                 h_minor.Add(unroll(file,cat,minor),1)#file.Get(cat).Get(minor),1)
         histlist.append(h_minor)
+        # stack sorting
+        for bkghistos in histlist:
+            histlist_sort.append(bkghistos.Integral())
+        histlist_sort2 = sorted(range(len(histlist_sort)), key=histlist_sort.__getitem__)
+        for isort in range(len(histlist_sort2)):
+            histlist2.append(histlist[histlist_sort2[isort]])
+            #histlist2.append(histlist[histlist_sort2.index(len(histlist_sort2)-isort)])
+        print histlist_sort
+        print histlist_sort2
+        print histlist
+        print histlist2
         # data
         h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
-        
+
         # add histograms into dictionary histos
         histos["histSig"][cate[cat]]=histlist_sig
-        histos["histBkg"][cate[cat]]=histlist
+        histos["histBkg"][cate[cat]]=histlist2
         histos["histData"][cate[cat]]=h_data
     return histos
 
@@ -214,9 +243,9 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
-        h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
-        if h_bkg is histoAll["histBkg"][category][-1]:
-            h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
+        #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
+        #if h_bkg is histoAll["histBkg"][category][-1]:
+        #    h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[-1]))
         c_index+=1
         stack.Add(h_bkg)
     #stack.SetMaximum(stack.GetMaximum()*1.60)
@@ -498,7 +527,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    #plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
+    plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
 
 
     # Make canvas 
