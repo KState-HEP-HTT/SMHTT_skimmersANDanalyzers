@@ -77,6 +77,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("costhetastar", &costhetastar);
     arbre->SetBranchAddress("Q2V1"        , &Q2V1);
     arbre->SetBranchAddress("Q2V2"        , &Q2V2);
+    arbre->SetBranchAddress("NN_disc"     , &NN_disc);
 
     arbre->SetBranchAddress("ME_sm_VBF"   , &ME_sm_VBF);
     arbre->SetBranchAddress("ME_sm_ggH"   , &ME_sm_ggH);
@@ -180,15 +181,42 @@ int main(int argc, char** argv) {
       // KSU study category //
       ////////////////////////
       //if (njets==0) is_0jet=true;
-      //else if (njets>=2) is_VBF=true; 
+      //else if (cat_vbf && nbtag==0) is_VBF=true; 
       //else is_boosted=true;   
 
       float var_0jetX = t1_decaymode;
       float var_0jetY = m_sv;
       float var_boostedX = pt_sv;
       float var_boostedY = m_sv;
-      float var_vbfX = mjj;
+      float var_vbfX = mjj;//normMELAvbf;//mjj;
       float var_vbfY = m_sv;
+
+      if (TMath::IsNaN(Q2V2)) {
+	std::cout << "t1_charge:" << t1_charge << std::endl;
+	std::cout << "mu_charge:" << mu_charge << std::endl;
+	std::cout << "Q2V2 :" << Q2V2 << std::endl;
+	std::cout << "Q2V1 :" << Q2V1 << std::endl;
+	std::cout << "costheta1 :" << costheta1 << std::endl;
+	std::cout << "costheta2 :" << costheta2 << std::endl;
+	std::cout << "costhetastar :" << costhetastar << std::endl;
+	std::cout << "Phi :" << Phi << std::endl;
+	std::cout << "Phi1 :" << Phi1 << std::endl;
+	std::cout << "Dbkg_VBF :" << Dbkg_VBF << std::endl;
+	std::cout << "Dbkg_ggH :" << Dbkg_ggH << std::endl;
+	std::cout << "njets : " << njets << std::endl;
+	std::cout << "tau1 pT : " << t1_pt << std::endl;
+	std::cout << "tau2 pT : " << mu_pt << std::endl;
+	std::cout << "tau1 eta : " << t1_eta << std::endl;
+	std::cout << "tau2 eta : " << mu_eta << std::endl;
+	std::cout << "tau1 phi : " << t1_phi << std::endl;
+	std::cout << "tau2 phi : " << mu_phi << std::endl;
+	std::cout << "jet1 pT : " << j1_pt << std::endl;
+	std::cout << "jet2 pT : " << j2_pt << std::endl;
+	std::cout << "jet1 eta : " << j1_eta << std::endl;
+	std::cout << "jet2 eta : " << j2_eta << std::endl;
+	std::cout << "jet1 phi : " << j1_phi << std::endl;
+	std::cout << "jet2 phi : " << j2_phi << std::endl;
+      }
 
       for (int k=0; k<nbhist; ++k){
 	if (mt<50 && t1_charge*mu_charge<0) {

@@ -2,14 +2,24 @@ import ROOT
 import os
 import sys
 from ROOT import TH1F
+from optparse import OptionParser
 
+ch = raw_input()
+print "channel is"
+print ch
 #fin = ROOT.TFile("files_nominal/VBF125.root","")
 finKSU = ROOT.TFile("final_nominal.root","")
 finOFF = ROOT.TFile("../../../CommonAN/htt_input.root","")
 fout = ROOT.TFile("testUnroll.root","recreate")
-dic_cat = {'tt_0jet':'htt_tt_1_13TeV', 'tt_boosted':'htt_tt_2_13TeV', 'tt_vbf':'htt_tt_3_13TeV'}
+dic_cat = {ch+'_0jet':'htt_'+ch+'_1_13TeV', ch+'_boosted':'htt_'+ch+'_2_13TeV', ch+'_vbf':'htt_'+ch+'_3_13TeV'}
 dic_sig = {'VBF125':'qqH_htt125', 'WH125':'WH_htt125','ggH125':'ggH_htt125','ZH125':'ZH_htt125'}
-dic_bkg = ['data_obs', 'ZTT', 'ZJ', 'ZL', 'TTT', 'TTJ', 'VVT', 'VVJ', 'W', 'EWKZ','QCD']
+dic_bkg = ['data_obs', 'ZTT', 'ZJ', 'ZL', 'TTT', 'TTJ', 'VV', 'W', 'EWKZ','QCD']
+if ch == 'tt':
+    print "this is tt channel"    
+    dic_bkg.remove("VV")
+    dic_bkg.insert(8,"VVT")
+    dic_bkg.insert(9,"VVJ")
+
 #dic_sig = {'VBF125':'qqH125', 'WH125':'WH125','ggH125':'ggH125','ZH125':'ZH125'}
 c=ROOT.TCanvas("canvas","",0,0,600,600)
 

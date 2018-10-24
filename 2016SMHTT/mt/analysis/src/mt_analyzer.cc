@@ -37,6 +37,7 @@
 #include "../include/LumiReweightingStandAlone.h"
 #include "../include/btagSF.h"
 #include "../include/TMVAClassification_TMlpANN.cxx"
+#include "../include/EmbedWeight.h"
 //#include "include/scenario_info.h"
 
 typedef std::vector<double> NumV;
@@ -145,12 +146,17 @@ int main(int argc, char** argv) {
     RooWorkspace *w2 = (RooWorkspace*)fw2.Get("w");
     fw2.Close();
 
+    TFile fem("../../../CommonAN/weightROOTs/htt_scalefactors_v16_9_embedded.root");
+    RooWorkspace *wEmbed = (RooWorkspace*)fem.Get("w");
+    fem.Close();
+
     float xs=1.0; float weight=1.0; float luminosity=35870.0;
     if (sample=="ZL" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL"){ xs=5765.4; weight=luminosity*xs/ngen;}
     else if (sample=="TT" or sample=="TTT" or sample=="TTJ") {xs=831.76; weight=luminosity*xs/ngen;}
     else if (sample=="W") {xs=61526.7; weight=luminosity*xs/ngen;}
     else if (sample=="QCD") {xs=720648000*0.00042; weight=luminosity*xs/ngen;}
     else if (sample=="data_obs"){weight=1.0;}
+    else if (sample=="embedded"){weight=1.0;}
     else if (sample=="WZ1L1Nu2Q") {xs=10.71; weight=luminosity*xs/ngen;}
     else if (sample=="WZ1L3Nu") {xs=3.05; weight=luminosity*xs/ngen;}
     else if (sample=="WZJets") {xs=5.26; weight=luminosity*xs/ngen;}
@@ -477,18 +483,10 @@ int main(int argc, char** argv) {
     //scenario_info scenario(arbre, unc);
 
     float bins0[] = {0,60,65,70,75,80,85,90,95,100,105,110,400};
-    //float bins0[] = {50,55,60,65,70,75,80,85,90,95,100,105,110,115,120}; // for 2D plot
-    //float bins0[] = {0,60,70,80,90,100,110,400};
     float bins1[] = {0,80,90,100,110,120,130,140,150,160,300};
-    //float bins1[] = {40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200}; // for 2D p
     float bins2[] = {0,95,115,135,155,400};
-    
     float bins_pth[] = {0,100,150,200,250,300,5000};
-    //float bins_pth[] = {0,25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400}; //for 2D
     float bins_mjj[] = {300,700,1100,1500,10000};
-    //float bins_mjj[] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-    //float bins_taupt[] = {30,35,40,45,50,55,300};
-    //float bins_taupt[] = {30,35,40,300};
     float bins_taupt[] = {0,1,10,11};
     
     int  binnum1 = sizeof(bins1)/sizeof(Float_t) - 1;
@@ -687,6 +685,10 @@ int main(int argc, char** argv) {
     
     Int_t nentries_wtn = (Int_t) arbre->GetEntries();
     for (Int_t i = 0; i < nentries_wtn; i++) {
+      if (TMath::IsNaN(Q2V2)) {
+	std::cout << "WHOLE" << std::endl;
+	std::cout << "run :" << run << std::endl;
+      }
       arbre->GetEntry(i);
       if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
       fflush(stdout);
@@ -742,7 +744,7 @@ int main(int argc, char** argv) {
       if (sample=="data_obs" && run<278820 && !id_m_medium2016_1) continue;
       if (sample=="data_obs" && run>=278820 && !id_m_medium_1) continue;
 
-      if (sample=="embedded" && tZTTGenDR>0.2) continue;
+      //if (sample=="embedded" && tZTTGenDR>0.2) continue;
 
       if (pt_1<20) continue;
       if (fabs(eta_1)>2.1) continue;
@@ -812,8 +814,8 @@ int main(int argc, char** argv) {
       }
       
       float correction=sf_id;
-	if (sample!="embedded" && sample!="data_obs") correction=correction*LumiWeights_12->weight(npu);
-        if (sample=="embedded" && amcatNLO_weight>1) amcatNLO_weight=0.10;
+        if (sample!="embedded" && sample!="data_obs") correction=correction*LumiWeights_12->weight(npu);
+        if (sample=="embedded" && amcatNLO_weight>1) continue;//amcatNLO_weight=0.10;
 	float aweight = 1.0;
 	if (name.find("ggH")) aweight = amcatNLO_weight*weight*correction;
 	else aweight=genweight*weight*correction;
@@ -1088,6 +1090,7 @@ int main(int argc, char** argv) {
 	      sf_trg_anti=myScaleFactor_trgMu22Anti->get_ScaleFactor(pt_1,eta_1);
 	    }
 	  }
+	  /*
 	  if (sample=="embedded"){
 	    if (mymu.Pt()<23){ 
 	      float eff_tau_ratio = w2->function("t_genuine_TightIso_mt_data")->getVal();
@@ -1099,22 +1102,46 @@ int main(int argc, char** argv) {
 	      sf_trg_anti=myScaleFactor_trgMu22Anti->get_EfficiencyData(pt_1,eta_1);
 	    }
 	  }
-            
+	  */
 	  //************************ Z mumu scale factors **************************
 	  if (fabs(tes)!=13 && (sample=="EWKZLL" or sample=="EWKZNuNu" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL" or sample=="ZL")) weight2=GetZmmSF(numberJets,var1_2,var1_1,mytau.Pt(),0);
 	  if (tes==13 && (sample=="EWKZLL" or sample=="EWKZNuNu" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL" or sample=="ZL")) weight2=GetZmmSF(numberJets,var1_2,var1_1,mytau.Pt(),1);
 	  if (tes==-13 && (sample=="EWKZLL" or sample=="EWKZNuNu" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL" or sample=="ZL")) weight2=GetZmmSF(numberJets,var1_2,var1_1,mytau.Pt(),-1);
 	  
 	  if (sample=="data_obs") {aweight=1.0; weight2=1.0;}
+	  //////////////////////
+	  // Embedded weights //
+	  //////////////////////
+	  if (sample=="embedded") {
+	    aweight=1.0; weight2=1.0;
+	    float Stitching_Weight= 1.0;
+	    if ((run >= 272007) && (run < 275657)) Stitching_Weight=(1.0/0.899  * 1.02);
+	    if ((run >= 275657) && (run < 276315))  Stitching_Weight=(1.0/0.881 * 1.02);
+	    if ((run >= 276315) && (run < 276831))  Stitching_Weight=(1.0/0.877 * 1.02);
+	    if ((run >= 276831) && (run < 277772))  Stitching_Weight=(1.0/0.939 * 1.02);
+	    if ((run >= 277772) && (run < 278820))  Stitching_Weight=(1.0/0.936 * 1.02);
+	    if ((run >= 278820) && (run < 280919))  Stitching_Weight=(1.0/0.908 * 1.02);
+	    if ((run >= 280919) && (run < 284045))  Stitching_Weight=(1.0/0.962 * 1.02);
+
+	    vector<double> info=EmdWeight_Muon(wEmbed,mymu.Pt(),mymu.Eta(),iso_1);	    
+	    double muon_id_scalefactor = info[2];
+	    double muon_iso_scalefactor = info[5];
+	    double muon_trg_efficiency = info[6];
+	    double EmbedWeight=muon_id_scalefactor*muon_iso_scalefactor*muon_trg_efficiency;
+	    float WEIGHT_sel_trg_ratio= m_sel_trg_ratio(wEmbed,mymu.Pt(),mymu.Eta(),mytau.Pt(),mytau.Eta());
+	    aweight=EmbedWeight * amcatNLO_weight * Stitching_Weight * WEIGHT_sel_trg_ratio;
+	  }
+
+
 	  weight2=weight2*sf_trg*dm_weight;
 	  ratioanti=ratioantiraw*sf_trg_anti/(sf_trg+0.000000001);
 	  
 	  bool is_0jet=(numberJets==0);
 	  bool is_boosted=(numberJets==1 or (numberJets>=2 && (massJets<=300 or var1_1<=50 or mytau.Pt()<=40)));
 	  bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
-	  //bool is_VBF=(massJets > 300 && numberJets>=2);// && var1_1>50 && mytau.Pt()>40);
+	  bool is_studyVBF=(massJets > 300 && numberJets>=2 && mytau.Pt()>40);
 	  float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
-	  TLorentzVector Higgs;// = mymet+mymu+mytau;
+	  TLorentzVector Higgs;
 	  Higgs.SetPtEtaPhiM(var1_1,(mymet+mymu+mytau).Eta(),(mymet+mymu+mytau).Phi(),(mymet+mymu+mytau).M());
 	  // book the NN                                                                                                       
 	  TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
@@ -1122,7 +1149,6 @@ int main(int argc, char** argv) {
 				  costheta1, costheta2, costhetastar,
 				  Q2V1, Q2V2);      
 	  
-	  //var1_2 = my_NN;
 	  fillNNTree(namu,mytau,q_1,l2_decayMode,
 		     mymu,q_2,
 		     myjet1,myjet2,
@@ -1132,12 +1158,11 @@ int main(int argc, char** argv) {
 		     bpt_1,beta_1,bphi_1,
 		     bpt_2,beta_2,bphi_2,nbtag,
 		     Higgs,
-		     is_0jet,is_boosted,is_VBF,
+		     is_0jet,is_boosted,is_studyVBF,
 		     signalRegion,qcdRegion,wRegion,wsfRegion,qcdCR,
 		     weight2*aweight,
 		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	  //################ W+jets reweighting in high mT ###############
-	  //if(is_VBF) std::cout << var1_2 << std::endl;
 	  if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){
 	    n70[k]->Fill(0.1,aweight*weight2);
 	    if (is_bveto && is_0jet && var2<400) n70[k]->Fill(1.1,aweight*weight2*weight_btag);

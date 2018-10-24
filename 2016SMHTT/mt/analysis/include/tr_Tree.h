@@ -63,7 +63,7 @@ float b2_pt, b2_eta, b2_phi;
 float evtwt, mt;
 bool is_signal,is_qcd,is_w,is_wsf,is_qcdCR;
 //float m_sv, pt_sv;
-
+float nbjets, mq, tq, weight;
 
 void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
    pt_1_=PT1;
