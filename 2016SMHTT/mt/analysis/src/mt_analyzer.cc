@@ -1135,6 +1135,7 @@ int main(int argc, char** argv) {
 	  bool is_0jet=(numberJets==0);
 	  bool is_boosted=(numberJets==1 or (numberJets>=2 && (massJets<=300 or var1_1<=50 or mytau.Pt()<=40)));
 	  bool is_VBF=(massJets > 300 && numberJets>=2 && var1_1>50 && mytau.Pt()>40);
+	  bool is_studyVBF=(massJets > 300 && numberJets>=2 && mytau.Pt()>40);
 	  float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);
 	  TLorentzVector Higgs;
 	  Higgs.SetPtEtaPhiM(var1_1,(mymet+mymu+mytau).Eta(),(mymet+mymu+mytau).Phi(),(mymet+mymu+mytau).M());
@@ -1153,7 +1154,7 @@ int main(int argc, char** argv) {
 		     bpt_1,beta_1,bphi_1,
 		     bpt_2,beta_2,bphi_2,nbtag,
 		     Higgs,
-		     is_0jet,is_boosted,is_VBF,
+		     is_0jet,is_boosted,is_studyVBF,
 		     signalRegion,qcdRegion,wRegion,wsfRegion,qcdCR,
 		     weight2*aweight,
 		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
