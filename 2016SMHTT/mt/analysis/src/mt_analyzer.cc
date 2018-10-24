@@ -66,45 +66,46 @@ int main(int argc, char** argv) {
 
     namu->Branch("evtwt",&evtwt);
 
-    namu->Branch("t1_pt",&t1_pt);
-    namu->Branch("t1_eta", &t1_eta);
-    namu->Branch("t1_phi", &t1_phi);
-    namu->Branch("t1_mass", &t1_mass);
+    namu->Branch("t1_pt",     &t1_pt);
+    namu->Branch("t1_eta",    &t1_eta);
+    namu->Branch("t1_phi",    &t1_phi);
+    namu->Branch("t1_mass",   &t1_mass);
     namu->Branch("t1_charge", &t1_charge);
-    namu->Branch("t1_decaymode", &t1_decaymode);
+    namu->Branch("t1_decayMode",  &t1_decayMode);
 
-    namu->Branch("mu_pt", &mu_pt);
-    namu->Branch("mu_eta", &mu_eta);
-    namu->Branch("mu_phi", &mu_phi);
-    namu->Branch("mu_mass", &mu_mass);
+    namu->Branch("mu_pt",     &mu_pt);
+    namu->Branch("mu_eta",    &mu_eta);
+    namu->Branch("mu_phi",    &mu_phi);
+    namu->Branch("mu_mass",   &mu_mass);
     namu->Branch("mu_charge", &mu_charge);
 
-    namu->Branch("j1_pt",&j1_pt);
-    namu->Branch("j1_eta", &j1_eta);
-    namu->Branch("j1_phi", &j1_phi);
-    namu->Branch("j2_pt", &j2_pt);
-    namu->Branch("j2_eta", &j2_eta);
-    namu->Branch("j2_phi", &j2_phi);
+    namu->Branch("njets",     &njets);
+    namu->Branch("nbjets",    &nbjets);
+    namu->Branch("j1_pt",     &j1_pt);
+    namu->Branch("j1_eta",    &j1_eta);
+    namu->Branch("j1_phi",    &j1_phi);
+    namu->Branch("j2_pt",     &j2_pt);
+    namu->Branch("j2_eta",    &j2_eta);
+    namu->Branch("j2_phi",    &j2_phi);
 
-    namu->Branch("b1_pt",&b1_pt);
-    namu->Branch("b1_eta", &b1_eta);
-    namu->Branch("b1_phi", &b1_phi);
-    namu->Branch("b2_pt", &b2_pt);
-    namu->Branch("b2_eta", &b2_eta);
-    namu->Branch("b2_phi", &b2_phi);
-    namu->Branch("nbtag", &nbtag);
+    namu->Branch("b1_pt",     &b1_pt);
+    namu->Branch("b1_eta",    &b1_eta);
+    namu->Branch("b1_phi",    &b1_phi);
+    namu->Branch("b2_pt",     &b2_pt);
+    namu->Branch("b2_eta",    &b2_eta);
+    namu->Branch("b2_phi",    &b2_phi);
 
-    namu->Branch("met",&met);
-    namu->Branch("metphi",&metphi);
-    namu->Branch("mjj",&mjj);
-    
-    namu->Branch("njets", &njets);
-    namu->Branch("numGenJets",&numGenJets);
+    namu->Branch("met",       &met);
+    namu->Branch("metphi",    &metphi);
+    namu->Branch("mjj",       &mjj);
+    namu->Branch("mt",        &mt);
 
-    namu->Branch("pt_sv", &pt_sv);
-    namu->Branch("m_sv",&m_sv);
-    namu->Branch("Dbkg_VBF",&Dbkg_VBF);
-    namu->Branch("Dbkg_ggH",&Dbkg_ggH);
+    namu->Branch("numGenJets",&numGenJets);    
+
+    namu->Branch("pt_sv",     &pt_sv);
+    namu->Branch("m_sv",      &m_sv);
+    namu->Branch("Dbkg_VBF",  &Dbkg_VBF);
+    namu->Branch("Dbkg_ggH",  &Dbkg_ggH);
     
     namu->Branch("Phi"         , &Phi);
     namu->Branch("Phi1"        , &Phi1);
@@ -116,12 +117,17 @@ int main(int argc, char** argv) {
 
     namu->Branch("ME_sm_VBF"   , &ME_sm_VBF);
     namu->Branch("ME_sm_ggH"   , &ME_sm_ggH);
-    namu->Branch("ME_bkg"   , &ME_bkg);
+    namu->Branch("ME_sm_WH"    , &ME_sm_WH);
+    namu->Branch("ME_sm_ZH"    , &ME_sm_ZH);
+    namu->Branch("ME_bkg"      , &ME_bkg);
+    namu->Branch("ME_bkg1"     , &ME_bkg1);
+    namu->Branch("ME_bkg2"     , &ME_bkg2);
 
     namu->Branch("higgs_pT",      &higgs_pT);
     namu->Branch("higgs_m",       &higgs_m);
     namu->Branch("hjj_pT",        &hjj_pT);
     namu->Branch("hjj_m",         &hjj_m);
+    namu->Branch("vis_mass",      &vis_mass);
     namu->Branch("dEtajj",        &dEtajj);
     namu->Branch("dPhijj",        &dPhijj);
     namu->Branch("cat_0jet",      &cat_0jet);
@@ -129,9 +135,17 @@ int main(int argc, char** argv) {
     namu->Branch("cat_vbf",       &cat_vbf);
     namu->Branch("cat_inclusive", &cat_inclusive);
 
+    namu->Branch("cat_antiiso", &cat_antiiso);
+    namu->Branch("cat_antiiso_0jet", &cat_antiiso_0jet);
+    namu->Branch("cat_antiiso_boosted", &cat_antiiso_boosted);
+    namu->Branch("cat_antiiso_vbf", &cat_antiiso_vbf);
+    namu->Branch("cat_qcd", &cat_qcd);
+    namu->Branch("cat_qcd_0jet", &cat_qcd_0jet);
+    namu->Branch("cat_qcd_boosted", &cat_qcd_boosted);
+    namu->Branch("cat_qcd_vbf", &cat_qcd_vbf);
+
     namu->Branch("is_signal", &is_signal);
     namu->Branch("is_qcd", &is_qcd);
-    namu->Branch("mt", &mt);
 
     TFile *f_Trk=new TFile("../../../CommonAN/weightROOTs/Tracking_EfficienciesAndSF_BCDEFGH.root");
     TGraph *h_Trk=(TGraph*) f_Trk->Get("ratio_eff_eta3_dr030e030_corr");
@@ -465,7 +479,11 @@ int main(int argc, char** argv) {
 
     arbre->SetBranchAddress("ME_sm_VBF",&ME_sm_VBF);
     arbre->SetBranchAddress("ME_sm_ggH",&ME_sm_ggH);
+    arbre->SetBranchAddress("ME_sm_WH",&ME_sm_WH);
+    arbre->SetBranchAddress("ME_sm_ZH",&ME_sm_ZH);
     arbre->SetBranchAddress("ME_bkg",&ME_bkg);
+    arbre->SetBranchAddress("ME_bkg1",&ME_bkg1);
+    arbre->SetBranchAddress("ME_bkg2",&ME_bkg2);
     
     arbre->SetBranchAddress("Dbkg_ggH", &Dbkg_ggH);
     arbre->SetBranchAddress("Dbkg_VBF", &Dbkg_VBF);
@@ -1158,10 +1176,13 @@ int main(int argc, char** argv) {
 		     bpt_1,beta_1,bphi_1,
 		     bpt_2,beta_2,bphi_2,nbtag,
 		     Higgs,
-		     is_0jet,is_boosted,is_studyVBF,
+		     is_0jet,numberJets==1,is_studyVBF,
 		     signalRegion,qcdRegion,wRegion,wsfRegion,qcdCR,
 		     weight2*aweight,
-		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
+		     ME_sm_VBF,ME_sm_ggH,ME_sm_WH,ME_sm_ZH,
+		     ME_bkg,ME_bkg1,ME_bkg2,
+		     mytau.M()+mymu.M()
+		     );
 	  //################ W+jets reweighting in high mT ###############
 	  if (q_1*q_2<0 && mt>80 && mt<200 && wsfRegion){
 	    n70[k]->Fill(0.1,aweight*weight2);
@@ -1325,6 +1346,7 @@ int main(int argc, char** argv) {
     fout->cd();
     nbevt->Write();
     namu->Write();
+    /*
     hincl->Write();
     nlowhigh->Write();
     mUESUp_0jet->Write();
@@ -1578,6 +1600,7 @@ int main(int argc, char** argv) {
       h2_QCD[k]->SetName(name.c_str()+postfix);
       h2_QCD[k]->Write();
     }
+    */
     cout<<h0_OS[0]->Integral()<<" "<<h1_OS[0]->Integral()<<" "<<h2_OS[0]->Integral()<<endl;
     fout->Close();
 } 
