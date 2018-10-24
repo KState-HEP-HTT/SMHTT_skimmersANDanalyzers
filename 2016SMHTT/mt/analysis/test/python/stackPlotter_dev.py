@@ -15,13 +15,13 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "Dijets Mass [GeV]"
+obs = "Dijet Mass [GeV]"
 obs1= "mjj"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"mt_vbf":"VBF enriched"}
+cate={"mt_vbf":"high Dijet Mass"}
 
-sig_stackScale = 30
+sig_stackScale = 50
 majors=["QCD","embedded","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
@@ -521,8 +521,8 @@ for cat in cate.keys():
     pad_2ndRatio.cd()
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
     #p_ratio_QCDVBF.DrawClonePad()
-    #p_ratio_VBFBKG.DrawClonePad()
-    p_ratio_VBFGGH.DrawClonePad()
+    p_ratio_VBFBKG.DrawClonePad()
+    #p_ratio_VBFGGH.DrawClonePad()
     ###         HERE YOU CAN CHOOSE THE 2ND RATIO PAD         ###
     # Stick title of the plot
     plot1.cd()
@@ -534,7 +534,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    #plot1.SaveAs("plots/"+obs1+cate[cat]+"_mt.pdf")
+    plot1.SaveAs("plots/"+obs1+cate[cat]+"_mt.pdf")
 
 
     # Make canvas 
@@ -567,7 +567,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot2.SaveAs("plots/basic"+obs1+cate[cat]+"_mt.pdf")
+    plot2.SaveAs("plots/basic_"+obs1+cate[cat]+"_mt.pdf")
 
 
 

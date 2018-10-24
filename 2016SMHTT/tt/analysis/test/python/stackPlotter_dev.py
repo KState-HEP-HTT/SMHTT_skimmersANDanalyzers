@@ -15,13 +15,13 @@ parser.add_option('--ztt', '-z', action='store_true',
 (options, args) = parser.parse_args()
 
 
-obs = "Dijets Mass [GeV]"
-obs1= "mjj"#"abs_Heata.5jjeta"
+obs = "m_{#tau#tau} [GeV]"
+obs1= "m_sv"#"abs_Heata.5jjeta"
 file=ROOT.TFile("final_nominal.root","r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"tt_vbf":"njets>1"}
+cate={"tt_vbf":"inclusive embedded"}
 
-sig_stackScale = 50
+sig_stackScale = 30
 majors=["QCD","embedded"]
 minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
 signals=["ggH125","VBF125","WH125","ZH125"]
@@ -49,7 +49,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.05)
     lumi.SetTextFont (   42 )
-    lumi.AddText("#mu#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
+    lumi.AddText("#tau_{h}#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -112,6 +112,7 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
             legend.AddEntry(h,"QCD","f") 
         if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
             legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
+            #legend.AddEntry(h,"embedded","f" )
         if h.GetName() == "TTT_px":
             legend.AddEntry(h,"TTT","f")
         if h.GetName() == "ZL_px":
@@ -242,7 +243,7 @@ def make_stack(category):
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
         if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
-            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))  #e57a16"))#f9cd66"))
         if h_bkg.GetName() == "TTT_px":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
         if h_bkg.GetName() == "ZL_px":
