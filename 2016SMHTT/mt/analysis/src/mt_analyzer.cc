@@ -685,6 +685,10 @@ int main(int argc, char** argv) {
     
     Int_t nentries_wtn = (Int_t) arbre->GetEntries();
     for (Int_t i = 0; i < nentries_wtn; i++) {
+      if (TMath::IsNaN(Q2V2)) {
+	std::cout << "WHOLE" << std::endl;
+	std::cout << "run :" << run << std::endl;
+      }
       arbre->GetEntry(i);
       if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
       fflush(stdout);
@@ -811,7 +815,7 @@ int main(int argc, char** argv) {
       
       float correction=sf_id;
         if (sample!="embedded" && sample!="data_obs") correction=correction*LumiWeights_12->weight(npu);
-        //if (sample=="embedded" && amcatNLO_weight>1) amcatNLO_weight=0.10;
+        if (sample=="embedded" && amcatNLO_weight>1) continue;//amcatNLO_weight=0.10;
 	float aweight = 1.0;
 	if (name.find("ggH")) aweight = amcatNLO_weight*weight*correction;
 	else aweight=genweight*weight*correction;
