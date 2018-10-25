@@ -82,7 +82,8 @@ int main(int argc, char** argv) {
 
     namu->SetBranchAddress("ME_sm_VBF"   , &ME_sm_VBF);
     namu->SetBranchAddress("ME_sm_ggH"   , &ME_sm_ggH);
-    namu->SetBranchAddress("ME_bkg"   , &ME_bkg);
+    namu->SetBranchAddress("ME_bkg"      , &ME_bkg);
+    namu->SetBranchAddress("NN_disc"      , &NN_disc);
 
     namu->SetBranchAddress("higgs_pT",      &higgs_pT);
     namu->SetBranchAddress("higgs_m",       &higgs_m);
@@ -97,8 +98,7 @@ int main(int argc, char** argv) {
     namu->SetBranchAddress("is_signal",     &is_signal);
     namu->SetBranchAddress("is_qcd",        &is_qcd);
     namu->SetBranchAddress("mt",            &mt);
-
-    // Reset branch address if it is exist branch
+    // Reset branch address if it exists branch
     TBranch* br = namu->GetBranch(tvar.c_str());
     if (br) namu->SetBranchAddress(tvar.c_str(), &var);
 
@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
     Int_t nentries_wtn = (Int_t) namu->GetEntries();
     for (Int_t i = 0; i < nentries_wtn; i++) {
       namu->GetEntry(i);
-      if (i % 1000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
+      //if (i % 1000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
       fflush(stdout);
       // book the NN                                                                                                        
       TMVAClassification_TMlpANN* t = new TMVAClassification_TMlpANN();
@@ -123,23 +123,24 @@ int main(int argc, char** argv) {
       //////////////////////////// 
       // 2016 analysis category //
       ////////////////////////////
-      if (njets==0) is_0jet=true;
-      if (njets==1 || (njets>=2 && (mjj<=300 || pt_sv<=50 || t1_pt<=40))) is_boosted=true;
-      if (njets>=2 && mjj>300 && pt_sv>50 && t1_pt>40) is_VBF=true;
+      //if (njets==0) is_0jet=true;
+      //if (njets==1 || (njets>=2 && (mjj<=300 || pt_sv<=50 || t1_pt<=40))) is_boosted=true;
+      //if (cat_vbf && t1_pt>40) is_VBF=true;
 
       ////////////////////////
       // KSU study category //
       ////////////////////////
       //if (njets==0) is_0jet=true;
-      //else if (cat_vbf) is_VBF=true; 
+      if (cat_vbf && nbjets==0) is_VBF=true; 
       //else is_boosted=true;   
-      if(tvar == "MELA") {
-	//float normMELAvbf = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg); 
-	var = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);   
-      }
+
+      // User obs
+      if(tvar == "MELA") var = ME_sm_VBF/(ME_sm_VBF+45*ME_bkg);   
+
+      
       if (mt<50 && t1_charge*mu_charge<0) {
 	// ################### signalRegion && OS ####################
-	if (is_VBF && is_signal) 	    h_sig->Fill(var,evtwt); 
+	if (is_VBF && is_signal) 	    h_sig->Fill(var,evtwt);
       }
       
       if (mt<50 && t1_charge*mu_charge>0) {
