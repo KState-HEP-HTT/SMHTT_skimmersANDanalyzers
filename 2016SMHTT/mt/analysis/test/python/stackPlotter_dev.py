@@ -21,7 +21,7 @@ file=ROOT.TFile("final_nominal.root","r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
 cate={"mt_vbf":"high Dijet Mass"}
 
-sig_stackScale = 50
+sig_stackScale = 30
 majors=["QCD","embedded","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
@@ -107,14 +107,14 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
     for i in range(0,len(histoAll["histBkg"][cate[cat]])):
         h = histoAll["histBkg"][cate[cat]][i_legend]
-        if h.GetName() == "QCD_px":
+        if h.GetName() == "QCD_px" or h.GetName() == "QCD":
             print">>>>>>>>>> h.GetName() ", h.GetName()
             legend.AddEntry(h,"QCD","f") 
-        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
+        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px" or h.GetName() == "embedded" or h.GetName() == "ZTT":
             legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
-        if h.GetName() == "TTT_px":
+        if h.GetName() == "TTT_px" or h.GetName() == "TTT":
             legend.AddEntry(h,"TTT","f")
-        if h.GetName() == "ZL_px":
+        if h.GetName() == "ZL_px" or h.GetName() == "ZL":
             legend.AddEntry(h,"others","f") 
         i_legend-=1
 
@@ -241,13 +241,13 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
-        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
+        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px" or h_bkg.GetName() == "embedded" or h_bkg.GetName() == "ZTT":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
-        if h_bkg.GetName() == "TTT_px":
+        if h_bkg.GetName() == "TTT_px" or h_bkg.GetName() == "TTT":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
-        if h_bkg.GetName() == "ZL_px":
+        if h_bkg.GetName() == "ZL_px" or h_bkg.GetName() == "ZL":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
-        if h_bkg.GetName() == "QCD_px":
+        if h_bkg.GetName() == "QCD_px" or h_bkg.GetName() == "QCD":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
             
         #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
