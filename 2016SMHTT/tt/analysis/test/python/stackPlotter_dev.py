@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+#######################################################################################
+## python python/stackPlotter_dev.py -i plots/Quick/templates/mjj.root -v mjj -c tt  ##
+#######################################################################################
+
 import ROOT
 import re
 from array import array
@@ -12,25 +17,44 @@ parser.add_option('--ztt', '-z', action='store_true',
                   default=False, dest='is_zttMC',
                   help='run on embedded or MC ZTT'
                   )
+parser.add_option('--input', '-i', action='store',
+                  default="final_nominal.root", dest='inputroot',
+                  help='input root file for the plot'
+                  )
+parser.add_option('--var', '-v', action='store',
+                  default="mjj", dest='obs',
+                  help='observable which you plot'
+                  )
+parser.add_option('--channel', '-c', action='store',
+                  default="tt", dest='ch',
+                  help='channel'
+                  )
 (options, args) = parser.parse_args()
 
-
-obs = "m_{#tau#tau} [GeV]"
-obs1= "m_sv"#"abs_Heata.5jjeta"
-file=ROOT.TFile("final_nominal.root","r")
+file=ROOT.TFile(options.inputroot,"r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"tt_vbf":"inclusive embedded"}
+cate={options.ch+"_vbf":""} # vlaue is tag on the plot such as high Diget Mass
+titleMap = {
+    "mjj":"Dijet Mass [GeV]",
+    "NN_disc":"NN disc",
+    "MELA":"Dbkg_{VBF}",
+}
+
 
 sig_stackScale = 30
+
 majors=["QCD","embedded"]
-minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
+minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ","EWKZ"]
 signals=["ggH125","VBF125","WH125","ZH125"]
 
-if options.is_zttMC:
+if options.ch!= "tt":
     del majors[:]
     del minors[:]
-    majors=["QCD","ZTT"]
-    minors=["ZL","ZJ","TTT","TTJ","W","VVT","VVJ"]
+    majors=["QCD","embedded","TTT"]
+    minors=["ZL","ZJ","TTJ","W","VV","EWKZ"]
+if options.is_zttMC:
+    majors.remove("embedded")
+    majors.insert(1,"ZTT")
 
 # Colors
 mypalette=["#ffbcfe","#f9cd66","#cfe87f","#fcc894","#a0abff","#d1c7be","#9feff2"]
@@ -49,7 +73,10 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.05)
     lumi.SetTextFont (   42 )
-    lumi.AddText("#tau_{h}#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
+    if options.ch=="mt":
+            lumi.AddText("#mu#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
+    if options.ch=="tt":
+        lumi.AddText("#tau_{h}#tau_{h}   2016, 35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -104,18 +131,17 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
         legend.AddEntry(main_ZH,"ZH Higgs(125)x"+str(sig_stackScale),"l")
 
     i_legend=len(histoAll["histBkg"][cate[cat]])-1
-    print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
+    #print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
     for i in range(0,len(histoAll["histBkg"][cate[cat]])):
         h = histoAll["histBkg"][cate[cat]][i_legend]
-        if h.GetName() == "QCD_px":
-            print">>>>>>>>>> h.GetName() ", h.GetName()
+        if h.GetName() == "QCD_px" or h.GetName() == "QCD":
+            #print">>>>>>>>>> h.GetName() ", h.GetName()
             legend.AddEntry(h,"QCD","f") 
-        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
+        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px" or h.GetName() == "embedded" or h.GetName() == "ZTT":
             legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
-            #legend.AddEntry(h,"embedded","f" )
-        if h.GetName() == "TTT_px":
+        if h.GetName() == "TTT_px" or h.GetName() == "TTT":
             legend.AddEntry(h,"TTT","f")
-        if h.GetName() == "ZL_px":
+        if h.GetName() == "ZL_px" or h.GetName() == "ZL":
             legend.AddEntry(h,"others","f") 
         i_legend-=1
 
@@ -200,11 +226,6 @@ def call_histos():
         histlist_sort2 = sorted(range(len(histlist_sort)), key=histlist_sort.__getitem__)
         for isort in range(len(histlist_sort2)):
             histlist2.append(histlist[histlist_sort2[isort]])
-        #print histlist_sort
-        #print histlist_sort2
-        #print "list1 >>>>>>>" ,histlist
-        print "list2 >>>>>>>" ,histlist2
-
         # data
         h_data=unroll(file,cat,"data_obs")#file.Get(cat).Get("data_obs")
         
@@ -242,13 +263,13 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
-        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
-            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))  #e57a16"))#f9cd66"))
-        if h_bkg.GetName() == "TTT_px":
+        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px" or h_bkg.GetName() == "embedded" or h_bkg.GetName() == "ZTT":
+            h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
+        if h_bkg.GetName() == "TTT_px" or h_bkg.GetName() == "TTT":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
-        if h_bkg.GetName() == "ZL_px":
+        if h_bkg.GetName() == "ZL_px" or h_bkg.GetName() == "ZL":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
-        if h_bkg.GetName() == "QCD_px":
+        if h_bkg.GetName() == "QCD_px" or h_bkg.GetName() == "QCD":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
             
         #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
@@ -329,7 +350,7 @@ def make_titleTag():
     obsPave.SetTextSize (  0.5 )
     obsPave.SetTextColor(    1 )
     obsPave.SetTextFont (   42 )
-    obsPave.AddText(obs)
+    obsPave.AddText(titleMap[options.obs])
     return obsPave
 
 def compute_SensitivityDeno(h_all,cat):    
@@ -535,7 +556,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+obs1+cate[cat]+"_tt.pdf")
+    plot1.SaveAs("plots/"+options.obs+cate[cat]+"_"+options.ch+".pdf")
 
 
     # Make canvas 
@@ -568,7 +589,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot2.SaveAs("plots/basic"+obs1+cate[cat]+"_tt.pdf")
+    plot2.SaveAs("plots/basic_"+options.obs+cate[cat]+"_"+options.ch+".pdf")
 
 
 

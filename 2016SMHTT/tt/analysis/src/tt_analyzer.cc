@@ -28,6 +28,7 @@
 #include "RooWorkspace.h"
 #include "RooRealVar.h"
 #include "RooFunctor.h"
+#include "TMath.h"
 // my includes
 #include "../include/myHelper.h"
 #include "../include/tt_Tree.h"
@@ -64,13 +65,13 @@ int main(int argc, char** argv) {
     namu->Branch("t1_phi", &t1_phi);
     namu->Branch("t1_mass", &t1_mass);
     namu->Branch("t1_charge", &t1_charge);
-    namu->Branch("t1_decaymode", &t1_decaymode);
+    namu->Branch("t1_decayMode", &t1_decayMode);
     namu->Branch("t2_pt", &t2_pt);
     namu->Branch("t2_eta", &t2_eta);
     namu->Branch("t2_phi", &t2_phi);
     namu->Branch("t2_mass", &t2_mass);
     namu->Branch("t2_charge", &t2_charge);
-    namu->Branch("t2_decaymode", &t2_decaymode);
+    namu->Branch("t2_decayMode", &t2_decayMode);
 
     namu->Branch("j1_pt",&j1_pt);
     namu->Branch("j1_eta", &j1_eta);
@@ -123,6 +124,7 @@ int main(int argc, char** argv) {
     namu->Branch("cat_inclusive", &cat_inclusive);
 
     namu->Branch("is_signal", &is_signal);
+    namu->Branch("is_ai", &is_ai);
 
     ////////////////////////////////////
     //                                //
@@ -453,6 +455,9 @@ int main(int argc, char** argv) {
 	bool tcomb35 =  passDoubleTauCmbIso35 && filterDoubleTauCmbIso35_1 && filterDoubleTauCmbIso35_2 && matchDoubleTauCmbIso35_1 && matchDoubleTauCmbIso35_2;
 	if (  !t35 && !tcomb35 ) continue;
       }
+      
+      // Reject problomatic one event data G
+      if (TMath::IsNaN(Q2V2)) continue;
 
 
       float jpt_1 = scenario.get_jpt_1();
@@ -725,6 +730,7 @@ int main(int argc, char** argv) {
 	bool is_0jet = false;
 	bool is_boosted = false;
 	bool is_VBF = false;
+	bool is_studyVBF = false;
 	bool is_VH = false;
 	bool is_2jets = false;
 	////////////////////////////
@@ -733,7 +739,7 @@ int main(int argc, char** argv) {
 	if (njets==0) is_0jet=true;
 	if (njets==1 || (njets>=2 && (!(Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5)))) is_boosted=true; 
 	if (njets>=2 && Higgs.Pt()>100 && std::abs(myjet1.Eta()-myjet2.Eta())>2.5) is_VBF=true;
-
+	if (njets>=2 && mjj>300) is_studyVBF=true;
 	////////////////////////
 	// KSU study category //
 	////////////////////////
@@ -788,8 +794,8 @@ int main(int argc, char** argv) {
 	float var_0jet = m_sv;
 	float var_boostedX = Higgs.Pt();//pt_sv;
 	float var_boostedY = m_sv; 
-	float var_vbfX = mjj;//my_NN;//normMELAvbf;
-	float var_vbfY = m_sv;//fabs(myjet1.Eta()-myjet2.Eta());//m_sv; 
+	float var_vbfX = mjj;
+	float var_vbfY = m_sv;
 
 	if (selection){
 	  // ################### signalRegion && OS ####################
@@ -874,8 +880,8 @@ int main(int argc, char** argv) {
 		     bpt_1,beta_1,bphi_1,
 		     bpt_2,beta_2,bphi_2,nbtag,
 		     Higgs,
-		     is_0jet,is_boosted,is_VBF,
-		     signalRegion,weight2*aweight,
+		     is_0jet,is_boosted,is_studyVBF,
+		     signalRegion,aiRegion,weight2*aweight,
 		     ME_sm_VBF,ME_sm_ggH,ME_bkg);
 	}
       }
@@ -885,6 +891,7 @@ int main(int argc, char** argv) {
     fout->cd();
     namu->Write();
     nbevt->Write();
+    /*
     TDirectory *OS0jet_tt =fout->mkdir("tt_0jet");
     TDirectory *OSboosted_tt =fout->mkdir("tt_boosted");
     TDirectory *OSvbf_tt =fout->mkdir("tt_vbf");
@@ -1018,6 +1025,7 @@ int main(int argc, char** argv) {
       h_AISS[k]->SetName(name.c_str()+postfix);
       h_AISS[k]->Write();
     }
+    */
     fout->Close();
     Py_Finalize();
 } 

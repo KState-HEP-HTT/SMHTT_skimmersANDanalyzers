@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
       // KSU study category //
       ////////////////////////
       //if (njets==0) is_0jet=true;
-      if (cat_vbf && nbjets==0) is_VBF=true; 
+      if (cat_vbf ) is_VBF=true; 
       //else is_boosted=true;   
 
       // User obs

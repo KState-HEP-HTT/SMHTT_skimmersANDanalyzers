@@ -24,7 +24,7 @@ parser.add_option('--var', '-v', action='store',
 
 file=ROOT.TFile(options.inputroot,"r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
-cate={"mt_vbf":"high Dijet Mass + H pT > 50"}
+cate={"mt_vbf":"high Dijet Mass"}
 
 titleMap = {
     "mjj":"Dijet Mass [GeV]",

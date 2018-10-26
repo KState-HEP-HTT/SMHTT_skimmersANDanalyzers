@@ -31,6 +31,7 @@
 // User
 #include "../include/ComputeWG1Unc.h"
 #include "../include/myHelper.h"
+#include "../include/lumiMap.h"
 #include "../include/tr_Tree.h"
 #include "../include/ScaleFactor.h"
 #include "../include/ZmmSF.h"
@@ -164,6 +165,12 @@ int main(int argc, char** argv) {
     RooWorkspace *wEmbed = (RooWorkspace*)fem.Get("w");
     fem.Close();
 
+    // Lumi weight  
+    float w_lumi = lumiWeight(sample, ngen);
+    if (w_lumi==0) std::cout << std::endl << "!!!!!!!!!!!!!!!!!!!!!!!! ATTENTION - can't find lumi weight. Check the sample. !!!!!!!!!!!!!!!!!!!!!!!!" << std::endl << std::endl;
+    float weight=w_lumi;
+    std::cout << "============== map weight: " << w_lumi << std::endl;
+    /*
     float xs=1.0; float weight=1.0; float luminosity=35870.0;
     if (sample=="ZL" or sample=="ZTT" or sample=="ZJ" or sample=="ZLL"){ xs=5765.4; weight=luminosity*xs/ngen;}
     else if (sample=="TT" or sample=="TTT" or sample=="TTJ") {xs=831.76; weight=luminosity*xs/ngen;}
@@ -221,7 +228,8 @@ int main(int argc, char** argv) {
     else if (sample=="EWKZLL" or sample=="EWKZLL_TT" or sample=="EWKZLL_J" or sample=="EWKZLL_L" or sample=="EWKZLL_LL") {xs=3.987; weight=luminosity*xs/ngen;}
     else if (sample=="EWKZNuNu" or sample=="EWKZNuNu_TT" or sample=="EWKZNuNu_J" or sample=="EWKZNuNu_L" or sample=="EWKZNuNu_LL") {xs=10.01; weight=luminosity*xs/ngen;}
     else cout<<"Attention!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
-
+    std::cout << "============== real weight: " << weight << std::endl;
+    */
     cout.setf(ios::fixed, ios::floatfield);
     cout.precision(10);
     arbre->SetBranchAddress("Rivet_higgsPt", &Rivet_higgsPt);
