@@ -35,10 +35,28 @@ file=ROOT.TFile(options.inputroot,"r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
 cate={options.ch+"_vbf":""} # vlaue is tag on the plot such as high Diget Mass
 titleMap = {
-    "mjj":"Dijet Mass [GeV]",
-    "NN_disc":"NN disc",
-    "MELA":"Dbkg_{VBF}",
-    "higgs_pT":"Higgs pT [GeV]",
+    'mjj':'Dijet Mass [GeV]',
+    'NN_disc':'NN disc',
+    'MELA':'D_{bkg}^{VBF}', # normalized by 45
+    'higgs_pT':'Higgs pT [GeV]',
+    'mu_pt': 'Muon p_{T} [GeV]',
+    't1_pt': 'Tau1 p_{T} [GeV]',
+    't2_pt': 'Tau2 p_{T} [GeV]',
+    'met': 'Missing E_{T} [GeV]',
+    'pt_sv': 'SVFit p_{T} [GeV]',
+    'm_sv': 'SVFit Mass [GeV]',
+    'mjj': 'Dijet Mass [GeV]',
+    'Dbkg_VBF': 'D_{bkg}^{VBF}',  # unnormalized mela
+    'Dbkg_ggH': 'D_{bkg}^{ggH}',
+    'NN_disc': 'NN Disc.',
+    'Q2V1': 'Q^2 V1',
+    'Q2V2': 'Q^2 V2',
+    'Phi': '#phi',
+    'Phi1': '#phi_1',
+    'costheta1': 'Cos(#theta_1)',
+    'costheta2': 'Cos(#theta_2)',
+    'costhetastar': 'Cos(#theta*)',
+    'nbjets': 'N(b-jets)'
 }
 
 
