@@ -11,46 +11,17 @@ git clone git@github.com:KState-HEP-HTT/SMHTT_skimmersANDanalyzers.git
 To compile,
 ```
 cd SMHTT_skimmersANDanalyzers/2016SMHTT/tt/analysis/src
-./Make.sh tt_templateMaker.cc
+./Make.sh tt_quickplot.cc 
+./Make.sh mt_quickplot.cc 
 ```
 
 To run the analyzer and make the distribution plots,
 
-1. Embedded sample,
-
 ```
 cd ../test
-source do_plotter.sh outputs_nominal
-python python/stackPlotter_dev.py
-```
-2. MC samples,
-
-```
-cd ../test
-source do_plotter.sh outputs_nominal mc
-python python/stackPlotter_dev.py -z
+source quickPlot.sh FREEZE_TREES/tt_sync_NN 20 0 1 MELA tt
 ```
 
----
-### How to make changes for R&D
-One mainly need to change three things. 1) binning, 2) variables, and 3) category. 
-Where ingredients for each category are the following.
-
-* 0jet 
-  - binning : bins0[]
-  - variable : var_0jet
-  - category : is_0jet 
-
-* boosted
-  - binning : bins1X[], bins1Y[]
-  - variable : var_boostedX, var_boostedY
-  - category : is_boosted
-
-* 0jet 
-  - binning : bins2X[], bins2Y[]
-  - variable : var_vbfX, var_vbfY
-  - category : is_VBF
-
-
+This will give you the plots with embedded sample + two lines that enable you to make the same plots usint MC ZTT.
 
 

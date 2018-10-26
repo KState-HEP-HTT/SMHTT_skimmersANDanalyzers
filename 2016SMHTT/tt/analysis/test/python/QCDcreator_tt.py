@@ -49,9 +49,9 @@ if __name__ == "__main__":
                     histos[cates.index(cate)].append(files[samples.index(sample)].Get(region+"_"+cate+"/"+sample))
                     print "----- Subtract -----"
                 else:
-                    print files[samples.index(sample)].Get(region+"_"+cate+"/"+sample).Integral()
                     histos[cates.index(cate)][-1].Add(files[samples.index(sample)].Get(region+"_"+cate+"/"+sample),-1)
                     print region+"_"+cate+"/"+sample
+                    print files[samples.index(sample)].Get(region+"_"+cate+"/"+sample).Integral()
 
     # Set negative yield bin to 0
     for i in range(0,len(histos)):
