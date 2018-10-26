@@ -38,6 +38,7 @@ titleMap = {
     "mjj":"Dijet Mass [GeV]",
     "NN_disc":"NN disc",
     "MELA":"Dbkg_{VBF}",
+    "higgs_pT":"Higgs pT [GeV]",
 }
 
 
@@ -556,8 +557,10 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+options.obs+cate[cat]+"_"+options.ch+".pdf")
-
+    if options.is_zttMC:
+        plot1.SaveAs("plots/"+options.obs+cate[cat]+"_"+options.ch+"_MC.pdf")
+    else:
+        plot1.SaveAs("plots/"+options.obs+cate[cat]+"_"+options.ch+".pdf")
 
     # Make canvas 
     plot2 = make_canvas(650,"plot1")  
@@ -589,7 +592,10 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot2.SaveAs("plots/basic_"+options.obs+cate[cat]+"_"+options.ch+".pdf")
+    if options.is_zttMC:
+        plot2.SaveAs("plots/basic_"+options.obs+cate[cat]+"_"+options.ch+"_MC.pdf")
+    else:
+        plot2.SaveAs("plots/basic_"+options.obs+cate[cat]+"_"+options.ch+".pdf")
 
 
 
