@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
     arbre->SetBranchAddress("t1_charge", &t1_charge);
-    arbre->SetBranchAddress("t1_decaymode", &t1_decaymode);
+    arbre->SetBranchAddress("t1_decayMode", &t1_decayMode);
     arbre->SetBranchAddress("mu_pt", &mu_pt);
     arbre->SetBranchAddress("mu_eta", &mu_eta);
     arbre->SetBranchAddress("mu_phi", &mu_phi);
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("b2_pt", &b2_pt);
     arbre->SetBranchAddress("b2_eta", &b2_eta);
     arbre->SetBranchAddress("b2_phi", &b2_phi);
-    arbre->SetBranchAddress("nbtag", &nbtag);
+    arbre->SetBranchAddress("nbjets", &nbjets);
 
     arbre->SetBranchAddress("met",&met);
     arbre->SetBranchAddress("metphi",&metphi);
@@ -107,7 +107,8 @@ int main(int argc, char** argv) {
     //Binning for 1jet cat, y-axis
     float bins1Y[] = {0,80,90,100,110,120,130,140,150,160,300};
     //Binning for 2jet cat, x-axis
-    float bins2X[] = {300,700,1100,1500,10000};
+    //float bins2X[] = {300,700,1100,1500,10000};
+    float bins2X[] = {0,0.1,0.5,0.9,1.0};
     //Binning for 2jet cat, y-axis
     float bins2Y[] = {0,95,115,135,155,400};
 
@@ -173,22 +174,22 @@ int main(int argc, char** argv) {
       //////////////////////////// 
       // 2016 analysis category //
       ////////////////////////////
-      if (njets==0) is_0jet=true;
-      if (njets==1 || (njets>=2 && (mjj<=300 || pt_sv<=50 || t1_pt<=40))) is_boosted=true;
-      if (njets>=2 && mjj>300 && pt_sv>50 && t1_pt>40) is_VBF=true;
+      //if (njets==0) is_0jet=true;
+      //if (njets==1 || (njets>=2 && (mjj<=300 || pt_sv<=50 || t1_pt<=40))) is_boosted=true;
+      //if (njets>=2 && mjj>300 && pt_sv>50 && t1_pt>40) is_VBF=true;
 
       ////////////////////////
       // KSU study category //
       ////////////////////////
-      //if (njets==0) is_0jet=true;
-      //else if (cat_vbf && nbtag==0) is_VBF=true; 
-      //else is_boosted=true;   
+      if (njets==0) is_0jet=true;
+      else if (cat_vbf && nbjets==0) is_VBF=true; 
+      else is_boosted=true;   
 
-      float var_0jetX = t1_decaymode;
+      float var_0jetX = t1_decayMode;
       float var_0jetY = m_sv;
       float var_boostedX = pt_sv;
       float var_boostedY = m_sv;
-      float var_vbfX = mjj;//normMELAvbf;//mjj;
+      float var_vbfX = NN_disc;//mjj;
       float var_vbfY = m_sv;
 
       if (TMath::IsNaN(Q2V2)) {

@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("cat_inclusive", &cat_inclusive);
 
     arbre->SetBranchAddress("is_signal", &is_signal);
-
+    arbre->SetBranchAddress("NN_disc", &NN_disc);
     //Binning for 0jet cat. 1D: Msv. In AN it was 10GeV binning / official data card combined 0~50 as one bin
     float bins0[] = {0,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300};
     //Binning for 1jet cat, x-axis: HpT
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
     //Binning for 1jet cat, y-axis: Msv
     float bins1Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
     //Binning for 2jet cat, x-axis: Mjj
-    float bins2X[] = {0,300,500,800,10000};
+    float bins2X[] = {0, 0.1, 0.5, 0.9, 1.0};//{0,300,500,800,10000};
     //Binning for 2jet cat, y-axis: Msv
     float bins2Y[] = {0,40,60,70,80,90,100,110,120,130,150,200,250};
 
@@ -179,21 +179,21 @@ int main(int argc, char** argv) {
       ////////////////////////////
       // 2016 analysis category //
       ////////////////////////////
-      if (njets==0) is_0jet=true;
-      if (njets==1 || (njets>=2 && (!(higgs_pT>100 && dEtajj>2.5)))) is_boosted=true;
-      if (njets>=2 && higgs_pT>100 && dEtajj>2.5) is_VBF=true;
+      //if (njets==0) is_0jet=true;
+      //if (njets==1 || (njets>=2 && (!(higgs_pT>100 && dEtajj>2.5)))) is_boosted=true;
+      //if (njets>=2 && higgs_pT>100 && dEtajj>2.5) is_VBF=true;
 
       ////////////////////////     
       // KSU study category //     
       ////////////////////////     
-      //if (njets==0) is_0jet=true;
-      //else if (njets>=2 && mjj>300) is_VBF=true; 
-      //else is_boosted=true;   
+      if (njets==0) is_0jet=true;
+      else if (njets>=2 && mjj>300) is_VBF=true; 
+      else is_boosted=true;   
 
       float var_0jet = m_sv;
       float var_boostedX = higgs_pT;
       float var_boostedY = m_sv;
-      float var_vbfX = mjj;
+      float var_vbfX = normMELAvbf;
       float var_vbfY = m_sv;
 
       for (int k=0; k<nbhist; ++k){

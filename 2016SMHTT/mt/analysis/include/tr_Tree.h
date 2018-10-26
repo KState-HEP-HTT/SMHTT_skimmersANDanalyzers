@@ -18,7 +18,7 @@ int nbtag;
 float genweight;
 float gentau_vispt;
 int run, lumi, evt;
-int nup,njets;
+int nup,njets, nbjets;
 float npv, pt_tt,jdeta,mjj;//mt_2;
 float jpt_1, jeta_1, jphi_1;
 float jpt_2, jeta_2, jphi_2;
@@ -51,10 +51,10 @@ float mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleUp,m
 float pt_1_, pt_2_, eta_1_, eta_2_, phi_1_, phi_2_, m_1_, m_2_, mvis_, metcov00_, metcov01_, metcov11_, weight_, met_, metphi_, fvalue_;
 float extraelec_veto, extramuon_veto, dilepton_veto;
 float Phi, Phi1, costheta1,costheta2,costhetastar,Q2V1,Q2V2;
-float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive;
-float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
+float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive,cat_antiiso, cat_antiiso_0jet, cat_antiiso_boosted, cat_antiiso_vbf,cat_qcd, cat_qcd_0jet, cat_qcd_boosted, cat_qcd_vbf;
+float ME_sm_VBF, ME_sm_ggH,ME_sm_WH, ME_sm_ZH, ME_bkg,ME_bkg1,ME_bkg2, Dbkg_VBF, Dbkg_ggH, NN_disc;
 
-float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge, t1_decaymode;
+float t1_pt, t1_eta, t1_phi, t1_mass, t1_charge, t1_decayMode;
 float mu_pt, mu_eta, mu_phi, mu_mass, mu_charge;
 float j1_pt, j1_eta, j1_phi;
 float j2_pt, j2_eta, j2_phi;
@@ -62,8 +62,9 @@ float b1_pt, b1_eta, b1_phi;
 float b2_pt, b2_eta, b2_phi;
 float evtwt, mt;
 bool is_signal,is_qcd,is_w,is_wsf,is_qcdCR;
+
 //float m_sv, pt_sv;
-float nbjets, mq, tq, weight;
+float mq, tq, weight, vis_mass;
 
 void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, float PHI1, float PHI2, float M1, float M2, float MET, float METPHI, float METCOV00, float METCOV01, float METCOV11, float MVIS, float TARGET, float WEIGHT) {
    pt_1_=PT1;
@@ -88,14 +89,14 @@ void fillTreeMVA(TTree* BG_Tree, float PT1, float PT2, float ETA1, float ETA2, f
 }
 
 
-void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mymt, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, bool qcdRegion, bool wRegion, bool wsfRegion, bool qcdCR, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode, TLorentzVector tau2, float charge2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mymt, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, bool qcdRegion, bool wRegion, bool wsfRegion, bool qcdCR, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_sm_WH, float myME_sm_ZH, float myME_bkg, float myME_bkg1, float myME_bkg2, float myvis_mass){
   evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
   t1_phi = tau1.Phi();
   t1_mass = tau1.M();
   t1_charge = charge1;
-  t1_decaymode = decaymode;
+  t1_decayMode = decaymode;
   mu_pt = tau2.Pt();
   mu_eta = tau2.Eta();
   mu_phi = tau2.Phi();
@@ -118,7 +119,11 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode
   mt = mymt;
   ME_sm_VBF = myME_sm_VBF;
   ME_sm_ggH = myME_sm_ggH;
+  ME_sm_WH = myME_sm_WH;
+  ME_sm_ZH = myME_sm_ZH;
   ME_bkg = myME_bkg;
+  ME_bkg = myME_bkg1;
+  ME_bkg = myME_bkg2;
 
   b1_pt = bpt_1;
   b1_eta = beta_1;
@@ -126,7 +131,7 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode
   b2_pt = bpt_2;
   b2_eta = beta_2;
   b2_phi = bphi_2;
-  nbtag = mynbtag;
+  nbjets = mynbtag;
 
   higgs_pT = Higgs.Pt();
   higgs_m = Higgs.M();
@@ -143,7 +148,24 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float decaymode
   is_wsf = wsfRegion;
   is_qcdCR = qcdCR;
   cat_inclusive = false;
+  vis_mass = myvis_mass;
+  cat_antiiso = false;
+  cat_antiiso_0jet = false;
+  cat_antiiso_boosted = false;
+  cat_antiiso_vbf = false;
+  cat_qcd = false;
+  cat_qcd_0jet = false;
+  cat_qcd_boosted = false;
+  cat_qcd_vbf = false;
   if (cat_0jet || cat_boosted || cat_vbf) cat_inclusive = true;
+  if (is_signal && t1_charge*mu_charge>0) cat_antiiso = true;
+  if (is_signal && t1_charge*mu_charge>0 && is_0jet) cat_antiiso_0jet = true;
+  if (is_signal && t1_charge*mu_charge>0 && is_boosted) cat_antiiso_boosted = true;
+  if (is_signal && t1_charge*mu_charge>0 && is_VBF) cat_antiiso_vbf = true;
+  if (is_qcd && t1_charge*mu_charge>0) cat_qcd = true;
+  if (is_qcd && t1_charge*mu_charge>0 && is_0jet) cat_qcd_0jet = true;
+  if (is_qcd && t1_charge*mu_charge>0 && is_boosted) cat_qcd_boosted = true;
+  if (is_qcd && t1_charge*mu_charge>0 && is_VBF) cat_qcd_vbf = true;
 
   namu->Fill();
 }

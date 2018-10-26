@@ -71,11 +71,11 @@ float b2_pt, b2_eta, b2_phi;
 float m_sv, pt_sv;
 float Dbkg;
 float Phi, Phi1, costheta1,costheta2,costhetastar,Q2V1,Q2V2;
-float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive, is_OS, is_signal;
+float higgs_pT, higgs_m, hjj_pT, hjj_m, dEtajj, dPhijj, cat_0jet, cat_boosted, cat_vbf, cat_inclusive, is_OS, is_signal, is_ai;
 float ME_sm_VBF, ME_sm_ggH, ME_bkg, Dbkg_VBF, Dbkg_ggH, NN_disc;
 float evtwt;
 
-void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float mydecay1, TLorentzVector tau2, float charge2,float mydecay2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
+void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float mydecay1, TLorentzVector tau2, float charge2,float mydecay2, TLorentzVector jet1, TLorentzVector jet2, TLorentzVector mymet, float mymjj, float mypt_sv, float mym_sv, float mynjets, float bpt_1, float beta_1, float bphi_1, float bpt_2, float beta_2, float bphi_2,float mynbtag,TLorentzVector Higgs, bool is_0jet, bool is_boosted, bool is_VBF, bool signalRegion, bool aiRegion, float myevtwt, float myME_sm_VBF, float myME_sm_ggH, float myME_bkg){
   evtwt = myevtwt;
   t1_pt = tau1.Pt();
   t1_eta = tau1.Eta();
@@ -126,6 +126,7 @@ void fillNNTree(TTree* namu, TLorentzVector tau1, float charge1, float mydecay1,
   cat_boosted = is_boosted;
   cat_vbf = is_VBF;
   is_signal = signalRegion;
+  is_ai = aiRegion;
   cat_inclusive = false;
   if (cat_0jet || cat_boosted || cat_vbf) cat_inclusive = true;
 

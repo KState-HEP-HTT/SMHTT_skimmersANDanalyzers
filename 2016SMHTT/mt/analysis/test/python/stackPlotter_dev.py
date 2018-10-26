@@ -12,16 +12,28 @@ parser.add_option('--ztt', '-z', action='store_true',
                   default=False, dest='is_zttMC',
                   help='run on embedded or MC ZTT'
                   )
+parser.add_option('--input', '-i', action='store',
+                  default="final_nominal.root", dest='inputroot',
+                  help='input root file for the plot'
+                  )
+parser.add_option('--var', '-v', action='store',
+                  default="mjj", dest='obs',
+                  help='observable which you plot'
+                  )
 (options, args) = parser.parse_args()
 
-
-obs = "Dijet Mass [GeV]"
-obs1= "mjj"#"abs_Heata.5jjeta"
-file=ROOT.TFile("final_nominal.root","r")
+file=ROOT.TFile(options.inputroot,"r")
 #cate={"mt_0jet":"0jet","mt_boosted":"Boosted","mt_vbf":"VBF"}
 cate={"mt_vbf":"high Dijet Mass"}
 
-sig_stackScale = 50
+titleMap = {
+    "mjj":"Dijet Mass [GeV]",
+    "NN_disc":"NN disc",
+    "MELA":"Dbkg_{VBF}",
+}
+
+
+sig_stackScale = 30
 majors=["QCD","embedded","TTT"]
 minors=["ZL","ZJ","TTJ","W","VV"]
 signals=["ggH125","VBF125","WH125","ZH125"]
@@ -107,14 +119,14 @@ def add_legendEntryMain(smh,ggh,vbf,wh,zh,cat):
     print ">>>>>>>>>> i_legned" , len(histoAll["histBkg"][cate[cat]])
     for i in range(0,len(histoAll["histBkg"][cate[cat]])):
         h = histoAll["histBkg"][cate[cat]][i_legend]
-        if h.GetName() == "QCD_px":
+        if h.GetName() == "QCD_px" or h.GetName() == "QCD":
             print">>>>>>>>>> h.GetName() ", h.GetName()
             legend.AddEntry(h,"QCD","f") 
-        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px":
+        if h.GetName() == "embedded_px" or h.GetName() == "ZTT_px" or h.GetName() == "embedded" or h.GetName() == "ZTT":
             legend.AddEntry(h,"Z#rightarrow#tau#tau","f" )
-        if h.GetName() == "TTT_px":
+        if h.GetName() == "TTT_px" or h.GetName() == "TTT":
             legend.AddEntry(h,"TTT","f")
-        if h.GetName() == "ZL_px":
+        if h.GetName() == "ZL_px" or h.GetName() == "ZL":
             legend.AddEntry(h,"others","f") 
         i_legend-=1
 
@@ -241,13 +253,13 @@ def make_stack(category):
     for h_bkg in histoAll["histBkg"][category]:
         h_bkg.SetLineWidth(2)
         h_bkg.SetLineColor(1)
-        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px":
+        if h_bkg.GetName() == "embedded_px" or h_bkg.GetName() == "ZTT_px" or h_bkg.GetName() == "embedded" or h_bkg.GetName() == "ZTT":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#f9cd66"))
-        if h_bkg.GetName() == "TTT_px":
+        if h_bkg.GetName() == "TTT_px" or h_bkg.GetName() == "TTT":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#cfe87f"))
-        if h_bkg.GetName() == "ZL_px":
+        if h_bkg.GetName() == "ZL_px" or h_bkg.GetName() == "ZL":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#9feff2"))
-        if h_bkg.GetName() == "QCD_px":
+        if h_bkg.GetName() == "QCD_px" or h_bkg.GetName() == "QCD":
             h_bkg.SetFillColor(ROOT.TColor.GetColor("#ffbcfe"))
             
         #h_bkg.SetFillColor(ROOT.TColor.GetColor(mypalette[c_index]))
@@ -328,7 +340,7 @@ def make_titleTag():
     obsPave.SetTextSize (  0.5 )
     obsPave.SetTextColor(    1 )
     obsPave.SetTextFont (   42 )
-    obsPave.AddText(obs)
+    obsPave.AddText(titleMap[options.obs])
     return obsPave
 
 def compute_SensitivityDeno(h_all,cat):    
@@ -534,7 +546,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot1.SaveAs("plots/"+obs1+cate[cat]+"_mt.pdf")
+    plot1.SaveAs("plots/"+options.obs+cate[cat]+"_mt.pdf")
 
 
     # Make canvas 
@@ -567,7 +579,7 @@ for cat in cate.keys():
     obsPave.Draw()
 
     # Save plot
-    plot2.SaveAs("plots/basic_"+obs1+cate[cat]+"_mt.pdf")
+    plot2.SaveAs("plots/basic_"+options.obs+cate[cat]+"_mt.pdf")
 
 
 

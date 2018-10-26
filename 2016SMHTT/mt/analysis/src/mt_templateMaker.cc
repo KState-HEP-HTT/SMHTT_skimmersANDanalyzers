@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("t1_phi", &t1_phi);
     arbre->SetBranchAddress("t1_mass", &t1_mass);
     arbre->SetBranchAddress("t1_charge", &t1_charge);
-    arbre->SetBranchAddress("t1_decaymode", &t1_decaymode);
+    arbre->SetBranchAddress("t1_decayMode", &t1_decayMode);
     arbre->SetBranchAddress("mu_pt", &mu_pt);
     arbre->SetBranchAddress("mu_eta", &mu_eta);
     arbre->SetBranchAddress("mu_phi", &mu_phi);
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
     arbre->SetBranchAddress("b2_pt", &b2_pt);
     arbre->SetBranchAddress("b2_eta", &b2_eta);
     arbre->SetBranchAddress("b2_phi", &b2_phi);
-    arbre->SetBranchAddress("nbtag", &nbtag);
+    arbre->SetBranchAddress("nbjets", &nbjets);
 
     arbre->SetBranchAddress("met",&met);
     arbre->SetBranchAddress("metphi",&metphi);
@@ -183,7 +183,7 @@ int main(int argc, char** argv) {
       //else if (njets>=2) is_VBF=true; 
       //else is_boosted=true;   
 
-      float var_0jetX = t1_decaymode;
+      float var_0jetX = t1_decayMode;
       float var_0jetY = m_sv;
       float var_boostedX = pt_sv;
       float var_boostedY = m_sv;
