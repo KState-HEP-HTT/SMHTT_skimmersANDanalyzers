@@ -80,7 +80,8 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("e_1", &e_1);
     Run_Tree->Branch("q_1", &q_1);
     Run_Tree->Branch("mt_1", &mt_1);
-    Run_Tree->Branch("iso_1", &iso_1);
+    Run_Tree->Branch("iso_1_old", &iso_1_old);
+    Run_Tree->Branch("iso_1_new", &iso_1_new);
     Run_Tree->Branch("t1_decayMode", &t1_decayMode);
     Run_Tree->Branch("trackpt_1", &trackpt_1);
 
@@ -133,6 +134,9 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("againstElectronVTightMVA6_1", &againstElectronVTightMVA6_1);
     Run_Tree->Branch("againstMuonLoose3_1", &againstMuonLoose3_1);
     Run_Tree->Branch("againstMuonTight3_1", &againstMuonTight3_1);
+    /////////////////////////    
+    /// ISO Old DecayMode ///
+    ///////////////////////// 
     Run_Tree->Branch("byVLooseIsolationMVArun2v1DBoldDMwLT_1", &byVLooseIsolationMVArun2v1DBoldDMwLT_1);
     Run_Tree->Branch("byLooseIsolationMVArun2v1DBoldDMwLT_1" , &byLooseIsolationMVArun2v1DBoldDMwLT_1 );
     Run_Tree->Branch("byMediumIsolationMVArun2v1DBoldDMwLT_1", &byMediumIsolationMVArun2v1DBoldDMwLT_1);
@@ -140,9 +144,21 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("byVTightIsolationMVArun2v1DBoldDMwLT_1", &byVTightIsolationMVArun2v1DBoldDMwLT_1);
     Run_Tree->Branch("byVVTightIsolationMVArun2v1DBoldDMwLT_1", &byVVTightIsolationMVArun2v1DBoldDMwLT_1);
     Run_Tree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_1", &byCombinedIsolationDeltaBetaCorrRaw3Hits_1);
-    Run_Tree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_2", &byCombinedIsolationDeltaBetaCorrRaw3Hits_2);
-    Run_Tree->Branch("byIsolationMVA3oldDMwoLTraw_1", &byIsolationMVA3oldDMwoLTraw_1);
-    Run_Tree->Branch("byIsolationMVA3oldDMwoLTraw_2", &byIsolationMVA3oldDMwoLTraw_2);
+    //Run_Tree->Branch("byIsolationMVA3oldDMwoLTraw_1", &byIsolationMVA3oldDMwoLTraw_1);
+    Run_Tree->Branch("decayModeFinding_1", &decayModeFinding_1);
+    /////////////////////////    
+    /// ISO New DecayMode ///
+    /////////////////////////
+    Run_Tree->Branch("byVLooseIsolationMVArun2v1DBnewDMwLT_1", &byVLooseIsolationMVArun2v1DBnewDMwLT_1);
+    Run_Tree->Branch("byLooseIsolationMVArun2v1DBnewDMwLT_1", &byLooseIsolationMVArun2v1DBnewDMwLT_1);
+    Run_Tree->Branch("byMediumIsolationMVArun2v1DBnewDMwLT_1", &byMediumIsolationMVArun2v1DBnewDMwLT_1);
+    Run_Tree->Branch("byTightIsolationMVArun2v1DBnewDMwLT_1", &byTightIsolationMVArun2v1DBnewDMwLT_1);
+    Run_Tree->Branch("byVTightIsolationMVArun2v1DBnewDMwLT_1", &byVTightIsolationMVArun2v1DBnewDMwLT_1);
+    Run_Tree->Branch("byVVTightIsolationMVArun2v1DBnewDMwLT_1", &byVVTightIsolationMVArun2v1DBnewDMwLT_1);
+    //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_1", &byIsolationMVA3newDMwLTraw_1);
+    Run_Tree->Branch("decayModeFindingNewDMs_1", &decayModeFindingNewDMs_1);
+
+
     Run_Tree->Branch("pt_2", &pt_2);
     Run_Tree->Branch("px_2", &px_2);
     Run_Tree->Branch("py_2", &py_2);
@@ -152,7 +168,8 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("m_2", &m_2);
     Run_Tree->Branch("e_2", &e_2);
     Run_Tree->Branch("q_2", &q_2);
-    Run_Tree->Branch("iso_2", &iso_2);
+    Run_Tree->Branch("iso_2_old", &iso_2_old);
+    Run_Tree->Branch("iso_2_new", &iso_2_new);
     Run_Tree->Branch("t2_decayMode", &t2_decayMode);
     Run_Tree->Branch("trackpt_2", &trackpt_2);
     Run_Tree->Branch("againstElectronLooseMVA6_2", &againstElectronLooseMVA6_2  );
@@ -162,12 +179,30 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("againstElectronVTightMVA6_2", &againstElectronVTightMVA6_2);
     Run_Tree->Branch("againstMuonLoose3_2", &againstMuonLoose3_2);
     Run_Tree->Branch("againstMuonTight3_2", &againstMuonTight3_2);
+    /////////////////////////    
+    /// ISO Old DecayMode ///
+    ///////////////////////// 
     Run_Tree->Branch("byVLooseIsolationMVArun2v1DBoldDMwLT_2", &byVLooseIsolationMVArun2v1DBoldDMwLT_2);
     Run_Tree->Branch("byLooseIsolationMVArun2v1DBoldDMwLT_2", &byLooseIsolationMVArun2v1DBoldDMwLT_2);
     Run_Tree->Branch("byMediumIsolationMVArun2v1DBoldDMwLT_2", &byMediumIsolationMVArun2v1DBoldDMwLT_2);
     Run_Tree->Branch("byTightIsolationMVArun2v1DBoldDMwLT_2", &byTightIsolationMVArun2v1DBoldDMwLT_2);
     Run_Tree->Branch("byVTightIsolationMVArun2v1DBoldDMwLT_2", &byVTightIsolationMVArun2v1DBoldDMwLT_2);
     Run_Tree->Branch("byVVTightIsolationMVArun2v1DBoldDMwLT_2", &byVVTightIsolationMVArun2v1DBoldDMwLT_2);
+    Run_Tree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_2", &byCombinedIsolationDeltaBetaCorrRaw3Hits_2);
+    //Run_Tree->Branch("byIsolationMVA3oldDMwoLTraw_2", &byIsolationMVA3oldDMwoLTraw_2);
+    Run_Tree->Branch("decayModeFinding_2", &decayModeFinding_2);
+    /////////////////////////    
+    /// ISO New DecayMode ///
+    /////////////////////////
+    Run_Tree->Branch("byVLooseIsolationMVArun2v1DBnewDMwLT_2", &byVLooseIsolationMVArun2v1DBnewDMwLT_2);
+    Run_Tree->Branch("byLooseIsolationMVArun2v1DBnewDMwLT_2", &byLooseIsolationMVArun2v1DBnewDMwLT_2);
+    Run_Tree->Branch("byMediumIsolationMVArun2v1DBnewDMwLT_2", &byMediumIsolationMVArun2v1DBnewDMwLT_2);
+    Run_Tree->Branch("byTightIsolationMVArun2v1DBnewDMwLT_2", &byTightIsolationMVArun2v1DBnewDMwLT_2);
+    Run_Tree->Branch("byVTightIsolationMVArun2v1DBnewDMwLT_2", &byVTightIsolationMVArun2v1DBnewDMwLT_2);
+    Run_Tree->Branch("byVVTightIsolationMVArun2v1DBnewDMwLT_2", &byVVTightIsolationMVArun2v1DBnewDMwLT_2);
+    //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
+    Run_Tree->Branch("decayModeFindingNewDMs_2", &decayModeFindingNewDMs_2);
+
 
     Run_Tree->Branch("genpX", &genpX);
     Run_Tree->Branch("genpY", &genpY);
@@ -435,8 +470,10 @@ int main(int argc, char** argv) {
       if (tau1.Pt() < 50./1.05 && tau2.Pt() < 50./1.5 ) continue;
 
       // line 771
-      if (!tree->t1DecayModeFinding) continue;
-      if (!tree->t2DecayModeFinding) continue;
+      //if (!tree->t1DecayModeFinding) continue;
+      //if (!tree->t2DecayModeFinding) continue;
+      if (!tree->t1DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
+      if (!tree->t2DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
 
       if ( abs(tree->t1Charge) != 1 || abs(tree->t2Charge) != 1) continue;
       //  line 772
@@ -449,7 +486,7 @@ int main(int argc, char** argv) {
       bool isoAll =
 	tree->t1ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5 &&
 	tree->t2ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5;
-      if (!isoAll ) continue;
+      //if (!isoAll ) continue; // For QCD control region study Doyeong commented out this.
       
       // Trigger follow https://github.com/truggles/Z_to_TauTau_13TeV/blob/MELA_test/analysisCuts.py#L23
       // tt35    = '((doubleTau35Pass > 0 && t1MatchesDoubleTau35Path > 0 && t2MatchesDoubleTau35Path > 0 && t1MatchesDoubleTau35Filter > 0 && t2MatchesDoubleTau35Filter > 0) || 
