@@ -492,7 +492,7 @@ int main(int argc, char** argv) {
 	bool isMedium = tree->mPFIDLoose && tree->mValidFraction> 0.49 && tree->mSegmentCompatibility > (goodglob ? 0.303 : 0.451); 
         if (isMC && !tree->mPFIDMedium) continue;//FIXME
         if (isData && !tree->mPFIDMedium && !isMedium) continue;//FIXME
-	if (!tree->tByVLooseIsolationMVArun2v1DBoldDMwLT) continue;//FIXME
+	if (!tree->tByVLooseIsolationMVArun2v1DBnewDMwLT) continue;//FIXME
 	// D.Kim : It should be done at analysis code for consistency with tt channel codes.
 	/*
 	if (tree->eVetoZTTp001dxyzR0>0) continue;//FIXME

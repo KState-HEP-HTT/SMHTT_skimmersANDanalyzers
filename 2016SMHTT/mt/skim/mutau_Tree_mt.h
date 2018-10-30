@@ -27,7 +27,7 @@ bool isZtt, isZmt, isZet, isZee, isZmm, isZem, isZEE, isZMM, isZLL, isFake;
 float e_1, px_1, py_1, pz_1, pt_1, phi_1, eta_1, m_1, q_1, d0_1, dZ_1, mt_1, iso_1, l1_decayMode, iso_1_v2;
 float id_m_highpt_1, id_m_loose_1, id_m_medium_1, id_m_tight_1, id_m_tightnovtx_1, id_m_hihghpt_1, id_e_mva_nt_loose_1, id_e_mva_nt_tight_1, id_e_cut_veto_1, id_e_cut_loose_1, id_e_cut_medium_1, id_e_cut_tight_1, againstElectronLooseMVA6_1, againstElectronMediumMVA6_1, againstElectronTightMVA6_1, againstElectronVLooseMVA6_1, againstElectronVTightMVA6_1, againstMuonLoose3_1, againstMuonTight3_1, decayModeFinding_1, decayModeFindingNewDMs_1,id_m_medium2016_1;
 float trigweight_1, byCombinedIsolationDeltaBetaCorrRaw3Hits_1, byIsolationMVA3oldDMwoLTraw_1, byIsolationMVA3oldDMwLTraw_1, byIsolationMVA3newDMwoLTraw_1, byIsolationMVA3newDMwLTraw_1, chargedIsoPtSum_1, neutralIsoPtSum_1, puCorrPtSum_1;
-float e_2, px_2, py_2, pz_2, pt_2, phi_2, eta_2, m_2, q_2, d0_2, dZ_2, mt_2, iso_2, l2_decayMode;
+float e_2, px_2, py_2, pz_2, pt_2, phi_2, eta_2, m_2, q_2, d0_2, dZ_2, mt_2, iso_2, iso_2_old, iso_2_new, l2_decayMode;
 float id_m_highpt_2, id_m_loose_2, id_m_medium_2, id_m_tight_2, id_m_tightnovtx_2, id_m_hihghpt_2, id_e_mva_nt_loose_2, id_e_mva_nt_tight_2, id_e_cut_veto_2, id_e_cut_loose_2, id_e_cut_medium_2, id_e_cut_tight_2, againstElectronLooseMVA6_2, againstElectronMediumMVA6_2, againstElectronTightMVA6_2, againstElectronVLooseMVA6_2, againstElectronVTightMVA6_2, againstMuonLoose3_2, againstMuonTight3_2, decayModeFinding_2, decayModeFindingNewDMs_2;
 float trigweight_2, byCombinedIsolationDeltaBetaCorrRaw3Hits_2, byIsolationMVA3oldDMwoLTraw_2, byIsolationMVA3oldDMwLTraw_2, byIsolationMVA3newDMwoLTraw_2, byIsolationMVA3newDMwLTraw_2, chargedIsoPtSum_2, neutralIsoPtSum_2, puCorrPtSum_2;
 float sigmaIetaIeta_1, deltaPhiSuperCluster_1, deltaEtaSuperCluster_1, depositR03tracker_1, depositR03ecal_1, depositR03hcal_1, trackIso_1, ecalIso_1, hcalIso_1; 
@@ -75,6 +75,7 @@ float flag_BadChargedCandidate, flag_BadPFMuon, flag_EcalDeadCellTriggerPrimitiv
 float tZTTGenDR;
 
 
+//RecoilCorrector recoilPFMetCorrector("$CMSSW_BASE/src/TypeI-PFMet_Run2016BtoH.root");
 RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
 void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil, bool ismc) {
@@ -603,7 +604,8 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     mt_2 = tree->tMtToPfMet_type1;
     dZ_2 = tree->tPVDZ;
     d0_2=tree->tPVDXY;
-    iso_2=tree->tByIsolationMVArun2v1DBoldDMwLTraw;
+    iso_2_old=tree->tByIsolationMVArun2v1DBoldDMwLTraw;
+    iso_2_new=tree->tByIsolationMVArun2v1DBnewDMwLTraw;
     q_2 = tree->tCharge;
     trackpt_2=tree->tLeadTrackPt;
     charged_signalCone_2=tree->tNChrgHadrSignalCands;
@@ -633,6 +635,10 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     //byLooseCombinedIsolationDeltaBetaCorr3HitsdR03_2 = tree->tByLooseCombinedIsolationDeltaBetaCorr3HitsdR03;
     //byMediumCombinedIsolationDeltaBetaCorr3HitsdR03_2 = tree->tByMediumCombinedIsolationDeltaBetaCorr3HitsdR03;
     //byTightCombinedIsolationDeltaBetaCorr3HitsdR03_2 = tree->tByTightCombinedIsolationDeltaBetaCorr3HitsdR03;
+    
+    /////////////////////    
+    /// Old DecayMode ///
+    /////////////////////    
     byVLooseIsolationMVArun2v1DBoldDMwLT_2 = tree->tByVLooseIsolationMVArun2v1DBoldDMwLT;
     byLooseIsolationMVArun2v1DBoldDMwLT_2 = tree->tByLooseIsolationMVArun2v1DBoldDMwLT;
     byMediumIsolationMVArun2v1DBoldDMwLT_2 = tree->tByMediumIsolationMVArun2v1DBoldDMwLT;
@@ -641,6 +647,9 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     byVVTightIsolationMVArun2v1DBoldDMwLT_2 = tree->tByVVTightIsolationMVArun2v1DBoldDMwLT;
     byCombinedIsolationDeltaBetaCorrRaw3Hits_2=tree->tByCombinedIsolationDeltaBetaCorrRaw3Hits;
     byIsolationMVA3oldDMwoLTraw_2=tree->tByIsolationMVArun2v1DBoldDMwLTraw;
+    ///////////////////////////    
+    /// Old DecayMode Rerun ///
+    ///////////////////////////        
     byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2 = tree->tRerunMVArun2v1DBoldDMwLTVLoose;
     byLooseIsolationRerunMVArun2v1DBoldDMwLT_2 = tree->tRerunMVArun2v1DBoldDMwLTLoose;
     byMediumIsolationRerunMVArun2v1DBoldDMwLT_2 = tree->tRerunMVArun2v1DBoldDMwLTMedium;
@@ -648,12 +657,24 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     byVTightIsolationRerunMVArun2v1DBoldDMwLT_2 = tree->tRerunMVArun2v1DBoldDMwLTVTight;
     byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2 = tree->tRerunMVArun2v1DBoldDMwLTVVTight;
     byIsolationRerunMVA3oldDMwLTraw_2=tree->tRerunMVArun2v1DBoldDMwLTraw;
+    /////////////////////    
+    /// New DecayMode ///
+    /////////////////////
+    byVLooseIsolationMVArun2v1DBnewDMwLT_2 = tree->tByVLooseIsolationMVArun2v1DBnewDMwLT;
+    byLooseIsolationMVArun2v1DBnewDMwLT_2 = tree->tByLooseIsolationMVArun2v1DBnewDMwLT;
+    byMediumIsolationMVArun2v1DBnewDMwLT_2 = tree->tByMediumIsolationMVArun2v1DBnewDMwLT;
+    byTightIsolationMVArun2v1DBnewDMwLT_2 = tree->tByTightIsolationMVArun2v1DBnewDMwLT;
+    byVTightIsolationMVArun2v1DBnewDMwLT_2 = tree->tByVTightIsolationMVArun2v1DBnewDMwLT;
+    byVVTightIsolationMVArun2v1DBnewDMwLT_2 = tree->tByVVTightIsolationMVArun2v1DBnewDMwLT;
+    byIsolationMVA3newDMwoLTraw_2=tree->tByIsolationMVArun2v1DBnewDMwLTraw;
+    /////////////////////
     neutralIsoPtSum_2=tree->tNeutralIsoPtSum;
     chargedIsoPtSum_2=tree->tChargedIsoPtSum;
     puCorrPtSum_2=tree->tPuCorrPtSum;
     decayModeFinding_2=tree->tDecayModeFinding;
     decayModeFindingNewDMs_2=tree->tDecayModeFindingNewDMs;
-    
+    /////////////////////
+
     jpt_1=tree->j1pt;
     jpt_2=tree->j2pt;
     jeta_1=tree->j1eta;

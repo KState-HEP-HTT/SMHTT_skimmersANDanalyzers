@@ -493,7 +493,7 @@ int main(int argc, char** argv) {
       //             (doubleTauCmbIso35RegPass > 0 && t1MatchesDoubleTauCmbIso35RegPath > 0 && t2MatchesDoubleTauCmbIso35RegPath > 0 && t1MatchesDoubleTauCmbIso35RegFilter > 0 && t2MatchesDoubleTauCmbIso35RegFilter > 0))'
       // Doyeong, this trigger requirement looks different in  your original code, do you  understand why?
       // MC & data_B, C, D, all the way to G (Table 14 page 44)
-      bool tt35      = tree->doubleTau35Pass || tree->doubleTauCmbIso35RegPass;
+      bool tt35      = tree->doubleTau35Pass;
       //&& tree->t1MatchesDoubleTau35Filter && tree->t2MatchesDoubleTau35Filter
       //&& tree->t1MatchesDoubleTau35Path   && tree->t2MatchesDoubleTau35Path;
       

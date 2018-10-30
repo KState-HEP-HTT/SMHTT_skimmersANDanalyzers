@@ -8,8 +8,14 @@ rm files_nominal/*
 ./mt_analyzer.exe myntuple/Sep10_fixQ/data_F.root files_nominal/data_F.root data_obs data_obs 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/data_G.root files_nominal/data_G.root data_obs data_obs 0
 ./mt_analyzer.exe myntuple/Sep10_fixQ/data_H.root files_nominal/data_H.root data_obs data_obs 0
-hadd -f files_nominal/Data.root files_nominal/data*.root
-rm files_nominal/data*.root
+hadd -f files_nominal/data_obs.root files_nominal/data*.root
+rm files_nominal/data_B.root
+rm files_nominal/data_C.root
+rm files_nominal/data_D.root
+rm files_nominal/data_E.root
+rm files_nominal/data_F.root
+rm files_nominal/data_G.root
+rm files_nominal/data_H.root
 
 # DY
 ./mt_analyzer.exe myntuple/Sep10_fixQ/DY.root files_nominal/ZTTall.root ZTT ZTT 0
@@ -73,6 +79,8 @@ rm files_nominal/W1.root
 rm files_nominal/W2.root
 rm files_nominal/W3.root
 rm files_nominal/W4.root
+rm files_nominal/EWKW*.root
+
 
 
 ./mt_analyzer.exe myntuple/Sep10_fixQ/WW1l1nu2q.root files_nominal/WW1L1Nu2Q.root WW1L1Nu2Q VV 0 

@@ -484,23 +484,23 @@ int main(int argc, char** argv) {
       if (tree->t2AgainstElectronVLooseMVA6 < 0.5 || tree->t2AgainstMuonLoose3 < 0.5) continue;
       
       bool isoAll =
-	tree->t1ByVLooseIsolationMVArun2v1DBnewDMwLT > 0.5 &&
-	tree->t2ByVLooseIsolationMVArun2v1DBnewDMwLT > 0.5;
-      if (!isoAll ) continue; // For QCD control region study Doyeong commented out this.
+	tree->t1ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5 &&
+	tree->t2ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5;
+      //if (!isoAll ) continue; // For QCD control region study Doyeong commented out this.
       
       // Trigger follow https://github.com/truggles/Z_to_TauTau_13TeV/blob/MELA_test/analysisCuts.py#L23
       // tt35    = '((doubleTau35Pass > 0 && t1MatchesDoubleTau35Path > 0 && t2MatchesDoubleTau35Path > 0 && t1MatchesDoubleTau35Filter > 0 && t2MatchesDoubleTau35Filter > 0) || 
       //             (doubleTauCmbIso35RegPass > 0 && t1MatchesDoubleTauCmbIso35RegPath > 0 && t2MatchesDoubleTauCmbIso35RegPath > 0 && t1MatchesDoubleTauCmbIso35RegFilter > 0 && t2MatchesDoubleTauCmbIso35RegFilter > 0))'
       // Doyeong, this trigger requirement looks different in  your original code, do you  understand why?
       // MC & data_B, C, D, all the way to G (Table 14 page 44)
-      bool tt35      = tree->doubleTau35Pass || tree->doubleTauCmbIso35RegPass;
-      //&& tree->t1MatchesDoubleTau35Filter && tree->t2MatchesDoubleTau35Filter
-      //&& tree->t1MatchesDoubleTau35Path   && tree->t2MatchesDoubleTau35Path;
+      bool tt35      = tree->doubleTau35Pass
+	&& tree->t1MatchesDoubleTau35Filter && tree->t2MatchesDoubleTau35Filter
+	&& tree->t1MatchesDoubleTau35Path   && tree->t2MatchesDoubleTau35Path;
       
       // only data_H
-      bool tt35Combo = tree->doubleTauCmbIso35RegPass;
-      //&&  tree->t1MatchesDoubleTauCmbIso35RegFilter  && tree->t2MatchesDoubleTauCmbIso35RegFilter
-      //&&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
+      bool tt35Combo = tree->doubleTauCmbIso35RegPass
+	&&  tree->t1MatchesDoubleTauCmbIso35RegFilter  && tree->t2MatchesDoubleTauCmbIso35RegFilter
+	&&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
 
       // require either tt35 or tt35Combo to fire
       if ( !tt35 && !tt35Combo) continue;
