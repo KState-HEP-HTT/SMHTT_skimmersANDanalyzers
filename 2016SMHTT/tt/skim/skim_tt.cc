@@ -503,7 +503,7 @@ int main(int argc, char** argv) {
       //&&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
 
       // require either tt35 or tt35Combo to fire
-      if ( !tt35 && !tt35Combo) continue;
+      //if ( !tt35 && !tt35Combo) continue;
       
       //  reject event if it has either an electron or a muon
       if ( tree->eVetoZTTp001dxyzR0>0 || tree->muVetoZTTp001dxyzR0>0 ) continue;
