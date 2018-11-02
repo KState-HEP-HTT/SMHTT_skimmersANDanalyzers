@@ -75,10 +75,12 @@ float genEta, genPhi, genHTT, genMass;
 float met_UESUp, met_UESDown, metphi_UESUp, metphi_UESDown, met_JESUp,met_JESDown, metphi_JESUp, metphi_JESDown, met_TESUp,met_TESDown, metphi_TESUp, metphi_TESDown;
 float t1GenCharge,t1GenDecayMode,t1GenEnergy,t1GenEta,t1GenIsPrompt,t1GenJetEta,t1GenJetPt,t1GenMotherEnergy,t1GenMotherEta,t1GenMotherPdgId,t1GenMotherPhi,t1GenMotherPt,t1GenPdgId,t1GenPhi,t1GenPt,t1GenStatus,t1ZTTGenDR,t1ZTTGenEta,t1ZTTGenMatching,t1ZTTGenPhi,t1ZTTGenPt;
 float t2GenCharge,t2GenDecayMode,t2GenEnergy,t2GenEta,t2GenIsPrompt,t2GenJetEta,t2GenJetPt,t2GenMotherEnergy,t2GenMotherEta,t2GenMotherPdgId,t2GenMotherPhi,t2GenMotherPt,t2GenPdgId,t2GenPhi,t2GenPt,t2GenStatus,t2ZTTGenDR,t2ZTTGenEta,t2ZTTGenMatching,t2ZTTGenPhi,t2ZTTGenPt;
+float t1MatchesDoubleTightTau35Path,t1MatchesDoubleTightTau35Filter,t1MatchesDoubleMediumTau40Path,t1MatchesDoubleMediumTau40Filter,t1MatchesDoubleTightTau40Path,t1MatchesDoubleTightTau40Filter;
+float t2MatchesDoubleTightTau35Path,t2MatchesDoubleTightTau35Filter,t2MatchesDoubleMediumTau40Path,t2MatchesDoubleMediumTau40Filter,t2MatchesDoubleTightTau40Path,t2MatchesDoubleTightTau40Filter;
 RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");  // For local test
 //RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
-void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil, bool ismc){
+void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil, bool ismc, bool seventeen){
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
@@ -202,18 +204,33 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     mjj_JetSinglePionHCALDown=tree->vbfMass_JetSinglePionHCALDown;
     mjj_JetTimePtEtaDown=tree->vbfMass_JetTimePtEtaDown;
 
-
-    passDoubleTau35 = tree->doubleTau35Pass;
-    matchDoubleTau35_1 = tree->t1MatchesDoubleTau35Path; // data    - path
-    matchDoubleTau35_2 = tree->t2MatchesDoubleTau35Path;
-    filterDoubleTau35_1 = tree->t1MatchesDoubleTau35Filter; // MC   - filter
-    filterDoubleTau35_2 = tree->t2MatchesDoubleTau35Filter;
-    passDoubleTauCmbIso35 = tree->doubleTauCmbIso35RegPass;
-    matchDoubleTauCmbIso35_1 = tree->t1MatchesDoubleTauCmbIso35RegPath;
-    matchDoubleTauCmbIso35_2 = tree->t2MatchesDoubleTauCmbIso35RegPath;
-    filterDoubleTauCmbIso35_1 = tree->t1MatchesDoubleTauCmbIso35RegFilter;
-    filterDoubleTauCmbIso35_2 = tree->t2MatchesDoubleTauCmbIso35RegFilter;
-
+    if (seventeen) {
+      t1MatchesDoubleTightTau35Path = tree->t1MatchesDoubleTightTau35Path;
+      t1MatchesDoubleTightTau35Filter = tree->t1MatchesDoubleTightTau35Filter;
+      t1MatchesDoubleMediumTau40Path = tree->t1MatchesDoubleMediumTau40Path;
+      t1MatchesDoubleMediumTau40Filter = tree->t1MatchesDoubleMediumTau40Filter;
+      t1MatchesDoubleTightTau40Path = tree->t1MatchesDoubleTightTau40Path;
+      t1MatchesDoubleTightTau40Filter = tree->t1MatchesDoubleTightTau40Filter;
+      
+      t2MatchesDoubleTightTau35Path = tree->t2MatchesDoubleTightTau35Path;
+      t2MatchesDoubleTightTau35Filter = tree->t2MatchesDoubleTightTau35Filter;
+      t2MatchesDoubleMediumTau40Path = tree->t2MatchesDoubleMediumTau40Path;
+      t2MatchesDoubleMediumTau40Filter = tree->t2MatchesDoubleMediumTau40Filter;
+      t2MatchesDoubleTightTau40Path = tree->t2MatchesDoubleTightTau40Path;
+      t2MatchesDoubleTightTau40Filter = tree->t2MatchesDoubleTightTau40Filter;
+    }
+    else {
+      passDoubleTau35 = tree->doubleTau35Pass;
+      matchDoubleTau35_1 = tree->t1MatchesDoubleTau35Path; // data    - path
+      matchDoubleTau35_2 = tree->t2MatchesDoubleTau35Path;
+      filterDoubleTau35_1 = tree->t1MatchesDoubleTau35Filter; // MC   - filter
+      filterDoubleTau35_2 = tree->t2MatchesDoubleTau35Filter;
+      passDoubleTauCmbIso35 = tree->doubleTauCmbIso35RegPass;
+      matchDoubleTauCmbIso35_1 = tree->t1MatchesDoubleTauCmbIso35RegPath;
+      matchDoubleTauCmbIso35_2 = tree->t2MatchesDoubleTauCmbIso35RegPath;
+      filterDoubleTauCmbIso35_1 = tree->t1MatchesDoubleTauCmbIso35RegFilter;
+      filterDoubleTauCmbIso35_2 = tree->t2MatchesDoubleTauCmbIso35RegFilter;
+    }
     genpX=tree->genpX;
     genpY=tree->genpY;
     genpT=tree->genpT;

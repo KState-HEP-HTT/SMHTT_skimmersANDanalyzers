@@ -28,9 +28,10 @@ int main(int argc, char** argv) {
     string status_sample = *(argv + 1);
     bool isMC = false;
     bool isData = false;
-
+    bool isEmbed = false;
     if (status_sample.compare("mc") == 0) isMC = true;
     if (status_sample.compare("data") == 0) isData = true;
+    if (status_sample.compare("embed") == 0) isEmbed = true;
     string out = *(argv + 2);
     string outname= out;
     TFile *fout = TFile::Open(outname.c_str(), "RECREATE");
@@ -50,6 +51,10 @@ int main(int argc, char** argv) {
     } else if (recoilType.find("Z") != std::string::npos) {
       recoil = 2;
     }
+
+    bool seventeen = false;
+    if (17 == atof(argv[5])) seventeen = true;
+
     // Get tree and couple of other histograms
     TTree* treePtr = (TTree*) fIn->Get("tt/final/Ntuple");
     TH1F *evCounter = (TH1F*) fIn->Get("tt/eventCount");
@@ -203,7 +208,6 @@ int main(int argc, char** argv) {
     //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
     Run_Tree->Branch("decayModeFindingNewDMs_2", &decayModeFindingNewDMs_2);
 
-
     Run_Tree->Branch("genpX", &genpX);
     Run_Tree->Branch("genpY", &genpY);
     Run_Tree->Branch("genpT", &genpT);
@@ -286,6 +290,23 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("bcsv_2", &bcsv_2);
     Run_Tree->Branch("bflavor_2", &bflavor_2);
 
+    if (seventeen) {
+      // https://github.com/truggles/TauTriggerSFs2017/tree/tauTriggers2017_reMiniaod_test
+      Run_Tree->Branch("t1MatchesDoubleTightTau35Path", &t1MatchesDoubleTightTau35Path);
+      Run_Tree->Branch("t1MatchesDoubleTightTau35Filter", &t1MatchesDoubleTightTau35Filter);
+      Run_Tree->Branch("t1MatchesDoubleMediumTau40Path", &t1MatchesDoubleMediumTau40Path);
+      Run_Tree->Branch("t1MatchesDoubleMediumTau40Filter", &t1MatchesDoubleMediumTau40Filter );
+      Run_Tree->Branch("t1MatchesDoubleTightTau40Path", &t1MatchesDoubleTightTau40Path);
+      Run_Tree->Branch("t1MatchesDoubleTightTau40Filter", &t1MatchesDoubleTightTau40Filter);
+
+      Run_Tree->Branch("t2MatchesDoubleTightTau35Path", &t2MatchesDoubleTightTau35Path);
+      Run_Tree->Branch("t2MatchesDoubleTightTau35Filter", &t2MatchesDoubleTightTau35Filter);
+      Run_Tree->Branch("t2MatchesDoubleMediumTau40Path", &t2MatchesDoubleMediumTau40Path);
+      Run_Tree->Branch("t2MatchesDoubleMediumTau40Filter", &t2MatchesDoubleMediumTau40Filter );
+      Run_Tree->Branch("t2MatchesDoubleTightTau40Path", &t2MatchesDoubleTightTau40Path);
+      Run_Tree->Branch("t2MatchesDoubleTightTau40Filter", &t2MatchesDoubleTightTau40Filter);
+    }
+    else {
     Run_Tree->Branch("passDoubleTau35", &passDoubleTau35);
     Run_Tree->Branch("matchDoubleTau35_1", &matchDoubleTau35_1);
     Run_Tree->Branch("matchDoubleTau35_2", &matchDoubleTau35_2);
@@ -296,6 +317,7 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("matchDoubleTauCmbIso35_2", &matchDoubleTauCmbIso35_2);
     Run_Tree->Branch("filterDoubleTauCmbIso35_1", &filterDoubleTauCmbIso35_1);
     Run_Tree->Branch("filterDoubleTauCmbIso35_2", &filterDoubleTauCmbIso35_2);
+    }
 
     Run_Tree->Branch("met_UESUp", &met_UESUp);
     Run_Tree->Branch("met_UESDown", &met_UESDown);
@@ -488,23 +510,31 @@ int main(int argc, char** argv) {
 	tree->t2ByVLooseIsolationMVArun2v1DBnewDMwLT > 0.5;
       if (!isoAll ) continue; // For QCD control region study Doyeong commented out this.
       
-      // Trigger follow https://github.com/truggles/Z_to_TauTau_13TeV/blob/MELA_test/analysisCuts.py#L23
-      // tt35    = '((doubleTau35Pass > 0 && t1MatchesDoubleTau35Path > 0 && t2MatchesDoubleTau35Path > 0 && t1MatchesDoubleTau35Filter > 0 && t2MatchesDoubleTau35Filter > 0) || 
-      //             (doubleTauCmbIso35RegPass > 0 && t1MatchesDoubleTauCmbIso35RegPath > 0 && t2MatchesDoubleTauCmbIso35RegPath > 0 && t1MatchesDoubleTauCmbIso35RegFilter > 0 && t2MatchesDoubleTauCmbIso35RegFilter > 0))'
-      // Doyeong, this trigger requirement looks different in  your original code, do you  understand why?
-      // MC & data_B, C, D, all the way to G (Table 14 page 44)
-      bool tt35      = tree->doubleTau35Pass || tree->doubleTauCmbIso35RegPass;
-      //&& tree->t1MatchesDoubleTau35Filter && tree->t2MatchesDoubleTau35Filter
-      //&& tree->t1MatchesDoubleTau35Path   && tree->t2MatchesDoubleTau35Path;
-      
-      // only data_H
-      bool tt35Combo = tree->doubleTauCmbIso35RegPass;
-      //&&  tree->t1MatchesDoubleTauCmbIso35RegFilter  && tree->t2MatchesDoubleTauCmbIso35RegFilter
-      //&&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
 
-      // require either tt35 or tt35Combo to fire
-      //if ( !tt35 && !tt35Combo) continue;
-      
+      if (seventeen && !isEmbed) {
+	bool tight35 = tree->t1MatchesDoubleTightTau35Path && tree->t1MatchesDoubleTightTau35Filter && tree->t2MatchesDoubleTightTau35Path && tree->t2MatchesDoubleTightTau35Filter;
+	bool medium40 = tree->t1MatchesDoubleMediumTau40Path && tree->t1MatchesDoubleMediumTau40Filter && tree->t2MatchesDoubleMediumTau40Path && tree->t2MatchesDoubleMediumTau40Filter;
+	bool tight40 = tree->t1MatchesDoubleTightTau40Path && tree->t1MatchesDoubleTightTau40Filter && tree->t2MatchesDoubleTightTau40Path && tree->t2MatchesDoubleTightTau40Filter;
+	if (!tight35 && !medium40 && !tight40) continue;
+      }
+      else if (!seventeen && !isEmbed){
+	// Trigger follow https://github.com/truggles/Z_to_TauTau_13TeV/blob/MELA_test/analysisCuts.py#L23
+	//bool tt35 = '((doubleTau35Pass > 0 && t1MatchesDoubleTau35Path > 0 && t2MatchesDoubleTau35Path > 0 && t1MatchesDoubleTau35Filter > 0 && t2MatchesDoubleTau35Filter > 0) || 
+	//             (doubleTauCmbIso35RegPass > 0 && t1MatchesDoubleTauCmbIso35RegPath > 0 && t2MatchesDoubleTauCmbIso35RegPath > 0 && t1MatchesDoubleTauCmbIso35RegFilter > 0 && t2MatchesDoubleTauCmbIso35RegFilter > 0))'
+	// Doyeong, this trigger requirement looks different in  your original code, do you  understand why?
+	// MC & data_B, C, D, all the way to G (Table 14 page 44)
+	bool tt35      = tree->doubleTau35Pass
+	  && tree->t1MatchesDoubleTau35Filter && tree->t2MatchesDoubleTau35Filter
+	  && tree->t1MatchesDoubleTau35Path   && tree->t2MatchesDoubleTau35Path;
+	
+	// only data_H
+	bool tt35Combo = tree->doubleTauCmbIso35RegPass
+	  &&  tree->t1MatchesDoubleTauCmbIso35RegFilter  && tree->t2MatchesDoubleTauCmbIso35RegFilter
+	  &&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
+	
+	// require either tt35 or tt35Combo to fire
+	if ( !isEmbed && !tt35 && !tt35Combo) continue;
+      }
       //  reject event if it has either an electron or a muon
       if ( tree->eVetoZTTp001dxyzR0>0 || tree->muVetoZTTp001dxyzR0>0 ) continue;
 
@@ -516,7 +546,7 @@ int main(int argc, char** argv) {
       //   since it is new event, do we have the best entry to save? If yes, save it!
 	if ( bestEntry > -1 )
 	  // this is the code that actually saves branches etc.
-	  fillTree(Run_Tree,tree,bestEntry,recoil,isMC);
+	  fillTree(Run_Tree,tree,bestEntry,recoil,isMC,seventeen);
 	
 	//  this is a new event, so the first tau pair is the best! :)
 	bestEntry=iEntry;
@@ -560,7 +590,7 @@ int main(int argc, char** argv) {
     
     // save the best pair from the last event
     if (bestEntry>-1)
-      fillTree(Run_Tree,tree,bestEntry,recoil,isMC);
+      fillTree(Run_Tree,tree,bestEntry,recoil,isMC,seventeen);
     
     // done!
     fout->cd();

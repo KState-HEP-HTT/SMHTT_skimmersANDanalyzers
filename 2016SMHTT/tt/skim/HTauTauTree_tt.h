@@ -85,6 +85,18 @@ public :
    Float_t         doubleTauCmbIso40RegGroup;
    Float_t         doubleTauCmbIso40RegPass;
    Float_t         doubleTauCmbIso40RegPrescale;
+   Float_t         t1MatchesDoubleTightTau35Path; //2017
+   Float_t         t1MatchesDoubleTightTau35Filter;
+   Float_t         t1MatchesDoubleMediumTau40Path;
+   Float_t         t1MatchesDoubleMediumTau40Filter;
+   Float_t         t1MatchesDoubleTightTau40Path;
+   Float_t         t1MatchesDoubleTightTau40Filter;
+   Float_t         t2MatchesDoubleTightTau35Path; 
+   Float_t         t2MatchesDoubleTightTau35Filter;
+   Float_t         t2MatchesDoubleMediumTau40Path;
+   Float_t         t2MatchesDoubleMediumTau40Filter;
+   Float_t         t2MatchesDoubleTightTau40Path;
+   Float_t         t2MatchesDoubleTightTau40Filter; //2017end
    Float_t         eVetoMVAIso;
    Float_t         eVetoMVAIsoVtx;
    Float_t         eVetoZTTp001dxyz;
@@ -1071,6 +1083,18 @@ public :
    TBranch        *b_doubleTauCmbIso40RegGroup;   //!
    TBranch        *b_doubleTauCmbIso40RegPass;   //!
    TBranch        *b_doubleTauCmbIso40RegPrescale;   //!
+   TBranch        *b_t1MatchesDoubleTightTau35Path;
+   TBranch        *b_t1MatchesDoubleTightTau35Filter;
+   TBranch        *b_t1MatchesDoubleMediumTau40Path;
+   TBranch        *b_t1MatchesDoubleMediumTau40Filter;
+   TBranch        *b_t1MatchesDoubleTightTau40Path;
+   TBranch        *b_t1MatchesDoubleTightTau40Filter;
+   TBranch        *b_t2MatchesDoubleTightTau35Path;
+   TBranch        *b_t2MatchesDoubleTightTau35Filter;
+   TBranch        *b_t2MatchesDoubleMediumTau40Path;
+   TBranch        *b_t2MatchesDoubleMediumTau40Filter;
+   TBranch        *b_t2MatchesDoubleTightTau40Path;
+   TBranch        *b_t2MatchesDoubleTightTau40Filter;
    TBranch        *b_eVetoMVAIso;   //!
    TBranch        *b_eVetoMVAIsoVtx;   //!
    TBranch        *b_eVetoZTTp001dxyz;   //!
@@ -2121,6 +2145,20 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("doubleTauCmbIso40RegGroup", &doubleTauCmbIso40RegGroup, &b_doubleTauCmbIso40RegGroup);
    fChain->SetBranchAddress("doubleTauCmbIso40RegPass", &doubleTauCmbIso40RegPass, &b_doubleTauCmbIso40RegPass);
    fChain->SetBranchAddress("doubleTauCmbIso40RegPrescale", &doubleTauCmbIso40RegPrescale, &b_doubleTauCmbIso40RegPrescale);
+
+   fChain->SetBranchAddress("t1MatchesDoubleTightTau35Path", &t1MatchesDoubleTightTau35Path, &b_t1MatchesDoubleTightTau35Path);
+   fChain->SetBranchAddress("t1MatchesDoubleTightTau35Filter", &t1MatchesDoubleTightTau35Filter, &b_t1MatchesDoubleTightTau35Filter);
+   fChain->SetBranchAddress("t1MatchesDoubleMediumTau40Path", &t1MatchesDoubleMediumTau40Path, &b_t1MatchesDoubleMediumTau40Path);
+   fChain->SetBranchAddress("t1MatchesDoubleMediumTau40Filter", &t1MatchesDoubleMediumTau40Filter, &b_t1MatchesDoubleMediumTau40Filter);
+   fChain->SetBranchAddress("t1MatchesDoubleTightTau40Path", &t1MatchesDoubleTightTau40Path, &b_t1MatchesDoubleTightTau40Path);
+   fChain->SetBranchAddress("t1MatchesDoubleTightTau40Filter", &t1MatchesDoubleTightTau40Filter, &b_t1MatchesDoubleTightTau40Filter);
+   fChain->SetBranchAddress("t2MatchesDoubleTightTau35Path", &t2MatchesDoubleTightTau35Path, &b_t2MatchesDoubleTightTau35Path);
+   fChain->SetBranchAddress("t2MatchesDoubleTightTau35Filter", &t2MatchesDoubleTightTau35Filter, &b_t2MatchesDoubleTightTau35Filter);
+   fChain->SetBranchAddress("t2MatchesDoubleMediumTau40Path", &t2MatchesDoubleMediumTau40Path, &b_t2MatchesDoubleMediumTau40Path);
+   fChain->SetBranchAddress("t2MatchesDoubleMediumTau40Filter", &t2MatchesDoubleMediumTau40Filter, &b_t2MatchesDoubleMediumTau40Filter);
+   fChain->SetBranchAddress("t2MatchesDoubleTightTau40Path", &t2MatchesDoubleTightTau40Path, &b_t2MatchesDoubleTightTau40Path);
+   fChain->SetBranchAddress("t2MatchesDoubleTightTau40Filter", &t2MatchesDoubleTightTau40Filter, &b_t2MatchesDoubleTightTau40Filter);
+
    fChain->SetBranchAddress("eVetoMVAIso", &eVetoMVAIso, &b_eVetoMVAIso);
    fChain->SetBranchAddress("eVetoMVAIsoVtx", &eVetoMVAIsoVtx, &b_eVetoMVAIsoVtx);
    fChain->SetBranchAddress("eVetoZTTp001dxyz", &eVetoZTTp001dxyz, &b_eVetoZTTp001dxyz);
