@@ -97,6 +97,9 @@ public :
    Float_t         t2MatchesDoubleMediumTau40Filter;
    Float_t         t2MatchesDoubleTightTau40Path;
    Float_t         t2MatchesDoubleTightTau40Filter; //2017end
+   Float_t         DoubleTightTau35Pass;
+   Float_t         DoubleMediumTau40Pass;
+   Float_t         DoubleTightTau40Pass; //2017 end
    Float_t         eVetoMVAIso;
    Float_t         eVetoMVAIsoVtx;
    Float_t         eVetoZTTp001dxyz;
@@ -1065,6 +1068,9 @@ public :
    TBranch        *b_doubleMuSingleEGroup;   //!
    TBranch        *b_doubleMuSingleEPass;   //!
    TBranch        *b_doubleMuSingleEPrescale;   //!
+   TBranch        *b_DoubleTightTau35Pass;
+   TBranch        *b_DoubleMediumTau40Pass;
+   TBranch        *b_DoubleTightTau40Pass;
    TBranch        *b_doubleTau32Group;   //!
    TBranch        *b_doubleTau32Pass;   //!
    TBranch        *b_doubleTau32Prescale;   //!
@@ -2158,6 +2164,9 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("t2MatchesDoubleMediumTau40Filter", &t2MatchesDoubleMediumTau40Filter, &b_t2MatchesDoubleMediumTau40Filter);
    fChain->SetBranchAddress("t2MatchesDoubleTightTau40Path", &t2MatchesDoubleTightTau40Path, &b_t2MatchesDoubleTightTau40Path);
    fChain->SetBranchAddress("t2MatchesDoubleTightTau40Filter", &t2MatchesDoubleTightTau40Filter, &b_t2MatchesDoubleTightTau40Filter);
+   fChain->SetBranchAddress("DoubleTightTau35Pass",&DoubleTightTau35Pass,&b_DoubleTightTau35Pass);
+   fChain->SetBranchAddress("DoubleMediumTau40Pass",&DoubleMediumTau40Pass,&b_DoubleMediumTau40Pass);
+   fChain->SetBranchAddress("DoubleTightTau40Pass",&DoubleTightTau40Pass,&b_DoubleTightTau40Pass);
 
    fChain->SetBranchAddress("eVetoMVAIso", &eVetoMVAIso, &b_eVetoMVAIso);
    fChain->SetBranchAddress("eVetoMVAIsoVtx", &eVetoMVAIsoVtx, &b_eVetoMVAIsoVtx);

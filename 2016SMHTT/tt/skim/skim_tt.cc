@@ -305,18 +305,22 @@ int main(int argc, char** argv) {
       Run_Tree->Branch("t2MatchesDoubleMediumTau40Filter", &t2MatchesDoubleMediumTau40Filter );
       Run_Tree->Branch("t2MatchesDoubleTightTau40Path", &t2MatchesDoubleTightTau40Path);
       Run_Tree->Branch("t2MatchesDoubleTightTau40Filter", &t2MatchesDoubleTightTau40Filter);
+      
+      Run_Tree->Branch("DoubleTightTau35Pass", &DoubleTightTau35Pass);
+      Run_Tree->Branch("DoubleMediumTau40Pass", &DoubleMediumTau40Pass);
+      Run_Tree->Branch("DoubleTightTau40Pass", &DoubleTightTau40Pass);
     }
     else {
-    Run_Tree->Branch("passDoubleTau35", &passDoubleTau35);
-    Run_Tree->Branch("matchDoubleTau35_1", &matchDoubleTau35_1);
-    Run_Tree->Branch("matchDoubleTau35_2", &matchDoubleTau35_2);
-    Run_Tree->Branch("filterDoubleTau35_1", &filterDoubleTau35_1);
-    Run_Tree->Branch("filterDoubleTau35_2", &filterDoubleTau35_2);
-    Run_Tree->Branch("passDoubleTauCmbIso35", &passDoubleTauCmbIso35);
-    Run_Tree->Branch("matchDoubleTauCmbIso35_1", &matchDoubleTauCmbIso35_1);
-    Run_Tree->Branch("matchDoubleTauCmbIso35_2", &matchDoubleTauCmbIso35_2);
-    Run_Tree->Branch("filterDoubleTauCmbIso35_1", &filterDoubleTauCmbIso35_1);
-    Run_Tree->Branch("filterDoubleTauCmbIso35_2", &filterDoubleTauCmbIso35_2);
+      Run_Tree->Branch("passDoubleTau35", &passDoubleTau35);
+      Run_Tree->Branch("matchDoubleTau35_1", &matchDoubleTau35_1);
+      Run_Tree->Branch("matchDoubleTau35_2", &matchDoubleTau35_2);
+      Run_Tree->Branch("filterDoubleTau35_1", &filterDoubleTau35_1);
+      Run_Tree->Branch("filterDoubleTau35_2", &filterDoubleTau35_2);
+      Run_Tree->Branch("passDoubleTauCmbIso35", &passDoubleTauCmbIso35);
+      Run_Tree->Branch("matchDoubleTauCmbIso35_1", &matchDoubleTauCmbIso35_1);
+      Run_Tree->Branch("matchDoubleTauCmbIso35_2", &matchDoubleTauCmbIso35_2);
+      Run_Tree->Branch("filterDoubleTauCmbIso35_1", &filterDoubleTauCmbIso35_1);
+      Run_Tree->Branch("filterDoubleTauCmbIso35_2", &filterDoubleTauCmbIso35_2);
     }
 
     Run_Tree->Branch("met_UESUp", &met_UESUp);
@@ -512,9 +516,15 @@ int main(int argc, char** argv) {
       
 
       if (seventeen && !isEmbed) {
-	bool tight35 = tree->t1MatchesDoubleTightTau35Path && tree->t1MatchesDoubleTightTau35Filter && tree->t2MatchesDoubleTightTau35Path && tree->t2MatchesDoubleTightTau35Filter;
-	bool medium40 = tree->t1MatchesDoubleMediumTau40Path && tree->t1MatchesDoubleMediumTau40Filter && tree->t2MatchesDoubleMediumTau40Path && tree->t2MatchesDoubleMediumTau40Filter;
-	bool tight40 = tree->t1MatchesDoubleTightTau40Path && tree->t1MatchesDoubleTightTau40Filter && tree->t2MatchesDoubleTightTau40Path && tree->t2MatchesDoubleTightTau40Filter;
+	bool tight35 = tree->DoubleTightTau35Pass
+	  && tree->t1MatchesDoubleTightTau35Path && tree->t1MatchesDoubleTightTau35Filter 
+	  && tree->t2MatchesDoubleTightTau35Path && tree->t2MatchesDoubleTightTau35Filter;
+	bool medium40 = tree->DoubleMediumTau40Pass
+	  && tree->t1MatchesDoubleMediumTau40Path && tree->t1MatchesDoubleMediumTau40Filter 
+	  && tree->t2MatchesDoubleMediumTau40Path && tree->t2MatchesDoubleMediumTau40Filter;
+	bool tight40 = tree->DoubleTightTau40Pass
+	  && tree->t1MatchesDoubleTightTau40Path && tree->t1MatchesDoubleTightTau40Filter 
+	  && tree->t2MatchesDoubleTightTau40Path && tree->t2MatchesDoubleTightTau40Filter;
 	if (!tight35 && !medium40 && !tight40) continue;
       }
       else if (!seventeen && !isEmbed){
