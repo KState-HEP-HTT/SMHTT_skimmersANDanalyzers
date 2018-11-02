@@ -46,6 +46,9 @@ int main(int argc, char** argv) {
     if (recoilType.compare("W") == 0)  recoil=1;
     if (recoilType.compare("Z") == 0)  recoil=2;
 
+    bool seventeen = false;
+    if (17 == atof(argv[5])) seventeen = true;
+
     TTree* treePtr = (TTree*) fIn->Get("mt/final/Ntuple");
     TH1F *evCounter = (TH1F*) fIn->Get("mt/eventCount");
     TH1F *evCounterW = (TH1F*) fIn->Get("mt/summedWeights");
@@ -89,39 +92,43 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("genM", &genM);
     Run_Tree->Branch("vispX", &vispX);
     Run_Tree->Branch("vispY", &vispY);
-
-    Run_Tree->Branch("matchIsoMu22eta2p1_1", &matchIsoMu22eta2p1_1);
-    Run_Tree->Branch("matchIsoTkMu22eta2p1_1", &matchIsoTkMu22eta2p1_1);
-    Run_Tree->Branch("matchIsoMu22_1", &matchIsoMu22_1);
-    Run_Tree->Branch("matchIsoTkMu22_1", &matchIsoTkMu22_1);
-    Run_Tree->Branch("matchIsoMu24_1", &matchIsoMu24_1);
-    Run_Tree->Branch("matchIsoTkMu24_1", &matchIsoTkMu24_1);
-    Run_Tree->Branch("matchIsoMu19Tau20_1", &matchIsoMu19Tau20_1);
-    Run_Tree->Branch("matchIsoMu21Tau20_1", &matchIsoMu21Tau20_1);
-
-    Run_Tree->Branch("filterIsoMu22eta2p1_1", &filterIsoMu22eta2p1_1);
-    Run_Tree->Branch("filterIsoTkMu22eta2p1_1", &filterIsoTkMu22eta2p1_1);
-    Run_Tree->Branch("filterIsoMu22_1", &filterIsoMu22_1);
-    Run_Tree->Branch("filterIsoTkMu22_1", &filterIsoTkMu22_1);
-    Run_Tree->Branch("filterIsoMu24_1", &filterIsoMu24_1);
-    Run_Tree->Branch("filterIsoTkMu24_1", &filterIsoTkMu24_1);
-    Run_Tree->Branch("filterIsoMu19Tau20_1", &filterIsoMu19Tau20_1);
-    Run_Tree->Branch("filterIsoMu21Tau20_1", &filterIsoMu21Tau20_1);
-
-    Run_Tree->Branch("passIsoMu22eta2p1", &passIsoMu22eta2p1);
-    Run_Tree->Branch("passIsoTkMu22eta2p1", &passIsoTkMu22eta2p1);
-    Run_Tree->Branch("passIsoMu22", &passIsoMu22);
-    Run_Tree->Branch("passIsoTkMu22", &passIsoTkMu22);
-    Run_Tree->Branch("passIsoMu24", &passIsoMu24);
-    Run_Tree->Branch("passIsoTkMu24", &passIsoTkMu24);
-    Run_Tree->Branch("passIsoMu19Tau20", &passIsoMu19Tau20);
-    Run_Tree->Branch("passIsoMu21Tau20", &passIsoMu21Tau20);
-
-    Run_Tree->Branch("matchIsoMu19Tau20_2", &matchIsoMu19Tau20_2);
-    Run_Tree->Branch("matchIsoMu21Tau20_2", &matchIsoMu21Tau20_2);
-    Run_Tree->Branch("filterIsoMu19Tau20_2", &filterIsoMu19Tau20_2);
-    Run_Tree->Branch("filterIsoMu21Tau20_2", &filterIsoMu21Tau20_2);
-
+    if (seventeen) {
+      Run_Tree->Branch("mMatchesIsoMu20Tau27Path", &mMatchesIsoMu20Tau27Path); 
+      Run_Tree->Branch("mMatchesIsoMu20Tau27Filter", &mMatchesIsoMu20Tau27Filter); 
+      Run_Tree->Branch("tMatchesIsoMu20Tau27Path", &tMatchesIsoMu20Tau27Path); 
+      Run_Tree->Branch("tMatchesIsoMu20Tau27Filter", &tMatchesIsoMu20Tau27Filter); 
+      Run_Tree->Branch("Mu20Tau27Pass", &Mu20Tau27Pass); 
+    }
+    else {
+      Run_Tree->Branch("matchIsoMu22eta2p1_1", &matchIsoMu22eta2p1_1);
+      Run_Tree->Branch("matchIsoTkMu22eta2p1_1", &matchIsoTkMu22eta2p1_1);
+      Run_Tree->Branch("matchIsoMu22_1", &matchIsoMu22_1);
+      Run_Tree->Branch("matchIsoTkMu22_1", &matchIsoTkMu22_1);
+      Run_Tree->Branch("matchIsoMu24_1", &matchIsoMu24_1);
+      Run_Tree->Branch("matchIsoTkMu24_1", &matchIsoTkMu24_1);
+      Run_Tree->Branch("matchIsoMu19Tau20_1", &matchIsoMu19Tau20_1);
+      Run_Tree->Branch("matchIsoMu21Tau20_1", &matchIsoMu21Tau20_1);
+      Run_Tree->Branch("filterIsoMu22eta2p1_1", &filterIsoMu22eta2p1_1);
+      Run_Tree->Branch("filterIsoTkMu22eta2p1_1", &filterIsoTkMu22eta2p1_1);
+      Run_Tree->Branch("filterIsoMu22_1", &filterIsoMu22_1);
+      Run_Tree->Branch("filterIsoTkMu22_1", &filterIsoTkMu22_1);
+      Run_Tree->Branch("filterIsoMu24_1", &filterIsoMu24_1);
+      Run_Tree->Branch("filterIsoTkMu24_1", &filterIsoTkMu24_1);
+      Run_Tree->Branch("filterIsoMu19Tau20_1", &filterIsoMu19Tau20_1);
+      Run_Tree->Branch("filterIsoMu21Tau20_1", &filterIsoMu21Tau20_1);
+      Run_Tree->Branch("passIsoMu22eta2p1", &passIsoMu22eta2p1);
+      Run_Tree->Branch("passIsoTkMu22eta2p1", &passIsoTkMu22eta2p1);
+      Run_Tree->Branch("passIsoMu22", &passIsoMu22);
+      Run_Tree->Branch("passIsoTkMu22", &passIsoTkMu22);
+      Run_Tree->Branch("passIsoMu24", &passIsoMu24);
+      Run_Tree->Branch("passIsoTkMu24", &passIsoTkMu24);
+      Run_Tree->Branch("passIsoMu19Tau20", &passIsoMu19Tau20);
+      Run_Tree->Branch("passIsoMu21Tau20", &passIsoMu21Tau20);
+      Run_Tree->Branch("matchIsoMu19Tau20_2", &matchIsoMu19Tau20_2);
+      Run_Tree->Branch("matchIsoMu21Tau20_2", &matchIsoMu21Tau20_2);
+      Run_Tree->Branch("filterIsoMu19Tau20_2", &filterIsoMu19Tau20_2);
+      Run_Tree->Branch("filterIsoMu21Tau20_2", &filterIsoMu21Tau20_2);
+    }
     Run_Tree->Branch("flag_goodVertices", &flag_goodVertices);
     Run_Tree->Branch("flag_globalTightHalo2016", &flag_globalTightHalo2016);
     Run_Tree->Branch("flag_eeBadSc", &flag_eeBadSc);
@@ -465,7 +472,8 @@ int main(int argc, char** argv) {
 
 	// Baseline selection https://www.dropbox.com/s/mb6e26affiodpn3/AN2016_355_v10.pdf?dl=0 page 22
 	// line 443. No requirement on OS/SS @ skimming level
-        if (tree->m_t_DR<0.5) continue;
+	if (seventeen && dau1.DeltaR(dau2) < 0.5) continue;
+        if (!seventeen && tree->m_t_DR<0.5) continue;
 
 	// loosen requirement on muon pT a bit for energy scale systematics  (by 5%) 
 	// loosen tau pT and muon eta keeping Cécile's cut
@@ -492,7 +500,7 @@ int main(int argc, char** argv) {
 	bool isMedium = tree->mPFIDLoose && tree->mValidFraction> 0.49 && tree->mSegmentCompatibility > (goodglob ? 0.303 : 0.451); 
         if (isMC && !tree->mPFIDMedium) continue;//FIXME
         if (isData && !tree->mPFIDMedium && !isMedium) continue;//FIXME
-	if (!tree->tByVLooseIsolationMVArun2v1DBoldDMwLT) continue;//FIXME
+	if (!tree->tByVLooseIsolationMVArun2v1DBnewDMwLT) continue;//FIXME
 	// D.Kim : It should be done at analysis code for consistency with tt channel codes.
 	/*
 	if (tree->eVetoZTTp001dxyzR0>0) continue;//FIXME
@@ -509,7 +517,7 @@ int main(int argc, char** argv) {
 	}
         if (evt_now!=evt_before){
            if (bestEntry>-1 && bestPT>29)
-	     fillTree(Run_Tree,tree,bestEntry,recoil, isMC);
+	     fillTree(Run_Tree,tree,bestEntry,recoil, isMC, seventeen);
            bestEntry=iEntry;
 	   bestPT=dau2.Pt();
 	}
@@ -526,7 +534,7 @@ int main(int argc, char** argv) {
 	evt_before=evt_now;
     }
     if (bestPT>29)
-      fillTree(Run_Tree,tree,bestEntry,recoil,isMC);
+      fillTree(Run_Tree,tree,bestEntry,recoil,isMC,seventeen);
     fout->cd();
     Run_Tree->Write();
     map<string, TH1F*>::const_iterator iMap1 = myMap1->begin();

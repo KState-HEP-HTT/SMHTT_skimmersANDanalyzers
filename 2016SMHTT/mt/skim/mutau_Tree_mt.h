@@ -73,12 +73,12 @@ float mjj_JetAbsoluteFlavMapDown,mjj_JetAbsoluteMPFBiasDown,mjj_JetAbsoluteScale
 float mjj_JetAbsoluteFlavMapUp,mjj_JetAbsoluteMPFBiasUp,mjj_JetAbsoluteScaleUp,mjj_JetAbsoluteStatUp,mjj_JetEnUp,mjj_JetFlavorQCDUp,mjj_JetFragmentationUp,mjj_JetPileUpDataMCUp,mjj_JetPileUpPtBBUp,mjj_JetPileUpPtEC1Up,mjj_JetPileUpPtEC2Up,mjj_JetPileUpPtHFUp,mjj_JetPileUpPtRefUp,mjj_JetRelativeBalUp,mjj_JetRelativeFSRUp,mjj_JetRelativeJEREC1Up,mjj_JetRelativeJEREC2Up,mjj_JetRelativeJERHFUp,mjj_JetRelativePtBBUp,mjj_JetRelativePtEC1Up,mjj_JetRelativePtEC2Up,mjj_JetRelativePtHFUp,mjj_JetRelativeStatECUp,mjj_JetRelativeStatFSRUp,mjj_JetRelativeStatHFUp,mjj_JetSinglePionECALUp,mjj_JetSinglePionHCALUp,mjj_JetTimePtEtaUp;
 float flag_BadChargedCandidate, flag_BadPFMuon, flag_EcalDeadCellTriggerPrimitive, flag_HBHENoise, flag_HBHENoiseIso, flag_badCloneMuon, flag_badGlobalMuon, flag_eeBadSc, flag_globalTightHalo2016, flag_goodVertices;
 float tZTTGenDR;
-
+float mMatchesIsoMu20Tau27Path, mMatchesIsoMu20Tau27Filter, tMatchesIsoMu20Tau27Path, tMatchesIsoMu20Tau27Filter, Mu20Tau27Pass;
 
 //RecoilCorrector recoilPFMetCorrector("$CMSSW_BASE/src/TypeI-PFMet_Run2016BtoH.root");
 RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
-void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil, bool ismc) {
+void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil, bool ismc, bool seventeen) {
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
@@ -215,38 +215,46 @@ void fillTree(TTree *Run_Tree, HTauTauTree_mt *tree, int entry_tree, int recoil,
     mjj_JetSinglePionHCALDown=tree->vbfMass_JetSinglePionHCALDown;
     mjj_JetTimePtEtaDown=tree->vbfMass_JetTimePtEtaDown;
 
-    matchIsoMu22eta2p1_1=tree->mMatchesIsoMu22eta2p1Path;
-    matchIsoTkMu22eta2p1_1=tree->mMatchesIsoTkMu22eta2p1Path;
-    matchIsoMu22_1=tree->mMatchesIsoMu22Path;
-    matchIsoTkMu22_1=tree->mMatchesIsoTkMu22Path;
-    matchIsoMu24_1=tree->mMatchesIsoMu24Path;
-    matchIsoTkMu24_1=tree->mMatchesIsoTkMu24Path;
-    matchIsoMu19Tau20_1=tree->mMatchesMu19Tau20sL1Path;
-    matchIsoMu21Tau20_1=tree->mMatchesMu21Tau20sL1Path;
-
-    filterIsoMu22eta2p1_1=tree->mIsoMu22eta2p1Filter;
-    filterIsoTkMu22eta2p1_1=tree->mIsoTkMu22eta2p1Filter;
-    filterIsoMu22_1=tree->mIsoMu22Filter;
-    filterIsoTkMu22_1=tree->mIsoTkMu22Filter;
-    filterIsoMu24_1=tree->mIsoMu24Filter;
-    filterIsoTkMu24_1=tree->mIsoTkMu24Filter;
-    filterIsoMu19Tau20_1=tree->mMatchesMu19Tau20sL1Filter;
-    filterIsoMu21Tau20_1=tree->mMatchesMu21Tau20sL1Filter;
-
-    passIsoMu22eta2p1=tree->singleIsoMu22eta2p1Pass;
-    passIsoTkMu22eta2p1=tree->singleIsoTkMu22eta2p1Pass;
-    passIsoMu22=tree->singleIsoMu22Pass;
-    passIsoTkMu22=tree->singleIsoTkMu22Pass;
-    passIsoMu24=tree->singleIsoMu24Pass;
-    passIsoTkMu24=tree->singleIsoTkMu24Pass;
-    passIsoMu19Tau20=tree->singleMu19eta2p1LooseTau20singleL1Pass;
-    passIsoMu21Tau20=tree->singleMu21eta2p1LooseTau20singleL1Pass;
-   
-    matchIsoMu19Tau20_2=tree->tMatchesMu19Tau20sL1Path;
-    matchIsoMu21Tau20_2=tree->tMatchesMu21Tau20sL1Path;
-    filterIsoMu19Tau20_2=tree->tMatchesMu19Tau20sL1Filter;
-    filterIsoMu21Tau20_2=tree->tMatchesMu21Tau20sL1Filter;
-
+    if (seventeen) { // cross trigger only
+      mMatchesIsoMu20Tau27Path=tree->mMatchesIsoMu20Tau27Path;
+      mMatchesIsoMu20Tau27Filter=tree->mMatchesIsoMu20Tau27Filter;
+      tMatchesIsoMu20Tau27Path=tree->tMatchesIsoMu20Tau27Path;
+      tMatchesIsoMu20Tau27Filter=tree->tMatchesIsoMu20Tau27Filter;
+      Mu20Tau27Pass=tree->Mu20Tau27Pass;
+    }
+    else {
+      matchIsoMu22eta2p1_1=tree->mMatchesIsoMu22eta2p1Path;
+      matchIsoTkMu22eta2p1_1=tree->mMatchesIsoTkMu22eta2p1Path;
+      matchIsoMu22_1=tree->mMatchesIsoMu22Path;
+      matchIsoTkMu22_1=tree->mMatchesIsoTkMu22Path;
+      matchIsoMu24_1=tree->mMatchesIsoMu24Path;
+      matchIsoTkMu24_1=tree->mMatchesIsoTkMu24Path;
+      matchIsoMu19Tau20_1=tree->mMatchesMu19Tau20sL1Path;
+      matchIsoMu21Tau20_1=tree->mMatchesMu21Tau20sL1Path;
+      
+      filterIsoMu22eta2p1_1=tree->mIsoMu22eta2p1Filter;
+      filterIsoTkMu22eta2p1_1=tree->mIsoTkMu22eta2p1Filter;
+      filterIsoMu22_1=tree->mIsoMu22Filter;
+      filterIsoTkMu22_1=tree->mIsoTkMu22Filter;
+      filterIsoMu24_1=tree->mIsoMu24Filter;
+      filterIsoTkMu24_1=tree->mIsoTkMu24Filter;
+      filterIsoMu19Tau20_1=tree->mMatchesMu19Tau20sL1Filter;
+      filterIsoMu21Tau20_1=tree->mMatchesMu21Tau20sL1Filter;
+      
+      passIsoMu22eta2p1=tree->singleIsoMu22eta2p1Pass;
+      passIsoTkMu22eta2p1=tree->singleIsoTkMu22eta2p1Pass;
+      passIsoMu22=tree->singleIsoMu22Pass;
+      passIsoTkMu22=tree->singleIsoTkMu22Pass;
+      passIsoMu24=tree->singleIsoMu24Pass;
+      passIsoTkMu24=tree->singleIsoTkMu24Pass;
+      passIsoMu19Tau20=tree->singleMu19eta2p1LooseTau20singleL1Pass;
+      passIsoMu21Tau20=tree->singleMu21eta2p1LooseTau20singleL1Pass;
+      
+      matchIsoMu19Tau20_2=tree->tMatchesMu19Tau20sL1Path;
+      matchIsoMu21Tau20_2=tree->tMatchesMu21Tau20sL1Path;
+      filterIsoMu19Tau20_2=tree->tMatchesMu19Tau20sL1Filter;
+      filterIsoMu21Tau20_2=tree->tMatchesMu21Tau20sL1Filter;
+    }
     genpX=tree->genpX;
     genpY=tree->genpY;
     genpT=tree->genpT;

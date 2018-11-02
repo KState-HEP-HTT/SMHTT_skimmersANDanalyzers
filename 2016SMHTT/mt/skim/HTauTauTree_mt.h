@@ -369,6 +369,11 @@ public :
    Float_t         mMu23Ele12Filter;
    Float_t         mMu8Ele23DZFilter;
    Float_t         mMu8Ele23Filter;
+   Float_t         mMatchesIsoMu20Tau27Path; //2017
+   Float_t         mMatchesIsoMu20Tau27Filter;
+   Float_t         tMatchesIsoMu20Tau27Path;
+   Float_t         tMatchesIsoMu20Tau27Filter;
+   Float_t         Mu20Tau27Pass; //2017 end
    Float_t         mMuonHits;
    Float_t         mNearestZMass;
    Float_t         mNormTrkChi2;
@@ -1348,6 +1353,11 @@ public :
    TBranch        *b_mMu23Ele12Filter;   //!
    TBranch        *b_mMu8Ele23DZFilter;   //!
    TBranch        *b_mMu8Ele23Filter;   //!
+   TBranch        *b_mMatchesIsoMu20Tau27Path;
+   TBranch        *b_mMatchesIsoMu20Tau27Filter;
+   TBranch        *b_tMatchesIsoMu20Tau27Path;
+   TBranch        *b_tMatchesIsoMu20Tau27Filter;
+   TBranch        *b_Mu20Tau27Pass;
    TBranch        *b_mMuonHits;   //!
    TBranch        *b_mNearestZMass;   //!
    TBranch        *b_mNormTrkChi2;   //!
@@ -2350,6 +2360,11 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("mMu23Ele12Filter", &mMu23Ele12Filter, &b_mMu23Ele12Filter);
    _tree->SetBranchAddress("mMu8Ele23DZFilter", &mMu8Ele23DZFilter, &b_mMu8Ele23DZFilter);
    _tree->SetBranchAddress("mMu8Ele23Filter", &mMu8Ele23Filter, &b_mMu8Ele23Filter);
+   _tree->SetBranchAddress("mMatchesIsoMu20Tau27Path", &mMatchesIsoMu20Tau27Path, &b_mMatchesIsoMu20Tau27Path);
+   _tree->SetBranchAddress("mMatchesIsoMu20Tau27Filter", &mMatchesIsoMu20Tau27Filter, &b_mMatchesIsoMu20Tau27Filter);
+   _tree->SetBranchAddress("tMatchesIsoMu20Tau27Path", &tMatchesIsoMu20Tau27Path, &b_tMatchesIsoMu20Tau27Path);
+   _tree->SetBranchAddress("tMatchesIsoMu20Tau27Filter", &tMatchesIsoMu20Tau27Filter, &b_tMatchesIsoMu20Tau27Filter);
+   _tree->SetBranchAddress("Mu20Tau27Pass", &Mu20Tau27Pass, &b_Mu20Tau27Pass);
    _tree->SetBranchAddress("mMuonHits", &mMuonHits, &b_mMuonHits);
    _tree->SetBranchAddress("mNearestZMass", &mNearestZMass, &b_mNearestZMass);
    _tree->SetBranchAddress("mNormTrkChi2", &mNormTrkChi2, &b_mNormTrkChi2);
