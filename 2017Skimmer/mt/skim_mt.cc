@@ -199,52 +199,21 @@ int main(int argc, char** argv) {
     //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
     Run_Tree->Branch("decayModeFindingNewDMs_2", &decayModeFindingNewDMs_2);
 
-
-    /*Run_Tree->Branch("byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2", &byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2, "byVLooseIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byLooseIsolationRerunMVArun2v1DBoldDMwLT_2", &byLooseIsolationRerunMVArun2v1DBoldDMwLT_2, "byLooseIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byMediumIsolationRerunMVArun2v1DBoldDMwLT_2", &byMediumIsolationRerunMVArun2v1DBoldDMwLT_2, "byMediumIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byTightIsolationRerunMVArun2v1DBoldDMwLT_2", &byTightIsolationRerunMVArun2v1DBoldDMwLT_2, "byTightIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byVTightIsolationRerunMVArun2v1DBoldDMwLT_2", &byVTightIsolationRerunMVArun2v1DBoldDMwLT_2, "byVTightIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2", &byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2, "byVVTightIsolationRerunMVArun2v1DBoldDMwLT_2/F");
-    Run_Tree->Branch("byIsolationRerunMVA3oldDMwLTraw_2", &byIsolationRerunMVA3oldDMwLTraw_2, "byIsolationRerunMVA3oldDMwLTraw_2/F");*/
-
     Run_Tree->Branch("numGenJets", &numGenJets);
     Run_Tree->Branch("jetPt_2", &jetPt_2);
 
     Run_Tree->Branch("pt_tt", &pt_tt);//, "pt_tt/F");
     Run_Tree->Branch("m_vis", &m_vis);//, "m_vis/F");
-    /*Run_Tree->Branch("m_coll", &m_coll, "m_coll/F");
-    Run_Tree->Branch("m_coll_uesD", &m_coll_uesD, "m_coll_uesD/F");
-    Run_Tree->Branch("m_coll_uesU", &m_coll_uesU, "m_coll_uesU/F");
-    Run_Tree->Branch("m_coll_tesD", &m_coll_tesD, "m_coll_tesD/F");
-    Run_Tree->Branch("m_coll_tesU", &m_coll_tesU, "m_coll_tesU/F");
-    Run_Tree->Branch("m_coll_jesU", &m_coll_jesU, "m_coll_jesU/F");
-    Run_Tree->Branch("m_coll_jesD", &m_coll_jesD, "m_coll_jesD/F");*/
 
     Run_Tree->Branch("pt_top1", &pt_top1);
     Run_Tree->Branch("pt_top2", &pt_top2);
-    Run_Tree->Branch("genweight", &genweight);
 
     Run_Tree->Branch("met_JESDown", &met_JESDown);
-    //Run_Tree->Branch("met_JERDown", &met_JERDown, "met_JERDown/F");
-    //Run_Tree->Branch("met_MESDown", &met_MESDown, "met_MESDown/F");
-    //Run_Tree->Branch("met_EESDown", &met_EESDown, "met_EESDown/F");
-    //Run_Tree->Branch("met_TESDown", &met_TESDown, "met_TESDown/F");
-    //Run_Tree->Branch("met_PESDown", &met_PESDown, "met_PESDown/F");
     Run_Tree->Branch("met_UESDown", &met_UESDown);
     Run_Tree->Branch("met_JESUp", &met_JESUp);
-    //Run_Tree->Branch("met_JERUp", &met_JERUp, "met_JERUp/F");
-    //Run_Tree->Branch("met_MESUp", &met_MESUp, "met_MESUp/F");
-    //Run_Tree->Branch("met_EESUp", &met_EESUp, "met_EESUp/F");
-    //Run_Tree->Branch("met_TESUp", &met_TESUp, "met_TESUp/F");
-    //Run_Tree->Branch("met_PESUp", &met_PESUp, "met_PESUp/F");
     Run_Tree->Branch("met_UESUp", &met_UESUp);
     Run_Tree->Branch("metphi_JESDown", &metphi_JESDown);
-    //Run_Tree->Branch("metphi_JERDown", &metphi_JERDown, "metphi_JERDown/F");
-    //Run_Tree->Branch("metphi_MESDown", &metphi_MESDown, "metphi_MESDown/F");
-    //Run_Tree->Branch("metphi_EESDown", &metphi_EESDown, "metphi_EESDown/F");
     Run_Tree->Branch("metphi_TESDown", &metphi_TESDown);
-    //Run_Tree->Branch("metphi_PESDown", &metphi_PESDown, "metphi_PESDown/F");
     Run_Tree->Branch("metphi_UESDown", &metphi_UESDown);
     Run_Tree->Branch("metphi_JESUp", &metphi_JESUp);
     //Run_Tree->Branch("metphi_JERUp", &metphi_JERUp, "metphi_JERUp/F");
@@ -267,32 +236,13 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("metphi", &metphi);
     Run_Tree->Branch("met_px", &met_px);
     Run_Tree->Branch("met_py", &met_py);
-    //Run_Tree->Branch("pzetavis", &pzetavis, "pzetavis/F");
-    //Run_Tree->Branch("pzetamiss", &pzetamiss, "pzetamiss/F");
-    //Run_Tree->Branch("dphi_12", &dphi_12, "dphi_12/F");
-    //Run_Tree->Branch("dphi_taumet", &dphi_taumet, "dphi_taumet/F");
-    //Run_Tree->Branch("dphi_mumet", &dphi_mumet, "dphi_mumet/F");
 
     Run_Tree->Branch("mjj", &mjj);
     Run_Tree->Branch("jdeta", &jdeta);//, "jdeta/F");
-    //Run_Tree->Branch("njetingap", &njetingap, "njetingap/I");
-    //Run_Tree->Branch("njetingap20", &njetingap20, "njetingap20/I");
     Run_Tree->Branch("mjj_JESUp", &mjj_JESUp);
-    //Run_Tree->Branch("jdeta_JESUp", &jdeta_JESUp, "jdeta_JESUp/F");
-    //Run_Tree->Branch("njetingap_JESUp", &njetingap_JESUp, "njetingap_JESUp/I");
-    //Run_Tree->Branch("njetingap20_JESUp", &njetingap20_JESUp, "njetingap20_JESUp/I");
     Run_Tree->Branch("mjj_JESDown", &mjj_JESDown);
-    //Run_Tree->Branch("jdeta_JESDown", &jdeta_JESDown, "jdeta_JESDown/F");
-    //Run_Tree->Branch("njetingap_JESDown", &njetingap_JESDown, "njetingap_JESDown/I");
-    //Run_Tree->Branch("njetingap20_JESDown", &njetingap20_JESDown, "njetingap20_JESDown/I");
     Run_Tree->Branch("gen_match_1", &gen_match_1);//, "gen_match_1/I");
     Run_Tree->Branch("gen_match_2", &gen_match_2);//, "gen_match_2/I");
-    //Run_Tree->Branch("jdphi", &jdphi, "jdphi/F");
-    //Run_Tree->Branch("dijetpt", &dijetpt, "dijetpt/F");
-    //Run_Tree->Branch("dijetphi", &dijetphi, "dijetphi/F");
-    //Run_Tree->Branch("hdijetphi", &hdijetphi, "hdijetphi/F");
-    //Run_Tree->Branch("visjeteta", &visjeteta, "visjeteta/F");
-    //Run_Tree->Branch("ptvis", &ptvis, "ptvis/F");
 
     if (isMC){
       Run_Tree->Branch("njets_JetAbsoluteFlavMapDown", &njets_JetAbsoluteFlavMapDown);

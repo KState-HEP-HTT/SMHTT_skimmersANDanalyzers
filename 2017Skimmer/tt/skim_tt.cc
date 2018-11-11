@@ -225,7 +225,6 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("numGenJets", &numGenJets);
     Run_Tree->Branch("pt_top1", &pt_top1);
     Run_Tree->Branch("pt_top2", &pt_top2);
-    Run_Tree->Branch("genweight", &genweight);
 
     Run_Tree->Branch("met_JESDown", &met_JESDown);
     Run_Tree->Branch("met_UESDown", &met_UESDown);
