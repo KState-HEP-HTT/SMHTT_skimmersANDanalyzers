@@ -16,16 +16,15 @@ public :
 
    Float_t         EmbPtWeight;
    Float_t         Eta;
-   Float_t         Flag_BadChargedCandidateFilter;
-   Float_t         Flag_BadPFMuonFilter;
-   Float_t         Flag_EcalDeadCellTriggerPrimitiveFilter;
+   Float_t         Flag_goodVertices;
+   Float_t         Flag_globalSuperTightHalo2016Filter;
    Float_t         Flag_HBHENoiseFilter;
    Float_t         Flag_HBHENoiseIsoFilter;
-   Float_t         Flag_badCloneMuonFilter;
-   Float_t         Flag_badGlobalMuonFilter;
+   Float_t         Flag_EcalDeadCellTriggerPrimitiveFilter;
+   Float_t         Flag_BadPFMuonFilter;
+   Float_t         Flag_BadChargedCandidateFilter;
    Float_t         Flag_eeBadScFilter;
-   Float_t         Flag_globalTightHalo2016Filter;
-   Float_t         Flag_goodVertices;
+   Float_t         Flag_ecalBadCalibFilter;
    Float_t         GenWeight;
    Float_t         Ht;
    Float_t         LT;
@@ -39,6 +38,7 @@ public :
    Float_t         NUP;
    Float_t         Phi;
    Float_t         Pt;
+   Float_t         bjetDeepCSVVeto20MediumWoNoisyJets;
    Float_t         bjetCISVVeto20Loose;
    Float_t         bjetCISVVeto20Medium;
    Float_t         bjetCISVVeto20Tight;
@@ -118,21 +118,41 @@ public :
    Float_t         j2partonflavor;
    Float_t         j2phi;
    Float_t         j2pt;
+
+   Float_t         j1csvWoNoisyJets;
+   Float_t         j1etaWoNoisyJets;
+   Float_t         j1hadronflavorWoNoisyJets;
+   Float_t         j1partonflavorWoNoisyJets;
+   Float_t         j1phiWoNoisyJets;
+   Float_t         j1ptWoNoisyJets;
+   Float_t         j2csvWoNoisyJets;
+   Float_t         j2etaWoNoisyJets;
+   Float_t         j2hadronflavorWoNoisyJets;
+   Float_t         j2partonflavorWoNoisyJets;
+   Float_t         j2phiWoNoisyJets;
+   Float_t         j2ptWoNoisyJets;
+
    Float_t         j2ptDown;
    Float_t         j2ptUp;
    Float_t         j2pu;
    Float_t         j2rawf;
+
    Float_t         jb1csv;
+   Float_t         jb1csvWoNoisyJets;
    Float_t         jb1csv_CSVL;
    Float_t         jb1eta;
+   Float_t         jb1etaWoNoisyJets;
    Float_t         jb1eta_CSVL;
    Float_t         jb1hadronflavor;
+   Float_t         jb1hadronflavorWoNoisyJets;
    Float_t         jb1hadronflavor_CSVL;
    Float_t         jb1partonflavor;
    Float_t         jb1partonflavor_CSVL;
    Float_t         jb1phi;
+   Float_t         jb1phiWoNoisyJets;
    Float_t         jb1phi_CSVL;
    Float_t         jb1pt;
+   Float_t         jb1ptWoNoisyJets;
    Float_t         jb1ptDown;
    Float_t         jb1ptDown_CSVL;
    Float_t         jb1ptUp;
@@ -143,16 +163,21 @@ public :
    Float_t         jb1rawf;
    Float_t         jb1rawf_CSVL;
    Float_t         jb2csv;
+   Float_t         jb2csvWoNoisyJets;
    Float_t         jb2csv_CSVL;
    Float_t         jb2eta;
+   Float_t         jb2etaWoNoisyJets;
    Float_t         jb2eta_CSVL;
    Float_t         jb2hadronflavor;
+   Float_t         jb2hadronflavorWoNoisyJets;
    Float_t         jb2hadronflavor_CSVL;
    Float_t         jb2partonflavor;
    Float_t         jb2partonflavor_CSVL;
    Float_t         jb2phi;
+   Float_t         jb2phiWoNoisyJets;
    Float_t         jb2phi_CSVL;
    Float_t         jb2pt;
+   Float_t         jb2ptWoNoisyJets;
    Float_t         jb2ptDown;
    Float_t         jb2ptDown_CSVL;
    Float_t         jb2ptUp;
@@ -163,9 +188,11 @@ public :
    Float_t         jb2rawf;
    Float_t         jb2rawf_CSVL;
    Float_t         jetVeto20;
+   Float_t         jetVeto20WoNoisyJets;
    Float_t         jetVeto20_JetEnDown;
    Float_t         jetVeto20_JetEnUp;
    Float_t         jetVeto30;
+   Float_t         jetVeto30WoNoisyJets;
    Float_t         jetVeto30_JetAbsoluteFlavMapDown;
    Float_t         jetVeto30_JetAbsoluteFlavMapUp;
    Float_t         jetVeto30_JetAbsoluteMPFBiasDown;
@@ -898,6 +925,7 @@ public :
    Float_t         vbfMVA_JetEnDown;
    Float_t         vbfMVA_JetEnUp;
    Float_t         vbfMass;
+   Float_t         vbfMassWoNoisyJets;
    Float_t         vbfMass_JetAbsoluteFlavMapDown;
    Float_t         vbfMass_JetAbsoluteFlavMapUp;
    Float_t         vbfMass_JetAbsoluteMPFBiasDown;
@@ -1006,16 +1034,17 @@ public :
    
    TBranch        *b_EmbPtWeight;   //!
    TBranch        *b_Eta;   //!
-   TBranch        *b_Flag_BadChargedCandidateFilter;   //!
-   TBranch        *b_Flag_BadPFMuonFilter;   //!
-   TBranch        *b_Flag_EcalDeadCellTriggerPrimitiveFilter;   //!
-   TBranch        *b_Flag_HBHENoiseFilter;   //!
-   TBranch        *b_Flag_HBHENoiseIsoFilter;   //!
-   TBranch        *b_Flag_badCloneMuonFilter;   //!
-   TBranch        *b_Flag_badGlobalMuonFilter;   //!
-   TBranch        *b_Flag_eeBadScFilter;   //!
-   TBranch        *b_Flag_globalTightHalo2016Filter;   //!
-   TBranch        *b_Flag_goodVertices;   //!
+
+   TBranch        *b_Flag_goodVertices;
+   TBranch        *b_Flag_globalSuperTightHalo2016Filter;
+   TBranch        *b_Flag_HBHENoiseFilter;
+   TBranch        *b_Flag_HBHENoiseIsoFilter;
+   TBranch        *b_Flag_EcalDeadCellTriggerPrimitiveFilter;
+   TBranch        *b_Flag_BadPFMuonFilter;
+   TBranch        *b_Flag_BadChargedCandidateFilter;
+   TBranch        *b_Flag_eeBadScFilter;
+   TBranch        *b_Flag_ecalBadCalibFilter;
+
    TBranch        *b_GenWeight;   //!
    TBranch        *b_Ht;   //!
    TBranch        *b_LT;   //!
@@ -1029,6 +1058,7 @@ public :
    TBranch        *b_NUP;   //!
    TBranch        *b_Phi;   //!
    TBranch        *b_Pt;   //!
+   TBranch        *b_bjetDeepCSVVeto20MediumWoNoisyJets;
    TBranch        *b_bjetCISVVeto20Loose;   //!
    TBranch        *b_bjetCISVVeto20Medium;   //!
    TBranch        *b_bjetCISVVeto20Tight;   //!
@@ -1112,17 +1142,36 @@ public :
    TBranch        *b_j2ptUp;   //!
    TBranch        *b_j2pu;   //!
    TBranch        *b_j2rawf;   //!
+
+   TBranch        *b_j1csvWoNoisyJets;   //!
+   TBranch        *b_j1etaWoNoisyJets;   //!
+   TBranch        *b_j1hadronflavorWoNoisyJets;   //!
+   TBranch        *b_j1partonflavorWoNoisyJets;   //!
+   TBranch        *b_j1phiWoNoisyJets;   //!
+   TBranch        *b_j1ptWoNoisyJets;   //!
+   TBranch        *b_j2csvWoNoisyJets;   //!
+   TBranch        *b_j2etaWoNoisyJets;   //!
+   TBranch        *b_j2hadronflavorWoNoisyJets;   //!
+   TBranch        *b_j2partonflavorWoNoisyJets;   //!
+   TBranch        *b_j2phiWoNoisyJets;   //!
+   TBranch        *b_j2ptWoNoisyJets;   //!
+
    TBranch        *b_jb1csv;   //!
+   TBranch        *b_jb1csvWoNoisyJets;   //!
    TBranch        *b_jb1csv_CSVL;   //!
    TBranch        *b_jb1eta;   //!
+   TBranch        *b_jb1etaWoNoisyJets;   //!
    TBranch        *b_jb1eta_CSVL;   //!
    TBranch        *b_jb1hadronflavor;   //!
+   TBranch        *b_jb1hadronflavorWoNoisyJets;   //!
    TBranch        *b_jb1hadronflavor_CSVL;   //!
    TBranch        *b_jb1partonflavor;   //!
    TBranch        *b_jb1partonflavor_CSVL;   //!
    TBranch        *b_jb1phi;   //!
+   TBranch        *b_jb1phiWoNoisyJets;   //!
    TBranch        *b_jb1phi_CSVL;   //!
    TBranch        *b_jb1pt;   //!
+   TBranch        *b_jb1ptWoNoisyJets;   //!
    TBranch        *b_jb1ptDown;   //!
    TBranch        *b_jb1ptDown_CSVL;   //!
    TBranch        *b_jb1ptUp;   //!
@@ -1133,16 +1182,21 @@ public :
    TBranch        *b_jb1rawf;   //!
    TBranch        *b_jb1rawf_CSVL;   //!
    TBranch        *b_jb2csv;   //!
+   TBranch        *b_jb2csvWoNoisyJets;   //!
    TBranch        *b_jb2csv_CSVL;   //!
    TBranch        *b_jb2eta;   //!
+   TBranch        *b_jb2etaWoNoisyJets;   //!
    TBranch        *b_jb2eta_CSVL;   //!
    TBranch        *b_jb2hadronflavor;   //!
+   TBranch        *b_jb2hadronflavorWoNoisyJets;   //!
    TBranch        *b_jb2hadronflavor_CSVL;   //!
    TBranch        *b_jb2partonflavor;   //!
    TBranch        *b_jb2partonflavor_CSVL;   //!
    TBranch        *b_jb2phi;   //!
+   TBranch        *b_jb2phiWoNoisyJets;   //!
    TBranch        *b_jb2phi_CSVL;   //!
    TBranch        *b_jb2pt;   //!
+   TBranch        *b_jb2ptWoNoisyJets;   //!
    TBranch        *b_jb2ptDown;   //!
    TBranch        *b_jb2ptDown_CSVL;   //!
    TBranch        *b_jb2ptUp;   //!
@@ -1153,9 +1207,11 @@ public :
    TBranch        *b_jb2rawf;   //!
    TBranch        *b_jb2rawf_CSVL;   //!
    TBranch        *b_jetVeto20;   //!
+   TBranch        *b_jetVeto20WoNoisyJets;   //!
    TBranch        *b_jetVeto20_JetEnDown;   //!
    TBranch        *b_jetVeto20_JetEnUp;   //!
    TBranch        *b_jetVeto30;   //!
+   TBranch        *b_jetVeto30WoNoisyJets;   //!
    TBranch        *b_jetVeto30_JetAbsoluteFlavMapDown;   //!
    TBranch        *b_jetVeto30_JetAbsoluteFlavMapUp;   //!
    TBranch        *b_jetVeto30_JetAbsoluteMPFBiasDown;   //!
@@ -1888,6 +1944,7 @@ public :
    TBranch        *b_vbfMVA_JetEnDown;   //!
    TBranch        *b_vbfMVA_JetEnUp;   //!
    TBranch        *b_vbfMass;   //!
+   TBranch        *b_vbfMassWoNoisyJets;   //!
    TBranch        *b_vbfMass_JetAbsoluteFlavMapDown;   //!
    TBranch        *b_vbfMass_JetAbsoluteFlavMapUp;   //!
    TBranch        *b_vbfMass_JetAbsoluteMPFBiasDown;   //!
@@ -2019,16 +2076,17 @@ void HTauTauTree_mt::Init(TTree* tree)
 
    _tree->SetBranchAddress("EmbPtWeight", &EmbPtWeight, &b_EmbPtWeight);
    _tree->SetBranchAddress("Eta", &Eta, &b_Eta);
-   _tree->SetBranchAddress("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter, &b_Flag_BadChargedCandidateFilter);
-   _tree->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter, &b_Flag_BadPFMuonFilter);
-   _tree->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter, &b_Flag_EcalDeadCellTriggerPrimitiveFilter);
+
+   _tree->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices, &b_Flag_goodVertices);
+   _tree->SetBranchAddress("Flag_globalSuperTightHalo2016Filter", &Flag_globalSuperTightHalo2016Filter, &b_Flag_globalSuperTightHalo2016Filter);
    _tree->SetBranchAddress("Flag_HBHENoiseFilter", &Flag_HBHENoiseFilter, &b_Flag_HBHENoiseFilter);
    _tree->SetBranchAddress("Flag_HBHENoiseIsoFilter", &Flag_HBHENoiseIsoFilter, &b_Flag_HBHENoiseIsoFilter);
-   _tree->SetBranchAddress("Flag_badCloneMuonFilter", &Flag_badCloneMuonFilter, &b_Flag_badCloneMuonFilter);
-   _tree->SetBranchAddress("Flag_badGlobalMuonFilter", &Flag_badGlobalMuonFilter, &b_Flag_badGlobalMuonFilter);
+   _tree->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter, &b_Flag_EcalDeadCellTriggerPrimitiveFilter);
+   _tree->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter, &b_Flag_BadPFMuonFilter);
+   _tree->SetBranchAddress("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter, &b_Flag_BadChargedCandidateFilter);
    _tree->SetBranchAddress("Flag_eeBadScFilter", &Flag_eeBadScFilter, &b_Flag_eeBadScFilter);
-   _tree->SetBranchAddress("Flag_globalTightHalo2016Filter", &Flag_globalTightHalo2016Filter, &b_Flag_globalTightHalo2016Filter);
-   _tree->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices, &b_Flag_goodVertices);
+   _tree->SetBranchAddress("Flag_ecalBadCalibFilter", &Flag_ecalBadCalibFilter, &b_Flag_ecalBadCalibFilter);
+
    _tree->SetBranchAddress("GenWeight", &GenWeight, &b_GenWeight);
    _tree->SetBranchAddress("Ht", &Ht, &b_Ht);
    _tree->SetBranchAddress("LT", &LT, &b_LT);
@@ -2042,6 +2100,7 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("NUP", &NUP, &b_NUP);
    _tree->SetBranchAddress("Phi", &Phi, &b_Phi);
    _tree->SetBranchAddress("Pt", &Pt, &b_Pt);
+   _tree->SetBranchAddress("bjetDeepCSVVeto20MediumWoNoisyJets", &bjetDeepCSVVeto20MediumWoNoisyJets, &b_bjetDeepCSVVeto20MediumWoNoisyJets);
    _tree->SetBranchAddress("bjetCISVVeto20Loose", &bjetCISVVeto20Loose, &b_bjetCISVVeto20Loose);
    _tree->SetBranchAddress("bjetCISVVeto20Medium", &bjetCISVVeto20Medium, &b_bjetCISVVeto20Medium);
    _tree->SetBranchAddress("bjetCISVVeto20Tight", &bjetCISVVeto20Tight, &b_bjetCISVVeto20Tight);
@@ -2125,17 +2184,36 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("j2ptUp", &j2ptUp, &b_j2ptUp);
    _tree->SetBranchAddress("j2pu", &j2pu, &b_j2pu);
    _tree->SetBranchAddress("j2rawf", &j2rawf, &b_j2rawf);
+
+   _tree->SetBranchAddress("j1csvWoNoisyJets", &j1csvWoNoisyJets, &b_j1csvWoNoisyJets);
+   _tree->SetBranchAddress("j1etaWoNoisyJets", &j1etaWoNoisyJets, &b_j1etaWoNoisyJets);
+   _tree->SetBranchAddress("j1hadronflavorWoNoisyJets", &j1hadronflavorWoNoisyJets, &b_j1hadronflavorWoNoisyJets);
+   _tree->SetBranchAddress("j1partonflavorWoNoisyJets", &j1partonflavorWoNoisyJets, &b_j1partonflavorWoNoisyJets);
+   _tree->SetBranchAddress("j1phiWoNoisyJets", &j1phiWoNoisyJets, &b_j1phiWoNoisyJets);
+   _tree->SetBranchAddress("j1ptWoNoisyJets", &j1ptWoNoisyJets, &b_j1ptWoNoisyJets);
+   _tree->SetBranchAddress("j2csvWoNoisyJets", &j2csvWoNoisyJets, &b_j2csvWoNoisyJets);
+   _tree->SetBranchAddress("j2etaWoNoisyJets", &j2etaWoNoisyJets, &b_j2etaWoNoisyJets);
+   _tree->SetBranchAddress("j2hadronflavorWoNoisyJets", &j2hadronflavorWoNoisyJets, &b_j2hadronflavorWoNoisyJets);
+   _tree->SetBranchAddress("j2partonflavorWoNoisyJets", &j2partonflavorWoNoisyJets, &b_j2partonflavorWoNoisyJets);
+   _tree->SetBranchAddress("j2phiWoNoisyJets", &j2phiWoNoisyJets, &b_j2phiWoNoisyJets);
+   _tree->SetBranchAddress("j2ptWoNoisyJets", &j2ptWoNoisyJets, &b_j2ptWoNoisyJets);
+
    _tree->SetBranchAddress("jb1csv", &jb1csv, &b_jb1csv);
+   _tree->SetBranchAddress("jb1csvWoNoisyJets", &jb1csvWoNoisyJets, &b_jb1csvWoNoisyJets);
    _tree->SetBranchAddress("jb1csv_CSVL", &jb1csv_CSVL, &b_jb1csv_CSVL);
    _tree->SetBranchAddress("jb1eta", &jb1eta, &b_jb1eta);
+   _tree->SetBranchAddress("jb1etaWoNoisyJets", &jb1etaWoNoisyJets, &b_jb1etaWoNoisyJets);
    _tree->SetBranchAddress("jb1eta_CSVL", &jb1eta_CSVL, &b_jb1eta_CSVL);
    _tree->SetBranchAddress("jb1hadronflavor", &jb1hadronflavor, &b_jb1hadronflavor);
+   _tree->SetBranchAddress("jb1hadronflavorWoNoisyJets", &jb1hadronflavorWoNoisyJets, &b_jb1hadronflavorWoNoisyJets);
    _tree->SetBranchAddress("jb1hadronflavor_CSVL", &jb1hadronflavor_CSVL, &b_jb1hadronflavor_CSVL);
    _tree->SetBranchAddress("jb1partonflavor", &jb1partonflavor, &b_jb1partonflavor);
    _tree->SetBranchAddress("jb1partonflavor_CSVL", &jb1partonflavor_CSVL, &b_jb1partonflavor_CSVL);
    _tree->SetBranchAddress("jb1phi", &jb1phi, &b_jb1phi);
+   _tree->SetBranchAddress("jb1phiWoNoisyJets", &jb1phiWoNoisyJets, &b_jb1phiWoNoisyJets);
    _tree->SetBranchAddress("jb1phi_CSVL", &jb1phi_CSVL, &b_jb1phi_CSVL);
    _tree->SetBranchAddress("jb1pt", &jb1pt, &b_jb1pt);
+   _tree->SetBranchAddress("jb1ptWoNoisyJets", &jb1ptWoNoisyJets, &b_jb1ptWoNoisyJets);
    _tree->SetBranchAddress("jb1ptDown", &jb1ptDown, &b_jb1ptDown);
    _tree->SetBranchAddress("jb1ptDown_CSVL", &jb1ptDown_CSVL, &b_jb1ptDown_CSVL);
    _tree->SetBranchAddress("jb1ptUp", &jb1ptUp, &b_jb1ptUp);
@@ -2146,16 +2224,21 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("jb1rawf", &jb1rawf, &b_jb1rawf);
    _tree->SetBranchAddress("jb1rawf_CSVL", &jb1rawf_CSVL, &b_jb1rawf_CSVL);
    _tree->SetBranchAddress("jb2csv", &jb2csv, &b_jb2csv);
+   _tree->SetBranchAddress("jb2csvWoNoisyJets", &jb2csvWoNoisyJets, &b_jb2csvWoNoisyJets);
    _tree->SetBranchAddress("jb2csv_CSVL", &jb2csv_CSVL, &b_jb2csv_CSVL);
    _tree->SetBranchAddress("jb2eta", &jb2eta, &b_jb2eta);
+   _tree->SetBranchAddress("jb2etaWoNoisyJets", &jb2etaWoNoisyJets, &b_jb2etaWoNoisyJets);
    _tree->SetBranchAddress("jb2eta_CSVL", &jb2eta_CSVL, &b_jb2eta_CSVL);
    _tree->SetBranchAddress("jb2hadronflavor", &jb2hadronflavor, &b_jb2hadronflavor);
+   _tree->SetBranchAddress("jb2hadronflavorWoNoisyJets", &jb2hadronflavorWoNoisyJets, &b_jb2hadronflavorWoNoisyJets);
    _tree->SetBranchAddress("jb2hadronflavor_CSVL", &jb2hadronflavor_CSVL, &b_jb2hadronflavor_CSVL);
    _tree->SetBranchAddress("jb2partonflavor", &jb2partonflavor, &b_jb2partonflavor);
    _tree->SetBranchAddress("jb2partonflavor_CSVL", &jb2partonflavor_CSVL, &b_jb2partonflavor_CSVL);
    _tree->SetBranchAddress("jb2phi", &jb2phi, &b_jb2phi);
+   _tree->SetBranchAddress("jb2phiWoNoisyJets", &jb2phiWoNoisyJets, &b_jb2phiWoNoisyJets);
    _tree->SetBranchAddress("jb2phi_CSVL", &jb2phi_CSVL, &b_jb2phi_CSVL);
    _tree->SetBranchAddress("jb2pt", &jb2pt, &b_jb2pt);
+   _tree->SetBranchAddress("jb2ptWoNoisyJets", &jb2ptWoNoisyJets, &b_jb2ptWoNoisyJets);
    _tree->SetBranchAddress("jb2ptDown", &jb2ptDown, &b_jb2ptDown);
    _tree->SetBranchAddress("jb2ptDown_CSVL", &jb2ptDown_CSVL, &b_jb2ptDown_CSVL);
    _tree->SetBranchAddress("jb2ptUp", &jb2ptUp, &b_jb2ptUp);
@@ -2166,9 +2249,11 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("jb2rawf", &jb2rawf, &b_jb2rawf);
    _tree->SetBranchAddress("jb2rawf_CSVL", &jb2rawf_CSVL, &b_jb2rawf_CSVL);
    _tree->SetBranchAddress("jetVeto20", &jetVeto20, &b_jetVeto20);
+   _tree->SetBranchAddress("jetVeto20WoNoisyJets", &jetVeto20WoNoisyJets, &b_jetVeto20WoNoisyJets);
    _tree->SetBranchAddress("jetVeto20_JetEnDown", &jetVeto20_JetEnDown, &b_jetVeto20_JetEnDown);
    _tree->SetBranchAddress("jetVeto20_JetEnUp", &jetVeto20_JetEnUp, &b_jetVeto20_JetEnUp);
    _tree->SetBranchAddress("jetVeto30", &jetVeto30, &b_jetVeto30);
+   _tree->SetBranchAddress("jetVeto30WoNoisyJets", &jetVeto30WoNoisyJets, &b_jetVeto30WoNoisyJets);
    _tree->SetBranchAddress("jetVeto30_JetAbsoluteFlavMapDown", &jetVeto30_JetAbsoluteFlavMapDown, &b_jetVeto30_JetAbsoluteFlavMapDown);
    _tree->SetBranchAddress("jetVeto30_JetAbsoluteFlavMapUp", &jetVeto30_JetAbsoluteFlavMapUp, &b_jetVeto30_JetAbsoluteFlavMapUp);
    _tree->SetBranchAddress("jetVeto30_JetAbsoluteMPFBiasDown", &jetVeto30_JetAbsoluteMPFBiasDown, &b_jetVeto30_JetAbsoluteMPFBiasDown);
@@ -2901,6 +2986,7 @@ void HTauTauTree_mt::Init(TTree* tree)
    _tree->SetBranchAddress("vbfMVA_JetEnDown", &vbfMVA_JetEnDown, &b_vbfMVA_JetEnDown);
    _tree->SetBranchAddress("vbfMVA_JetEnUp", &vbfMVA_JetEnUp, &b_vbfMVA_JetEnUp);
    _tree->SetBranchAddress("vbfMass", &vbfMass, &b_vbfMass);
+   _tree->SetBranchAddress("vbfMassWoNoisyJets", &vbfMassWoNoisyJets, &b_vbfMassWoNoisyJets);
    _tree->SetBranchAddress("vbfMass_JetAbsoluteFlavMapDown", &vbfMass_JetAbsoluteFlavMapDown, &b_vbfMass_JetAbsoluteFlavMapDown);
    _tree->SetBranchAddress("vbfMass_JetAbsoluteFlavMapUp", &vbfMass_JetAbsoluteFlavMapUp, &b_vbfMass_JetAbsoluteFlavMapUp);
    _tree->SetBranchAddress("vbfMass_JetAbsoluteMPFBiasDown", &vbfMass_JetAbsoluteMPFBiasDown, &b_vbfMass_JetAbsoluteMPFBiasDown);

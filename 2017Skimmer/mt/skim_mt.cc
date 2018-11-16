@@ -1,3 +1,6 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//  https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2017#mutau%20checklist  //
+///////////////////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -72,9 +75,6 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("Rivet_nJets30", &Rivet_nJets30);
 
     Run_Tree->Branch("pt_1", &pt_1);
-    Run_Tree->Branch("px_1", &px_1);
-    Run_Tree->Branch("py_1", &py_1);
-    Run_Tree->Branch("pz_1", &pz_1);
     Run_Tree->Branch("phi_1", &phi_1);
     Run_Tree->Branch("eta_1", &eta_1);
     Run_Tree->Branch("m_1", &m_1);
@@ -84,14 +84,6 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("iso_1", &iso_1);
     Run_Tree->Branch("iso_1_v2", &iso_1_v2);
     Run_Tree->Branch("id_m_medium_1", &id_m_medium_1);
-    Run_Tree->Branch("id_m_medium2016_1", &id_m_medium2016_1);
-    //Run_Tree->Branch("id_m_tight_1", &id_m_tight_1, "id_m_tight_1/O");
-    Run_Tree->Branch("genpX", &genpX);
-    Run_Tree->Branch("genpY", &genpY);
-    Run_Tree->Branch("genpT", &genpT);
-    Run_Tree->Branch("genM", &genM);
-    Run_Tree->Branch("vispX", &vispX);
-    Run_Tree->Branch("vispY", &vispY);
     if (seventeen) {
       // Cross trigger
       Run_Tree->Branch("mMatchesIsoMu20Tau27Path", &mMatchesIsoMu20Tau27Path); 
@@ -138,41 +130,15 @@ int main(int argc, char** argv) {
       Run_Tree->Branch("filterIsoMu19Tau20_2", &filterIsoMu19Tau20_2);
       Run_Tree->Branch("filterIsoMu21Tau20_2", &filterIsoMu21Tau20_2);
     }
-    Run_Tree->Branch("flag_goodVertices", &flag_goodVertices);
-    Run_Tree->Branch("flag_globalTightHalo2016", &flag_globalTightHalo2016);
-    Run_Tree->Branch("flag_eeBadSc", &flag_eeBadSc);
-    Run_Tree->Branch("flag_badGlobalMuon", &flag_badGlobalMuon);
-    Run_Tree->Branch("flag_badCloneMuon", &flag_badCloneMuon);
-    Run_Tree->Branch("flag_HBHENoiseIso", &flag_HBHENoiseIso);
-    Run_Tree->Branch("flag_HBHENoise", &flag_HBHENoise);
-    Run_Tree->Branch("flag_EcalDeadCellTriggerPrimitive", &flag_EcalDeadCellTriggerPrimitive);
-    Run_Tree->Branch("flag_BadPFMuon", &flag_BadPFMuon);
-    Run_Tree->Branch("flag_BadChargedCandidate", &flag_BadChargedCandidate);
-
     Run_Tree->Branch("pt_2", &pt_2);
     Run_Tree->Branch("phi_2", &phi_2);
     Run_Tree->Branch("eta_2", &eta_2);
-    Run_Tree->Branch("px_2", &px_2);
-    Run_Tree->Branch("py_2", &py_2);
-    Run_Tree->Branch("pz_2", &pz_2);
     Run_Tree->Branch("m_2", &m_2);
     Run_Tree->Branch("e_2", &e_2);
     Run_Tree->Branch("q_2", &q_2);
-    //Run_Tree->Branch("d0_2", &d0_2, "d0_2/F");
-    //Run_Tree->Branch("dZ_2", &dZ_2, "dZ_2/F");
-    //Run_Tree->Branch("mt_2", &mt_2, "mt_2/F");
     Run_Tree->Branch("l2_decayMode", &l2_decayMode);
-    //Run_Tree->Branch("againstElectronLooseMVA6_2", &againstElectronLooseMVA6_2, "againstElectronLooseMVA6_2/F");
-    //Run_Tree->Branch("againstElectronMediumMVA6_2", &againstElectronMediumMVA6_2, "againstElectronMediumMVA6_2/F");
-    //Run_Tree->Branch("againstElectronTightMVA6_2", &againstElectronTightMVA6_2, "againstElectronTightMVA6_2/F");
     Run_Tree->Branch("againstElectronVLooseMVA6_2", &againstElectronVLooseMVA6_2);
-    //Run_Tree->Branch("againstElectronVTightMVA6_2", &againstElectronVTightMVA6_2, "againstElectronVTightMVA6_2/F");
-    //Run_Tree->Branch("againstMuonLoose3_2", &againstMuonLoose3_2, "againstMuonLoose3_2/F");
     Run_Tree->Branch("againstMuonTight3_2", &againstMuonTight3_2);
-    //Run_Tree->Branch("byLooseCombinedIsolationDeltaBetaCorr3Hits_2", &byLooseCombinedIsolationDeltaBetaCorr3Hits_2, "byLooseCombinedIsolationDeltaBetaCorr3Hits_2/F");
-    //Run_Tree->Branch("byMediumCombinedIsolationDeltaBetaCorr3Hits_2", &byMediumCombinedIsolationDeltaBetaCorr3Hits_2, "byMediumCombinedIsolationDeltaBetaCorr3Hits_2/F");
-    //Run_Tree->Branch("byTightCombinedIsolationDeltaBetaCorr3Hits_2", &byTightCombinedIsolationDeltaBetaCorr3Hits_2, "byTightCombinedIsolationDeltaBetaCorr3Hits_2/F");
-    //Run_Tree->Branch("byCombinedIsolationDeltaBetaCorrRaw3Hits_2", &byCombinedIsolationDeltaBetaCorrRaw3Hits_2, "byCombinedIsolationDeltaBetaCorrRaw3Hits_2/F");
 
     /////////////////////////    
     /// ISO Old DecayMode ///
@@ -189,6 +155,7 @@ int main(int argc, char** argv) {
     /////////////////////////    
     /// ISO New DecayMode ///
     /////////////////////////
+    /*
     Run_Tree->Branch("byVLooseIsolationMVArun2v1DBnewDMwLT_2", &byVLooseIsolationMVArun2v1DBnewDMwLT_2);
     Run_Tree->Branch("byLooseIsolationMVArun2v1DBnewDMwLT_2", &byLooseIsolationMVArun2v1DBnewDMwLT_2);
     Run_Tree->Branch("byMediumIsolationMVArun2v1DBnewDMwLT_2", &byMediumIsolationMVArun2v1DBnewDMwLT_2);
@@ -196,32 +163,18 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("byVTightIsolationMVArun2v1DBnewDMwLT_2", &byVTightIsolationMVArun2v1DBnewDMwLT_2);
     Run_Tree->Branch("byVVTightIsolationMVArun2v1DBnewDMwLT_2", &byVVTightIsolationMVArun2v1DBnewDMwLT_2);
     Run_Tree->Branch("iso_2_new", &iso_2_new);
-    //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
     Run_Tree->Branch("decayModeFindingNewDMs_2", &decayModeFindingNewDMs_2);
+    */
+    //Run_Tree->Branch("byIsolationMVA3newDMwLTraw_2", &byIsolationMVA3newDMwLTraw_2);
 
     Run_Tree->Branch("numGenJets", &numGenJets);
     Run_Tree->Branch("jetPt_2", &jetPt_2);
 
-    Run_Tree->Branch("pt_tt", &pt_tt);//, "pt_tt/F");
-    Run_Tree->Branch("m_vis", &m_vis);//, "m_vis/F");
+    Run_Tree->Branch("pt_tt", &pt_tt);
+    Run_Tree->Branch("m_vis", &m_vis);
 
     Run_Tree->Branch("pt_top1", &pt_top1);
     Run_Tree->Branch("pt_top2", &pt_top2);
-
-    Run_Tree->Branch("met_JESDown", &met_JESDown);
-    Run_Tree->Branch("met_UESDown", &met_UESDown);
-    Run_Tree->Branch("met_JESUp", &met_JESUp);
-    Run_Tree->Branch("met_UESUp", &met_UESUp);
-    Run_Tree->Branch("metphi_JESDown", &metphi_JESDown);
-    Run_Tree->Branch("metphi_TESDown", &metphi_TESDown);
-    Run_Tree->Branch("metphi_UESDown", &metphi_UESDown);
-    Run_Tree->Branch("metphi_JESUp", &metphi_JESUp);
-    //Run_Tree->Branch("metphi_JERUp", &metphi_JERUp, "metphi_JERUp/F");
-    //Run_Tree->Branch("metphi_MESUp", &metphi_MESUp, "metphi_MESUp/F");
-    //Run_Tree->Branch("metphi_EESUp", &metphi_EESUp, "metphi_EESUp/F");
-    //Run_Tree->Branch("metphi_TESUp", &metphi_TESUp, "metphi_TESUp/F");
-    //Run_Tree->Branch("metphi_PESUp", &metphi_PESUp, "metphi_PESUp/F");
-    Run_Tree->Branch("metphi_UESUp", &metphi_UESUp);
 
     Run_Tree->Branch("met", &met);
     Run_Tree->Branch("metSig", &metSig);
@@ -363,23 +316,19 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("nbtag", &nbtag);
     Run_Tree->Branch("njets", &njets);
     Run_Tree->Branch("njetspt20", &njetspt20);
-    Run_Tree->Branch("njets_JESDown", &njets_JESDown);
+    //Run_Tree->Branch("njets_JESDown", &njets_JESDown);
     //Run_Tree->Branch("njetspt20_JESDown", &njetspt20_JESDown, "njetspt20_JESDown/I");
-    Run_Tree->Branch("njets_JESUp", &njets_JESUp);
+    //Run_Tree->Branch("njets_JESUp", &njets_JESUp);
     //Run_Tree->Branch("njetspt20_JESUp", &njetspt20_JESUp, "njetspt20_JESUp/I");
     Run_Tree->Branch("jpt_1", &jpt_1);
     Run_Tree->Branch("jeta_1", &jeta_1);
     Run_Tree->Branch("jphi_1", &jphi_1);
     Run_Tree->Branch("jcsv_1", &jcsv_1);
-    Run_Tree->Branch("jpt_1_JESUp",  &jpt_1_JESUp);
-    Run_Tree->Branch("jpt_1_JESDown",  &jpt_1_JESDown);
 
     Run_Tree->Branch("jpt_2", &jpt_2);
     Run_Tree->Branch("jeta_2", &jeta_2);
     Run_Tree->Branch("jphi_2", &jphi_2);
     Run_Tree->Branch("jcsv_2", &jcsv_2);
-    Run_Tree->Branch("jpt_2_JESUp",  &jpt_2_JESUp);
-    Run_Tree->Branch("jpt_2_JESDown",  &jpt_2_JESDown);
 
     Run_Tree->Branch("bpt_1", &bpt_1);
     Run_Tree->Branch("beta_1", &beta_1);
@@ -396,12 +345,17 @@ int main(int argc, char** argv) {
     Run_Tree->Branch("extraelec_veto", &extraelec_veto);
     Run_Tree->Branch("extramuon_veto", &extramuon_veto);
     Run_Tree->Branch("dilepton_veto", &dilepton_veto);
+    
+    Run_Tree->Branch("Flag_goodVertices", &Flag_goodVertices );
+    Run_Tree->Branch("Flag_globalSuperTightHalo2016Filter", &Flag_globalSuperTightHalo2016Filter );
+    Run_Tree->Branch("Flag_HBHENoiseFilter", &Flag_HBHENoiseFilter );
+    Run_Tree->Branch("Flag_HBHENoiseIsoFilter", &Flag_HBHENoiseIsoFilter );
+    Run_Tree->Branch("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter );
+    Run_Tree->Branch("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter );
+    Run_Tree->Branch("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter );
+    Run_Tree->Branch("Flag_eeBadScFilter", &Flag_eeBadScFilter );
+    Run_Tree->Branch("Flag_ecalBadCalibFilter", &Flag_ecalBadCalibFilter );
 
-    //Run_Tree->Branch("gen_Higgs_pt", &gen_Higgs_pt, "gen_Higgs_pt/F");
-    //Run_Tree->Branch("gen_Higgs_mass", &gen_Higgs_mass, "gen_Higgs_mass/F");
-
-    //reweight::LumiReWeighting* LumiWeights_12;
-    //LumiWeights_12 = new reweight::LumiReWeighting("pileup-hists/MC_Spring15_PU25_Startup.root", "pileup-hists/Data_Pileup_2015D_Nov17.root", "pileup", "pileup");
     int bestEntry=-1;
     float bestPT=-1;
     ULong64_t evt_now=0;
@@ -436,12 +390,12 @@ int main(int argc, char** argv) {
 
 	// loosen requirement on muon pT a bit for energy scale systematics  (by 5%) 
 	// loosen tau pT and muon eta keeping Cécile's cut
-	if (dau1.Pt() < 20./1.05 || fabs(dau1.Eta())>2.4) continue;
+	if (dau1.Pt() < 20./1.05 || fabs(dau1.Eta())>2.1) continue;
 	if (dau2.Pt() < 20 || fabs(dau2.Eta())>2.3) continue;
 
 	// line 460
-	//if (!tree->tDecayModeFinding) continue; // For QCD control region study Doyeong commented out this.
-	if (!tree->tDecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
+	if (!tree->tDecayModeFinding) continue; // For QCD control region study Doyeong commented out this.
+	//if (!tree->tDecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
 	
  	if (fabs(tree->tCharge)>1) continue;
 
@@ -459,13 +413,7 @@ int main(int argc, char** argv) {
 	bool isMedium = tree->mPFIDLoose && tree->mValidFraction> 0.49 && tree->mSegmentCompatibility > (goodglob ? 0.303 : 0.451); 
         if (isMC && !tree->mPFIDMedium) continue;//FIXME
         if (isData && !tree->mPFIDMedium && !isMedium) continue;//FIXME
-	if (!tree->tByVLooseIsolationMVArun2v1DBnewDMwLT) continue;//FIXME
-	// D.Kim : It should be done at analysis code for consistency with tt channel codes.
-	/*
-	if (tree->eVetoZTTp001dxyzR0>0) continue;//FIXME
-	if (tree->muVetoZTTp001dxyzR0>1) continue;//FIXME
-	if (tree->dimuonVeto>0) continue;//FIXME
-	*/
+	if (!tree->tByVLooseIsolationMVArun2v1DBnewDMwLT) continue;
 
 	evt_now=tree->evt;
 	if (evt_now!=evt_before){
