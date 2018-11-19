@@ -8,6 +8,7 @@
 #include <typeinfo>
 // ROOT
 #include <TH2.h>
+#include <TH3.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TGraph.h>
@@ -86,6 +87,16 @@ int main(int argc, char** argv) {
     RooWorkspace *w2 = (RooWorkspace*)fw2.Get("w");
     fw2.Close();
 
+    
+    
+    TFile *FakeFraction=new TFile("FakeFraction_tautau_3D.root");
+    TH3F *fakefrac_0jet=(TH3F*) FakeFraction->Get("0jet/0jet");
+    TH3F *fakefrac_boosted=(TH3F*) FakeFraction->Get("boosted/boosted");
+    TH3F *fakefrac_vbf=(TH3F*) FakeFraction->Get("vbf/vbf");
+
+    
+    
+    
     // D.Kim
     const char *scriptDirectoryName = "./../python/";
     Py_Initialize();
@@ -325,13 +336,7 @@ int main(int argc, char** argv) {
     
     TFile* ff_file_0jet = TFile::Open("HTTutilities/Jet2TauFakes/data/SM2016_ML/tight/tt/fakeFactors_tt_inclusive.root");
     FakeFactor* ff_0jet = (FakeFactor*)ff_file_0jet->Get("ff_comb");
-    const std::vector<std::string>& inputNames_0jet = ff_0jet->inputs();
-    TFile* ff_file_boosted = TFile::Open("HTTutilities/Jet2TauFakes/data/SM2016_ML/tight/tt/fakeFactors_tt_inclusive.root");
-    FakeFactor* ff_boosted = (FakeFactor*)ff_file_boosted->Get("ff_comb");
-    const std::vector<std::string>& inputNames_boosted = ff_boosted->inputs();
-    TFile* ff_file_vbf = TFile::Open("HTTutilities/Jet2TauFakes/data/SM2016_ML/tight/tt/fakeFactors_tt_inclusive.root");
-    FakeFactor* ff_vbf = (FakeFactor*)ff_file_vbf->Get("ff_comb");
-    const std::vector<std::string>& inputNames_vbf = ff_vbf->inputs();
+
     std::vector<double> input_1(8);
     std::vector<double> input_2(8);
     std::string FFsys[31]={"","ff_qcd_syst_up","ff_qcd_syst_down","ff_qcd_dm0_njet0_stat_up","ff_qcd_dm0_njet0_stat_down","ff_qcd_dm0_njet1_stat_up","ff_qcd_dm0_njet1_stat_down","ff_qcd_dm1_njet0_stat_up","ff_qcd_dm1_njet0_stat_down","ff_qcd_dm1_njet1_stat_up","ff_qcd_dm1_njet1_stat_down","ff_w_syst_up","ff_w_syst_down","ff_w_dm0_njet0_stat_up","ff_w_dm0_njet0_stat_down","ff_w_dm0_njet1_stat_up","ff_w_dm0_njet1_stat_down","ff_w_dm1_njet0_stat_up","ff_w_dm1_njet0_stat_down","ff_w_dm1_njet1_stat_up","ff_w_dm1_njet1_stat_down","ff_tt_syst_up","ff_tt_syst_down","ff_tt_dm0_njet0_stat_up","ff_tt_dm0_njet0_stat_down","ff_tt_dm0_njet1_stat_up","ff_tt_dm0_njet1_stat_down","ff_tt_dm1_njet0_stat_up","ff_tt_dm1_njet0_stat_down","ff_tt_dm1_njet1_stat_up","ff_tt_dm1_njet1_stat_down"};
@@ -893,6 +898,9 @@ int main(int argc, char** argv) {
           //
           //********************* Compute fake factors *********************
           
+          
+          float Frac_var= m_sv;
+          
           input_1[0] = mytau1.Pt();
           input_1[1] = mytau2.Pt();//pt of non-fake tau candidate
           input_1[2] = t1_decayMode;
@@ -916,30 +924,43 @@ int main(int argc, char** argv) {
           input_2[6] = 0.15;
           input_2[7] = 0.05;
           
+          float vis_mass=(mytau1+mytau2).M();
+          float numberJets=njets;
           
-          for (int u =0; u<9;u++)
-              cout<<"  u = " << u << "   "<<input_1[u] << "  and " <<input_2[u]<<"\n";
+
+          
+          
+          if (is_0jet){
+              input_1[5] =input_2[5] = fakefrac_0jet->GetBinContent(fakefrac_0jet->GetXaxis()->FindBin(vis_mass), fakefrac_0jet->GetYaxis()->FindBin(numberJets),1);
+              input_1[6] =input_2[6] = fakefrac_0jet->GetBinContent(fakefrac_0jet->GetXaxis()->FindBin(vis_mass), fakefrac_0jet->GetYaxis()->FindBin(numberJets),2);
+              input_1[7] =input_2[7] = fakefrac_0jet->GetBinContent(fakefrac_0jet->GetXaxis()->FindBin(vis_mass), fakefrac_0jet->GetYaxis()->FindBin(numberJets),3);
+          }
+          
+          if (is_boosted){
+              input_1[5] =input_2[5] = fakefrac_boosted->GetBinContent(fakefrac_boosted->GetXaxis()->FindBin(vis_mass), fakefrac_boosted->GetYaxis()->FindBin(numberJets),1);
+              input_1[6] =input_2[6] = fakefrac_boosted->GetBinContent(fakefrac_boosted->GetXaxis()->FindBin(vis_mass), fakefrac_boosted->GetYaxis()->FindBin(numberJets),2);
+              input_1[7] =input_2[7] = fakefrac_boosted->GetBinContent(fakefrac_boosted->GetXaxis()->FindBin(vis_mass), fakefrac_boosted->GetYaxis()->FindBin(numberJets),3);
+          }
+          
+          
+          if (is_VBF){
+              input_1[5] =input_2[5] = fakefrac_vbf->GetBinContent(fakefrac_vbf->GetXaxis()->FindBin(vis_mass), fakefrac_vbf->GetYaxis()->FindBin(numberJets),1);
+              input_1[6] =input_2[6] = fakefrac_vbf->GetBinContent(fakefrac_vbf->GetXaxis()->FindBin(vis_mass), fakefrac_vbf->GetYaxis()->FindBin(numberJets),2);
+              input_1[7] =input_2[7] = fakefrac_vbf->GetBinContent(fakefrac_vbf->GetXaxis()->FindBin(vis_mass), fakefrac_vbf->GetYaxis()->FindBin(numberJets),3);
+          }
+          
+          
           
           //*********************  fake factors weight *********************
           double FF_weight_1=ff_0jet->value(input_1);
           double FF_weight_2=ff_0jet->value(input_2);
-//          double FF_weight=ff_0jet->getFFValue(input_1);
-          
           
           //************************* Fill histograms Fake Factor 0 jet **********************
           
           if (is_0jet ){
               
-              if ((sample=="data_obs" or gen_match_2==5) && signalRegion && q_1*q_2<0) // had taus
-                  h0tau_OS[k]->Fill(m_sv,aweight*weight2);
-              
-              if ((sample!="data_obs" && gen_match_2<5) && signalRegion && q_1*q_2<0) // light leptons
-                  h0ell_OS[k]->Fill(m_sv,aweight*weight2);
-              
               if (AI_Region && q_1*q_2<0 && (sample=="data_obs" or gen_match_2<=5)){ //anti-isolated data, and MC without jets to subtract later
                   //                for (int k=l;k<l+nbhistFF;++k){ // To get also the systematics
-                  //                    double FF=ff_0jet->value(input_1,FFsys[0]);
-                  //                    double FF=ff_0jet->value(input_1);
                   h0_AI[k]->Fill(m_sv,aweight*FF_weight_1*weight2*0.5);
                   h0_AI[k]->Fill(m_sv,aweight*FF_weight_2*weight2*0.5);
                   //                }
@@ -951,16 +972,8 @@ int main(int argc, char** argv) {
           
           if (is_boosted ){
               
-              if ((sample=="data_obs" or gen_match_2==5) && signalRegion && q_1*q_2<0) // had taus
-                  h1tau_OS[k]->Fill(m_sv,aweight*weight2);
-              
-              if ((sample!="data_obs" && gen_match_2<5) && signalRegion && q_1*q_2<0) // light leptons
-                  h1ell_OS[k]->Fill(m_sv,aweight*weight2);
-              
               if (AI_Region && q_1*q_2<0 && (sample=="data_obs" or gen_match_2<=5)){ //anti-isolated data, and MC without jets to subtract later
                   //                for (int k=l;k<l+nbhistFF;++k){ // To get also the systematics
-                  //                    double FF=ff_0jet->value(input_1,FFsys[0]);
-                  //                    double FF=ff_0jet->value(input_1);
                   h1_AI[k]->Fill(m_sv,aweight*FF_weight_1*weight2*0.5);
                   h1_AI[k]->Fill(m_sv,aweight*FF_weight_2*weight2*0.5);
                   //                }
@@ -971,16 +984,8 @@ int main(int argc, char** argv) {
           
           if (is_VBF ){
               
-              if ((sample=="data_obs" or gen_match_2==5) && signalRegion && q_1*q_2<0) // had taus
-                  h2tau_OS[k]->Fill(m_sv,aweight*weight2);
-              
-              if ((sample!="data_obs" && gen_match_2<5) && signalRegion && q_1*q_2<0) // light leptons
-                  h2ell_OS[k]->Fill(m_sv,aweight*weight2);
-              
               if (AI_Region && q_1*q_2<0 && (sample=="data_obs" or gen_match_2<=5)){ //anti-isolated data, and MC without jets to subtract later
                   //                for (int k=l;k<l+nbhistFF;++k){ // To get also the systematics
-                  //                    double FF=ff_0jet->value(input_1,FFsys[0]);
-                  //                    double FF=ff_0jet->value(input_1);
                   h2_AI[k]->Fill(m_sv,aweight*FF_weight_1*weight2*0.5);
                   h2_AI[k]->Fill(m_sv,aweight*FF_weight_2*weight2*0.5);
                   //                }
@@ -1225,7 +1230,7 @@ int main(int argc, char** argv) {
       if (tes==1000) postfix=postfixWG1[k];
       if (tes==13)  postfix="_CMS_htt_zmumuShape_VBF_13TeVUp";        
       if (tes==-13) postfix="_CMS_htt_zmumuShape_VBF_13TeVDown";
-      std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;
+//      std::cout << "\nnbhist = " << nbhist << ", tes = " << tes << ", postfix = " << postfix  << std::endl;
       
       // These will be the final root files
       // D.Kim
