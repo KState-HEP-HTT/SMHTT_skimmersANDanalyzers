@@ -20,16 +20,15 @@ public :
    // Declaration of leaf types
    Float_t         EmbPtWeight;
    Float_t         Eta;
-   Float_t         Flag_BadChargedCandidateFilter;
-   Float_t         Flag_BadPFMuonFilter;
-   Float_t         Flag_EcalDeadCellTriggerPrimitiveFilter;
+   Float_t         Flag_goodVertices;
+   Float_t         Flag_globalSuperTightHalo2016Filter;
    Float_t         Flag_HBHENoiseFilter;
    Float_t         Flag_HBHENoiseIsoFilter;
-   Float_t         Flag_badCloneMuonFilter;
-   Float_t         Flag_badGlobalMuonFilter;
+   Float_t         Flag_EcalDeadCellTriggerPrimitiveFilter;
+   Float_t         Flag_BadPFMuonFilter;
+   Float_t         Flag_BadChargedCandidateFilter;
    Float_t         Flag_eeBadScFilter;
-   Float_t         Flag_globalTightHalo2016Filter;
-   Float_t         Flag_goodVertices;
+   Float_t         Flag_ecalBadCalibFilter;
    Float_t         GenWeight;
    Float_t         Ht;
    Float_t         LT;
@@ -43,6 +42,7 @@ public :
    Float_t         NUP;
    Float_t         Phi;
    Float_t         Pt;
+   Float_t         bjetDeepCSVVeto20MediumWoNoisyJets;
    Float_t         bjetCISVVeto20Loose;
    Float_t         bjetCISVVeto20Medium;
    Float_t         bjetCISVVeto20Tight;
@@ -121,6 +121,19 @@ public :
    Float_t         isZmumu;
    Float_t         isZtautau;
    Int_t           isdata;
+   Float_t         j1csvWoNoisyJets;
+   Float_t         j1etaWoNoisyJets;
+   Float_t         j1hadronflavorWoNoisyJets;
+   Float_t         j1partonflavorWoNoisyJets;
+   Float_t         j1phiWoNoisyJets;
+   Float_t         j1ptWoNoisyJets;
+   Float_t         j2csvWoNoisyJets;
+   Float_t         j2etaWoNoisyJets;
+   Float_t         j2hadronflavorWoNoisyJets;
+   Float_t         j2partonflavorWoNoisyJets;
+   Float_t         j2phiWoNoisyJets;
+   Float_t         j2ptWoNoisyJets;
+
    Float_t         j1csv;
    Float_t         j1eta;
    Float_t         j1hadronflavor;
@@ -142,16 +155,21 @@ public :
    Float_t         j2pu;
    Float_t         j2rawf;
    Float_t         jb1csv;
+   Float_t         jb1csvWoNoisyJets;
    Float_t         jb1csv_CSVL;
    Float_t         jb1eta;
+   Float_t         jb1etaWoNoisyJets;
    Float_t         jb1eta_CSVL;
    Float_t         jb1hadronflavor;
+   Float_t         jb1hadronflavorWoNoisyJets;
    Float_t         jb1hadronflavor_CSVL;
    Float_t         jb1partonflavor;
    Float_t         jb1partonflavor_CSVL;
    Float_t         jb1phi;
+   Float_t         jb1phiWoNoisyJets;
    Float_t         jb1phi_CSVL;
    Float_t         jb1pt;
+   Float_t         jb1ptWoNoisyJets;
    Float_t         jb1ptDown;
    Float_t         jb1ptDown_CSVL;
    Float_t         jb1ptUp;
@@ -162,16 +180,21 @@ public :
    Float_t         jb1rawf;
    Float_t         jb1rawf_CSVL;
    Float_t         jb2csv;
+   Float_t         jb2csvWoNoisyJets;
    Float_t         jb2csv_CSVL;
    Float_t         jb2eta;
+   Float_t         jb2etaWoNoisyJets;
    Float_t         jb2eta_CSVL;
    Float_t         jb2hadronflavor;
+   Float_t         jb2hadronflavorWoNoisyJets;
    Float_t         jb2hadronflavor_CSVL;
    Float_t         jb2partonflavor;
    Float_t         jb2partonflavor_CSVL;
    Float_t         jb2phi;
+   Float_t         jb2phiWoNoisyJets;
    Float_t         jb2phi_CSVL;
    Float_t         jb2pt;
+   Float_t         jb2ptWoNoisyJets;
    Float_t         jb2ptDown;
    Float_t         jb2ptDown_CSVL;
    Float_t         jb2ptUp;
@@ -182,9 +205,11 @@ public :
    Float_t         jb2rawf;
    Float_t         jb2rawf_CSVL;
    Float_t         jetVeto20;
+   Float_t         jetVeto20WoNoisyJets;
    Float_t         jetVeto20_JetEnDown;
    Float_t         jetVeto20_JetEnUp;
    Float_t         jetVeto30;
+   Float_t         jetVeto30WoNoisyJets;
    Float_t         jetVeto30_JetAbsoluteFlavMapDown;
    Float_t         jetVeto30_JetAbsoluteFlavMapUp;
    Float_t         jetVeto30_JetAbsoluteMPFBiasDown;
@@ -433,6 +458,21 @@ public :
    Float_t         singleTau140Trk50Pass;
    Float_t         singleTau140Trk50Prescale;
    Float_t         t1AbsEta;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTVLoose;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTLoose;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTMedium;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTTight;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTVTight;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTVVTight;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTVLoose;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTLoose;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTMedium;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTTight;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTVTight;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTVVTight;
+   Float_t         t1RerunMVArun2v2DBoldDMwLTraw;
+   Float_t         t2RerunMVArun2v2DBoldDMwLTraw;
+
    Float_t         t1AgainstElectronLooseMVA6;
    Float_t         t1AgainstElectronMVA6Raw;
    Float_t         t1AgainstElectronMVA6category;
@@ -918,6 +958,7 @@ public :
    Float_t         vbfMVA_JetEnDown;
    Float_t         vbfMVA_JetEnUp;
    Float_t         vbfMass;
+   Float_t         vbfMassWoNoisyJets;
    Float_t         vbfMass_JetAbsoluteFlavMapDown;
    Float_t         vbfMass_JetAbsoluteFlavMapUp;
    Float_t         vbfMass_JetAbsoluteMPFBiasDown;
@@ -1021,16 +1062,43 @@ public :
    // List of branches
    TBranch        *b_EmbPtWeight;   //!
    TBranch        *b_Eta;   //!
-   TBranch        *b_Flag_BadChargedCandidateFilter;   //!
-   TBranch        *b_Flag_BadPFMuonFilter;   //!
-   TBranch        *b_Flag_EcalDeadCellTriggerPrimitiveFilter;   //!
-   TBranch        *b_Flag_HBHENoiseFilter;   //!
-   TBranch        *b_Flag_HBHENoiseIsoFilter;   //!
-   TBranch        *b_Flag_badCloneMuonFilter;   //!
-   TBranch        *b_Flag_badGlobalMuonFilter;   //!
-   TBranch        *b_Flag_eeBadScFilter;   //!
-   TBranch        *b_Flag_globalTightHalo2016Filter;   //!
-   TBranch        *b_Flag_goodVertices;   //!
+   TBranch        *b_Flag_goodVertices;
+   TBranch        *b_Flag_globalSuperTightHalo2016Filter;
+   TBranch        *b_Flag_HBHENoiseFilter;
+   TBranch        *b_Flag_HBHENoiseIsoFilter;
+   TBranch        *b_Flag_EcalDeadCellTriggerPrimitiveFilter;
+   TBranch        *b_Flag_BadPFMuonFilter;
+   TBranch        *b_Flag_BadChargedCandidateFilter;
+   TBranch        *b_Flag_eeBadScFilter;
+   TBranch        *b_Flag_ecalBadCalibFilter;
+   TBranch        *b_bjetDeepCSVVeto20MediumWoNoisyJets;
+   TBranch        *b_j1csvWoNoisyJets;   //!
+   TBranch        *b_j1etaWoNoisyJets;   //!
+   TBranch        *b_j1hadronflavorWoNoisyJets;   //!
+   TBranch        *b_j1partonflavorWoNoisyJets;   //!
+   TBranch        *b_j1phiWoNoisyJets;   //!
+   TBranch        *b_j1ptWoNoisyJets;   //!
+   TBranch        *b_j2csvWoNoisyJets;   //!
+   TBranch        *b_j2etaWoNoisyJets;   //!
+   TBranch        *b_j2hadronflavorWoNoisyJets;   //!
+   TBranch        *b_j2partonflavorWoNoisyJets;   //!
+   TBranch        *b_j2phiWoNoisyJets;   //!
+   TBranch        *b_j2ptWoNoisyJets;   //!
+   TBranch        *b_jb1csvWoNoisyJets;   //!
+   TBranch        *b_jb1etaWoNoisyJets;   //!
+   TBranch        *b_jb1hadronflavorWoNoisyJets;   //!
+   TBranch        *b_jb1phiWoNoisyJets;   //!
+   TBranch        *b_jb1ptWoNoisyJets;   //!
+   TBranch        *b_jb2csvWoNoisyJets;   //!
+   TBranch        *b_jb2etaWoNoisyJets;   //!
+   TBranch        *b_jb2hadronflavorWoNoisyJets;   //!
+   TBranch        *b_jb2phiWoNoisyJets;   //!
+   TBranch        *b_jb2ptWoNoisyJets;   //!
+   TBranch        *b_jetVeto20WoNoisyJets;   //!
+   TBranch        *b_jetVeto30WoNoisyJets;   //!
+   TBranch        *b_vbfMassWoNoisyJets;   //!
+   
+
    TBranch        *b_GenWeight;   //!
    TBranch        *b_Ht;   //!
    TBranch        *b_LT;   //!
@@ -1623,6 +1691,14 @@ public :
    TBranch        *b_t1RerunMVArun2v1DBoldDMwLTVTight;   //!
    TBranch        *b_t1RerunMVArun2v1DBoldDMwLTVVTight;   //!
    TBranch        *b_t1RerunMVArun2v1DBoldDMwLTraw;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTLoose;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTMedium;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTTight;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTVLoose;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTVTight;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTVVTight;   //!
+   TBranch        *b_t1RerunMVArun2v2DBoldDMwLTraw;   //!
+
    TBranch        *b_t1VZ;   //!
    TBranch        *b_t1ZTTGenDR;   //!
    TBranch        *b_t1ZTTGenEta;   //!
@@ -1855,6 +1931,15 @@ public :
    TBranch        *b_t2RerunMVArun2v1DBoldDMwLTVTight;   //!
    TBranch        *b_t2RerunMVArun2v1DBoldDMwLTVVTight;   //!
    TBranch        *b_t2RerunMVArun2v1DBoldDMwLTraw;   //!
+
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTLoose;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTMedium;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTTight;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTVLoose;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTVTight;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTVVTight;   //!
+   TBranch        *b_t2RerunMVArun2v2DBoldDMwLTraw;   //!
+
    TBranch        *b_t2VZ;   //!
    TBranch        *b_t2ZTTGenDR;   //!
    TBranch        *b_t2ZTTGenEta;   //!
@@ -2086,16 +2171,44 @@ void HTauTauTree_tt::Init(TTree *tree)
 
    fChain->SetBranchAddress("EmbPtWeight", &EmbPtWeight, &b_EmbPtWeight);
    fChain->SetBranchAddress("Eta", &Eta, &b_Eta);
-   fChain->SetBranchAddress("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter, &b_Flag_BadChargedCandidateFilter);
-   fChain->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter, &b_Flag_BadPFMuonFilter);
-   fChain->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter, &b_Flag_EcalDeadCellTriggerPrimitiveFilter);
+   fChain->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices, &b_Flag_goodVertices);
+   fChain->SetBranchAddress("Flag_globalSuperTightHalo2016Filter", &Flag_globalSuperTightHalo2016Filter, &b_Flag_globalSuperTightHalo2016Filter);
    fChain->SetBranchAddress("Flag_HBHENoiseFilter", &Flag_HBHENoiseFilter, &b_Flag_HBHENoiseFilter);
    fChain->SetBranchAddress("Flag_HBHENoiseIsoFilter", &Flag_HBHENoiseIsoFilter, &b_Flag_HBHENoiseIsoFilter);
-   fChain->SetBranchAddress("Flag_badCloneMuonFilter", &Flag_badCloneMuonFilter, &b_Flag_badCloneMuonFilter);
-   fChain->SetBranchAddress("Flag_badGlobalMuonFilter", &Flag_badGlobalMuonFilter, &b_Flag_badGlobalMuonFilter);
+   fChain->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter, &b_Flag_EcalDeadCellTriggerPrimitiveFilter);
+   fChain->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter, &b_Flag_BadPFMuonFilter);
+   fChain->SetBranchAddress("Flag_BadChargedCandidateFilter", &Flag_BadChargedCandidateFilter, &b_Flag_BadChargedCandidateFilter);
    fChain->SetBranchAddress("Flag_eeBadScFilter", &Flag_eeBadScFilter, &b_Flag_eeBadScFilter);
-   fChain->SetBranchAddress("Flag_globalTightHalo2016Filter", &Flag_globalTightHalo2016Filter, &b_Flag_globalTightHalo2016Filter);
-   fChain->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices, &b_Flag_goodVertices);
+   fChain->SetBranchAddress("Flag_ecalBadCalibFilter", &Flag_ecalBadCalibFilter, &b_Flag_ecalBadCalibFilter);
+   fChain->SetBranchAddress("bjetDeepCSVVeto20MediumWoNoisyJets", &bjetDeepCSVVeto20MediumWoNoisyJets, &b_bjetDeepCSVVeto20MediumWoNoisyJets);
+   fChain->SetBranchAddress("j1csvWoNoisyJets", &j1csvWoNoisyJets, &b_j1csvWoNoisyJets);
+   fChain->SetBranchAddress("j1etaWoNoisyJets", &j1etaWoNoisyJets, &b_j1etaWoNoisyJets);
+   fChain->SetBranchAddress("j1hadronflavorWoNoisyJets", &j1hadronflavorWoNoisyJets, &b_j1hadronflavorWoNoisyJets);
+   fChain->SetBranchAddress("j1partonflavorWoNoisyJets", &j1partonflavorWoNoisyJets, &b_j1partonflavorWoNoisyJets);
+   fChain->SetBranchAddress("j1phiWoNoisyJets", &j1phiWoNoisyJets, &b_j1phiWoNoisyJets);
+   fChain->SetBranchAddress("j1ptWoNoisyJets", &j1ptWoNoisyJets, &b_j1ptWoNoisyJets);
+   fChain->SetBranchAddress("j2csvWoNoisyJets", &j2csvWoNoisyJets, &b_j2csvWoNoisyJets);
+   fChain->SetBranchAddress("j2etaWoNoisyJets", &j2etaWoNoisyJets, &b_j2etaWoNoisyJets);
+   fChain->SetBranchAddress("j2hadronflavorWoNoisyJets", &j2hadronflavorWoNoisyJets, &b_j2hadronflavorWoNoisyJets);
+   fChain->SetBranchAddress("j2partonflavorWoNoisyJets", &j2partonflavorWoNoisyJets, &b_j2partonflavorWoNoisyJets);
+   fChain->SetBranchAddress("j2phiWoNoisyJets", &j2phiWoNoisyJets, &b_j2phiWoNoisyJets);
+   fChain->SetBranchAddress("j2ptWoNoisyJets", &j2ptWoNoisyJets, &b_j2ptWoNoisyJets);
+   fChain->SetBranchAddress("jb1csvWoNoisyJets", &jb1csvWoNoisyJets, &b_jb1csvWoNoisyJets);
+   fChain->SetBranchAddress("jb1etaWoNoisyJets", &jb1etaWoNoisyJets, &b_jb1etaWoNoisyJets);
+   fChain->SetBranchAddress("jb1hadronflavorWoNoisyJets", &jb1hadronflavorWoNoisyJets, &b_jb1hadronflavorWoNoisyJets);
+   fChain->SetBranchAddress("jb1phiWoNoisyJets", &jb1phiWoNoisyJets, &b_jb1phiWoNoisyJets);
+   fChain->SetBranchAddress("jb1ptWoNoisyJets", &jb1ptWoNoisyJets, &b_jb1ptWoNoisyJets);
+   fChain->SetBranchAddress("jb2csvWoNoisyJets", &jb2csvWoNoisyJets, &b_jb2csvWoNoisyJets);
+   fChain->SetBranchAddress("jb2etaWoNoisyJets", &jb2etaWoNoisyJets, &b_jb2etaWoNoisyJets);
+   fChain->SetBranchAddress("jb2hadronflavorWoNoisyJets", &jb2hadronflavorWoNoisyJets, &b_jb2hadronflavorWoNoisyJets);
+   fChain->SetBranchAddress("jb2phiWoNoisyJets", &jb2phiWoNoisyJets, &b_jb2phiWoNoisyJets);
+   fChain->SetBranchAddress("jb2ptWoNoisyJets", &jb2ptWoNoisyJets, &b_jb2ptWoNoisyJets);
+   fChain->SetBranchAddress("jetVeto20WoNoisyJets", &jetVeto20WoNoisyJets, &b_jetVeto20WoNoisyJets);
+   fChain->SetBranchAddress("jetVeto30WoNoisyJets", &jetVeto30WoNoisyJets, &b_jetVeto30WoNoisyJets);
+   fChain->SetBranchAddress("vbfMassWoNoisyJets", &vbfMassWoNoisyJets, &b_vbfMassWoNoisyJets);
+   
+   
+
    fChain->SetBranchAddress("GenWeight", &GenWeight, &b_GenWeight);
    fChain->SetBranchAddress("Ht", &Ht, &b_Ht);
    fChain->SetBranchAddress("LT", &LT, &b_LT);
@@ -2501,6 +2614,7 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("singleTau140Trk50Pass", &singleTau140Trk50Pass, &b_singleTau140Trk50Pass);
    fChain->SetBranchAddress("singleTau140Trk50Prescale", &singleTau140Trk50Prescale, &b_singleTau140Trk50Prescale);
    fChain->SetBranchAddress("t1AbsEta", &t1AbsEta, &b_t1AbsEta);
+
    fChain->SetBranchAddress("t1AgainstElectronLooseMVA6", &t1AgainstElectronLooseMVA6, &b_t1AgainstElectronLooseMVA6);
    fChain->SetBranchAddress("t1AgainstElectronMVA6Raw", &t1AgainstElectronMVA6Raw, &b_t1AgainstElectronMVA6Raw);
    fChain->SetBranchAddress("t1AgainstElectronMVA6category", &t1AgainstElectronMVA6category, &b_t1AgainstElectronMVA6category);
@@ -2690,6 +2804,15 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("t1RerunMVArun2v1DBoldDMwLTVTight", &t1RerunMVArun2v1DBoldDMwLTVTight, &b_t1RerunMVArun2v1DBoldDMwLTVTight);
    fChain->SetBranchAddress("t1RerunMVArun2v1DBoldDMwLTVVTight", &t1RerunMVArun2v1DBoldDMwLTVVTight, &b_t1RerunMVArun2v1DBoldDMwLTVVTight);
    fChain->SetBranchAddress("t1RerunMVArun2v1DBoldDMwLTraw", &t1RerunMVArun2v1DBoldDMwLTraw, &b_t1RerunMVArun2v1DBoldDMwLTraw);
+
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTLoose", &t1RerunMVArun2v2DBoldDMwLTLoose, &b_t1RerunMVArun2v2DBoldDMwLTLoose);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTMedium", &t1RerunMVArun2v2DBoldDMwLTMedium, &b_t1RerunMVArun2v2DBoldDMwLTMedium);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTTight", &t1RerunMVArun2v2DBoldDMwLTTight, &b_t1RerunMVArun2v2DBoldDMwLTTight);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTVLoose", &t1RerunMVArun2v2DBoldDMwLTVLoose, &b_t1RerunMVArun2v2DBoldDMwLTVLoose);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTVTight", &t1RerunMVArun2v2DBoldDMwLTVTight, &b_t1RerunMVArun2v2DBoldDMwLTVTight);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTVVTight", &t1RerunMVArun2v2DBoldDMwLTVVTight, &b_t1RerunMVArun2v2DBoldDMwLTVVTight);
+   fChain->SetBranchAddress("t1RerunMVArun2v2DBoldDMwLTraw", &t1RerunMVArun2v2DBoldDMwLTraw, &b_t1RerunMVArun2v2DBoldDMwLTraw);
+
    fChain->SetBranchAddress("t1VZ", &t1VZ, &b_t1VZ);
    fChain->SetBranchAddress("t1ZTTGenDR", &t1ZTTGenDR, &b_t1ZTTGenDR);
    fChain->SetBranchAddress("t1ZTTGenEta", &t1ZTTGenEta, &b_t1ZTTGenEta);
@@ -2922,6 +3045,15 @@ void HTauTauTree_tt::Init(TTree *tree)
    fChain->SetBranchAddress("t2RerunMVArun2v1DBoldDMwLTVTight", &t2RerunMVArun2v1DBoldDMwLTVTight, &b_t2RerunMVArun2v1DBoldDMwLTVTight);
    fChain->SetBranchAddress("t2RerunMVArun2v1DBoldDMwLTVVTight", &t2RerunMVArun2v1DBoldDMwLTVVTight, &b_t2RerunMVArun2v1DBoldDMwLTVVTight);
    fChain->SetBranchAddress("t2RerunMVArun2v1DBoldDMwLTraw", &t2RerunMVArun2v1DBoldDMwLTraw, &b_t2RerunMVArun2v1DBoldDMwLTraw);
+
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTLoose", &t2RerunMVArun2v2DBoldDMwLTLoose, &b_t2RerunMVArun2v2DBoldDMwLTLoose);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTMedium", &t2RerunMVArun2v2DBoldDMwLTMedium, &b_t2RerunMVArun2v2DBoldDMwLTMedium);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTTight", &t2RerunMVArun2v2DBoldDMwLTTight, &b_t2RerunMVArun2v2DBoldDMwLTTight);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTVLoose", &t2RerunMVArun2v2DBoldDMwLTVLoose, &b_t2RerunMVArun2v2DBoldDMwLTVLoose);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTVTight", &t2RerunMVArun2v2DBoldDMwLTVTight, &b_t2RerunMVArun2v2DBoldDMwLTVTight);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTVVTight", &t2RerunMVArun2v2DBoldDMwLTVVTight, &b_t2RerunMVArun2v2DBoldDMwLTVVTight);
+   fChain->SetBranchAddress("t2RerunMVArun2v2DBoldDMwLTraw", &t2RerunMVArun2v2DBoldDMwLTraw, &b_t2RerunMVArun2v2DBoldDMwLTraw);
+
    fChain->SetBranchAddress("t2VZ", &t2VZ, &b_t2VZ);
    fChain->SetBranchAddress("t2ZTTGenDR", &t2ZTTGenDR, &b_t2ZTTGenDR);
    fChain->SetBranchAddress("t2ZTTGenEta", &t2ZTTGenEta, &b_t2ZTTGenEta);

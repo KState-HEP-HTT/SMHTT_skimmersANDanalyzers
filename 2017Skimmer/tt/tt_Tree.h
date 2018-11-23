@@ -77,10 +77,14 @@ float t1GenCharge,t1GenDecayMode,t1GenEnergy,t1GenEta,t1GenIsPrompt,t1GenJetEta,
 float t2GenCharge,t2GenDecayMode,t2GenEnergy,t2GenEta,t2GenIsPrompt,t2GenJetEta,t2GenJetPt,t2GenMotherEnergy,t2GenMotherEta,t2GenMotherPdgId,t2GenMotherPhi,t2GenMotherPt,t2GenPdgId,t2GenPhi,t2GenPt,t2GenStatus,t2ZTTGenDR,t2ZTTGenEta,t2ZTTGenMatching,t2ZTTGenPhi,t2ZTTGenPt;
 float t1MatchesDoubleTightTau35Path,t1MatchesDoubleTightTau35Filter,t1MatchesDoubleMediumTau40Path,t1MatchesDoubleMediumTau40Filter,t1MatchesDoubleTightTau40Path,t1MatchesDoubleTightTau40Filter;
 float t2MatchesDoubleTightTau35Path,t2MatchesDoubleTightTau35Filter,t2MatchesDoubleMediumTau40Path,t2MatchesDoubleMediumTau40Filter,t2MatchesDoubleTightTau40Path,t2MatchesDoubleTightTau40Filter,DoubleTightTau35Pass,DoubleMediumTau40Pass,DoubleTightTau40Pass;
+float Flag_goodVertices, Flag_globalSuperTightHalo2016Filter, Flag_HBHENoiseFilter, Flag_HBHENoiseIsoFilter, Flag_EcalDeadCellTriggerPrimitiveFilter, Flag_BadPFMuonFilter, Flag_BadChargedCandidateFilter, Flag_eeBadScFilter, Flag_ecalBadCalibFilter;
+float t1RerunMVArun2v2DBoldDMwLTVLoose, t1RerunMVArun2v2DBoldDMwLTLoose, t1RerunMVArun2v2DBoldDMwLTMedium, t1RerunMVArun2v2DBoldDMwLTTight, t1RerunMVArun2v2DBoldDMwLTVTight, t1RerunMVArun2v2DBoldDMwLTVVTight, t1RerunMVArun2v2DBoldDMwLTraw;
+float t2RerunMVArun2v2DBoldDMwLTVLoose, t2RerunMVArun2v2DBoldDMwLTLoose, t2RerunMVArun2v2DBoldDMwLTMedium, t2RerunMVArun2v2DBoldDMwLTTight, t2RerunMVArun2v2DBoldDMwLTVTight, t2RerunMVArun2v2DBoldDMwLTVVTight, t2RerunMVArun2v2DBoldDMwLTraw;
+
 RecoilCorrector recoilPFMetCorrector("Type1_PFMET_2017.root");  // For local test
 //RecoilCorrector recoilPFMetCorrector("TypeI-PFMet_Run2016BtoH.root");
 
-void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil, bool ismc, bool seventeen){
+void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil, bool ismc, bool isembed, bool seventeen){
     tree->GetEntry(entry_tree);
     run = tree->run;
     lumi = tree->lumi;
@@ -235,6 +239,23 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
       filterDoubleTauCmbIso35_1 = tree->t1MatchesDoubleTauCmbIso35RegFilter;
       filterDoubleTauCmbIso35_2 = tree->t2MatchesDoubleTauCmbIso35RegFilter;
     }
+
+    t1RerunMVArun2v2DBoldDMwLTVLoose = tree->t1RerunMVArun2v2DBoldDMwLTVLoose;
+    t1RerunMVArun2v2DBoldDMwLTLoose = tree->t1RerunMVArun2v2DBoldDMwLTLoose;
+    t1RerunMVArun2v2DBoldDMwLTMedium = tree->t1RerunMVArun2v2DBoldDMwLTMedium;
+    t1RerunMVArun2v2DBoldDMwLTTight = tree->t1RerunMVArun2v2DBoldDMwLTTight;
+    t1RerunMVArun2v2DBoldDMwLTVTight = tree->t1RerunMVArun2v2DBoldDMwLTVTight;
+    t1RerunMVArun2v2DBoldDMwLTVVTight = tree->t1RerunMVArun2v2DBoldDMwLTVVTight;
+    t1RerunMVArun2v2DBoldDMwLTraw = tree->t1RerunMVArun2v2DBoldDMwLTraw;
+    t2RerunMVArun2v2DBoldDMwLTVLoose = tree->t2RerunMVArun2v2DBoldDMwLTVLoose;
+    t2RerunMVArun2v2DBoldDMwLTLoose = tree->t2RerunMVArun2v2DBoldDMwLTLoose;
+    t2RerunMVArun2v2DBoldDMwLTMedium = tree->t2RerunMVArun2v2DBoldDMwLTMedium;
+    t2RerunMVArun2v2DBoldDMwLTTight = tree->t2RerunMVArun2v2DBoldDMwLTTight;
+    t2RerunMVArun2v2DBoldDMwLTVTight = tree->t2RerunMVArun2v2DBoldDMwLTVTight;
+    t2RerunMVArun2v2DBoldDMwLTVVTight = tree->t2RerunMVArun2v2DBoldDMwLTVVTight;
+    t2RerunMVArun2v2DBoldDMwLTraw = tree->t2RerunMVArun2v2DBoldDMwLTraw;
+
+
     genpX=tree->genpX;
     genpY=tree->genpY;
     genpT=tree->genpT;
@@ -246,6 +267,16 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     genPhi=tree->genPhi;
     genHTT=tree->genHTT;
     genMass=tree->genMass;
+
+    Flag_goodVertices=tree->Flag_goodVertices;
+    Flag_globalSuperTightHalo2016Filter=tree->Flag_globalSuperTightHalo2016Filter;
+    Flag_HBHENoiseFilter=tree->Flag_HBHENoiseFilter;
+    Flag_HBHENoiseIsoFilter=tree->Flag_HBHENoiseIsoFilter;
+    Flag_EcalDeadCellTriggerPrimitiveFilter=tree->Flag_EcalDeadCellTriggerPrimitiveFilter;
+    Flag_BadPFMuonFilter=tree->Flag_BadPFMuonFilter;
+    Flag_BadChargedCandidateFilter=tree->Flag_BadChargedCandidateFilter;
+    Flag_eeBadScFilter=tree->Flag_eeBadScFilter;
+    Flag_ecalBadCalibFilter=tree->Flag_ecalBadCalibFilter;
 
     t1GenCharge=tree->t1GenCharge;
     t1GenDecayMode=tree->t1GenDecayMode;
@@ -300,12 +331,13 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     TLorentzVector tau2;
     tau1.SetPtEtaPhiM(tree->t1Pt,tree->t1Eta,tree->t1Phi,tree->t1Mass);
     tau2.SetPtEtaPhiM(tree->t2Pt,tree->t2Eta,tree->t2Phi,tree->t2Mass);
-    if (ismc && tree->t1DecayMode==0) tau1=tau1*0.982;
-    else if (ismc && tree->t1DecayMode==1) tau1=tau1*1.010;
-    else if (ismc && tree->t1DecayMode==10) tau1=tau1*1.004;
-    if (ismc && tree->t2DecayMode==0) tau2=tau2*0.982;
-    else if (ismc && tree->t2DecayMode==1) tau2=tau2*1.010;
-    else if (ismc && tree->t2DecayMode==10) tau2=tau2*1.004;
+    
+    if (isembed && tree->t1DecayMode==0) tau1=tau1*0.975;
+    else if (isembed && tree->t1DecayMode==1) tau1=tau1*0.975*1.051;
+    else if (isembed && tree->t1DecayMode==10) tau1=tau1*(0.975*0.975*0.975)*(1.0);
+    if (isembed && tree->t2DecayMode==0) tau2=tau2*0.975;
+    else if (isembed && tree->t2DecayMode==1) tau2=tau2*0.975*1.051;
+    else if (isembed && tree->t2DecayMode==10) tau2=tau2*(0.975*0.975*0.975)*(1.0);
 
     // configure nominal met
     TLorentzVector mymet;
@@ -324,7 +356,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,         // generator Z/W/Higgs py (float)
           tree->vispX,         // generator visible Z/W/Higgs px (float)
           tree->vispY,         // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30 + 1, // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets + 1, // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex,        // corrected type I pf met px (float)
           pfmetcorr_ey         // corrected type I pf met py (float)
       );
@@ -336,7 +368,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,     // generator Z/W/Higgs py (float)
           tree->vispX,     // generator visible Z/W/Higgs px (float)
           tree->vispY,     // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30, // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets, // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex,    // corrected type I pf met px (float)
           pfmetcorr_ey     // corrected type I pf met py (float)
       );
@@ -389,7 +421,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,            // generator Z/W/Higgs py (float)
           tree->vispX,            // generator visible Z/W/Higgs px (float)
           tree->vispY,            // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30 + 1,    // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets + 1,    // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_UESUp,     // corrected type I pf met px (float)
           pfmetcorr_ey_UESUp      // corrected type I pf met py (float)
       );
@@ -402,7 +434,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,            // generator Z/W/Higgs py (float)
           tree->vispX,            // generator visible Z/W/Higgs px (float)
           tree->vispY,            // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30 + 1,    // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets + 1,    // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_UESDown,   // corrected type I pf met px (float)
           pfmetcorr_ey_UESDown    // corrected type I pf met py (float)
       );
@@ -415,7 +447,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,         // generator Z/W/Higgs py (float)
           tree->vispX,         // generator visible Z/W/Higgs px (float)
           tree->vispY,         // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30 + 1, // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets + 1, // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_JESUp,  // corrected type I pf met px (float)
           pfmetcorr_ey_JESUp   // corrected type I pf met py (float)
       );
@@ -428,7 +460,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,          // generator Z/W/Higgs py (float)
           tree->vispX,          // generator visible Z/W/Higgs px (float)
           tree->vispY,          // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30 + 1,  // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets + 1,  // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_JESDown, // corrected type I pf met px (float)
           pfmetcorr_ey_JESDown  // corrected type I pf met py (float)
       );
@@ -441,7 +473,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,         // generator Z/W/Higgs py (float)
           tree->vispX,         // generator visible Z/W/Higgs px (float)
           tree->vispY,         // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30,     // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets,     // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_UESUp,  // corrected type I pf met px (float)
           pfmetcorr_ey_UESUp   // corrected type I pf met py (float)
       );
@@ -454,7 +486,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,          // generator Z/W/Higgs py (float)
           tree->vispX,          // generator visible Z/W/Higgs px (float)
           tree->vispY,          // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30,      // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets,      // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_UESDown, // corrected type I pf met px (float)
           pfmetcorr_ey_UESDown  // corrected type I pf met py (float)
       );
@@ -467,7 +499,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,         // generator Z/W/Higgs py (float)
           tree->vispX,         // generator visible Z/W/Higgs px (float)
           tree->vispY,         // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30,     // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets,     // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_JESUp,  // corrected type I pf met px (float)
           pfmetcorr_ey_JESUp   // corrected type I pf met py (float)
       );
@@ -480,7 +512,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
           tree->genpY,          // generator Z/W/Higgs py (float)
           tree->vispX,          // generator visible Z/W/Higgs px (float)
           tree->vispY,          // generator visible Z/W/Higgs py (float)
-          tree->jetVeto30,      // number of jets (hadronic jet multiplicity) (int)
+          tree->jetVeto30WoNoisyJets,      // number of jets (hadronic jet multiplicity) (int)
           pfmetcorr_ex_JESDown, // corrected type I pf met px (float)
           pfmetcorr_ey_JESDown  // corrected type I pf met py (float)
       );
@@ -518,10 +550,10 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     metcov10_v2=tree->metcov10_DESYlike; 
     metcov11_v2=tree->metcov11_DESYlike; 
 
-    njets = tree->jetVeto30;
-    nbtag = tree->bjetCISVVeto20Medium;
+    njets = tree->jetVeto30WoNoisyJets;
+    nbtag = tree->bjetDeepCSVVeto20MediumWoNoisyJets;//bjetCISVVeto20Medium;
     nbtagL = tree->bjetCISVVeto20Loose;
-    njetspt20=tree->jetVeto20;
+    njetspt20=tree->jetVeto20WoNoisyJets;
 
     njets_JESDown = tree->jetVeto30_JetEnDown;
     njetspt20_JESDown=tree->jetVeto20_JetEnDown;
@@ -636,29 +668,29 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
     //byIsolationMVA3oldDMwoLTraw_2=tree->t2ByIsolationMVArun2v1DBoldDMwLTraw;
     decayModeFindingNewDMs_2=tree->t2DecayModeFindingNewDMs;
 
-    jpt_1=tree->j1pt;
-    jpt_2=tree->j2pt;
-    jeta_1=tree->j1eta;
-    jeta_2=tree->j2eta;
-    jphi_1=tree->j1phi;
-    jphi_2=tree->j2phi;
-    jcsv_1=tree->j1csv;
-    jcsv_2=tree->j2csv;
+    jpt_1=tree->j1ptWoNoisyJets;
+    jpt_2=tree->j2ptWoNoisyJets;
+    jeta_1=tree->j1etaWoNoisyJets;
+    jeta_2=tree->j2etaWoNoisyJets;
+    jphi_1=tree->j1phiWoNoisyJets;
+    jphi_2=tree->j2phiWoNoisyJets;
+    jcsv_1=tree->j1csvWoNoisyJets;
+    jcsv_2=tree->j2csvWoNoisyJets;
     jpt_1_JESUp=tree->j1ptUp;
     jpt_1_JESDown=tree->j1ptDown;
     jpt_2_JESUp=tree->j2ptUp;
     jpt_2_JESDown=tree->j2ptDown;
 
-    bpt_1=tree->jb1pt;
-    bpt_2=tree->jb2pt;
-    beta_1=tree->jb1eta;
-    beta_2=tree->jb2eta;
-    bphi_1=tree->jb1phi;
-    bphi_2=tree->jb2phi;
-    bcsv_1=tree->jb1csv;
-    bcsv_2=tree->jb2csv;
-    bflavor_1=tree->jb1hadronflavor;
-    bflavor_2=tree->jb2hadronflavor;
+    bpt_1=tree->jb1ptWoNoisyJets;
+    bpt_2=tree->jb2ptWoNoisyJets;
+    beta_1=tree->jb1etaWoNoisyJets;
+    beta_2=tree->jb2etaWoNoisyJets;
+    bphi_1=tree->jb1phiWoNoisyJets;
+    bphi_2=tree->jb2phiWoNoisyJets;
+    bcsv_1=tree->jb1csvWoNoisyJets;
+    bcsv_2=tree->jb2csvWoNoisyJets;
+    bflavor_1=tree->jb1hadronflavorWoNoisyJets;
+    bflavor_2=tree->jb2hadronflavorWoNoisyJets;
 
    TLorentzVector jet1;
    if (njetspt20 > 0 && jpt_1>0)
@@ -671,7 +703,7 @@ void fillTree(TTree *Run_Tree, HTauTauTree_tt *tree, int entry_tree, int recoil,
       jdeta=tree->vbfDeta;
       jdphi=tree->vbfDphi;
       dijetphi=dijet.Phi();
-      mjj=tree->vbfMass;
+      mjj=tree->vbfMassWoNoisyJets;
       njetingap20=tree->vbfJetVeto20;
       njetingap=tree->vbfJetVeto30;
    }
