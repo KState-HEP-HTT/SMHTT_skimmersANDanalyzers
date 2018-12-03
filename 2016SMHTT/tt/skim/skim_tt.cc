@@ -453,7 +453,7 @@ int main(int argc, char** argv) {
       Run_Tree->Branch("mjj_JetTimePtEtaUp", &mjj_JetTimePtEtaUp, "mjj_JetTimePtEtaUp/F");
     }
 
-
+    TH1F *h_cutflow = new TH1F("","",15,0,15);
      
 
     float lt_before=0;
@@ -485,35 +485,37 @@ int main(int argc, char** argv) {
       tau2.SetPtEtaPhiM(tree->t2Pt,tree->t2Eta,tree->t2Phi,tree->t2Mass);
 
       // Baseline selection https://www.dropbox.com/s/mb6e26affiodpn3/AN2016_355_v10.pdf?dl=0 page 44
+      h_cutflow->Fill(1,1);
       // line 769. No requirement on OS/SS @ skimming level
       if (tau1.DeltaR(tau2) < 0.5) continue;
-      
+      h_cutflow->Fill(2,1);
       // loosen requirements  on  pT a bit for energy scale systematics  (by 5%)
       if (tau1.Pt() < 40./1.05 || fabs(tau1.Eta()) > 2.1 ) continue;
       if (tau2.Pt() < 40./1.05 || fabs(tau2.Eta()) > 2.1 ) continue;
-      
+      h_cutflow->Fill(3,1);
       // require the highest pT tau to have pT > 50 (loosen requirements by 5%)
       if (tau1.Pt() < 50./1.05 && tau2.Pt() < 50./1.5 ) continue;
-
+      h_cutflow->Fill(4,1);
       // line 771
-      //if (!tree->t1DecayModeFinding) continue;
-      //if (!tree->t2DecayModeFinding) continue;
-      if (!tree->t1DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
-      if (!tree->t2DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
-
+      if (!tree->t1DecayModeFinding) continue;
+      if (!tree->t2DecayModeFinding) continue;
+      //if (!tree->t1DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
+      //if (!tree->t2DecayModeFindingNewDMs) continue; // For QCD control region study Doyeong tDecayModeFinding replaced to 
+      h_cutflow->Fill(5,1);
       if ( abs(tree->t1Charge) != 1 || abs(tree->t2Charge) != 1) continue;
       //  line 772
+      h_cutflow->Fill(6,1);
       if (fabs( tree->t1PVDZ ) > 0.2 || fabs( tree->t2PVDZ ) > 0.2) continue;
       //  lines 773-774
-      
+      h_cutflow->Fill(7,1);
       if (tree->t1AgainstElectronVLooseMVA6 < 0.5 || tree->t1AgainstMuonLoose3 < 0.5) continue;
       if (tree->t2AgainstElectronVLooseMVA6 < 0.5 || tree->t2AgainstMuonLoose3 < 0.5) continue;
-      
+      h_cutflow->Fill(8,1);
       bool isoAll =
-	tree->t1ByVLooseIsolationMVArun2v1DBnewDMwLT > 0.5 &&
-	tree->t2ByVLooseIsolationMVArun2v1DBnewDMwLT > 0.5;
+	tree->t1ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5 &&
+	tree->t2ByVLooseIsolationMVArun2v1DBoldDMwLT > 0.5;
       if (!isoAll ) continue; // For QCD control region study Doyeong commented out this.
-      
+      h_cutflow->Fill(9,1);      
 
       if (seventeen && !isEmbed) {
 	bool tight35 = tree->DoubleTightTau35Pass
@@ -525,7 +527,9 @@ int main(int argc, char** argv) {
 	bool tight40 = tree->DoubleTightTau40Pass
 	  && tree->t1MatchesDoubleTightTau40Path && tree->t1MatchesDoubleTightTau40Filter 
 	  && tree->t2MatchesDoubleTightTau40Path && tree->t2MatchesDoubleTightTau40Filter;
+	h_cutflow->Fill(10,1);
 	if (!tight35 && !medium40 && !tight40) continue;
+
       }
       else if (!seventeen && !isEmbed){
 	// Trigger follow https://github.com/truggles/Z_to_TauTau_13TeV/blob/MELA_test/analysisCuts.py#L23
@@ -541,13 +545,14 @@ int main(int argc, char** argv) {
 	bool tt35Combo = tree->doubleTauCmbIso35RegPass
 	  &&  tree->t1MatchesDoubleTauCmbIso35RegFilter  && tree->t2MatchesDoubleTauCmbIso35RegFilter
 	  &&  tree->t1MatchesDoubleTauCmbIso35RegPath    && tree->t2MatchesDoubleTauCmbIso35RegPath;
-	
+	h_cutflow->Fill(9,1);	
 	// require either tt35 or tt35Combo to fire
 	if ( !isEmbed && !tt35 && !tt35Combo) continue;
       }
+      h_cutflow->Fill(11,1);
       //  reject event if it has either an electron or a muon
       if ( tree->eVetoZTTp001dxyzR0>0 || tree->muVetoZTTp001dxyzR0>0 ) continue;
-
+      h_cutflow->Fill(12,1);
       evt_now=tree->evt;
       // implement new sorting per 
       // https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2017#Baseline_Selection
@@ -604,6 +609,8 @@ int main(int argc, char** argv) {
     
     // done!
     fout->cd();
+    h_cutflow->SetName("CutFlow");
+    h_cutflow->Write();
     Run_Tree->Write();
     map<string, TH1F*>::const_iterator iMap1 = myMap1->begin();
     map<string, TH1F*>::const_iterator jMap1 = myMap1->end();

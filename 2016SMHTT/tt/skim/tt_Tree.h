@@ -19,7 +19,9 @@ using namespace std;
 
 
 float trackpt_1,trackpt_2, jetPt_1, jetPt_2;
-unsigned int run, lumi, evt, NUP = -10;
+unsigned int NUP = -10;
+UInt_t run, lumi;
+ULong64_t evt;
 int gen_match_1, gen_match_2=0;
 float met_norecoil;
 float npu, rho, npv=-1;//, puweight, weight;
